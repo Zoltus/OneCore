@@ -194,6 +194,8 @@
         Todo-----------:
           Important:
             - TEST EVERYTHING!
+            - fix github
+            - Make permissions for gamemode, survival, creative, adventure, spectator, ect.
 
             - Test economy. (OneEconomy and compability with other Economy plugins)
             - Rtp to async & create worker.
