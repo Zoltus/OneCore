@@ -1,0 +1,10 @@
+# Project exclude paths
+/target/
+/.idea/dataSources.local.xml
+/.idea/dataSources/fa4273bd-c566-4c9e-84f9-e87b3cc6d843.xml
+/jars/
+OneCore.iml
+/.gradle/
+/.idea/
+/build/
+/identifier.sqlite

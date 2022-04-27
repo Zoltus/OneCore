@@ -1,0 +1,325 @@
+  ___
+    _||__|[]|  ______   ______   ______
+    (        | |      | |      | |      |
+    /-()---() ~ ()--() ~ ()--() ~ ()--()
+
+
+    ╔═╗╔═╗
+    ║ ║║
+    ╚═╝╚═╝ OneCore
+
+    ╔═╗╔═╗
+    ║ ║║ OneCore
+    ╚═╝╚═╝
+
+
+      TODO:
+      ? = Mayby
+        @ = Done
+        * = Started
+        - = TODO
+
+        ((DedicatedServer) MinecraftServer.getServer()).propertyManager.setProperty(key, value);
+
+        - "https://www.spigotmc.org/resources/view-distance-tweaks-1-14-1-17.75164/"
+          - "https://github.com/YouHaveTrouble/minecraft-optimization"
+
+
+      Testing:
+        - Test every cmd by executing them 1000-5000x/s.
+        - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue
+      OTHER:
+        - dupe on crash server
+        - "https://www.spigotmc.org/threads/how-to-create-custom-biomes.512105/page-2#post-4246285" prevent xray
+        TODO:
+          - !!IMPORTANT!!! Command to debug all maps/lists, easy to check memory leaks
+          - nbtplayer works only on world(0)
+          - /spigot reload
+          - IF u type / to console it says needs to be player to type ot
+          - check TextColor.fromHexString("#bb00fb"));
+          - recheck if invsee with multiple players work, check bimap
+          - tpa hover
+          - yml manager from cmi, has comments
+          - save server settings only if they have been edited, same with players,
+          - default messages
+          - offline users to batchlist
+          - only save edited players
+          jdependency
+        -----Need Testing 100%--
+        - Mentions
+      Invsee:
+        - /invsee <player>
+        - OfflineSupport
+      EChest:
+        - /echest
+        - /echest <player>
+        - OfflineSupport
+      Back:
+        - /back
+        - /back <amount>
+        - /back <amount> <player>
+        ------------100% Done------------
+        World check for offlineplayers might fail if sender is on nether or other world
+      SystemInfo:
+        - /SystemInfo
+      Broadcast:
+        - /Broadcast <message>
+      ClearChat:
+        - /Clearchat
+        * consoleSupport
+      Feed:
+        - /feed
+        - /feed <player>
+        - OfflineSupport
+      Fly:
+        - /fly
+        - /fly <player>
+        - /fly <player> true
+        - OfflineSupport
+      Heal:
+        - /heal
+        - /heal <player>
+        - OfflineSupport
+      God:
+        - /god
+        - /god <player>
+        - OfflineSupport
+      Ping:
+        - /ping
+        - /ping <player>
+      Top:
+        - /top
+        - /top <player>
+      MSG:
+        - /msg <player>
+      Seen:
+        - /seen <player>
+      PlayTime:
+        - /playtime
+        - /playtime <player>
+        - OfflineSupport
+        - getjsonfile from worldfolder
+      Gamemode:
+        - /gamemode creative
+        - /gamemode creative <player> (og)
+        - OfflineSupport
+      Speed:
+        - /speed 10
+        - /speed 10 <player>
+        - /speed 10 <player> <fly/walk>
+        * offlinesupport
+      KillAll:
+        - /killall <entity/all>
+        - /killall <entity/all> <range>
+        ? /killall <entity> <world> *
+      Weather:
+        - /<weather>
+        - /weather <weather>
+        - /weather <weather> <world>
+      Time:
+        - /<time>
+        - /time <time>
+        - /time <time> <world>
+        - /time <tickTime>
+        - /time <tickTime> <world>
+      Spawn:
+        - /spawn
+        - /spawn <player>
+        - OfflineSupport
+      SetSpawn:
+        - /setspawn
+      SetMaxPlayers:
+        -/setmaxplayers <amount>
+      Warp:
+        - /warp <warp>
+        - /warp <warp> <player>
+        * offlinesupport
+      Setwarp:
+        -/setwarp <name>
+      Tp:
+        - /tp <player>
+        - /tp <player> <target>
+        * offlinesupport
+      Tphere:
+        - /tphere <player>
+        * OfflineSupport
+      Economy:
+        - /eco give,set,take
+        - /balance <name>
+        - /pay <name>
+        - /eco give <name>
+        - /eco set <name>
+      Home:
+        - /home
+        - /home <home>
+        - /home <player> (gives default home)
+        - /home <player> <home>
+        * offlinesupport
+        -----TestPermissions---
+      Tpa:
+        - /tpa <player>
+        - tele to any location with your ride?
+        - teleport.setTpType(AsyncTeleport.TeleportType.TPA);
+        - teleport cancel events, safe teleport cancel
+      Tpahere:
+        - /tpahere <player>
+      Tpaccept:
+        - /tpaccept <player>
+      Tpdeny:
+        - /tpdeny <player>
+      Tptoggle:
+        - /tptoggle
+      Baltop:
+        - /baltop
+      Baltop Reload:
+        - /baltop reload
+      Reload:
+        - /oc
+        - /onecore reload = initconfig again?
+        ----------90% Can use---------------
+      Repair:
+        - /repair
+        - /repair <hand/all>
+        - /repair <hand/all> target
+        - missing repair all
+        * offlinesupport
+        ----------90% UNUSABLE---------------
+    * Rtp:
+        - /rtp
+        - /rtp <player>
+        - check if lands on player protected area, if it does find new. canbuild fake break event
+        ? make async
+        * cooldowns
+        --------------STARTED 90%--------------
+        Todo-----------:
+          Important:
+            - TEST EVERYTHING!
+
+            - Test economy. (OneEconomy and compability with other Economy plugins)
+            - Rtp to async & create worker.
+            - All teles&chunks to async for cmds
+            - shade perms dont work still
+            - Test homes limit
+            - fix suggestions
+            - listaliases option percommand
+            - teleports dont work on spectatormode
+            - spawn and warps to yml
+            - lang homes to same category, undet home.sethome, home.delhome ect
+
+            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
+            - async tabcomplete on dev commandapi
+            - Go throught yml namings & comments.
+            - PaperLib?
+            - Testplugin to motimaa
+            - warps,motd,warps to settings class with @data, or any better system than current
+            - motd
+            - pergamemode perm
+
+            - rename jar
+            - link balance table?
+            - butcher, finish all cmds
+            - query system for all commands incase server lags
+
+
+            - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"
+            - https://www.youtube.com/watch?v=AbQeo6Zob_M
+                ----------------Extra--------------------:
+                a:
+                  - ADMINMODE
+                  - TIMESTAMPS perplayer packets
+                  - skycolors
+                  - https://github.com/dscalzi/SkyChanger/blob/master/skychanger-bukkit/src/main/java/com/dscalzi/skychanger/bukkit/internal/SkyChangeImpl.java
+                    https://github.com/dscalzi/SkyChanger/blob/master/skychanger-bukkit/src/main/java/com/dscalzi/skychanger/bukkit/internal/ReflectionUtil.java
+                    //not priority after release can be fondeasdd
+                  - sethome <name> <player>
+                  - No Black Sky <world>
+                  - BRIGHTNESS
+                    - joka yö spawnaa 1 giant zombi ja superloottii
+
+
+                  //todo CHANGE SEEDS ON SPIGOT.yml!
+                  //https://www.youtube.com/watch?v=Ks7mmrer37g
+                setDefaultHome:
+                  - /setdefaulthome <home>
+                  - keep fly on relog
+                  - bannerboard
+                  - Document everything.
+                  - more colors &hjiklmnopqrstuwdasdas
+                  - badwordfilter / ip filter "https://gist.github.com/Jire/4aa72bd3554cdccdc369c216a230ee56"
+                offlineinventorysaerch:
+                  - Searched items from offlineplayers&online inventorys&enderchests
+                  - Define if it searched files which edited last 1 days ect so wont
+                  be too much data, default is last 24h files
+                  actionbar or something to tell if ur on godmode? COLORED HEARTS on godmode!
+                  set join & quitmsg
+                  difficulty does not save on restart
+                  DiskSpace warnings
+                  replace tp tasks with systemmillis
+                  tele to any location with your ride
+                  op permission lvl to 0 in server.proterties
+              * ServerInfo:
+                  - /serverinfo 'ip:port'
+                  - /serverinfo ip port
+                  - /serverinfo ip (defautls to 25565)
+
+                  rename/recolor items command?
+                  TpsBar
+                  Delete old logs automaticly, choose time from cofnig
+                  tptrap protection 10s?
+                  WorldManager
+                  Kits
+                  Rules
+                  Help
+                  Tickets
+                  FirstJoin
+                  Vanish
+                  SocialSpy & commandspy
+                  PlayerTags&Nicks
+                  Global mc statistics to gui?
+                  Xray alerts based on diamonds/minerals mined on hour
+                  backup player.dat system
+                  hold f to pass throught walls thing (creative)
+                  sit = shift + f 3x past + commands Lay = shift + f 5x fast sit on stairs
+                  renaming items with lores ect
+                  hat
+                  spawn any named players skull
+                  elevators
+                  open workbench/enderchest
+                  show namehistory/iphistory on seen?
+                  per player time & weather?
+
+                  type in chat [item1] and will replace it with item from
+                  inv slot 1 or [item] for iteminhand
+                  nodeathscreen
+                  viewdistance depending on server tps
+                  regex chat filtering
+                  https://proxy.spigotmc.org/c2b11f65a397a034f070719d1182baa71aacb8ba?url=http%3A%2F%2Fwww.zrips.net%2Fwp-content%2Fuploads%2F2019%2F02%2F2018-03-22_12-42-21.gif
+                  rainbow leather armor for vips?
+                  yhteisö & yhteisö spawn on death
+
+
+                  public String serverInfo(String ip, int port) {
+                  try {
+                  Socket sock = new Socket(ip, port);
+                  DataOutputStream out = new DataOutputStream(sock.getOutputStream());
+                  DataInputStream in = new DataInputStream(sock.getInputStream());
+                  out.write(0xFE);
+                  int b;
+                  StringBuilder str = new StringBuilder();
+                  while ((b = in.read()) != -1) {
+                  if (b > 16 && b != 255 && b != 23 && b != 24)
+                  str.append((char) b);
+      }
+        String[] data = str.toString().split("§");
+        String serverMotd = data[0];
+        int onlinePlayers = Integer.parseInt(data[1]);
+        int maxPlayers = Integer.parseInt(data[2]);
+        return "" + onlinePlayers;
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+        return null;
+      }
+
+
+
