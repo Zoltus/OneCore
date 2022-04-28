@@ -24,10 +24,37 @@
         - "https://www.spigotmc.org/resources/view-distance-tweaks-1-14-1-17.75164/"
           - "https://github.com/YouHaveTrouble/minecraft-optimization"
 
+        Todo-----------:
+          Important:
+            - TEST EVERYTHING!
+            - Make permissions for gamemode, survival, creative, adventure, spectator, ect.
+            - Test economy. (OneEconomy and compability with other Economy plugins)
+            - Rtp to async & create worker.
+            - All teles&chunks to async for cmds
+            - Test homes limit
+            - listaliases option percommand
+            - teleports dont work on spectatormode
+            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
+            - async tabcomplete on dev commandapi
+            - Testplugin to motimaa
+            - pergamemode perm
+
+
+            Not important:
+            - spawn and warps to yml
+            - lang homes to same category, undet home.sethome, home.delhome ect
+            - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"
+            - https://www.youtube.com/watch?v=AbQeo6Zob_M
+            - rename jar
+            - link balance table?
+            - butcher, finish all cmds
+            - warps,motd,warps to settings class with @data, or any better system than current
+            - Go throught yml namings & comments.
 
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
         - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue
+        -
       OTHER:
         - dupe on crash server
         - "https://www.spigotmc.org/threads/how-to-create-custom-biomes.512105/page-2#post-4246285" prevent xray
@@ -191,40 +218,7 @@
         ? make async
         * cooldowns
         --------------STARTED 90%--------------
-        Todo-----------:
-          Important:
-            - TEST EVERYTHING!
-            - fix github
-            - Make permissions for gamemode, survival, creative, adventure, spectator, ect.
 
-            - Test economy. (OneEconomy and compability with other Economy plugins)
-            - Rtp to async & create worker.
-            - All teles&chunks to async for cmds
-            - shade perms dont work still
-            - Test homes limit
-            - fix suggestions
-            - listaliases option percommand
-            - teleports dont work on spectatormode
-            - spawn and warps to yml
-            - lang homes to same category, undet home.sethome, home.delhome ect
-
-            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
-            - async tabcomplete on dev commandapi
-            - Go throught yml namings & comments.
-            - PaperLib?
-            - Testplugin to motimaa
-            - warps,motd,warps to settings class with @data, or any better system than current
-            - motd
-            - pergamemode perm
-
-            - rename jar
-            - link balance table?
-            - butcher, finish all cmds
-            - query system for all commands incase server lags
-
-
-            - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"
-            - https://www.youtube.com/watch?v=AbQeo6Zob_M
                 ----------------Extra--------------------:
                 a:
                   - ADMINMODE
