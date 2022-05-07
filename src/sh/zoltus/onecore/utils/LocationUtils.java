@@ -31,9 +31,8 @@ public class LocationUtils {
     public static CompletableFuture<Void> teleportSafeAsync(Player p, Location loc) {
         return CompletableFuture.completedFuture(getSafeLocation(p, loc))
                 .thenAccept(locc -> {
-                    if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && p.isInsideVehicle()) {
-                        Entity vehicle = p.getVehicle();
-                        assert vehicle != null;
+                    Entity vehicle = p.getVehicle();
+                    if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
                         vehicle.teleport(loc);
                         p.teleport(locc);
                         vehicle.addPassenger(p);

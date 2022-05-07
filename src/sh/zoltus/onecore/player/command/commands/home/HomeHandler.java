@@ -30,11 +30,12 @@ public class HomeHandler {
                 }
                 case SET -> {
                     User user = User.of(Objects.requireNonNull(Bukkit.getPlayer(sender.getName())));
-                    if (user.hasHomeSlots()) {
+                    if (user.hasHome(home) || user.hasHomeSlots()) {
                         user.setHome(home, user.getPlayer().getLocation());
                         user.sendMessage(SETHOME_SET.rp(HOME_PH, home));
                     } else {
                         user.sendMessage(SETHOME_FULL_HOMES.getString());
+                        return;
                     }
                     targetMsg = SETHOME_OTHER.rp(PLAYER_PH, target.getName(), HOME_PH, home);
                 }
