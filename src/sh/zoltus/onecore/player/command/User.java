@@ -27,7 +27,6 @@ public class User {
 
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
-
     @Getter
     private static final Map<UUID, User> users = new HashMap<>();
 
@@ -38,9 +37,7 @@ public class User {
     private transient final List<Request> requests = new ArrayList<>();
     //Database
 
-    @Getter
     private boolean tpEnabled = false;
-    //@SerializedName("homes")
     private Map<String, PreLocation> homes = new HashMap<>();
 
     public User(OfflinePlayer offP) {
@@ -70,7 +67,6 @@ public class User {
     public static User of(Player p) {
         return users.get(p.getUniqueId());
     }
-
 
     /**
      * Used only for economy arg @ cmd.
@@ -124,13 +120,6 @@ public class User {
     }
 
     /*
-     * Settings
-     */
-    public void setTpEnabled(boolean bool) {
-        this.tpEnabled = bool;
-    }
-
-    /*
      * Homes
      */
 
@@ -162,7 +151,6 @@ public class User {
     public void setHome(String name, PreLocation loc) {
         homes.put(name, loc);
     }
-
 
     /**
      * Deletes player home
@@ -211,7 +199,6 @@ public class User {
         return false;
     }
 
-
     /*
      * Economy
      */
@@ -221,13 +208,9 @@ public class User {
      *
      * @return amount of the money
      */
-//todo cleanup
+    //todo cleanup
     public double getBalance() {
-        if (economy == null) {
-            return 0;
-        } else {
-            return economy.getBalance(offP);
-        }
+        return economy == null ? 0 : economy.getBalance(getPlayer());
     }
 
     /**
@@ -251,11 +234,7 @@ public class User {
      * @return e
      */
     public boolean deposit(double amount) {
-        if (economy == null) {
-            return false;
-        } else {
-            return economy.depositPlayer(offP, amount).transactionSuccess();
-        }
+        return economy != null && economy.depositPlayer(offP, amount).transactionSuccess();
     }
 
     /**
@@ -265,10 +244,6 @@ public class User {
      * @return result
      */
     public boolean withdraw(double amount) {
-        if (economy == null) {
-            return false;
-        } else {
-            return economy.withdrawPlayer(offP, amount).transactionSuccess();
-        }
+        return economy != null && economy.withdrawPlayer(offP, amount).transactionSuccess();
     }
 }

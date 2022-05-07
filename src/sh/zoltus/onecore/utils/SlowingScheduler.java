@@ -1,9 +1,9 @@
 package sh.zoltus.onecore.utils;
 
+import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.NotNull;
 import sh.zoltus.onecore.OneCore;
 
 public class SlowingScheduler extends BukkitRunnable {
@@ -25,9 +25,9 @@ public class SlowingScheduler extends BukkitRunnable {
         }
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public synchronized BukkitTask runTaskLater(@NotNull Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException {
+    public synchronized BukkitTask runTaskLater(@NonNull Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException {
         ticks = delay;
         try {
             return super.runTaskLater(plugin, delay);
@@ -38,23 +38,23 @@ public class SlowingScheduler extends BukkitRunnable {
         return super.runTaskLater(plugin, delay);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public synchronized BukkitTask runTaskLaterAsynchronously(@NotNull Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException {
+    public synchronized BukkitTask runTaskLaterAsynchronously(@NonNull Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException {
         ticks = delay;
         return super.runTaskLaterAsynchronously(plugin, delay);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public synchronized BukkitTask runTaskTimer(@NotNull Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException {
+    public synchronized BukkitTask runTaskTimer(@NonNull Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException {
         ticks = delay;
        return super.runTaskTimer(plugin, delay, period);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public synchronized BukkitTask runTaskTimerAsynchronously(@NotNull Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException {
+    public synchronized BukkitTask runTaskTimerAsynchronously(@NonNull Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException {
         ticks = delay;
         return super.runTaskTimerAsynchronously(plugin, delay, period);
     }

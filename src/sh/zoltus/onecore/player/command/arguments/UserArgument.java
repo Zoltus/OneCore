@@ -26,6 +26,6 @@ public class UserArgument extends OneArgument {
                 return User.of(player);
             }
         });
-        replaceSuggestions(ArgumentSuggestions.strings(info -> playerSuggestions(info.currentArg())));
+        replaceSuggestions((info) -> playerSuggestions(info.currentArg()));
     }
 }

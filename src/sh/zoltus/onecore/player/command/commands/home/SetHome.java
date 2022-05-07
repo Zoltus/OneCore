@@ -8,6 +8,7 @@ import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_HOME_NAME;
+import static sh.zoltus.onecore.configuration.yamls.Lang.SETHOME_OTHER;
 
 public class SetHome implements IOneCommand {
 
@@ -31,7 +32,7 @@ public class SetHome implements IOneCommand {
                 }),
                 //sethome <home> <player> //todo messages
                 command(SETHOME_LABEL)
-                        .withPermission(SETHOME_PERMISSION)
+                        .withPermission(SETHOME_PERMISSION_OTHER)
                         .withAliases(SETHOME_ALIASES)
                         .withArguments(new StringArgument(NODES_HOME_NAME.getString()))
                         .withArguments(new UserArgument())

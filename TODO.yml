@@ -37,10 +37,10 @@
             - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
             - async tabcomplete on dev commandapi
             - Testplugin to motimaa
-            - pergamemode perm
-
 
             Not important:
+            - admin cant set more homes to user if limit is full on the user
+            - permissions are in config and in language file
             - spawn and warps to yml
             - lang homes to same category, undet home.sethome, home.delhome ect
             - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"

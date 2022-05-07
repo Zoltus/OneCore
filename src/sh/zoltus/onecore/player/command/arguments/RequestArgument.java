@@ -25,9 +25,9 @@ public class RequestArgument extends OneArgument {
                 return User.of(player);
             }
         });
-        replaceSuggestions(ArgumentSuggestions.strings(info -> ApiCommand.filter(info.currentArg(), User.of((Player) info.sender())
+        replaceSuggestions(info -> ApiCommand.filter(info.currentArg(), User.of((Player) info.sender())
                 .getRequests()
                 .stream().map(request -> request.getSender().getName())
-                .toArray(String[]::new))));
+                .toArray(String[]::new)));
     }
 }

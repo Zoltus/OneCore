@@ -21,7 +21,7 @@
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>7.0.0</commandapi.version>
+        <commandapi.version>8.1.0</commandapi.version>
 
         <!-- Maven -->
         <maven.compiler.versions>16</maven.compiler.versions>
@@ -95,9 +95,8 @@
         <!-- CommandApi -->
         <dependency>
             <groupId>dev.jorel.CommandAPI</groupId>
-            <artifactId>commandapi-core</artifactId>
+            <artifactId>commandapi-shade</artifactId>
             <version>${commandapi.version}</version>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <artifactId>adventure-api</artifactId>
@@ -122,13 +121,6 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>${bstats.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
         </dependency>
         <!-- MockBukkit
         <dependency>
@@ -213,6 +205,10 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.jorel</pattern>
+                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.leonhard.storage</pattern>

@@ -1,7 +1,6 @@
 package sh.zoltus.onecore.player.command.commands;
 
 import dev.jorel.commandapi.arguments.Argument;
-import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
@@ -18,6 +17,7 @@ import java.util.Arrays;
 import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Gamemode implements IOneCommand {
@@ -27,10 +27,12 @@ public class Gamemode implements IOneCommand {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
                 throw new CustomArgument.CustomArgumentException(GAMEMODE_INVALID_GAMEMODE.getString());
+            } else if (!info.sender().hasPermission(GAMEMODE_MODE_PERMISSION.getAsPermission() + gm.name().toLowerCase())) {
+                throw new CustomArgument.CustomArgumentException(GAMEMODE_MODE_PERMISSION_MISSING.rp(MODE_PH, PERMISSION_PREFIX.getAsPermission() + gm.name().toLowerCase()));
             } else {
                 return gm;
             }
-        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr())));
+        }).replaceSuggestions((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr()));
     }
 
     public ApiCommand[] getCommands() {
@@ -102,7 +104,7 @@ public class Gamemode implements IOneCommand {
         } else if (aliasContains(GAMEMODE_ALIASES_SPECTATOR, arg)) {
             return GameMode.SPECTATOR;
         }
-        return GameMode.SURVIVAL;
+        return null;
     }
 
     private boolean aliasContains(Commands aliasString, String input) {

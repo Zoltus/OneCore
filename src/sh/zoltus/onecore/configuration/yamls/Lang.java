@@ -43,6 +43,7 @@ public enum Lang implements IConfig {
     GAMEMODE_INVALID_GAMEMODE("gamemode.invalid-gamemode"),
     GAMEMODE_TARGETS_GAMEMODE_CHANGED("gamemode.targets-gamemode-changed"),
     GAMEMODE_TARGET_ALREADY_IN_GAMEMODE("gamemode.target-already-in-gamemode"),
+    GAMEMODE_MODE_PERMISSION_MISSING("gamemode.mode-permission-missing"),
     GOD_CHANGED_TARGETS_GOD("god.changed-targets-god"),
     GOD_SET_TO("god.set-to"),
     HEAL_YOU_GOT_HEALED("heal.you-got-healed"),

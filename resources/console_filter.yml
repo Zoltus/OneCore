@@ -1,0 +1,4 @@
+# If message contains hide text, it hides it from the console.
+
+Data:
+  - 'this message will be hidden'
