@@ -23,6 +23,6 @@ public class WorldsArgument extends OneArgument {
                 return world;
             }
         });
-        replaceSuggestions(ArgumentSuggestions.strings(info -> worldSuggestions(info.currentArg())));
+        replaceSuggestions(info -> worldSuggestions(info.currentArg()));
     }
 }

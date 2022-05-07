@@ -1,19 +1,20 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
+import dev.jorel.commandapi.arguments.StringArgument;
+import dev.jorel.commandapi.arguments.TextArgument;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
-import org.bukkit.plugin.java.annotation.dependency.Dependency;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
@@ -24,9 +25,9 @@ import sh.zoltus.onecore.configuration.yamls.Lang;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.listeners.ConsoleFilter;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -35,8 +36,8 @@ import java.util.stream.Stream;
 @Author("Zoltus")
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
 @LogPrefix("OneCore")
-@ApiVersion(ApiVersion.Target.v1_17)
-@Dependency("CommandAPI")
+@ApiVersion(ApiVersion.Target.v1_18)
+//@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
 @Getter
@@ -57,7 +58,6 @@ public class OneCore extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {//asddsfsdf
-        Bukkit.getScheduler().scheduleSyncRepeatingTask()
         CommandAPI.onEnable(this); //Loads commandapi
         long time = System.currentTimeMillis();
         Database.init(this); // Loads db & baltop todo only obj or static

@@ -1,0 +1,276 @@
+# Here are all the commands
+# enabled: <true/false>    = If you want the command to be loaded/enabled
+# label: <label>           = Command label
+# permission: <permission> = permission to use the command
+# aliases: <aliasesList>   = command aliases
+
+Data:
+  back:
+    aliases: ''
+    enabled: true
+    label: back
+    permission: back
+  broadcast:
+    aliases: bc
+    enabled: true
+    label: broadcasta
+    permission: broadcast
+  clearchat:
+    aliases: cc
+    enabled: true
+    label: clearchat
+    permission: clearchat
+  delhome:
+    aliases: poistakoti
+    enabled: true
+    label: delhome
+    permission: delhome
+  economy:
+    aliases: eco
+    enabled: true
+    label: economy
+    permission: economy
+    balance:
+      aliases: bal,raha
+      label: balance
+      permission: balance
+    baltop:
+      aliases: ''
+      label: baltop
+      permission: baltop
+    give:
+      aliases: ''
+      label: give
+      permission: give
+    pay:
+      aliases: maksa
+      label: pay
+      permission: pay
+    set:
+      aliases: ''
+      label: set
+      permission: set
+    take:
+      aliases: ''
+      label: take
+      permission: set
+    transfer:
+      aliases: ''
+      label: transfer
+      permission: transfer
+  enderchest:
+    aliases: ''
+    edit-permission: enderchest.edit
+    enabled: true
+    label: enderchest
+    other-permission: enderchest
+    permission: enderchest
+  feed:
+    aliases: ''
+    enabled: true
+    label: feed
+    permission: feed
+    permission-other: feed.other
+  fly:
+    aliases: ''
+    enabled: true
+    label: fly
+    permission: Fly
+    permission-other: Fly.other
+  gamemode:
+    aliases: gm,pelimuoto
+    aliases-adventure: 2,a,adv,adventure,seik,seikkailu,se,sei
+    aliases-creative: 1,c,creative,crea,luo,luova,lu,l
+    aliases-spectator: 3,sp,spec,spe,spectator,k,kat,katselu
+    aliases-survival: 0,s,survival,surv,selviytyminen,selviytyjä
+    enabled: true
+    label: gamemode
+    other-permission: gamemode.other
+    # Used as gamemode.creative, etc.
+    mode-permission: gamemode.
+    permission: gamemode
+    suggestions: survival,creative,spectator
+  god:
+    aliases: ''
+    enabled: true
+    label: god
+    permission: god
+    permission-other: god.other
+  heal:
+    aliases: ''
+    enabled: true
+    label: heal
+    permission: heal
+    permission-other: heal.other
+  home:
+    aliases: koti
+    default-name: Koti
+    enabled: true
+    label: home
+    permission: home
+    permission-amount: home.amount
+    permission-other: home.other
+  invsee:
+    aliases: ''
+    edit-permission: invsee.edit
+    enabled: true
+    label: invsee
+    permission: invsee.view
+  killall:
+    aliases: butcher
+    enabled: true
+    label: killall
+    permission: killall
+  msg:
+    aliases: ''
+    enabled: true
+    label: msg
+    permission: msg
+  ping:
+    aliases: ''
+    enabled: true
+    label: pinga
+    other-permission: Ping.other
+    permission: ping
+  playtime:
+    aliases: ''
+    enabled: true
+    label: playtime
+    other-permission: playtime.other
+    permission: playtime
+  reload:
+    aliases: ''
+    enabled: true
+    label: reload
+    permission: onecore.reload
+  repair:
+    aliases: ''
+    enabled: true
+    label: repair
+    permission: repair
+  rtp:
+    aliases: ''
+    enabled: true
+    label: Rtp
+    permission: rtp
+  seen:
+    aliases: ''
+    enabled: true
+    label: seen
+    permission: seen
+  sethome:
+    aliases: asetakoti
+    enabled: true
+    label: sethome
+    permission: sethome
+    other-permission: sethome.other
+  setmaxplayers:
+    aliases: ''
+    enabled: true
+    label: setmaxplayers
+    permission: setmaxplayers
+  setspawn:
+    aliases: setspawn
+    enabled: true
+    label: setspawn
+    permission: setspawn
+  setwarp:
+    aliases: ''
+    enabled: true
+    label: setwarp
+    permission: setwarp
+  spawn:
+    aliases: spawn,spawni
+    enabled: true
+    label: spawn
+    permission: spawn
+    permission-other: spawn.other
+  speed:
+    aliases: ''
+    enabled: true
+    label: speed
+    permission: speed
+    permission-other: speed.other
+  fly-aliases: lento
+  walk-aliases: kävely
+  system:
+    aliases: ''
+    enabled: true
+    label: system
+    permission: system
+  systeminfo:
+    enabled: true
+  time:
+    afternoon-aliases: afternoon
+    aliases: ''
+    day-aliases: day
+    enabled: true
+    label: time
+    morning-aliases: morning
+    night-aliases: night
+    permission: time
+    single-word-cmds: day,night,afternoon,morning
+    suggestions: day,night,afternoon,morning
+  top:
+    aliases: ''
+    enabled: true
+    label: top
+    other-permission: top.other
+    permission: top
+  tp:
+    aliases: tpo,tpother
+    enabled: true
+    label: tp
+    permission: tp
+    permission-other: tp.other
+  tpa:
+    aliases: ''
+    enabled: true
+    label: tpa
+    permission: tpa
+  tpaccept:
+    aliases: tpyes
+    enabled: true
+    label: tpaccept
+    permission: tpaccept
+  tpahere:
+    aliases: tpah
+    enabled: true
+    label: tpahere
+    permission: tpahere
+  tpdeny:
+    aliases: tpno
+    enabled: true
+    label: tpdeny
+    permission: tpdeny
+  tphere:
+    aliases: tpohere
+    enabled: true
+    label: tphere
+    permission: tphere
+  tptoggle:
+    aliases: ''
+    enabled: true
+    label: tptoggle
+    permission: tptoggle
+  warp:
+    aliases: ''
+    enabled: true
+    label: warp
+    permission: warp
+    permission-other: warp.other
+  weather:
+    aliases: sää,saa,sun,storm,clear,rain
+    clear-aliases: c,clear,s,sun
+    enabled: true
+    label: weather
+    permission: weather
+    rain-aliases: rain,r,sade
+    single-word-cmds: sun,storm,rain
+    storm-aliases: storm,lightning,salama
+    suggestions: sun,storm,rain,clear
+  worldmanager:
+    aliases: wm
+    enabled: true
+    label: worldmanager
+    permission: world

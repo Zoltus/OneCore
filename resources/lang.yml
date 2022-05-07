@@ -1,0 +1,275 @@
+Data:
+  other:
+    cooldown-bypass-permission: cooldowns.bypass
+    invalid-amount: '{p} Kelvoton määrä'
+    invalid-range: '{p} Kelvoton säde'
+    # <player>
+    joined: '&a&l+ &7<player>'
+    kicked-for-spamming-reason: '{p} §cKicked for spamming!'
+    mention-color: '&x&0&0&f&f&0&0&l'
+    mention-permission: mention
+    mention-tag: '@'
+    player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
+    player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
+    player-only-command: '{p} Tämä komento on vain pelaajille!'
+    # <player>
+    quit: '&c&l- &7<player>'
+    world-not-found: '{p} maailmaa ei löytynyt'
+    # Command nodes, Tells what to type for command arguments
+    # for example /home <home-name-node>
+    nodes:
+      amount: amount
+      entity-type: entity-type
+      gamemode: gamemode
+      home-home/player-name: home/player
+      home-name: home
+      location: location
+      message: message
+      player: player
+      range: range
+      slot: slot
+      speed: speed
+      time: time
+      true-false: true/false
+      warp-name: warpname
+      weather: weather
+      world-name: world
+  back:
+    invalid-number: '{p} Invalid back amount, try 1-10'
+    # <player>
+    no-history: '{p} No history found for <player>'
+    # <size>
+    out-of-bounds: '{p} Target has back size of <size>'
+    # <player>
+    target-sent: '{p} Sent <player> to location'
+  broadcast:
+    prefix: '[Prefix]'
+  clear:
+    player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&lcleared'
+  delhome:
+    # <home>
+    deleted: '{p} Koti poistettu <home>'
+    # <home>, <player>
+    other: '{p} Koti <home> poistettu pelaajalta <player>'
+  economy:
+    balance:
+      # <player>, <balance>
+      targets-balance: '{p} <player> balance is <balance>'
+      # <balance>
+      your-balance: '{p} Your balance is <balance>'
+    baltop:
+      empty: '&7Baltop is empty.'
+      # <player>, <amount>
+      line: '&7<player> : <amount>'
+      top-players: '{p} Top 10 players:'
+    give:
+      # <player>, <amount>, <balance>
+      gave: '{p} You gave <amount> to <player> your new balance <balance>'
+      # <amount>, <balance>
+      your-balance-was-increaced: '{p} Admin gave you <amount>, new balance <balance>'
+    not-enought: '{p} You dont have enought money'
+    target-doesnt-have-enought-money: '{p} <player> didnt have enought money'
+    pay:
+      # <player>, <amount>, <balance>
+      received: '{p} You received <amount> from <player>, your new balance is <balance>'
+      # <player>, <amount>, <balance>
+      sent: '{p} You sent <amount> to <player>, your new balance is <balance>'
+    set:
+      # <player>, <amount>
+      set: '{p} You set players <player> balance to <amount>'
+      # <amount>
+      your-balance-was-set: '{p} Your balance was updated to <amount> by admin'
+    take:
+      #  <player>, <amount>, <balance>
+      took: '{p} You removed <amount> from <player>, new balance <balance>'
+      # <amount>, <balance>
+      your-balance-reduced: '{p} Your balance was reduced by <amount> by admin, new balance <balance>'
+    # <player>
+    transfer:
+      # <player>, <player2>, <amount>
+      transfered: '{p} Successfully transfered <amount> from <player> to <player2>'
+  feed:
+    # <player>
+    you-fed-target: '{p} You Fed player: <player>'
+    you-have-been-healed: '{p} You have been Fed'
+  fly:
+    # <player> <mode>
+    you-switched-target: '{p} You switched players <player> fly to : <mode>'
+    # <mode>
+    your-flight-is-now: '{p} Your flight was changed to <mode>!'
+  gamemode:
+    # <mode>
+    changed: '{p} Your gamemode was switched to <mode>'
+    invalid-gamemode: '{p} Invalid gamemode'
+    # <player> <mode>
+    target-already-in-gamemode: '{p} <player> is already in <mode>'
+    # <player> <mode>
+    targets-gamemode-changed: '{p} You changed players <player> gamemode to <mode>'
+    # <mode>
+    mode-permission-missing: 'Missing permission <mode>!'
+  god:
+    # <player> <mode>
+    changed-targets-god: '{p} You made <player> god to: <mode>'
+    # <mode>
+    set-to: '{p} godmode set to <mode>'
+  heal:
+    you-got-healed: '{p} You have been healed'
+    # <player>
+    you-healed-target: '{p} You healed player: <player>'
+  home:
+    # <list>
+    list: '{p} Kotia ei löytynyt. Homet <list>'
+    no-homes: '{p} Ei homeja'
+    # <player>, <home>
+    sent-target: '{p} Sent <player> to home: <home>.'
+  killall:
+    # <amount>, <type>, <radius>
+    removed-entitys: '{p} Killed <amount> with type <type> from radius <radius>'
+  msg:
+    # <player>, <player2>, <message>
+    received-msg: '{p} [<player> > <player2>] : <message>'
+    # <player>, <player2>, <message>
+    sent-msg: '{p} [<player> > <player2>] : <message>'
+  ping:
+    # <player>, <ping>
+    targets-ping: '{p} <player> ping is <ping>'
+    # <ping>
+    your-ping: '{p} Your pinga is <ping>'
+  playtime:
+    # <time>
+    targets-playtime: '{p} <player> playtime is <time>'
+    time-format: HH:mm:ss
+    # <player>, <time>
+    your-playtime: '{p} Your playtime is <time>'
+  reload:
+    reloaded: §aDatabase & files reloaded!
+    reloading: Started reloading!
+  repair:
+    # <slot>
+    nothing-to-fix: '{p} Nothing to fix in slot <slot>'
+    # <slot>
+    self-repaired: '{p} Items repaired from slot <slot>'
+    slot-all: all
+    slot-armor: armor
+    slot-hand: hand
+    slot-invalid-slot: invalid slot
+    slot-inventory: inventory
+    slot-offhand: offhand
+    # <player>, <slot>
+    you-repaired-target: '{p} you repaired players: <player> items from slot <slot>'
+    # <slot>
+    your-items-got-repaired: '{p} Your items from slot <slot> was repaired'
+  rtp:
+    # <seconds>
+    on-cooldown: '{p} You can rtp again after <seconds>'
+    teleported: '{p} Teleported to randomloc'
+  seen:
+    date-format: dd.MM.yyyy | HH:mm
+    # <player>, <time>
+    last-seen: '{p} <player> was last seen <time>'
+  sethome:
+    # <home>
+    full-homes: '{p} Sinulla on jo täysi määrä koteja, poista /delhome <home>'
+    # <home>
+    set: '{p} Asetit kodin: <home>'
+    # <home>, <player>
+    other: '{p} Koti <home> asetettu pelaajalle <player>'
+  setmaxplayers:
+    # <amount>
+    set: '{p} Max players set to <amount>'
+  setspawn:
+    set: '{p} Spawn set'
+  setwarp:
+    # <warp>
+    set: '{p} warp: <warp> set'
+  spawn:
+    is-not-set: '{p} spawn is not set, set it with /setspawn'
+    # <player>
+    target-sent: '{p} Sent target <player> to spawn'
+  speed:
+    mode-fly: fly
+    mode-invalid-mode: '{p} invalid mode'
+    mode-invalid-speed: '{p} invalid speed, use 0-10'
+    mode-walk: walk
+    # <player>, <mode>, <amount>
+    you-set-speed: '{p} players <player> Speed set to <amount> for mode <mode>'
+    # <mode>, <amount>
+    your-speed-set: '{p} Speed set to <amount> for mode <mode>'
+  system:
+    # <used>, <total>
+    disk-usage: 'System Disk usage: <used>GB/<total>GB'
+    # <version>
+    java-version: 'System Java Versio: <version>'
+    # <system-os>
+    os: 'System OS: <system-os>'
+    # <processors>
+    processors: 'System Processors Available: <processors>'
+    # <used>, <total>
+    ram-usage: 'System Ram: <used>MB/<total>MB'
+    # <version>
+    server-version: 'System Server Version: <version>'
+    # <username>
+    username: 'System Username: <username>'
+    # <version>
+    version: 'System Version: <version>'
+  time:
+    # <time>, <world>
+    changed: '{p} Time changed to <time> in world: <world>'
+    invalid-time: '{p} Invalid time'
+  top:
+    # <player>
+    teleported-target: '{p} Teled <player> To top'
+    telported: '{p} TeledToTop'
+  tp:
+    accept-button: '&aAccept'
+    accept-button-hover: '&aClick to accept!'
+    # <player>
+    accepted: '{p} <player> accepted ur requestd'
+    cancelled-by-damage: '{p} got cancelled because of dmg'
+    cancelled-by-movement: '{p} got cancelled because of movement'
+    cant-self-teleport: '{p} Cant send request to self'
+    # <player>
+    denied: '{p} Your request to <player> was denied'
+    deny-button: '&cDeny'
+    deny-button-hover: '&cClick to deny!'
+    expired: '{p} expired'
+    no-requests: '{p} no reqs'
+    no-requests-found: '{p} no request found'
+    no-safe-locations: '{p} no safe loc found'
+    # <player>
+    offline-target: '{p} You teleported to offline target <player>'
+    offline-targets: '{p} One or both of the targets were offline'
+    # <player>
+    received: '{p} request received from <player>'
+    # <accept>, <deny>
+    received-accept-line: <accept> | <deny>
+    # <player>
+    sent: '{p} sent to <player>'
+    # <seconds>
+    started: '{p} Teleport started dont move, teleporting in <seconds> seconds'
+    # <player>
+    target-quit: '{p} Tele cancelled because <player> left the server'
+    # <player>
+    toggle-is-off: '{p} <player> has tp disabled'
+    # <toggle>
+    toggle-switched: '{p} tp switched to: <toggle>'
+    # <player>
+    you-accepted: '{p} you accepted players <player> request'
+    # <player>
+    you-already-sent-request: '{p} You already have request for <player>'
+    # <player>
+    you-denied: '{p} You denied players <player> request'
+  tphere:
+    # <player>
+    offline-target: '{p} <player> was offline and was teled to you'
+  warp:
+    # <list>
+    list: 'Warps: <list>'
+    # <list>
+    not-set: '{p} Warp is not set warps: <list>'
+    # <player>, <warp>
+    target-sent: '{p} Sent target <player> to warp <warp>'
+  weather:
+    # <weather>, <world>
+    changed: '{p} Weather changed to <weather> in world <world>'
+    invalid-weather: '{p} Invalid weather'

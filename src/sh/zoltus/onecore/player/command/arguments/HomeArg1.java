@@ -29,6 +29,7 @@ public class HomeArg1 extends OneArgument {
                 return input;
             }
         });
+
         //todo
         replaceSuggestions(ArgumentSuggestions.stringsAsync(info -> CompletableFuture.supplyAsync(() -> {
             String prevArg = (String) info.previousArgs()[0];

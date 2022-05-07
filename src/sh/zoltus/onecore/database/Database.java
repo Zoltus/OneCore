@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.intellij.lang.annotations.Language;
 import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.OneEconomy;
@@ -75,7 +74,8 @@ public class Database {
 
     //Creates tables if doesnt exist async?
     private void createTables() {
-        @Language("SQLite") final String[] tables = { //todo join table uuid,name ect balance
+        //@Language("SQLite")
+        final String[] tables = { //todo join table uuid,name ect balance
                 // "PRAGMA mmap_size = 30000000000;",
                 //"PRAGMA foreign_keys = ON;",
                 "CREATE TABLE IF NOT EXISTS Balances(" +

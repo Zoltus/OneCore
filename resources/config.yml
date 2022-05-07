@@ -1,0 +1,30 @@
+# Here are the server configs
+
+Data:
+  back-history-size: 10
+  baltop-update-interval: 60
+  chat-color-permission: chat.colors
+  chat-colors-enabled: true
+  # How player & server data is saved. Baltop also updates after database is updated.
+  data-save-interval-minutes: 5
+  database-name: database
+  economy:
+    currency-plural: €
+    currency-singular: €
+    enabled: true
+    use-oneeconomy: true
+    start-money: 500
+  keep-users-in-cache: true
+  kicked-for-spamming-bypass: kick.bypass
+  permission-prefix: onecore.
+  prefix: '&9&lOnecore &8&l»&7'
+  rtp-cooldown-seconds: 60
+  rtp-radius: 10000
+  sign-color-permission: sign.colors
+  sign-edit-permission: sign.edit
+  teleport-delay: 3
+  teleport-expire: 10
+  # If true it resets velocity on command & plugin teleports
+  telepor-velocity-reset: true
+  teleport-with-vehicle: true
+  user-console-filter: true

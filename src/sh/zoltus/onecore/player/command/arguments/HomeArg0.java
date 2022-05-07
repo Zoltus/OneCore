@@ -15,7 +15,7 @@ public class HomeArg0 extends OneArgument {
 
     public HomeArg0() { //todo to stringarg with replace
         super(NODES_HOME_NAME_OR_Player.getString(), CustomArgumentInfo::input);
-        replaceSuggestions(ArgumentSuggestions.strings(info -> {
+        replaceSuggestions(info -> {
             CommandSender sender = info.sender();
             User target = User.of((Player) sender);
             String[] homes = target.getHomeArray();
@@ -24,6 +24,6 @@ public class HomeArg0 extends OneArgument {
             } else {
                 return (String[]) ArrayUtils.addAll(homes, playerSuggestions(info.currentInput()));
             }
-        }));
+        });
     }
 }
