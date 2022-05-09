@@ -15,9 +15,9 @@
 
       TODO:
       ? = Mayby
-        @ = Done
-        * = Started
-        - = TODO
+      @ = Done
+      * = Started
+      - = TODO
 
         ((DedicatedServer) MinecraftServer.getServer()).propertyManager.setProperty(key, value);
 
@@ -26,19 +26,17 @@
 
         Todo-----------:
           Important:
-            - TEST EVERYTHING!
-            - Make permissions for gamemode, survival, creative, adventure, spectator, ect.
+            - TEST EVERYTHING! (MOTIMMAA test)
             - Test economy. (OneEconomy and compability with other Economy plugins)
-            - Rtp to async & create worker.
-            - All teles&chunks to async for cmds
-            - Test homes limit
-            - listaliases option percommand
-            - teleports dont work on spectatormode
-            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
-            - async tabcomplete on dev commandapi
-            - Testplugin to motimaa
+            - Rtp improvements to async & create worker.
+            - command /<cmd>  messages
+
 
             Not important:
+            - All teles&chunks to async for cmds
+            - teleports dont work on spectatormode
+            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
+            - listaliases option percommand
             - admin cant set more homes to user if limit is full on the user
             - permissions are in config and in language file
             - spawn and warps to yml

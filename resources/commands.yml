@@ -108,7 +108,7 @@ Data:
     enabled: true
     label: home
     permission: home
-    permission-amount: home.amount
+    permission-amount: home
     permission-other: home.other
   invsee:
     aliases: ''
