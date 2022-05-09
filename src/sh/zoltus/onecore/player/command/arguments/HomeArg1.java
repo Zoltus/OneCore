@@ -30,7 +30,6 @@ public class HomeArg1 extends OneArgument {
             }
         });
 
-        //todo
         replaceSuggestions(ArgumentSuggestions.stringsAsync(info -> CompletableFuture.supplyAsync(() -> {
             String prevArg = (String) info.previousArgs()[0];
             //If arg lenght 0 it will try to asyncload first argument as oneuser from db

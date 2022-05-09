@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
+        <!--<outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir> -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <!-- Removes warnings -->
@@ -24,7 +24,7 @@
         <commandapi.version>8.1.0</commandapi.version>
 
         <!-- Maven -->
-        <maven.compiler.versions>16</maven.compiler.versions>
+        <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
@@ -175,7 +175,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
             <!-- For Shading -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -203,18 +202,51 @@
                     </filters>
                     <relocations>
                         <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>dev.jorel</pattern>
-                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>de.leonhard.storage</pattern>
-                            <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
-                        </relocation>
+                             <pattern>org.bstats</pattern>
+                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
+                         </relocation>
+                         <relocation>
+                             <pattern>dev.jorel</pattern>
+                             <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
+                         </relocation>
+                         <relocation>
+                             <pattern>de.leonhard</pattern>
+                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
+                         </relocation>
                     </relocations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>2.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <obfuscate>true</obfuscate>
+                    <injar>${project.build.finalName}.jar</injar>
+                    <outjar>${project.build.finalName}-proguard.jar</outjar>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                    <libs>
+                        <lib>${java.home}/jmods/java.base.jmod</lib>
+                   </libs>
+                    <options>
+                        <option>-dontnote</option>
+                        <option>-dontwarn</option>
+                        <option>-dontshrink</option>
+                        <option>-repackageclasses 'sh.zoltus.onecore'</option>
+                        <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
+                      <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
+                        <option>-keepattributes *Annotation*,EventHandler,Exceptions,LineNumberTable,Synthetic,Override</option>
+                        <!--<option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>-->
+                    </options>
                 </configuration>
             </plugin>
         </plugins>
