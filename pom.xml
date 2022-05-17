@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!--<outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir> -->
+        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <!-- Removes warnings -->
@@ -173,6 +173,9 @@
                             <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <source>17</source>
+                    <target>17</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
             <!-- For Shading -->
@@ -216,7 +219,7 @@
                     </relocations>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <version>2.5.3</version>
@@ -241,14 +244,14 @@
                         <option>-dontnote</option>
                         <option>-dontwarn</option>
                         <option>-dontshrink</option>
+                        <option>-dontoptimize</option>
                         <option>-repackageclasses 'sh.zoltus.onecore'</option>
                         <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
-                      <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
-                        <option>-keepattributes *Annotation*,EventHandler,Exceptions,LineNumberTable,Synthetic,Override</option>
-                        <!--<option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>-->
+                        <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
+                        <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
                     </options>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

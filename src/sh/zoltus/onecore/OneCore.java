@@ -1,11 +1,7 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
-import dev.jorel.commandapi.arguments.ArgumentSuggestions;
-import dev.jorel.commandapi.arguments.StringArgument;
-import dev.jorel.commandapi.arguments.TextArgument;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -27,7 +23,6 @@ import sh.zoltus.onecore.listeners.ConsoleFilter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -62,7 +57,7 @@ public class OneCore extends JavaPlugin implements Listener {
         long time = System.currentTimeMillis();
         Database.init(this); // Loads db & baltop todo only obj or static
         this.vault = hookEconomy();// Hooks economy if its enabled on config.
-        this.registerer = sh.zoltus.onecore.Registerer.create(this);// Register listeners & Commands
+        this.registerer = Registerer.create(this);// Register listeners & Commands
         this.initMetrics(); // Inits metrics
         this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
