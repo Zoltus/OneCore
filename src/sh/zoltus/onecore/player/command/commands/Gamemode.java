@@ -13,6 +13,8 @@ import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.utils.NBTPlayer;
 
 import java.util.Arrays;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
@@ -93,22 +95,20 @@ public class Gamemode implements IOneCommand {
         }
     }
 
-    //todo improve
-    private GameMode getGamemode(String arg) {
-        if (aliasContains(GAMEMODE_ALIASES_SURVIVAL, arg)) {
+    private GameMode getGamemode(String input) {
+        Predicate<Commands> hasGm = (gamemodes) -> Arrays
+                .stream(gamemodes.getString().split(",")).anyMatch(input::equalsIgnoreCase);
+        if (hasGm.test(GAMEMODE_ALIASES_SURVIVAL)) {
             return GameMode.SURVIVAL;
-        } else if (aliasContains(GAMEMODE_ALIASES_CREATIVE, arg)) {
+        } else if (hasGm.test(GAMEMODE_ALIASES_CREATIVE)) {
             return GameMode.CREATIVE;
-        } else if (aliasContains(GAMEMODE_ALIASES_ADVENTURE, arg)) {
+        } else if (hasGm.test(GAMEMODE_ALIASES_ADVENTURE)) {
             return GameMode.ADVENTURE;
-        } else if (aliasContains(GAMEMODE_ALIASES_SPECTATOR, arg)) {
+        } else if (hasGm.test(GAMEMODE_ALIASES_SPECTATOR)) {
             return GameMode.SPECTATOR;
+        } else {
+            return null;
         }
-        return null;
     }
 
-    private boolean aliasContains(Commands aliasString, String input) {
-        String[] aliases = aliasString.getString().split(",");
-        return Arrays.stream(aliases).anyMatch(input::equalsIgnoreCase);
-    }
 }
