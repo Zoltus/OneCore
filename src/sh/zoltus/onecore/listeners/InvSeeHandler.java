@@ -168,18 +168,6 @@ public class InvSeeHandler implements Listener {
         NBTPlayer nbtPlayer = new NBTPlayer(offline);
         Map<Integer, net.minecraft.world.item.ItemStack> updatedItems = Stream.of(inv.getContents())
                 .collect(HashMap::new, (map, stack) -> map.put(map.size(), CraftItemStack.asNMSCopy(stack)), Map::putAll);
-       /*
-       Map<Integer, net.minecraft.world.item.ItemStack> updatedItems = new HashMap<>();
-
-        int slot = 0;
-        for (ItemStack stack : inv.getContents()) {
-            if (stack != null)
-                updatedItems.put(slot, CraftItemStack.asNMSCopy(stack));
-            slot++;
-        }
-        */
-
-
         if (isEnderChest) {
             nbtPlayer.setEnderItems(updatedItems);
         } else {

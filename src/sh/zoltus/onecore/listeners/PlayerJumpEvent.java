@@ -21,7 +21,7 @@ import java.util.List;
  * width 1.375
  * List<Entity> nearby = p.getNearbyEntities(1.5, 0.5626, 1.5);
  * <p>
- * 1.9 15w45a Player's jump height is increased from 1.125 blocks to 1.25 blocks.
+ * 1.9 15w45a Player's jump height is increased from 1.125 blocks to 1.25 blocks. Jump height increased from 1 3⁄16 blocks to 1 4⁄16 blocks.
  * 1.17 20w49a Player's jump while sneaking ignores sculk sensors
  * https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas
  */
@@ -35,9 +35,8 @@ public class PlayerJumpEvent implements Listener {
             Material.LADDER, Material.VINE,
             Material.SCAFFOLDING, Material.WEEPING_VINES,
             Material.WEEPING_VINES_PLANT, Material.TWISTING_VINES,
-            Material.TWISTING_VINES_PLANT, Material.RED_BED
-            // Material.CAVE_VINES_PLANT[upcoming: JE 1.17]
-            // Material.CAVE_VINES[upcoming: JE 1.17]));
+            Material.TWISTING_VINES_PLANT, Material.RED_BED,
+             Material.CAVE_VINES_PLANT, Material.CAVE_VINES
     ));
 
     @SuppressWarnings("deprecation")

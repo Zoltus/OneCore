@@ -13,8 +13,6 @@ import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.WEATHER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.WORLD_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

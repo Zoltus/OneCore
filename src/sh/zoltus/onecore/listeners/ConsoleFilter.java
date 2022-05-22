@@ -26,6 +26,7 @@ public class ConsoleFilter implements Filter {
     /**
      * Inits custom consoleFilter
      */
+    //todo clean up
     public static ConsoleFilter init() {
         if (consoleFilter != null) {
             return consoleFilter;
@@ -55,8 +56,7 @@ public class ConsoleFilter implements Filter {
     private boolean hideListContains(String message) {
         List<String> hideKeys = (List<String>) filters.getList("Hide");
         if (hideKeys != null && !hideKeys.isEmpty()) {
-            for (int i = 0, size = hideKeys.size(); i < size; i++) {
-                String hideKey = hideKeys.get(i);
+            for (String hideKey : hideKeys) {
                 if (message.contains(hideKey)) {
                     return true;
                 }

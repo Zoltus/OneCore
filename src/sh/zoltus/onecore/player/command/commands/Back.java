@@ -64,7 +64,7 @@ public class Back implements IOneCommand, Listener {
         };
     }
 
-    private Argument backArg() {
+    private Argument<?> backArg() {
         return new CustomArgument<>("1-" + BACK_HISTORY_SIZE.getInt(), (info) -> {
             try {
                 return Integer.parseInt(info.input());

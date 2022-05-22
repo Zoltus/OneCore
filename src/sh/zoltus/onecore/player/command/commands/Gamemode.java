@@ -13,11 +13,8 @@ import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.utils.NBTPlayer;
 
 import java.util.Arrays;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
@@ -45,7 +42,9 @@ public class Gamemode implements IOneCommand {
                         .withAliases(GAMEMODE_ALIASES)
                         .withArguments(gamemodeArgument())
                         .executesPlayer((player, args) -> {
-                    setOnlineGamemode(player, (GameMode) args[0]);
+                            GameMode gm = (GameMode) args[0];
+                    player.setGameMode(gm);
+                    player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gm.name()));
                 }),
                 //gamemode creative <player>
                 command(GAMEMODE_LABEL)
@@ -60,38 +59,29 @@ public class Gamemode implements IOneCommand {
 
     private void handleTarget(CommandSender sender, OfflinePlayer offTarget, GameMode gm) {
         Player target = offTarget.getPlayer();
-        //todo hasPlayedBefore
         if (target != null && target == sender) {
-            setOnlineGamemode(target, gm);
-            return;
-        }
-
-        boolean hadAlready;
-        //Change gamemodes
-        if (target != null) {
-            hadAlready = target.getGameMode() == gm;
-            setOnlineGamemode(target, gm);
+            target.setGameMode(gm);
+            target.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gm.name()));
         } else {
-            NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
-            int currentGamemode = nbtPlayer.getplayerGameType();
-            int newGamemodeValue = gm.getValue();
-            nbtPlayer.setPreviousPlayerGameType(currentGamemode);
-            nbtPlayer.setplayerGameType(newGamemodeValue);
-            hadAlready = (currentGamemode == newGamemodeValue);
-            nbtPlayer.save();
-        }
-
-        if (hadAlready) {
-            sender.sendMessage(GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
-        } else {
-            sender.sendMessage(GAMEMODE_TARGETS_GAMEMODE_CHANGED.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
-        }
-    }
-
-    private void setOnlineGamemode(Player player, GameMode gm) {
-        if (player.getGameMode() != gm) {
-            player.setGameMode(gm);
-            player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gm.name()));
+            boolean gmChanged;
+            //Change gamemodes
+            if (target != null) {
+                gmChanged = target.getGameMode() != gm;
+                target.setGameMode(gm);
+            } else {
+                NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
+                int currentGamemode = nbtPlayer.getplayerGameType();
+                int newGamemodeValue = gm.getValue();
+                nbtPlayer.setPreviousPlayerGameType(currentGamemode);
+                nbtPlayer.setplayerGameType(newGamemodeValue);
+                gmChanged = (currentGamemode != newGamemodeValue);
+                nbtPlayer.save();
+            }
+            if (gmChanged) {
+                sender.sendMessage(GAMEMODE_TARGETS_GAMEMODE_CHANGED.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
+            } else {
+                sender.sendMessage(GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
+            }
         }
     }
 

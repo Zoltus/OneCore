@@ -42,7 +42,6 @@ public class OneYml extends YamlConfiguration {
         return value;
     }
 
-
     public void save() {
         try {
             save(file);
