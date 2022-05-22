@@ -6,9 +6,6 @@ import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.MESSAGE_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER2_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

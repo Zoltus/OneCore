@@ -18,9 +18,6 @@ import sh.zoltus.onecore.utils.PreLocation;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.LIST_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.WARP_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

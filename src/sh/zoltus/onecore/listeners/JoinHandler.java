@@ -8,6 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.player.command.User;
 
@@ -38,5 +40,34 @@ public record JoinHandler() implements Listener {
     public void onLeave(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(JOINED.rp(PLAYER_PH, p.getName()));
+    }
+
+
+    static double x,y,z = 0;
+
+    @EventHandler
+    public void onLeave(PlayerMoveEvent e) {
+        Player p = e.getPlayer();
+        Vector v = p.getVelocity();
+        double x1 = v.getX();
+        double y1 = v.getY();
+        double z1 = v.getZ();
+        if (x1 > x ) {
+            x = x1;
+            Bukkit.broadcastMessage(x1 + "");
+        }
+        if (y1 > y ) {
+            y = y1;
+            Bukkit.broadcastMessage(y1+ "");
+        }
+        if (z1 > z ) {
+            z = z1;
+            Bukkit.broadcastMessage(z1+ "");
+        }
+        if (p.isSneaking()) {
+            p.sendMessage("x: " + x + " y: " + y + " z: " + z);
+        }
+
+
     }
 }

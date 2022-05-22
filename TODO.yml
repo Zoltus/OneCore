@@ -29,7 +29,10 @@
             - TEST EVERYTHING! (MOTIMMAA test)
             - Test economy. (OneEconomy and compability with other Economy plugins)
             - Rtp improvements to async & create worker.
-            - command /<cmd>  messages
+            - command /<cmd> messages
+            - test gamemode changes.
+            - gamemode messages to be able to translate gamemode words.
+            - eco logs
 
 
             Not important:

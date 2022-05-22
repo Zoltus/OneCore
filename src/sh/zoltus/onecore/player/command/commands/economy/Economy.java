@@ -12,10 +12,6 @@ import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import java.util.*;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.AMOUNT_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.BALANCE_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER2_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

@@ -16,8 +16,6 @@ import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 import java.util.Arrays;
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.SLOT_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

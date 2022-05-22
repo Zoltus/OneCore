@@ -15,9 +15,6 @@ import sh.zoltus.onecore.utils.NBTPlayer;
 import java.util.Arrays;
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.AMOUNT_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
