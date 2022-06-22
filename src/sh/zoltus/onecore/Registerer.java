@@ -2,6 +2,7 @@ package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIHandler;
+import dev.jorel.commandapi.RegisteredCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import sh.zoltus.onecore.listeners.*;
@@ -64,7 +65,6 @@ public class Registerer {
     }
 
 
-
     private void register() {
         Bukkit.getConsoleSender().sendMessage("Registering command & listeners...");
         Stream.of(listeners).forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
@@ -75,21 +75,6 @@ public class Registerer {
     }
 
     public void unregisterCommands() {
-        try {
-            Field f = CommandAPIHandler.getInstance().getClass().getDeclaredField("registeredCommands");
-            f.setAccessible(true);
-            List<Object> registeredCommands = (List<Object>) f.get(CommandAPIHandler.getInstance());
-
-            //All cmds as string without duplicates
-            Set<String> targetSet = new HashSet<>();
-            for (Object o : registeredCommands) {
-                Field command = o.getClass().getDeclaredField("command");
-                command.setAccessible(true);
-                targetSet.add(String.valueOf(command.get(o)));
-            }
-            targetSet.forEach(CommandAPI::unregister);
-        } catch (NoSuchFieldException | IllegalAccessException ex) {
-            ex.printStackTrace();
-        }
+        CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName()));
     }
 }

@@ -15,13 +15,13 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.18.2-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.18.2-R0.1-SNAPSHOT</spigot.server.version>
+        <spigotAPI.version>1.19-R0.1-SNAPSHOT</spigotAPI.version>
+        <spigot.server.version>1.19-R0.1-SNAPSHOT</spigot.server.version>
         <spigot.annotations.version>1.2.3-SNAPSHOT</spigot.annotations.version>
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>8.1.0</commandapi.version>
+        <commandapi.version>8.4.0</commandapi.version>
 
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
@@ -44,7 +44,7 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
-        <!-- Vault & CommandAPI -->
+        <!-- Vault -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -94,7 +94,7 @@
         </dependency>
         <!-- CommandApi -->
         <dependency>
-            <groupId>dev.jorel.CommandAPI</groupId>
+            <groupId>dev.jorel</groupId>
             <artifactId>commandapi-shade</artifactId>
             <version>${commandapi.version}</version>
             <exclusions>
