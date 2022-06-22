@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
-public class HomeArg1 extends OneArgument {
+public class HomeArg1 extends CustomArgument<String, String> implements OneArgument  {
     //home <player> <home> <--
     //Delhome <player> <home> <--
     public HomeArg1() {

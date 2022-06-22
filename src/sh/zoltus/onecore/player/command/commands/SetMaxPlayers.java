@@ -3,7 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import net.minecraft.server.dedicated.DedicatedPlayerList;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_18_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 

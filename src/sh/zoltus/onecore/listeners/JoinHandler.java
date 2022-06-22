@@ -41,33 +41,4 @@ public record JoinHandler() implements Listener {
         Player p = e.getPlayer();
         e.setJoinMessage(JOINED.rp(PLAYER_PH, p.getName()));
     }
-
-
-    static double x,y,z = 0;
-
-    @EventHandler
-    public void onLeave(PlayerMoveEvent e) {
-        Player p = e.getPlayer();
-        Vector v = p.getVelocity();
-        double x1 = v.getX();
-        double y1 = v.getY();
-        double z1 = v.getZ();
-        if (x1 > x ) {
-            x = x1;
-            Bukkit.broadcastMessage(x1 + "");
-        }
-        if (y1 > y ) {
-            y = y1;
-            Bukkit.broadcastMessage(y1+ "");
-        }
-        if (z1 > z ) {
-            z = z1;
-            Bukkit.broadcastMessage(z1+ "");
-        }
-        if (p.isSneaking()) {
-            p.sendMessage("x: " + x + " y: " + y + " z: " + z);
-        }
-
-
-    }
 }

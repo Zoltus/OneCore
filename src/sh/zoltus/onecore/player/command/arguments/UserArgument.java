@@ -3,13 +3,14 @@ package sh.zoltus.onecore.player.command.arguments;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.OneArgument;
 import sh.zoltus.onecore.player.command.User;
 
 import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_PLAYER;
 import static sh.zoltus.onecore.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
-public class UserArgument extends OneArgument {
+public class UserArgument extends CustomArgument<User, String> implements OneArgument  {
 
     public UserArgument() {
         this("");

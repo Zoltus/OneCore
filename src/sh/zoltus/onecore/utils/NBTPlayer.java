@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -131,7 +131,7 @@ public class NBTPlayer {
     public void setItems(Map<Integer, ItemStack> items, String tag) {
         NBTTagList list = new NBTTagList();
         items.forEach((slot, stack) -> {
-            NBTTagCompound stackTag = stack.b(stack.t());
+            NBTTagCompound stackTag = stack.b(stack.v());
             // MinecraftKey minecraftkey = IRegistry.m.a();
             stackTag.a("Slot", (byte) (int) slot);
             list.add(stackTag);
