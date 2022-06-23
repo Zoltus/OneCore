@@ -34,6 +34,7 @@
             - gamemode messages to be able to translate gamemode words.
             - eco logs
             - TEST minecraft methods, reflection
+            - use nbtapi
 
 
             Not important:
