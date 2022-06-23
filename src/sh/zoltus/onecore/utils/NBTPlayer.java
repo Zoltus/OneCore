@@ -1,7 +1,15 @@
 package sh.zoltus.onecore.utils;
 
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTCompoundList;
+import de.tr7zw.nbtapi.NBTListCompound;
+import de.tr7zw.nbtapi.data.NBTData;
+import de.tr7zw.nbtapi.data.PlayerData;
 import lombok.SneakyThrows;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -10,9 +18,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,8 +25,9 @@ import java.util.UUID;
 
 public class NBTPlayer {
 
-    private final File datFile;
-    private NBTTagCompound compound;
+
+    private PlayerData data;
+    private NBTCompound compound;
 
     public NBTPlayer(OfflinePlayer offP) {
         this(offP.getUniqueId());
@@ -30,35 +36,21 @@ public class NBTPlayer {
     //todo cleanup
     private NBTPlayer(UUID uuid) {
         Validate.notNull(uuid, "Cannot get null UUID");
-        World w = Bukkit.getWorlds().get(0);
-        datFile = new File(w.getWorldFolder().getAbsolutePath() + "/playerdata/" + uuid.toString().toLowerCase() + ".dat");
-
-        if (!datFile.exists()) {
-            System.out.println("File does not exist: " + datFile.getAbsolutePath());
-        } else if (datFile.isDirectory()) {
-            System.out.println("File is a directory not player.dat file: " + datFile.getAbsolutePath());
-        } else {
-            try {
-                compound = NBTCompressedStreamTools.a(new FileInputStream(datFile));
-            } catch (IOException ex) {
-                System.out.println("Error trying to create NBTTagCompund for player : " + uuid + " :" + ex.getMessage());
-            }
-        }
+        this.data = NBTData.getOfflinePlayerData(uuid);
+        this.compound = data.getCompound();
     }
 
     @SneakyThrows
     public void save() {
-        NBTCompressedStreamTools.a(compound, datFile);
+        data.saveChanges();
     }
 
-    //TODO add all attributes for player, luck armortoughtness ect
     @SuppressWarnings("SameParameterValue")
     private Double getAttribute(String abilityName) {
-        NBTTagList list = compound.c("Attributes", 10);
-        for (NBTBase nbt : list) {
-            NBTTagCompound attribute = (NBTTagCompound) nbt;
-            if (attribute.l("Name").equals(abilityName)) {
-                return attribute.k("Base");
+        NBTCompoundList list = compound.getCompoundList("Attributes");
+        for (NBTListCompound nbt : list) {
+            if (nbt.getString("Name").equals(abilityName)) {
+                return attribute.k("Base"); //todo
             }
         }
         return null;
@@ -69,59 +61,59 @@ public class NBTPlayer {
     }
 
     public void setWalkSpeed(float f) {
-        compound.p("abilities").a("walkSpeed", f);
+        compound.getCompound("abilities").setFloat("walkSpeed", f);
     }
 
     public void setFlySpeed(float f) {
-        compound.p("abilities").a("flySpeed", f);
+        compound.getCompound("abilities").setFloat("flySpeed", f);
     }
 
     public boolean getFlying() {
-        return compound.p("abilities").b("flying");
+        return compound.getCompound("abilities").getBoolean("flying");
     }
 
     public void setFlying(boolean bool) {
-        compound.p("abilities").a("flying", bool);
+        compound.getCompound("abilities").setBoolean("flying", bool);
     }
 
     public boolean getMayfly() {
-        return compound.p("abilities").b("mayfly");
+        return compound.getCompound("abilities").getBoolean("mayfly");
     }
 
     public void setMayfly(boolean bool) {
-        compound.p("abilities").a("mayfly", bool);
+        compound.getCompound("abilities").setBoolean("mayfly", bool);
     }
 
     public int getplayerGameType() {
-        return compound.h("playerGameType");
+        return compound.getInteger("playerGameType");
     }
 
     public boolean getInvulnerable() {
-        return compound.b("Invulnerable");
+        return compound.getBoolean("Invulnerable");
     }
 
     public void setInvulnerable(boolean bool) {
-        compound.a("Invulnerable", bool);
+        compound.setBoolean("Invulnerable", bool);
     }
 
     public float getHealth() {
-        return compound.j("Health");
+        return data.getHealth();
     }
 
     public void setHealth(double d) {
-        compound.a("Health", d);
+        compound.setDouble("Health", d);
     }
 
     public void setFoodExhaustionLevel(float f) {
-        compound.a("foodExhaustionLevel", f);
+        compound.setFloat("foodExhaustionLevel", f);
     }
 
     public int getXpSeed() {
-        return compound.h("XpSeed");
+        return compound.getInteger("XpSeed");
     }
 
     public void setXpSeed(int i) {
-        compound.a("XpSeed", i);
+        compound.setInteger("XpSeed", i);
     }
 
     public Map<Integer, CraftItemStack> getInventoryItems() {
@@ -131,12 +123,12 @@ public class NBTPlayer {
     public void setItems(Map<Integer, ItemStack> items, String tag) {
         NBTTagList list = new NBTTagList();
         items.forEach((slot, stack) -> {
-            NBTTagCompound stackTag = stack.b(stack.v());
-            // MinecraftKey minecraftkey = IRegistry.m.a();
-            stackTag.a("Slot", (byte) (int) slot);
+            NBTTagCompound stackTag = stack.getBoolean(stack.v());
+            // MinecraftKey minecraftkey = IRegistry.m.setFloat();
+            stackTag.setFloat("Slot", (byte) (int) slot);
             list.add(stackTag);
         });
-        compound.a(tag, list);
+        compound.setFloat(tag, list);
     }
 
     public void setInventoryItems(Map<Integer, ItemStack> items) {
@@ -152,15 +144,12 @@ public class NBTPlayer {
     }
 
     public String getDimension() {
-        return compound.l("Dimension");
-    }
-
-    public void setDimension(String s) {
-        compound.a("Dimension", s);
+        return compound.getString("Dimension");
     }
 
     public Location getLocation() {
-        NBTTagList tagList = compound.c("Pos", 6);
+        NBTCompoundList tagList = compound.getCompoundList("Pos");
+
         float yaw = getYaw();
         float pitch = getPitch();
         String worldName = getWorld().getName();
@@ -172,11 +161,11 @@ public class NBTPlayer {
     }
 
     public float getYaw() {
-        return compound.c("Rotation", 5).i(0);
+        return (float) compound.getCompoundList("Rotation").get(0).getCompound();
     }
 
     public float getPitch() {
-        return compound.c("Rotation", 5).i(1);
+        return (float) compound.getCompoundList("Rotation").get(1).getCompound();
     }
 
     public World getWorld() {
@@ -199,31 +188,31 @@ public class NBTPlayer {
 
     //todo setdimension/world
     public void setLocation(Location loc) {
-        compound.a("Pos", newDoubleList(loc.getX(), loc.getY(), loc.getZ()));
-        compound.a("Rotation", newFloatList(loc.getYaw(), loc.getPitch()));
-        compound.a("Motion", newDoubleList(0, 0, 0));
+        compound.setFloat("Pos", newDoubleList(loc.getX(), loc.getY(), loc.getZ()));
+        compound.setFloat("Rotation", newFloatList(loc.getYaw(), loc.getPitch()));
+        compound.setFloat("Motion", newDoubleList(0, 0, 0));
     }
 
     public void setplayerGameType(int i) {
-        compound.a("playerGameType", i);
+        compound.setInteger("playerGameType", i);
     }
 
     public void setPreviousPlayerGameType(int i) {
-        compound.a("previousPlayerGameType", i);
+        compound.setInteger("previousPlayerGameType", i);
     }
 
     public void setfoodSaturationLevel(float f) {
-        compound.a("foodSaturationLevel", f);
+        compound.setFloat("foodSaturationLevel", f);
     }
 
     public void setfoodLevel(int i) {
-        compound.a("foodLevel", i);
+        compound.setInteger("foodLevel", i);
     }
 
     private NBTTagList newDoubleList(double... adouble) {
         NBTTagList nbttaglist = new NBTTagList();
         for (double v : adouble) {
-            nbttaglist.add(NBTTagDouble.a(v));
+            nbttaglist.add(NBTTagDouble.setFloat(v));
         }
         return nbttaglist;
     }
@@ -231,7 +220,7 @@ public class NBTPlayer {
     private NBTTagList newFloatList(float... afloat) {
         NBTTagList nbttaglist = new NBTTagList();
         for (float f : afloat) {
-            nbttaglist.add(NBTTagFloat.a(f));
+            nbttaglist.add(NBTTagFloat.setFloat(f));
         }
         return nbttaglist;
     }
