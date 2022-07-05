@@ -61,17 +61,25 @@
         <!--Spigot APIS -->
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
+            <artifactId>spigot-api</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>minecraft-server</artifactId>
-            <version>${spigot.server.version}</version>
+            <artifactId>spigot</artifactId>
+            <version>${spigotAPI.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- SpigotAnnotations -->
+        <!-- Spigot Server, Github cant build with this
+
+          <dependency>
+             <groupId>org.spigotmc</groupId>
+             <artifactId>minecraft-server</artifactId>
+             <version>${spigot.server.version}</version>
+             <scope>provided</scope>
+         </dependency>-->
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>plugin-annotations</artifactId>
@@ -133,6 +141,22 @@
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.10.0</version>
         </dependency>
+
+        <!-- bstats -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.36.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+
         <!-- MockBukkit
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
