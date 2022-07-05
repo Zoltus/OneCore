@@ -18,7 +18,7 @@ public class SetMaxPlayers implements IOneCommand {
     @Override
     public ApiCommand[] getCommands() {
         return new ApiCommand[]{
-                //setmaxplayers <amount>
+                //setmaxplayers <amount>,
                 command(SETMAXPLAYERS_LABEL)
                         .withPermission(SETMAXPLAYERS_PERMISSION)
                         .withAliases(SETMAXPLAYERS_ALIASES)
