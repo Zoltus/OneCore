@@ -8,7 +8,7 @@ import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-import sh.zoltus.onecore.utils.NBTPlayer;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.HEAL_YOU_GOT_HEALED;

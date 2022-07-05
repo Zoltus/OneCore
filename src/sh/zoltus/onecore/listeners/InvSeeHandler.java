@@ -4,7 +4,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
-import sh.zoltus.onecore.utils.NBTPlayer;
+import org.bukkit.inventory.ItemStack;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class InvSeeHandler implements Listener {
             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
             inv = Bukkit.createInventory(null, 36);
             //Chooses if it uses enderchesitems or normal inv items
-            Map<Integer, CraftItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventoryItems();
+            Map<Integer, ItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventoryItems();
             items.forEach(inv::setItem);
 
         }
@@ -149,8 +149,8 @@ public class InvSeeHandler implements Listener {
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(invMap.inverse().get(inv));
                 invMap.remove(offP.getUniqueId());
                 //If player has logged in after opening inv it sets to his onlineinv
-                Optional.ofNullable(offP.getPlayer()).
-                        ifPresentOrElse(p -> p.getInventory().setStorageContents(inv.getStorageContents()), () -> {
+                Optional.ofNullable(offP.getPlayer())
+                        .ifPresentOrElse(p -> p.getInventory().setStorageContents(inv.getStorageContents()), () -> {
                             setOfflineInventory(offP, inv, isEnderChest);   //Sets to players offline inv if player is offline
                         });
             }
@@ -166,8 +166,8 @@ public class InvSeeHandler implements Listener {
      */
     private void setOfflineInventory(OfflinePlayer offline, Inventory inv, boolean isEnderChest) {
         NBTPlayer nbtPlayer = new NBTPlayer(offline);
-        Map<Integer, net.minecraft.world.item.ItemStack> updatedItems = Stream.of(inv.getContents())
-                .collect(HashMap::new, (map, stack) -> map.put(map.size(), CraftItemStack.asNMSCopy(stack)), Map::putAll);
+        Map<Integer, ItemStack> updatedItems = Stream.of(inv.getContents())
+                .collect(HashMap::new, (map, stack) -> map.put(map.size(), stack), Map::putAll);
         if (isEnderChest) {
             nbtPlayer.setEnderItems(updatedItems);
         } else {

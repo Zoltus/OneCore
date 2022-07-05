@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-import sh.zoltus.onecore.utils.NBTPlayer;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.GOD_CHANGED_TARGETS_GOD;
