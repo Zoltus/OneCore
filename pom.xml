@@ -21,7 +21,7 @@
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>8.4.0</commandapi.version>
+        <commandapi.version>8.4.1</commandapi.version>
 
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
