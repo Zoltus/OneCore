@@ -26,6 +26,7 @@ public class SetMaxPlayers implements IOneCommand {
                         .executesPlayer((p, args) -> {
                     try {
                         int maxPlayers = (int) args[0];
+                        //todo switch to reflection for multiple 1.19 versions
                         DedicatedPlayerList server = ((CraftServer) Bukkit.getServer()).getHandle();
                         Field f = server.getClass().getSuperclass().getDeclaredField("f");
                         f.setAccessible(true);

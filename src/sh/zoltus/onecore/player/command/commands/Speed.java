@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-import sh.zoltus.onecore.utils.NBTPlayer;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
 import java.util.Arrays;
 import java.util.List;

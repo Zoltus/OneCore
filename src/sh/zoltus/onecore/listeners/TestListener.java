@@ -11,11 +11,14 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import sh.zoltus.onecore.utils.LocationUtils;
-import sh.zoltus.onecore.utils.NBTPlayer;
 
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class TestListener implements Listener {
 
@@ -130,18 +133,6 @@ public class TestListener implements Listener {
                             }//1063, 10959 10504
                             p.sendMessage("joins took " + (System.currentTimeMillis() - time));
                         });
-
-                case "/roll" -> {
-                        /* ChatBuilder cb2 = new ChatBuilder("1amoi pappa pylly %a1% §ba moi", "pallo §c%a1%");
-                    cb2.addComponents(new ChatBuilder.Component("%a1%", "testa1")
-                            .setCustomAction((pp) -> pp.sendMessage("moi"))
-                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("teksti")))
-                    );
-
-                    cb2.build();
-                    cb2.send(p);*/
-                    //roll();
-                }
 
                 case "/tas1" -> {
                     Location loc = p.getLocation();

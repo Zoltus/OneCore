@@ -22,7 +22,7 @@
         ((DedicatedServer) MinecraftServer.getServer()).propertyManager.setProperty(key, value);
 
         - "https://www.spigotmc.org/resources/view-distance-tweaks-1-14-1-17.75164/"
-          - "https://github.com/YouHaveTrouble/minecraft-optimization"
+          - "https://github.com/YouHaveTrouble/-optimization"
 
         Todo-----------:
           Important:
@@ -33,7 +33,7 @@
             - test gamemode changes.
             - gamemode messages to be able to translate gamemode words.
             - eco logs
-            - TEST minecraft methods, reflection
+            - TEST  methods, reflection
             - use nbtapi
 
 

@@ -1,22 +1,18 @@
 package sh.zoltus.onecore.player.command.commands;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.stats.ServerStatisticManager;
-import net.minecraft.stats.StatisticList;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
-import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.TIME_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
@@ -55,11 +51,8 @@ public class PlayTime implements IOneCommand {
     }
 
     private int getOfflineTime(OfflinePlayer offPlayer) {
-        World w = Bukkit.getWorlds().get(0);
-        MinecraftServer mcServer = ((CraftWorld) w).getHandle().n();
-        File jsonFile = new File(w.getWorldFolder().getAbsolutePath() + "/stats/" + offPlayer.getUniqueId().toString().toLowerCase() + ".json");
-        ServerStatisticManager statManager = new ServerStatisticManager(mcServer, jsonFile);
-        return statManager.a(StatisticList.i.b(StatisticList.k));
-
+        return new NBTPlayer(offPlayer).getStats().getData().getCustom().getPlayTime();
     }
+
+
 }

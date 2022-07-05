@@ -67,6 +67,7 @@ public class OneCore extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Saves all users & settings on disable
+        //todo mode database to mainclass instead of static
         Database.database().saveAll();
         System.out.println("Saved users & settings to database...");
         registerer.unregisterCommands(); //Unregisters all cmds to better support reloading
