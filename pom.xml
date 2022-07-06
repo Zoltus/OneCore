@@ -58,7 +58,7 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <!--Spigot APIS -->
+        <!--Spigot APIS. -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
