@@ -71,15 +71,14 @@
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Spigot Server, Github cant build with this
-
+        <!-- Spigot Server,
+        Github cant build with this and prevents version support anyways.
           <dependency>
              <groupId>org.spigotmc</groupId>
              <artifactId>minecraft-server</artifactId>
              <version>${spigot.server.version}</version>
              <scope>provided</scope>
          </dependency>-->
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>plugin-annotations</artifactId>
