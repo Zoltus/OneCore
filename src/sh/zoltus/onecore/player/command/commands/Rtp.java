@@ -22,6 +22,7 @@ import static sh.zoltus.onecore.configuration.yamls.Config.RTP_COOLDOWN_SECONDS;
 import static sh.zoltus.onecore.configuration.yamls.Lang.RTP_ON_COOLDOWN;
 import static sh.zoltus.onecore.configuration.yamls.Lang.RTP_TELEPORTED;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class Rtp implements IOneCommand {
 
     private static final int RADIUS = Config.RTP_RADIUS.getInt();

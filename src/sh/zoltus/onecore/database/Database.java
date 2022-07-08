@@ -18,13 +18,11 @@ import sh.zoltus.onecore.player.command.commands.Spawn;
 import sh.zoltus.onecore.player.command.commands.Warp;
 import sh.zoltus.onecore.utils.PreLocation;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.lang.reflect.Type;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
@@ -306,11 +304,10 @@ public class Database {
             if (!Files.exists(f) || (Files.exists(f) && !Files.isDirectory(f))) {
                 Files.createDirectory(f);
             }
-            try (FileChannel sourceChannel = new FileInputStream(source.toFile()).getChannel()
-                 ; FileChannel destChannel = new FileOutputStream(target.toFile()).getChannel()) {
-                destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-            }
+            //todo test if backup is done
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
+            System.out.println("§4Error backing up database!\n §c" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -320,8 +317,6 @@ public class Database {
         saveEconomy();
         saveServer();
     }
-
-
     private static class HashMapTypeToken extends TypeToken<HashMap<String, PreLocation>> {
     }
 }

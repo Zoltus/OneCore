@@ -18,7 +18,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Weather implements IOneCommand {
 
-    private Argument weatherArgument() {
+    private Argument<?> weatherArgument() {
         return new CustomArgument<>(NODES_WEATHER.getString(), (info) -> {
             String input = info.input();
             if (!Arrays.asList(WEATHER_SUGGESTIONS.getSplitArr()).contains(input.toLowerCase())) {

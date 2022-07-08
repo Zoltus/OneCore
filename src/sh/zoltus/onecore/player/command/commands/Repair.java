@@ -29,7 +29,7 @@ public class Repair implements IOneCommand {
             REPAIR_SLOT_ARMOR.getString().toLowerCase(),
             REPAIR_SLOT_INVENTORY.getString().toLowerCase());
 
-    private Argument slotArg() {
+    private Argument<?> slotArg() {
         return new CustomArgument<>(NODES_SLOT.getString(), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
