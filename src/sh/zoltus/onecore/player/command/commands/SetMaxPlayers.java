@@ -1,11 +1,15 @@
 package sh.zoltus.onecore.player.command.commands;
 
 import dev.jorel.commandapi.arguments.IntegerArgument;
+import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
+import java.lang.reflect.Field;
+
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_AMOUNT;
+import static sh.zoltus.onecore.configuration.yamls.Lang.SETMAXPLAYERS_SET;
 
 public class SetMaxPlayers implements IOneCommand {
 
@@ -19,16 +23,21 @@ public class SetMaxPlayers implements IOneCommand {
                         .withArguments(new IntegerArgument(NODES_AMOUNT.getString()))
                         .executesPlayer((p, args) -> {
                     int maxPlayers = (int) args[0];
-                    //todo switch to reflection for multiple 1.19 versions
-                       /* DedicatedPlayerList server = ((CraftServer) Bukkit.getServer()).getHandle();
-                        Field f = server.getClass().getSuperclass().getDeclaredField("f");
-                        f.setAccessible(true);
-                        f.set(server, maxPlayers);
+                    try {
+                        setMaxPlayers(maxPlayers);
                         p.sendMessage(SETMAXPLAYERS_SET.rp(AMOUNT_PH, maxPlayers));
-                        catch
-                          p.sendMessage("Error changing max players!")
-                        */
+                    } catch (ReflectiveOperationException e) {
+                        p.sendMessage("Error changing max players!");
+                    }
                 }),
         };
+    }
+
+    public static void setMaxPlayers(int amount) throws ReflectiveOperationException {
+        String bukkitversion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
+        Object playerlist = Class.forName("org.bukkit.craftbukkit." + bukkitversion    + ".CraftServer").getDeclaredMethod("getHandle").invoke(Bukkit.getServer());
+        Field maxplayers = playerlist.getClass().getSuperclass().getDeclaredField("f");
+        maxplayers.setAccessible(true);
+        maxplayers.set(playerlist, amount);
     }
 }
