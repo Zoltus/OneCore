@@ -1,8 +1,6 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIHandler;
-import dev.jorel.commandapi.RegisteredCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import sh.zoltus.onecore.listeners.*;
@@ -19,10 +17,6 @@ import sh.zoltus.onecore.player.command.commands.inventory.Invsee;
 import sh.zoltus.onecore.player.command.commands.teleport.*;
 import sh.zoltus.onecore.player.command.commands.teleport.handlers.TeleportHandler;
 
-import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 public class Registerer {

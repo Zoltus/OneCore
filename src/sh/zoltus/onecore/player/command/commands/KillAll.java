@@ -44,7 +44,7 @@ public class KillAll implements IOneCommand {
         return new EntityTypeArgument(NODES_ENTITY_TYPE.getString());
     }
 
-    private Argument rangeArgument() {
+    private Argument<?> rangeArgument() {
         return new CustomArgument<>(NODES_RANGE.getString(), (info) -> {
             try {
                 return Double.parseDouble(info.input());

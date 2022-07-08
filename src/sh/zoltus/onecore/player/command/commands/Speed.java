@@ -22,7 +22,7 @@ public class Speed implements IOneCommand {
 
     private final List<String> speedArgs = Arrays.asList(SPEED_MODE_FLY.getString(), SPEED_MODE_WALK.getString());
 
-    private Argument speedIntArg() {
+    private Argument<?> speedIntArg() {
         return new CustomArgument<>(NODES_SPEED.getString(), (info) -> {
             try {
                 float speed = Float.parseFloat(info.input());
@@ -39,7 +39,7 @@ public class Speed implements IOneCommand {
                 toSuggestion(info.currentArg(), new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"})));
     }
 
-    private Argument speedModeArg() {
+    private Argument<?> speedModeArg() {
         return new CustomArgument<>(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString(), (info) -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {

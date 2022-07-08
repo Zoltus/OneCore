@@ -23,7 +23,7 @@ import java.util.List;
  * <p>
  * 1.9 15w45a Player's jump height is increased from 1.125 blocks to 1.25 blocks. Jump height increased from 1 3⁄16 blocks to 1 4⁄16 blocks.
  * 1.17 20w49a Player's jump while sneaking ignores sculk sensors
- * https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas
+ * <a href="https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas">...</a>
  */
 public class PlayerJumpEvent implements Listener {
     //https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas

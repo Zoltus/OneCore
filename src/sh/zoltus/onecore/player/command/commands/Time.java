@@ -18,7 +18,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Time implements IOneCommand {
 
-    private Argument timeArg() {
+    private Argument<?> timeArg() {
         return new CustomArgument<>(NODES_TIME.getString(), info -> toTime(info.input()))
                 .replaceSuggestions(ArgumentSuggestions.strings(info ->
                         toSuggestion(info.currentArg(), TIME_SUGGESTIONS.getSplitArr())

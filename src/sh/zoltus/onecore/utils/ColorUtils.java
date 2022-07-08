@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 public class ColorUtils {
 
     // for detecting #8f8f8f
-    private static final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F0-9]{6})");
+    private static final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F\\d]{6})");
     // for detecting &x&8&f&8&f&8&f in message
-    private static final Pattern pattern2 = Pattern.compile("(?<!\\\\)(§x[a-fA-F0-9§]{12})");
+    private static final Pattern pattern2 = Pattern.compile("(?<!\\\\)(§x[a-fA-F\\d§]{12})");
 
     /**
      * TODO fix converting, check from old source This is messed up

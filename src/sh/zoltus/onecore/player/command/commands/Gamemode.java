@@ -21,7 +21,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Gamemode implements IOneCommand {
 
-    private Argument gamemodeArgument() {
+    private Argument<?> gamemodeArgument() {
         return new CustomArgument<>(NODES_GAMEMODE.getString(), (info) -> {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {

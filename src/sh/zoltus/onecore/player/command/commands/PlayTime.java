@@ -11,8 +11,6 @@ import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.TIME_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 

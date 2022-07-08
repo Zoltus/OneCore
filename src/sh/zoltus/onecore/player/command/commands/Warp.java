@@ -27,7 +27,7 @@ public class Warp implements IOneCommand {
     @Getter
     private static HashMap<String, PreLocation> warps = new LinkedHashMap<>();
 
-    private Argument warpArg() {
+    private Argument<?> warpArg() {
         return new CustomArgument<>(NODES_WARP_NAME.getString(), (info) -> {
             String input = info.input();
             if (!warps.containsKey(input)) {
