@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import lombok.SneakyThrows;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 public class Time implements IOneCommand {
 
     private Argument<?> timeArg() {
-        return new CustomArgument<>(NODES_TIME.getString(), info -> toTime(info.input()))
+        return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> toTime(info.input()))
                 .replaceSuggestions(ArgumentSuggestions.strings(info ->
                         toSuggestion(info.currentArg(), TIME_SUGGESTIONS.getSplitArr())
                 ));

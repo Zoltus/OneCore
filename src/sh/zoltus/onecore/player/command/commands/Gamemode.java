@@ -1,7 +1,9 @@
 package sh.zoltus.onecore.player.command.commands;
 
 import dev.jorel.commandapi.arguments.Argument;
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -22,7 +24,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 public class Gamemode implements IOneCommand {
 
     private Argument<?> gamemodeArgument() {
-        return new CustomArgument<>(NODES_GAMEMODE.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_GAMEMODE.getString()), (info) -> {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
                 throw new CustomArgument.CustomArgumentException(GAMEMODE_INVALID_GAMEMODE.getString());
@@ -31,7 +33,8 @@ public class Gamemode implements IOneCommand {
             } else {
                 return gm;
             }
-        }).replaceSuggestions((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr()));
+        }).replaceSuggestions(ArgumentSuggestions
+                .strings((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr())));
     }
 
     public ApiCommand[] getCommands() {

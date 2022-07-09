@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,7 @@ public class Speed implements IOneCommand {
     private final List<String> speedArgs = Arrays.asList(SPEED_MODE_FLY.getString(), SPEED_MODE_WALK.getString());
 
     private Argument<?> speedIntArg() {
-        return new CustomArgument<>(NODES_SPEED.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_SPEED.getString()), (info) -> {
             try {
                 float speed = Float.parseFloat(info.input());
                 if (speed > 10.0f) {
@@ -40,7 +41,7 @@ public class Speed implements IOneCommand {
     }
 
     private Argument<?> speedModeArg() {
-        return new CustomArgument<>(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString()), (info) -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {
                 throw new CustomArgument.CustomArgumentException(SPEED_MODE_INVALID_SPEED.getString());

@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.OneEconomy;
+import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.commands.teleport.handlers.Request;
 import sh.zoltus.onecore.player.command.commands.teleport.handlers.Teleport;
 import sh.zoltus.onecore.utils.LocationUtils;

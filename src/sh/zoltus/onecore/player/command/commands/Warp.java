@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -28,7 +29,7 @@ public class Warp implements IOneCommand {
     private static HashMap<String, PreLocation> warps = new LinkedHashMap<>();
 
     private Argument<?> warpArg() {
-        return new CustomArgument<>(NODES_WARP_NAME.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), (info) -> {
             String input = info.input();
             if (!warps.containsKey(input)) {
                 throw new CustomArgument.CustomArgumentException(WARP_NOT_SET.rp(LIST_PH, warps.keySet().toString()));

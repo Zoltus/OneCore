@@ -2,6 +2,7 @@ package sh.zoltus.onecore.player.command.arguments;
 
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.player.command.ApiCommand;
@@ -16,7 +17,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements OneArgum
     //home <player> <home> <--
     //Delhome <player> <home> <--
     public HomeArg1() {
-        super(NODES_HOME_NAME.getString(), (info) -> {
+        super(new StringArgument(NODES_HOME_NAME.getString()), (info) -> {
             String input = info.input();
             String prevArg = (String) info.previousArgs()[0];
             User user = getPrevArgTarget(prevArg);

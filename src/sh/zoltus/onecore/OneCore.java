@@ -19,6 +19,7 @@ import sh.zoltus.onecore.configuration.yamls.Commands;
 import sh.zoltus.onecore.configuration.yamls.Config;
 import sh.zoltus.onecore.configuration.yamls.Lang;
 import sh.zoltus.onecore.database.Database;
+import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.listeners.ConsoleFilter;
 
 import java.util.List;
@@ -35,12 +36,13 @@ import java.util.stream.Stream;
 //@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
-@Getter
 public class OneCore extends JavaPlugin implements Listener {
 
     @Getter
     private static OneCore plugin;
+    @Getter
     private Economy vault;
+    @Getter
     private Registerer registerer;
 
     //https://github.com/GeertBraakman/xLib/blob/master/src/main/java/io/github/geertbraakman/v0_3_4/api/command/APICommand.java
@@ -98,7 +100,7 @@ public class OneCore extends JavaPlugin implements Listener {
             }
 
             if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
-                getServer().getServicesManager().register(Economy.class, new sh.zoltus.onecore.OneEconomy(this), this, ServicePriority.Highest);
+                getServer().getServicesManager().register(Economy.class, new OneEconomy(this), this, ServicePriority.Highest);
             }
             RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
             if (rsp != null) {
