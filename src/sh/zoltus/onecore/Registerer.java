@@ -7,15 +7,15 @@ import sh.zoltus.onecore.listeners.*;
 import sh.zoltus.onecore.listeners.tweaks.Kick;
 import sh.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.commands.*;
-import sh.zoltus.onecore.player.command.commands.economy.Economy;
-import sh.zoltus.onecore.player.command.commands.home.DelHome;
-import sh.zoltus.onecore.player.command.commands.home.Home;
-import sh.zoltus.onecore.player.command.commands.home.SetHome;
-import sh.zoltus.onecore.player.command.commands.inventory.EnderChest;
-import sh.zoltus.onecore.player.command.commands.inventory.Invsee;
-import sh.zoltus.onecore.player.command.commands.teleport.*;
-import sh.zoltus.onecore.player.command.commands.teleport.handlers.TeleportHandler;
+import sh.zoltus.onecore.player.command.commands.admin.*;
+import sh.zoltus.onecore.player.command.commands.regular.Economy;
+import sh.zoltus.onecore.player.command.commands.regular.DelHome;
+import sh.zoltus.onecore.player.command.commands.regular.Home;
+import sh.zoltus.onecore.player.command.commands.regular.SetHome;
+import sh.zoltus.onecore.player.command.commands.regular.EnderChest;
+import sh.zoltus.onecore.player.command.commands.regular.Invsee;
+import sh.zoltus.onecore.player.teleporting.TeleportHandler;
+import sh.zoltus.onecore.player.command.commands.regular.*;
 
 import java.util.stream.Stream;
 
