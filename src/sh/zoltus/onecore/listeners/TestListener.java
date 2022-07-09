@@ -139,11 +139,7 @@ public class TestListener implements Listener {
                     LocationUtils.teleportSafeAsync(p, new Location(loc.getWorld(), 0, 70, 0));
                     p.sendMessage("asd");
                 }
-
             }
         }
     }
-
-
-
 }

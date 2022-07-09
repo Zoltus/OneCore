@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +31,7 @@ public class Repair implements IOneCommand {
             REPAIR_SLOT_INVENTORY.getString().toLowerCase());
 
     private Argument<?> slotArg() {
-        return new CustomArgument<>(NODES_SLOT.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_SLOT.getString()), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
                 throw new CustomArgument.CustomArgumentException(REPAIR_SLOT_INVALID_SLOT.getString());

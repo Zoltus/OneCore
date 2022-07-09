@@ -11,7 +11,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.OneEconomy;
+import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.configuration.yamls.Config;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.commands.Spawn;

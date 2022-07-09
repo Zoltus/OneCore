@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.configuration.yamls.Commands;
@@ -19,7 +20,7 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 public class Weather implements IOneCommand {
 
     private Argument<?> weatherArgument() {
-        return new CustomArgument<>(NODES_WEATHER.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_WEATHER.getString()), (info) -> {
             String input = info.input();
             if (!Arrays.asList(WEATHER_SUGGESTIONS.getSplitArr()).contains(input.toLowerCase())) {
                 throw new CustomArgument.CustomArgumentException(WEATHER_INVALID_WEATHER.getString());

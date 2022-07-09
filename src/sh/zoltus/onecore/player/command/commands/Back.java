@@ -2,6 +2,7 @@ package sh.zoltus.onecore.player.command.commands;
 
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -65,7 +66,7 @@ public class Back implements IOneCommand, Listener {
     }
 
     private Argument<?> backArg() {
-        return new CustomArgument<>("1-" + BACK_HISTORY_SIZE.getInt(), (info) -> {
+        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.getInt()), (info) -> {
             try {
                 return Integer.parseInt(info.input());
             } catch (Exception e) {

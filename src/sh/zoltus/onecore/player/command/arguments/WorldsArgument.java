@@ -1,6 +1,8 @@
 package sh.zoltus.onecore.player.command.arguments;
 
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import sh.zoltus.onecore.player.command.OneArgument;
@@ -14,7 +16,7 @@ public class WorldsArgument extends CustomArgument<World, String> implements One
     }
 
     public WorldsArgument(String add) {
-        super(add, (info) -> {
+        super(new StringArgument(add), (info) -> {
             World world = Bukkit.getWorld(info.input());
             if (world == null) {
                 throw new CustomArgument.CustomArgumentException(WORLD_NOT_FOUND.getString());
@@ -22,6 +24,7 @@ public class WorldsArgument extends CustomArgument<World, String> implements One
                 return world;
             }
         });
-        replaceSuggestions(info -> worldSuggestions(info.currentArg()));
+        replaceSuggestions(ArgumentSuggestions
+                .strings(info -> worldSuggestions(info.currentArg())));
     }
 }

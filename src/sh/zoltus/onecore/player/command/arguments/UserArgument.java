@@ -1,6 +1,8 @@
 package sh.zoltus.onecore.player.command.arguments;
 
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.OneArgument;
@@ -16,7 +18,7 @@ public class UserArgument extends CustomArgument<User, String> implements OneArg
     }
 
     public UserArgument(String add) {
-        super(NODES_PLAYER.getString() + add, (info) -> {
+        super(new StringArgument(NODES_PLAYER.getString() + add), (info) -> {
             String input = info.input();
             Player player = Bukkit.getPlayer(input);
             if (player == null) {
@@ -25,6 +27,7 @@ public class UserArgument extends CustomArgument<User, String> implements OneArg
                 return User.of(player);
             }
         });
-        replaceSuggestions((info) -> playerSuggestions(info.currentArg()));
+        replaceSuggestions(ArgumentSuggestions
+                .strings((info) -> playerSuggestions(info.currentArg())));
     }
 }

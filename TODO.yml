@@ -33,9 +33,6 @@
             - test gamemode changes.
             - gamemode messages to be able to translate gamemode words.
             - eco logs
-            - TEST  methods, reflection
-            - use nbtapi
-
 
             Not important:
             - All teles&chunks to async for cmds

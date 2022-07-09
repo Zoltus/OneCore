@@ -3,6 +3,7 @@ package sh.zoltus.onecore.player.command.commands;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.EntityTypeArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class KillAll implements IOneCommand {
     }
 
     private Argument<?> rangeArgument() {
-        return new CustomArgument<>(NODES_RANGE.getString(), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_RANGE.getString()), (info) -> {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {
