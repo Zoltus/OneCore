@@ -1,27 +1,33 @@
-package sh.zoltus.onecore;
+package sh.zoltus.onecore.economy;
 
+import com.google.common.io.Files;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import sh.zoltus.onecore.OneCore;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import static sh.zoltus.onecore.configuration.yamls.Config.CURRENCY_PLURAL;
 import static sh.zoltus.onecore.configuration.yamls.Config.CURRENCY_SINGULAR;
 
-public record OneEconomy(OneCore plugin) implements Economy {
-
+public final class OneEconomy implements Economy {
     @Getter
     private static final LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
-
-    public String getName() {
-        return "OneEconomy";
-    }
+    private final Logger logger;
+    private final OneCore plugin;
+    @Getter
+    private final String name = "OneEconomy";
 
     public boolean isEnabled() {
         return (plugin.getVault() != null);
@@ -34,6 +40,43 @@ public record OneEconomy(OneCore plugin) implements Economy {
 
     public String currencyNameSingular() {
         return CURRENCY_SINGULAR.getString();
+    }
+
+    public OneEconomy(OneCore plugin) {
+        this.plugin = plugin;
+        this.logger = createLogger();
+    }
+
+    private Logger createLogger() {
+        try {
+            File logFile = new File(plugin.getDataFolder().getAbsolutePath() + "/logs/Economy.log");
+            Files.createParentDirs(logFile);
+            Files.touch(logFile);
+            Logger logger = Logger.getLogger(getName());
+            logger.setUseParentHandlers(false);
+            LogFormatter formatter = new LogFormatter();
+            FileHandler handler = new FileHandler(logFile.getAbsolutePath());
+            handler.setFormatter(formatter);
+            logger.addHandler(handler);
+            return logger;
+        } catch (SecurityException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void log(String message) {
+        logger.info(message);
+    }
+
+    private static class LogFormatter extends Formatter {
+        private final Date dat = new Date();
+        private static final DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+
+        public synchronized String format(LogRecord record) {
+            dat.setTime(record.getMillis());
+            return df.format(dat) + " : " + record.getLevel().getName() + " : " + record.getMessage() + "\n";
+
+        }
     }
 
     /**
@@ -87,6 +130,7 @@ public record OneEconomy(OneCore plugin) implements Economy {
         if (!has(offP, amount)) {
             return new EconomyResponse(1, 1, EconomyResponse.ResponseType.FAILURE, "failed");
         } else {
+            log("Withdrawing " + amount + " from " + offP.getName());
             double newBalance = getBalance(offP) - amount;
             balances.put(offP.getUniqueId(), newBalance);
             return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "sucsess withdraw");
@@ -104,6 +148,7 @@ public record OneEconomy(OneCore plugin) implements Economy {
         if (Double.isInfinite(newBalance) || Double.isNaN(newBalance)) {
             return new EconomyResponse(1, 1, EconomyResponse.ResponseType.FAILURE, "failed deposit");
         } else {
+            log("Depositing " + amount + " to " + offP.getName());
             balances.put(offP.getUniqueId(), newBalance);
             return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "sucsess deposit");
         }
@@ -255,5 +300,29 @@ public record OneEconomy(OneCore plugin) implements Economy {
     public List<String> getBanks() {
         return new ArrayList<>();
     }
+
+    public OneCore plugin() {
+        return plugin;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (OneEconomy) obj;
+        return Objects.equals(this.plugin, that.plugin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(plugin);
+    }
+
+    @Override
+    public String toString() {
+        return "OneEconomy[" +
+                "plugin=" + plugin + ']';
+    }
+
 
 }

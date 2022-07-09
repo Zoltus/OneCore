@@ -3,8 +3,8 @@ package sh.zoltus.onecore.player.command.commands.economy;
 import dev.jorel.commandapi.arguments.DoubleArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import sh.zoltus.onecore.OneEconomy;
 import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.User;
@@ -23,10 +23,10 @@ public class Economy implements IOneCommand {
                 command(ECONOMY_LABEL)
                         .withPermission(ECONOMY_PERMISSION)
                         .withAliases(ECONOMY_ALIASES)
-                        .executes((sender, args) -> {
+                       // .executes((sender, args) -> {
                             //todo
-                            sender.sendMessage("not done");
-                        })
+                        //    sender.sendMessage("not done");
+                       // })
                         .withSubcommands(pay, give, transfer, set, take)
                         .withSeparateSubcommands(balance, balance2, pay, balTop)
         };
@@ -43,7 +43,7 @@ public class Economy implements IOneCommand {
             .withPermission(ECONOMY_BALTOP_PERMISSION)
             .withAliases(ECONOMY_BALTOP_ALIASES)
             .executesPlayer((sender, args) -> {
-                if (Config.ECONOMY.getBoolean() && Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+                if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
                     sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
                     return;
                 }
