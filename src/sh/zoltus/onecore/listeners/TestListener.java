@@ -124,7 +124,6 @@ public class TestListener implements Listener {
                         Bukkit.getScheduler().runTaskAsynchronously(OneCore.getPlugin(), () -> {
                             long time = System.currentTimeMillis();
                             int i = Integer.parseInt(args[0]);
-
                             AsyncPlayerPreLoginEvent asyncPrejoin = new AsyncPlayerPreLoginEvent("Zoltus", Objects.requireNonNull(p.getAddress()).getAddress(), p.getUniqueId());
                             Bukkit.broadcastMessage("§8started");
                             while (i != 0) {

@@ -98,6 +98,11 @@ Data:
     # <mode>
     your-flight-is-now: '{p} Your flight was changed to <mode>!'
   gamemode:
+    # <mode> will be replaced with the gamemode name
+    survival: 'survival'
+    creative: 'creative'
+    adventure: 'adventure'
+    spectator: 'spectator'
     # <mode>
     changed: '{p} Your gamemode was switched to <mode>'
     invalid-gamemode: '{p} Invalid gamemode'

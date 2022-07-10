@@ -17,6 +17,9 @@ import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import static org.bukkit.GameMode.SURVIVAL;
+import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
@@ -45,9 +48,10 @@ public class Gamemode implements IOneCommand {
                         .withAliases(GAMEMODE_ALIASES)
                         .withArguments(gamemodeArgument())
                         .executesPlayer((player, args) -> {
-                            GameMode gm = (GameMode) args[0];
+                    GameMode gm = (GameMode) args[0];
+                    String gmName = getGmName(gm);
                     player.setGameMode(gm);
-                    player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gm.name()));
+                    player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gmName));
                 }),
                 //gamemode creative <player>
                 command(GAMEMODE_LABEL)
@@ -62,9 +66,10 @@ public class Gamemode implements IOneCommand {
 
     private void handleTarget(CommandSender sender, OfflinePlayer offTarget, GameMode gm) {
         Player target = offTarget.getPlayer();
+        String gmName = getGmName(gm);
         if (target != null && target == sender) {
             target.setGameMode(gm);
-            target.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gm.name()));
+            target.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gmName));
         } else {
             boolean gmChanged;
             //Change gamemodes
@@ -81,18 +86,29 @@ public class Gamemode implements IOneCommand {
                 nbtPlayer.save();
             }
             if (gmChanged) {
-                sender.sendMessage(GAMEMODE_TARGETS_GAMEMODE_CHANGED.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
+                sender.sendMessage(GAMEMODE_TARGETS_GAMEMODE_CHANGED
+                        .rp(MODE_PH, gmName, PLAYER_PH, offTarget.getName()));
             } else {
-                sender.sendMessage(GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.rp(MODE_PH, gm.name(), PLAYER_PH, offTarget.getName()));
+                sender.sendMessage(GAMEMODE_TARGET_ALREADY_IN_GAMEMODE
+                        .rp(MODE_PH, gmName, PLAYER_PH, offTarget.getName()));
             }
         }
+    }
+
+    private String getGmName(GameMode gm) {
+        return switch (gm) {
+            case SURVIVAL -> GAMEMODE_SURVIVAL.getString();
+            case CREATIVE -> GAMEMODE_CREATIVE.getString();
+            case ADVENTURE -> GAMEMODE_ADVENTURE.getString();
+            case SPECTATOR -> GAMEMODE_SPECTATOR.getString();
+        };
     }
 
     private GameMode getGamemode(String input) {
         Predicate<Commands> hasGm = (gamemodes) -> Arrays
                 .stream(gamemodes.getString().split(",")).anyMatch(input::equalsIgnoreCase);
         if (hasGm.test(GAMEMODE_ALIASES_SURVIVAL)) {
-            return GameMode.SURVIVAL;
+            return SURVIVAL;
         } else if (hasGm.test(GAMEMODE_ALIASES_CREATIVE)) {
             return GameMode.CREATIVE;
         } else if (hasGm.test(GAMEMODE_ALIASES_ADVENTURE)) {
@@ -103,5 +119,4 @@ public class Gamemode implements IOneCommand {
             return null;
         }
     }
-
 }

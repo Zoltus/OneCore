@@ -32,7 +32,7 @@
             - command /<cmd> messages
             - test gamemode changes.
             - gamemode messages to be able to translate gamemode words.
-            - eco logs
+            - Builder for sending msg
 
             Not important:
             - All teles&chunks to async for cmds
