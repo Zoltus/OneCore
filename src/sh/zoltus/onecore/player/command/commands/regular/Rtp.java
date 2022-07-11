@@ -93,9 +93,9 @@ public class Rtp implements IOneCommand {
     /**
      * Checks if player could break the block on the location
      *
-     * @param p   player
+     * @param p   Player
      * @param loc Location
-     * @return boolean
+     * @return    boolean
      */
     private boolean canBreak(Player p, Location loc) {
         BlockBreakEvent breakEvent = new BlockBreakEvent(loc.getBlock(), p);

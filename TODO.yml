@@ -25,14 +25,13 @@
           - "https://github.com/YouHaveTrouble/-optimization"
 
         Todo-----------:
+          - TEST EVERYTHING! (MOTIMMAA test)
+          - permissions
+          - Test economy. (OneEconomy and compability with other Economy plugins)
           Important:
-            - TEST EVERYTHING! (MOTIMMAA test)
-            - Test economy. (OneEconomy and compability with other Economy plugins)
             - Rtp improvements to async & create worker.
-            - command /<cmd> messages
-            - test gamemode changes.
-
             Not important:
+            - command /<cmd> messages? mayby
             - teleports dont work on spectatormode
             - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
             - listaliases option percommand
