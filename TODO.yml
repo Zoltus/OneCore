@@ -31,11 +31,10 @@
             - Rtp improvements to async & create worker.
             - command /<cmd> messages
             - test gamemode changes.
-            - gamemode messages to be able to translate gamemode words.
             - Builder for sending msg
+            - fix sign hex color.
 
             Not important:
-            - All teles&chunks to async for cmds
             - teleports dont work on spectatormode
             - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
             - listaliases option percommand

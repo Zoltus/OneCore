@@ -1,9 +1,11 @@
 package sh.zoltus.onecore.listeners;
 
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,12 +13,20 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.utils.ColorUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static sh.zoltus.onecore.configuration.yamls.Config.SIGN_COLOR_PERMISSION;
 import static sh.zoltus.onecore.configuration.yamls.Config.SIGN_EDIT_PERMISSION;
 
-public record SignHandler(OneCore plugin) implements Listener {
+public record SignColorHandler(OneCore plugin) implements Listener {
+
+    // for detecting #8f8f8f
+    private static final Pattern pattern = Pattern.compile("#\\p{XDigit}{6}");
+    // for detecting §x§8§f§8§f§8§f
+    private static final Pattern pattern2 = Pattern
+            .compile("&x&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}");
 
     /**
      * Sign save converts Readable colors to Minecraft colors §.
@@ -28,7 +38,7 @@ public record SignHandler(OneCore plugin) implements Listener {
         if (e.getPlayer().hasPermission(SIGN_COLOR_PERMISSION.getAsPermission())) {
             for (int line = 0; line < e.getLines().length; line++) {
                 String text = e.getLine(line);
-                e.setLine(line, ColorUtils.colorizeAll(text));
+                e.setLine(line, toMineHex(text));
             }
         }
     }
@@ -48,7 +58,7 @@ public record SignHandler(OneCore plugin) implements Listener {
             return;
 
         BlockState state = b.getState();
-        if (state instanceof org.bukkit.block.Sign sign) {
+        if (state instanceof Sign sign) {
             e.setCancelled(true);
             BlockBreakEvent breakEvent = new BlockBreakEvent(b, p);
             Bukkit.getServer().getPluginManager().callEvent(breakEvent);
@@ -66,13 +76,50 @@ public record SignHandler(OneCore plugin) implements Listener {
      * @param p    Player who views the sign
      * @param sign sign to be opened
      */
-    private void handleSignOpen(Player p, org.bukkit.block.Sign sign) {
+    private void handleSignOpen(Player p, Sign sign) {
         for (int line = 0; line < sign.getLines().length; line++) {
             String text = sign.getLine(line);
-            sign.setLine(line, ColorUtils.deColorizeAll(text));
+            sign.setLine(line, toNormal(text));
         }
         sign.update(true);
         //prevents bug with 2tick delay
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.openSign(sign), 2L);
     }
+
+
+    /**
+     * Converts §x§8§f§8§f§8§f to #8f8f8f
+     *
+     * @param message Message containing symbolized hex (§x§8§f§8§f§8§f)
+     * @return returns converted message
+     */
+    private String toNormal(String message) {
+        message = message.replaceAll("§", "&");
+        Matcher matcher = pattern2.matcher(message);
+        StringBuilder sb = new StringBuilder(message);
+        while (matcher.find()) {
+            String hex = matcher.group()
+                    .replaceAll("&", "")
+                    .replaceFirst("x", "#");
+            sb.replace(matcher.start(), matcher.end(), hex);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Converts #8f8f8f to §x§8§f§8§f§8§f
+     *
+     * @param message Message containing hex (#8f8f8f)
+     * @return returns converted message
+     */
+    private String toMineHex(String message) {
+        Matcher matcher = pattern.matcher(message);
+        StringBuilder sb = new StringBuilder(message);
+        while (matcher.find()) {
+            String color = matcher.group();
+            sb.replace(matcher.start(), matcher.end(), String.valueOf(ChatColor.of(color)));
+        }
+        return ChatColor.translateAlternateColorCodes('&', sb.toString());
+    }
+
 }
