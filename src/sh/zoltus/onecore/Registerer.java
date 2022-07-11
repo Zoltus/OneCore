@@ -36,7 +36,7 @@ public class Registerer {
                 new ChatColors(), new InvSeeHandler(),
                 new JoinHandler(), new Kick(),
                 new Mentions(), new PlayerJumpEvent(),
-                new QuitListener(), new SignHandler(plugin),
+                new QuitListener(), new SignColorHandler(plugin),
                 new TeleportHandler(), new TestListener(),
                 new TeleportVelocity()
         };
