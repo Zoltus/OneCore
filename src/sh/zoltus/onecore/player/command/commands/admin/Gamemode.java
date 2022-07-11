@@ -18,8 +18,6 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import static org.bukkit.GameMode.SURVIVAL;
-import static sh.zoltus.onecore.configuration.yamls.Commands.MODE_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;

@@ -8,12 +8,6 @@ import sh.zoltus.onecore.listeners.tweaks.Kick;
 import sh.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.admin.*;
-import sh.zoltus.onecore.player.command.commands.regular.Economy;
-import sh.zoltus.onecore.player.command.commands.regular.DelHome;
-import sh.zoltus.onecore.player.command.commands.regular.Home;
-import sh.zoltus.onecore.player.command.commands.regular.SetHome;
-import sh.zoltus.onecore.player.command.commands.regular.EnderChest;
-import sh.zoltus.onecore.player.command.commands.regular.Invsee;
 import sh.zoltus.onecore.player.teleporting.TeleportHandler;
 import sh.zoltus.onecore.player.command.commands.regular.*;
 
