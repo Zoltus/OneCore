@@ -31,8 +31,6 @@
             - Rtp improvements to async & create worker.
             - command /<cmd> messages
             - test gamemode changes.
-            - Builder for sending msg
-            - fix sign hex color.
 
             Not important:
             - teleports dont work on spectatormode

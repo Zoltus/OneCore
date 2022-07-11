@@ -121,5 +121,4 @@ public record SignColorHandler(OneCore plugin) implements Listener {
         }
         return ChatColor.translateAlternateColorCodes('&', sb.toString());
     }
-
 }
