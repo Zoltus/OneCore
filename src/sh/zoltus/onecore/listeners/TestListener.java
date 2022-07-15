@@ -12,7 +12,8 @@ import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
-import sh.zoltus.onecore.utils.LocationUtils;
+import sh.zoltus.onecore.player.teleporting.LocationUtils;
+import sh.zoltus.onecore.utils.SlowingScheduler;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -138,7 +139,26 @@ public class TestListener implements Listener {
                     LocationUtils.teleportSafeAsync(p, new Location(loc.getWorld(), 0, 70, 0));
                     p.sendMessage("asd");
                 }
+                case "/rtp2" -> {
+                    OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
+                }
+                case "/rtptimer" -> {
+                    int i = Integer.parseInt(args[0]);
+                    OneCore.getPlugin().getRtpHandler().changeQueueTimer(i);
+                }
+                case "/sht" -> {
+                    int i = Integer.parseInt(args[0]);
+                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i,false, () -> {
+                        p.sendMessage("Task " + i);
+                    });
+                }
+
+                case "/shtset" -> {
+                    int i = Integer.parseInt(args[0]);
+                    scheduler.reSchedule(i);
+                }
             }
         }
     }
+    public static SlowingScheduler scheduler;
 }

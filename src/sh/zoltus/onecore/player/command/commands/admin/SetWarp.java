@@ -4,7 +4,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.regular.Warp;
-import sh.zoltus.onecore.utils.PreLocation;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_WARP_NAME;

@@ -13,8 +13,8 @@ import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.teleporting.Request;
 import sh.zoltus.onecore.player.teleporting.Teleport;
-import sh.zoltus.onecore.utils.LocationUtils;
-import sh.zoltus.onecore.utils.PreLocation;
+import sh.zoltus.onecore.player.teleporting.LocationUtils;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.util.*;
 

@@ -14,7 +14,7 @@ import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
-import sh.zoltus.onecore.utils.PreLocation;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
