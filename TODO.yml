@@ -28,6 +28,7 @@
           - TEST EVERYTHING! (MOTIMMAA test)
           - permissions
           - Test economy. (OneEconomy and compability with other Economy plugins)
+          - Fix teleporthandler
           Important:
             - Rtp improvements to async & create worker.
             Not important:

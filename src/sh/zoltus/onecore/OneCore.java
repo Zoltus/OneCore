@@ -21,6 +21,7 @@ import sh.zoltus.onecore.configuration.yamls.Lang;
 import sh.zoltus.onecore.database.Database;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.listeners.ConsoleFilter;
+import sh.zoltus.onecore.player.teleporting.RTPHandler;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,14 +37,14 @@ import java.util.stream.Stream;
 //@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
+@Getter
 public class OneCore extends JavaPlugin implements Listener {
 
     @Getter
     private static OneCore plugin;
-    @Getter
     private Economy vault;
-    @Getter
     private Registerer registerer;
+    private RTPHandler rtpHandler;
 
     //https://github.com/GeertBraakman/xLib/blob/master/src/main/java/io/github/geertbraakman/v0_3_4/api/command/APICommand.java
     //https://github.com/TheMode/CommandBuilder/tree/master/src/main/java/fr/themode/command
@@ -60,6 +61,7 @@ public class OneCore extends JavaPlugin implements Listener {
         Database.init(this); // Loads db & baltop todo only obj or static
         this.vault = hookEconomy();// Hooks economy if its enabled on config.
         this.registerer = Registerer.create(this);// Register listeners & Commands
+        this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         this.initMetrics(); // Inits metrics
         this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set

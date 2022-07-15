@@ -16,7 +16,7 @@ import sh.zoltus.onecore.configuration.yamls.Config;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.commands.regular.Spawn;
 import sh.zoltus.onecore.player.command.commands.regular.Warp;
-import sh.zoltus.onecore.utils.PreLocation;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.lang.reflect.Type;
 import java.nio.file.Files;

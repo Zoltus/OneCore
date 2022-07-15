@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.player.command.User;
-import sh.zoltus.onecore.utils.PreLocation;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.util.Objects;
 

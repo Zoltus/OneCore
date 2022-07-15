@@ -1,4 +1,4 @@
-package sh.zoltus.onecore.utils;
+package sh.zoltus.onecore.player.teleporting;
 
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;

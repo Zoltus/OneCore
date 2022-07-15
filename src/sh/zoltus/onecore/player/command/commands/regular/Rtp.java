@@ -9,7 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import sh.zoltus.onecore.configuration.yamls.Config;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.utils.LocationUtils;
+import sh.zoltus.onecore.player.teleporting.LocationUtils;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
