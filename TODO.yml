@@ -32,7 +32,7 @@
           Important:
             - Rtp improvements to async & create worker.
             Not important:
-            - command /<cmd> messages? mayby
+            - command /<cmd> messages? vanilla doesnt have this
             - teleports dont work on spectatormode
             - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
             - listaliases option percommand
@@ -47,7 +47,6 @@
             - butcher, finish all cmds
             - warps,motd,warps to settings class with @data, or any better system than current
             - Go throught yml namings & comments.
-
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
         - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue
