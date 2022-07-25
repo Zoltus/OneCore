@@ -27,7 +27,6 @@ public record SignColorHandler(OneCore plugin) implements Listener {
     // for detecting §x§8§f§8§f§8§f
     private static final Pattern pattern2 = Pattern
             .compile("&x&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}");
-
     /**
      * Sign save converts Readable colors to Minecraft colors §.
      *
