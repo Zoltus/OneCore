@@ -43,7 +43,7 @@ Data:
     # <player>
     target-sent: '{p} Sent <player> to location'
   broadcast:
-    prefix: '[Prefix]'
+    prefix: '&8&l[&c&lIlmoitus&8&l] &7'
   clear:
     player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&lcleared'
   delhome:

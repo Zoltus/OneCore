@@ -64,9 +64,7 @@ public class Repair implements IOneCommand {
                         .withPermission(REPAIR_PERMISSION)
                         .withAliases(REPAIR_ALIASES)
                         .withArguments(slotArg(), new PlayerArgument())
-                        .executes((sender, args) -> {
-                    handleRepair(sender, (Player) args[1], (String) args[0]);
-                })
+                        .executes((sender, args) -> handleRepair(sender, (Player) args[1], (String) args[0]))
         };
     }
 

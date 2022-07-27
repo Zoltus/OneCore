@@ -13,7 +13,7 @@ Data:
   broadcast:
     aliases: bc
     enabled: true
-    label: broadcasta
+    label: broadcast
     permission: broadcast
   clearchat:
     aliases: cc

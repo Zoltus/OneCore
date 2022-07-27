@@ -28,9 +28,7 @@ public class DelHome implements IOneCommand {
                         .withPermission(DELHOME_PERMISSION)
                         .withAliases(DELHOME_ALIASES)
                         .withArguments(new HomeArg0(), new HomeArg1())
-                        .executes((sender, args) -> {
-                    HomeHandler.handle(sender, Bukkit.getOfflinePlayer((String) args[0]), (String) args[0], HomeAction.DELETE);
-                }),
+                        .executes((sender, args) -> HomeHandler.handle(sender, Bukkit.getOfflinePlayer((String) args[0]), (String) args[0], HomeAction.DELETE)),
         };
     }
 }

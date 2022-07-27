@@ -1,8 +1,15 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
+import dev.jorel.commandapi.CommandTree;
+import dev.jorel.commandapi.arguments.ChatArgument;
+import dev.jorel.commandapi.arguments.LiteralArgument;
+import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import lombok.Getter;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -60,12 +67,28 @@ public class OneCore extends JavaPlugin implements Listener {
         long time = System.currentTimeMillis();
         Database.init(this); // Loads db & baltop todo only obj or static
         this.vault = hookEconomy();// Hooks economy if its enabled on config.
-        this.registerer = Registerer.create(this);// Register listeners & Commands
+        this.registerer = Registerer.init(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         this.initMetrics(); // Inits metrics
         this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         System.out.println("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+        testCmd();
+    }
+
+    public void testCmd() {
+        new CommandTree("test0")
+                .withPermission("test0")
+                .withAliases("test0")
+                .executesPlayer((sender, args) -> {
+                    System.out.println("test0");
+                })
+                .then(new LiteralArgument("test1").executesPlayer((sender, args) -> {
+                    System.out.println("test1");
+                }))
+                .then(new LiteralArgument("test2").executesPlayer((sender, args) -> {
+                    System.out.println("test2");
+                })).register();
     }
 
     @Override

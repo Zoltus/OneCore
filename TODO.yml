@@ -29,6 +29,8 @@
           - permissions
           - Test economy. (OneEconomy and compability with other Economy plugins)
           - Fix teleporthandler
+          - Custom oreshift generator
+          - signedit
           Important:
             - Rtp improvements to async & create worker.
             Not important:

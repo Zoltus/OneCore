@@ -29,9 +29,7 @@ public class Top implements IOneCommand {
                         .withPermission(TOP_OTHER_PERMISSION)
                         .withAliases(TOP_ALIASES)
                         .withArguments(new PlayerArgument())
-                        .executes((sender, args) -> {
-                    executes(sender, (Player) args[0]);
-                }),
+                        .executes((sender, args) -> executes(sender, (Player) args[0])),
         };
     }
 

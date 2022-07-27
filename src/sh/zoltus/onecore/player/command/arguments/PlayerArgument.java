@@ -8,7 +8,7 @@ public class PlayerArgument extends dev.jorel.commandapi.arguments.PlayerArgumen
     public PlayerArgument() {
         this("");
     }
-
+    //todo remove @everyone from this arg switch to entityselector
     public PlayerArgument(String add) {
         super(NODES_PLAYER.getString() + add);
     }

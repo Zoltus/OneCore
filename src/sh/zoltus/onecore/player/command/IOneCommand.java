@@ -1,6 +1,9 @@
 package sh.zoltus.onecore.player.command;
 
 import dev.jorel.commandapi.CommandAPI;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import sh.zoltus.onecore.OneCore;
@@ -39,6 +42,10 @@ public interface IOneCommand {
         //But instead I have /speed <amount> ect
         //todo system/list for apicommands registered so could use overridelike system
         Stream.of(cmds).forEach(ApiCommand::register);
+    }
+
+    default BaseComponent[] toComponents(String text) {
+        return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', text));
     }
 
     default String[] toSuggestion(String input, String[] list) {

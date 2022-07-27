@@ -18,9 +18,7 @@ public class SystemInfo implements IOneCommand {
                 command(SYSTEM_LABEL)
                         .withPermission(SYSTEM_PERMISSION)
                         .withAliases(SYSTEM_ALIASES)
-                        .executes((sender, args) -> {
-                    sendSystemInfo(sender);
-                })
+                        .executes((sender, args) -> sendSystemInfo(sender))
         };
     }
 

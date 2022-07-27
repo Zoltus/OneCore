@@ -139,18 +139,14 @@ public class TestListener implements Listener {
                     LocationUtils.teleportSafeAsync(p, new Location(loc.getWorld(), 0, 70, 0));
                     p.sendMessage("asd");
                 }
-                case "/rtp2" -> {
-                    OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
-                }
+                case "/rtp2" -> OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
                 case "/rtptimer" -> {
                     int i = Integer.parseInt(args[0]);
                     OneCore.getPlugin().getRtpHandler().changeQueueTimer(i);
                 }
                 case "/sht" -> {
                     int i = Integer.parseInt(args[0]);
-                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i,false, () -> {
-                        p.sendMessage("Task " + i);
-                    });
+                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i,false, () -> p.sendMessage("Task " + i));
                 }
 
                 case "/shtset" -> {

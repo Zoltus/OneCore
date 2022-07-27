@@ -56,9 +56,7 @@ public class Gamemode implements IOneCommand {
                         .withPermission(GAMEMODE_OTHER_PERMISSION)
                         .withAliases(GAMEMODE_ALIASES)
                         .withArguments(gamemodeArgument(), new OfflinePlayerArgument())
-                        .executes((sender, args) -> {
-                    handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0]);
-                }),
+                        .executes((sender, args) -> handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0])),
         };
     }
 

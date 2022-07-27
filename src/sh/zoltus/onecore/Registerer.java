@@ -19,7 +19,7 @@ public class Registerer {
     private final IOneCommand[] cmds;
     private final OneCore plugin;
 
-    public static Registerer create(OneCore plugin) {
+    public static Registerer init(OneCore plugin) {
         Registerer registerer = plugin.getRegisterer();
         return registerer == null ? new Registerer(plugin) : registerer;
     }

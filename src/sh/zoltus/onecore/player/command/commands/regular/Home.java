@@ -36,9 +36,7 @@ public class Home implements IOneCommand {
                         .withPermission(HOME_PERMISSION)
                         .withAliases(HOME_ALIASES)
                         .withArguments(new HomeArg0(), new HomeArg1())
-                        .executes((sender, args) -> {
-                    HomeHandler.handle(sender, Bukkit.getOfflinePlayer((String) args[0]), (String) args[1], HomeAction.HOME);
-                }),
+                        .executes((sender, args) -> HomeHandler.handle(sender, Bukkit.getOfflinePlayer((String) args[0]), (String) args[1], HomeAction.HOME)),
         };
     }
 }
