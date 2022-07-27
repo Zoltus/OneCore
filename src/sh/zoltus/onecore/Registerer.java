@@ -43,7 +43,7 @@ public class Registerer {
                 new Ping(), new PlayTime(), new Reload(),
                 new Repair(), new Rtp(), new Seen(),
                 new SetHome(), new SetMaxPlayers(), new SetSpawn(),
-                new SetWarp(), new Spawn(), new Speed(),
+                new SetWarp(), new SignEdit(), new Spawn(), new Speed(),
                 new SystemInfo(), new Tp(), new Tpa(),
                 new Tpaccept(), new TpaHere(), new TpDeny(),
                 new TpToggle(), new Time(), new Top(),

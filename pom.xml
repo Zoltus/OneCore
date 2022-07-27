@@ -67,13 +67,6 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <!-- PaperAPI
-        <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency> -->
         <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -81,7 +74,7 @@
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Spigot, has some dependencies, log4j, sqlite ect-->
+        <!-- Spigot, has some dependencies, log4 ect-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
@@ -89,13 +82,13 @@
             <scope>provided</scope>
         </dependency>
         <!-- Spigot Server,
-        Github cant build with this and prevents version support anyways.
+        Github cant build with this and prevents version support anyways.-->
           <dependency>
              <groupId>org.spigotmc</groupId>
              <artifactId>minecraft-server</artifactId>
              <version>${spigot.server.version}</version>
              <scope>provided</scope>
-         </dependency>-->
+         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>plugin-annotations</artifactId>

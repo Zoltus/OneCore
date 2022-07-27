@@ -185,6 +185,11 @@ Data:
     label: spawn
     permission: spawn
     permission-other: spawn.other
+  signedit:
+    aliases: ''
+    enabled: true
+    label: signedit
+    permission: signedit
   speed:
     aliases: ''
     enabled: true
