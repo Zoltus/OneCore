@@ -26,29 +26,26 @@
 
         Todo-----------:
           - TEST EVERYTHING! (MOTIMMAA test)
-          - permissions
-          - Test economy. (OneEconomy and compability with other Economy plugins)
           - Fix teleporthandler
           - Custom oreshift generator
           - signedit
-          Important:
-            - Rtp improvements to async & create worker.
-            Not important:
-            - command /<cmd> messages? vanilla doesnt have this
-            - teleports dont work on spectatormode
-            - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
-            - listaliases option percommand
-            - admin cant set more homes to user if limit is full on the user
-            - permissions are in config and in language file
-            - spawn and warps to yml
-            - lang homes to same category, undet home.sethome, home.delhome ect
-            - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"
-            - https://www.youtube.com/watch?v=AbQeo6Zob_M
-            - rename jar
-            - link balance table?
-            - butcher, finish all cmds
-            - warps,motd,warps to settings class with @data, or any better system than current
-            - Go throught yml namings & comments.
+        Important:
+          - Rtp improvements to async & create worker.
+        Not important:
+          - teleports dont work on spectatormode
+          - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
+          - listaliases option percommand
+          - admin cant set more homes to user if limit is full on the user
+          - permissions are in config and in language file
+          - spawn and warps to yml
+          - lang homes to same category, undet home.sethome, home.delhome ect
+          - Duplicate-uuid-resolver paperyml for  "UUID of added entity already exists:"
+          - https://www.youtube.com/watch?v=AbQeo6Zob_M
+          - rename jar
+          - link balance table?
+          - butcher, finish all cmds
+          - warps,motd,warps to settings class with @data, or any better system than current
+          - Go throught yml namings & comments.
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
         - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue

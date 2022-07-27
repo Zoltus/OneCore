@@ -92,7 +92,7 @@ public record SignColorHandler(OneCore plugin) implements Listener {
      * @param message Message containing symbolized hex (§x§8§f§8§f§8§f)
      * @return returns converted message
      */
-    private String toNormal(String message) {
+    public static String toNormal(String message) {
         message = message.replaceAll("§", "&");
         Matcher matcher = pattern2.matcher(message);
         StringBuilder sb = new StringBuilder(message);
@@ -111,7 +111,7 @@ public record SignColorHandler(OneCore plugin) implements Listener {
      * @param message Message containing hex (#8f8f8f)
      * @return returns converted message
      */
-    private String toMineHex(String message) {
+    public static String toMineHex(String message) {
         Matcher matcher = pattern.matcher(message);
         StringBuilder sb = new StringBuilder(message);
         while (matcher.find()) {

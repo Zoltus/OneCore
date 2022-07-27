@@ -13,10 +13,6 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN_HEAL
 public class Feed implements IOneCommand {
     @Override
     public void init() {
-
-
-
-
         //feed
         command(FEED_LABEL)
                 .withPermission(FEED_PERMISSION)
