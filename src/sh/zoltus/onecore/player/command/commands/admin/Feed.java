@@ -2,7 +2,6 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -12,28 +11,31 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.FEED_YOU_FED_TARGET;
 import static sh.zoltus.onecore.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN_HEALED;
 
 public class Feed implements IOneCommand {
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //feed
-                command(FEED_LABEL)
-                        .withPermission(FEED_PERMISSION)
-                        .withAliases(FEED_ALIASES)
-                        .executesPlayer((player, args) -> {
+    @Override
+    public void init() {
+
+
+
+
+        //feed
+        command(FEED_LABEL)
+                .withPermission(FEED_PERMISSION)
+                .withAliases(FEED_ALIASES)
+                .executesPlayer((player, args) -> {
                     feed(player);
-                }),
-                //feed <player>
-                command(FEED_LABEL)
-                        .withPermission(FEED_PERMISSION_OTHER)
-                        .withAliases(FEED_ALIASES)
-                        .withArguments(new OfflinePlayerArgument())
-                        .executes((sender, args) -> {
+                }).register();
+        //feed <player>
+        command(FEED_LABEL)
+                .withPermission(FEED_PERMISSION_OTHER)
+                .withAliases(FEED_ALIASES)
+                .withArguments(new OfflinePlayerArgument())
+                .executes((sender, args) -> {
                     OfflinePlayer target = (OfflinePlayer) args[0];
                     feed(target);
                     if (target.getPlayer() != sender) {
                         sender.sendMessage(FEED_YOU_FED_TARGET.rp(PLAYER_PH, target.getName()));
                     }
-                })
-        };
+                }).register();
     }
 
     // Feeds player

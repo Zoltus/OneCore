@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.configuration.yamls.Commands;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 
@@ -26,24 +25,24 @@ public class Time implements IOneCommand {
                 ));
     }
 
-    public ApiCommand[] getCommands() {
+    @Override
+    public void init() {
         registerSingleWordTime();
-        return new ApiCommand[]{
-                //TIME <TIME>
-                command(TIME_LABEL)
-                        .withPermission(TIME_PERMISSION)
-                        .withAliases(TIME_ALIASES)
-                        .withArguments(timeArg())
-                        .executesPlayer((p, args) -> {
+        //TIME <TIME>
+        command(TIME_LABEL)
+                .withPermission(TIME_PERMISSION)
+                .withAliases(TIME_ALIASES)
+                .withArguments(timeArg())
+                .executesPlayer((p, args) -> {
                     changeTime(p, (long) args[0], p.getWorld());
-                }),
-                //TIME <TIME> <world>
-                command(TIME_LABEL)
-                        .withPermission(TIME_PERMISSION)
-                        .withAliases(TIME_ALIASES)
-                        .withArguments(timeArg(), new WorldsArgument())
-                        .executes((sender, args) -> changeTime(sender, (long) args[0], (World) args[1]))
-        };
+                }).register();
+        //TIME <TIME> <world>
+        command(TIME_LABEL)
+                .withPermission(TIME_PERMISSION)
+                .withAliases(TIME_ALIASES)
+                .withArguments(timeArg(), new WorldsArgument())
+                .executes((sender, args) -> changeTime(sender, (long) args[0], (World) args[1]))
+                .register();
     }
 
     /**

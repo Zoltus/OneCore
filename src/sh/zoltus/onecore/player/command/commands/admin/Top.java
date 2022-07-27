@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
@@ -15,22 +14,21 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.TOP_TELPORTED;
 
 public class Top implements IOneCommand {
     @Override
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //top
-                command(TOP_LABEL)
-                        .withPermission(TOP_PERMISSION)
-                        .withAliases(TOP_ALIASES)
-                        .executesPlayer((p, args) -> {
+    public void init() {
+        //top
+        command(TOP_LABEL)
+                .withPermission(TOP_PERMISSION)
+                .withAliases(TOP_ALIASES)
+                .executesPlayer((p, args) -> {
                     executes(p, p);
-                }),
-                //top <player>
-                command(TOP_LABEL)
-                        .withPermission(TOP_OTHER_PERMISSION)
-                        .withAliases(TOP_ALIASES)
-                        .withArguments(new PlayerArgument())
-                        .executes((sender, args) -> executes(sender, (Player) args[0])),
-        };
+                }).register();
+        //top <player>
+        command(TOP_LABEL)
+                .withPermission(TOP_OTHER_PERMISSION)
+                .withAliases(TOP_ALIASES)
+                .withArguments(new PlayerArgument())
+                .executes((sender, args) -> executes(sender, (Player) args[0]))
+                .register();
     }
 
     private void executes(CommandSender sender, Player target) {

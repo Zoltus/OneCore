@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -22,25 +21,24 @@ public class Spawn implements IOneCommand {
     private static PreLocation spawn;
 
     @Override
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //spawn
-                command(SPAWN_LABEL)
-                        .withPermission(SPAWN_PERMISSION)
-                        .withAliases(SPAWN_ALIASES)
-                        .executesUser((user, args) -> {
+    public void init() {
+        //spawn
+        command(SPAWN_LABEL)
+                .withPermission(SPAWN_PERMISSION)
+                .withAliases(SPAWN_ALIASES)
+                .executesUser((user, args) -> {
                     if (spawn == null) {
                         user.sendMessage(SPAWN_IS_NOT_SET.getString());
                     } else {
                         user.teleportTimer(spawn.toLocation());
                     }
-                }),
-                //spawn <player>
-                command(SPAWN_LABEL)
-                        .withPermission(SPAWN_PERMISSION_OTHER)
-                        .withAliases(SPAWN_ALIASES)
-                        .withArguments(new OfflinePlayerArgument())
-                        .executes((sender, args) -> {
+                }).register();
+        //spawn <player>
+        command(SPAWN_LABEL)
+                .withPermission(SPAWN_PERMISSION_OTHER)
+                .withAliases(SPAWN_ALIASES)
+                .withArguments(new OfflinePlayerArgument())
+                .executes((sender, args) -> {
                     if (spawn == null) {
                         sender.sendMessage(SPAWN_IS_NOT_SET.getString());
                     } else {
@@ -58,7 +56,6 @@ public class Spawn implements IOneCommand {
                             sender.sendMessage(SPAWN_TARGET_SENT.rp(PLAYER_PH, offTarget.getName()));
                         }
                     }
-                })
-        };
+                }).register();
     }
 }

@@ -2,7 +2,6 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.configuration.Yamls;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.util.stream.Stream;
@@ -13,12 +12,12 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.RELOAD_RELOADING;
 
 public class Reload implements IOneCommand {
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //onecore reload todo onecore reload all/config
-                command(plugin.getName())
-                        .withAliases("oc")
-                        .withSubcommand(
+    @Override
+    public void init() {
+        //onecore reload todo onecore reload all/config
+        command(plugin.getName())
+                .withAliases("oc")
+                .withSubcommand(
                         command(RELOAD_LABEL)
                                 .withPermission(RELOAD_PERMISSION)
                                 .withAliases(RELOAD_ALIASES)
@@ -30,8 +29,8 @@ public class Reload implements IOneCommand {
                                         //Sets all data to enums
                                         sender.sendMessage(RELOAD_RELOADED.getString());
                                     });
-                                }))
+                                })).register();
 
-        };
+
     }
 }

@@ -33,7 +33,7 @@ public class RTPHandler {
     private RTPHandler(OneCore plugin) {
         this.plugin = plugin;
         this.slowingScheduler = new SlowingScheduler(plugin, tickSpeed, false, () -> {
-            Bukkit.broadcastMessage("Tick");
+            //Bukkit.broadcastMessage("Tick");
             if (!playerQueue.isEmpty() && playerQueue.peek() != null) {
                 UUID uuid = playerQueue.poll();
                 Player player = Bukkit.getPlayer(uuid);

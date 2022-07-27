@@ -17,19 +17,19 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Economy implements IOneCommand {
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                // Economy
-                command(ECONOMY_LABEL)
-                        .withPermission(ECONOMY_PERMISSION)
-                        .withAliases(ECONOMY_ALIASES)
-                       // .executes((sender, args) -> {
-                            //todo
-                        //    sender.sendMessage("not done");
-                       // })
-                        .withSubcommands(pay, give, transfer, set, take)
-                        .withSeparateSubcommands(balance, balance2, pay, balTop)
-        };
+    @Override
+    public void init() {
+        // Economy
+        command(ECONOMY_LABEL)
+                .withPermission(ECONOMY_PERMISSION)
+                .withAliases(ECONOMY_ALIASES)
+                // .executes((sender, args) -> {
+                //todo
+                //    sender.sendMessage("not done");
+                // })
+                .withSubcommands(pay, give, transfer, set, take)
+                .withSeparateSubcommands(balance, balance2, pay, balTop)
+                .register();
     }
 
     // balance

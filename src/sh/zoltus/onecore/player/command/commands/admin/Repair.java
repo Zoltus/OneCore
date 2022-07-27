@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
@@ -41,31 +40,31 @@ public class Repair implements IOneCommand {
         }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), slots.toArray(new String[0]))));
     }
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //repair (hand)
-                command(REPAIR_LABEL)
-                        .withPermission(REPAIR_PERMISSION)
-                        .withAliases(REPAIR_ALIASES)
-                        .executesPlayer((p, args) -> {
+    @Override
+    public void init() {
+        //repair (hand)
+        command(REPAIR_LABEL)
+                .withPermission(REPAIR_PERMISSION)
+                .withAliases(REPAIR_ALIASES)
+                .executesPlayer((p, args) -> {
                     handleRepair(p, p, slots.get(0));
-                }),
-                //repair <hand/all>
-                command(REPAIR_LABEL)
-                        .withPermission(REPAIR_PERMISSION)
-                        .withAliases(REPAIR_ALIASES)
-                        .withArguments(slotArg())
-                        .executesPlayer((p, args) -> {
+                }).register();
+        //repair <hand/all>
+        command(REPAIR_LABEL)
+                .withPermission(REPAIR_PERMISSION)
+                .withAliases(REPAIR_ALIASES)
+                .withArguments(slotArg())
+                .executesPlayer((p, args) -> {
                     handleRepair(p, p, (String) args[0]);
-                }),
+                }).register();
 
-                //repair <hand/all> <player>
-                command(REPAIR_LABEL)
-                        .withPermission(REPAIR_PERMISSION)
-                        .withAliases(REPAIR_ALIASES)
-                        .withArguments(slotArg(), new PlayerArgument())
-                        .executes((sender, args) -> handleRepair(sender, (Player) args[1], (String) args[0]))
-        };
+        //repair <hand/all> <player>
+        command(REPAIR_LABEL)
+                .withPermission(REPAIR_PERMISSION)
+                .withAliases(REPAIR_ALIASES)
+                .withArguments(slotArg(), new PlayerArgument())
+                .executes((sender, args) -> handleRepair(sender, (Player) args[1], (String) args[0]))
+                .register();
     }
 
     private void handleRepair(CommandSender sender, Player target, String slot) {
