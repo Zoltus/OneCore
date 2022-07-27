@@ -42,9 +42,7 @@ public class Time implements IOneCommand {
                         .withPermission(TIME_PERMISSION)
                         .withAliases(TIME_ALIASES)
                         .withArguments(timeArg(), new WorldsArgument())
-                        .executes((sender, args) -> {
-                    changeTime(sender, (long) args[0], (World) args[1]);
-                })
+                        .executes((sender, args) -> changeTime(sender, (long) args[0], (World) args[1]))
         };
     }
 

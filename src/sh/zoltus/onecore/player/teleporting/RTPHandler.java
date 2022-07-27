@@ -21,12 +21,13 @@ public class RTPHandler {
     //todo config to set queuetimer when low tps
     private final OneCore plugin;
     //todo to settings
-    private int tickSpeed = 100;
+    private final int tickSpeed = 100;
     private static RTPHandler rtpHandler;
     private final SlowingScheduler slowingScheduler;
     //Queue for teleports
     private final ConcurrentLinkedQueue<UUID> playerQueue = new ConcurrentLinkedQueue<>();
     //Map for cooldowns
+    //todo
     private final ConcurrentHashMap<UUID, Long> lastTeleportTime = new ConcurrentHashMap<>();
 
     private RTPHandler(OneCore plugin) {

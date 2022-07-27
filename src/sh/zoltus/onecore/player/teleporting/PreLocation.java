@@ -8,7 +8,6 @@ import org.bukkit.Location;
  * so it can be created before worlds are loaded
  */
 public class PreLocation {
-
     private final transient Location loc;
     private final String worldName;
     private final double x, y, z;

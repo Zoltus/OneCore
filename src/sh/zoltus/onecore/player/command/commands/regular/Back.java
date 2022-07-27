@@ -59,9 +59,7 @@ public class Back implements IOneCommand, Listener {
                         .withPermission(BACK_PERMISSION)
                         .withAliases(BACK_ALIASES)
                         .withArguments(backArg(), new PlayerArgument())
-                        .executes((sender, args) -> {
-                    executes(sender, (int) args[0], (Player) args[1]);
-                }),
+                        .executes((sender, args) -> executes(sender, (int) args[0], (Player) args[1])),
         };
     }
 

@@ -76,9 +76,7 @@ public class Economy implements IOneCommand {
             .withPermission(ECONOMY_BALANCE_PERMISSION)
             .withAliases(ECONOMY_BALANCE_ALIASES)
             .withArguments(new UserArgument())
-            .executes((sender, args) -> {
-                handleBalance(sender, (User) args[0]);
-            });
+            .executes((sender, args) -> handleBalance(sender, (User) args[0]));
 
     // pay <player> <amount>
     private final ApiCommand pay = command(ECONOMY_PAY_LABEL)

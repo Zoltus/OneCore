@@ -65,17 +65,13 @@ public class Speed implements IOneCommand {
                         .withPermission(SPEED_PERMISSION_OTHER)
                         .withAliases(SPEED_ALIASES)
                         .withArguments(speedIntArg(), new OfflinePlayerArgument())
-                        .executes((player, args) -> {
-                    handle(player, (OfflinePlayer) args[1], (float) args[0], null);
-                }),
+                        .executes((player, args) -> handle(player, (OfflinePlayer) args[1], (float) args[0], null)),
                 //speed <amount> <player> <fly/walk>
                 command(SPEED_LABEL)
                         .withPermission(SPEED_PERMISSION_OTHER)
                         .withAliases(SPEED_ALIASES)
                         .withArguments(speedIntArg(), new OfflinePlayerArgument(), speedModeArg())
-                        .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]);
-                })
+                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]))
         };
     }
 

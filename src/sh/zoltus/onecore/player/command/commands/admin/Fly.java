@@ -28,17 +28,13 @@ public class Fly implements IOneCommand {
                         .withPermission(FLY_PERMISSION_OTHER)
                         .withAliases(FLY_ALIASES)
                         .withArguments(new OfflinePlayerArgument())
-                        .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[0], null);
-                }),
+                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], null)),
                 //fly zoltus true/false
                 command(FLY_LABEL)
                         .withPermission(FLY_PERMISSION_OTHER)
                         .withAliases(FLY_ALIASES)
                         .withArguments(new OfflinePlayerArgument(), new BooleanArgument(NODES_TRUE_FALSE.getString()))
-                        .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[0], (Boolean) args[1]);
-                })
+                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], (Boolean) args[1]))
         };
     }
 

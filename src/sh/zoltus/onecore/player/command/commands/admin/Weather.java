@@ -46,9 +46,7 @@ public class Weather implements IOneCommand {
                         .withPermission(WEATHER_PERMISSION)
                         .withAliases(WEATHER_ALIASES)
                         .withArguments(weatherArgument(), new WorldsArgument())
-                        .executes((sender, args) -> {
-                    changeWeather(sender, args[0], args[1]);
-                })
+                        .executes((sender, args) -> changeWeather(sender, args[0], args[1]))
         };
     }
 

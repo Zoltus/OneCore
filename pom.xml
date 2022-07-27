@@ -59,6 +59,11 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
+        <!-- CommandApiSnapshot -->
+        <repository>
+            <id>oss.sonatype.org-snapshot</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
     </repositories>
     <!-- Dependencies -->
     <dependencies>
@@ -76,12 +81,13 @@
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--  <dependency>
+        <!-- Spigot, has some dependencies, log4j, sqlite ect-->
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
-        </dependency> -->
+        </dependency>
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.
           <dependency>
@@ -114,7 +120,7 @@
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-shade</artifactId>
-            <version>${commandapi.version}</version>
+            <version>8.5.0-SNAPSHOT</version>
         </dependency>
         <!-- bstats -->
         <dependency>
@@ -220,9 +226,13 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
                         </relocation>
+                        <!--<relocation>
+                         <pattern>dev.jorel</pattern>
+                         <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
+                     </relocation>-->
                         <relocation>
-                            <pattern>dev.jorel</pattern>
-                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>sh.zoltus.apis.net.kyori</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.tr7zw</pattern>
@@ -236,37 +246,37 @@
                 </configuration>
             </plugin>
             <!--<plugin>
-                <groupId>com.github.wvengen</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
-                <version>2.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>proguard</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <obfuscate>true</obfuscate>
-                    <injar>${project.build.finalName}.jar</injar>
-                    <outjar>${project.build.finalName}-proguard.jar</outjar>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                    <proguardInclude>${basedir}/proguard.conf</proguardInclude>
-                    <libs>
-                        <lib>${java.home}/jmods/java.base.jmod</lib>
-                   </libs>
-                    <options>
-                        <option>-dontnote</option>
-                        <option>-dontwarn</option>
-                        <option>-dontshrink</option>
-                        <option>-dontoptimize</option>
-                        <option>-repackageclasses 'sh.zoltus.onecore'</option>
-                        <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
-                        <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
-                        <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
-                    </options>
-                </configuration>
+             <groupId>com.github.wvengen</groupId>
+             <artifactId>proguard-maven-plugin</artifactId>
+             <version>2.5.3</version>
+             <executions>
+                 <execution>
+                     <phase>package</phase>
+                     <goals>
+                         <goal>proguard</goal>
+                     </goals>
+                 </execution>
+             </executions>
+             <configuration>
+                 <obfuscate>true</obfuscate>
+                 <injar>${project.build.finalName}.jar</injar>
+                 <outjar>${project.build.finalName}-proguard.jar</outjar>
+                 <outputDirectory>${project.build.directory}</outputDirectory>
+                 <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                 <libs>
+                     <lib>${java.home}/jmods/java.base.jmod</lib>
+                </libs>
+                 <options>
+                     <option>-dontnote</option>
+                     <option>-dontwarn</option>
+                     <option>-dontshrink</option>
+                     <option>-dontoptimize</option>
+                     <option>-repackageclasses 'sh.zoltus.onecore'</option>
+                     <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
+                     <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
+                     <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
+                 </options>
+             </configuration>
             </plugin>-->
         </plugins>
     </build>
