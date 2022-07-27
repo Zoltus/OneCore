@@ -2,7 +2,6 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import org.bukkit.Bukkit;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.lang.reflect.Field;
@@ -14,14 +13,13 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.SETMAXPLAYERS_SET;
 public class SetMaxPlayers implements IOneCommand {
 
     @Override
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //setmaxplayers <amount>
-                command(SETMAXPLAYERS_LABEL)
-                        .withPermission(SETMAXPLAYERS_PERMISSION)
-                        .withAliases(SETMAXPLAYERS_ALIASES)
-                        .withArguments(new IntegerArgument(NODES_AMOUNT.getString()))
-                        .executesPlayer((p, args) -> {
+    public void init() {
+        //setmaxplayers <amount>
+        command(SETMAXPLAYERS_LABEL)
+                .withPermission(SETMAXPLAYERS_PERMISSION)
+                .withAliases(SETMAXPLAYERS_ALIASES)
+                .withArguments(new IntegerArgument(NODES_AMOUNT.getString()))
+                .executesPlayer((p, args) -> {
                     try {
                         int maxPlayers = (int) args[0];
                         setMaxPlayers(maxPlayers);
@@ -29,8 +27,7 @@ public class SetMaxPlayers implements IOneCommand {
                     } catch (ReflectiveOperationException e) {
                         p.sendMessage("Error changing max players!");
                     }
-                }),
-        };
+                }).register();
     }
 
     public static void setMaxPlayers(int amount) throws ReflectiveOperationException {

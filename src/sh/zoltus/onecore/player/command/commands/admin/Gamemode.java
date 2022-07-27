@@ -9,7 +9,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.configuration.yamls.Commands;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -38,26 +37,27 @@ public class Gamemode implements IOneCommand {
                 .strings((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr())));
     }
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //gamemode creative
-                command(GAMEMODE_LABEL)
-                        .withPermission(GAMEMODE_PERMISSION)
-                        .withAliases(GAMEMODE_ALIASES)
-                        .withArguments(gamemodeArgument())
-                        .executesPlayer((player, args) -> {
+    @Override
+    public void init() {
+        //gamemode creative
+        command(GAMEMODE_LABEL)
+                .withPermission(GAMEMODE_PERMISSION)
+                .withAliases(GAMEMODE_ALIASES)
+                .withArguments(gamemodeArgument())
+                .executesPlayer((player, args) -> {
                     GameMode gm = (GameMode) args[0];
                     String gmName = getGmName(gm);
                     player.setGameMode(gm);
                     player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gmName));
-                }),
-                //gamemode creative <player>
-                command(GAMEMODE_LABEL)
-                        .withPermission(GAMEMODE_OTHER_PERMISSION)
-                        .withAliases(GAMEMODE_ALIASES)
-                        .withArguments(gamemodeArgument(), new OfflinePlayerArgument())
-                        .executes((sender, args) -> handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0])),
-        };
+                }).register();
+        //gamemode creative <player>
+        command(GAMEMODE_LABEL)
+                .withPermission(GAMEMODE_OTHER_PERMISSION)
+                .withAliases(GAMEMODE_ALIASES)
+                .withArguments(gamemodeArgument(), new OfflinePlayerArgument())
+                .executes((sender, args) -> handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0]))
+                .register();
+
     }
 
     private void handleTarget(CommandSender sender, OfflinePlayer offTarget, GameMode gm) {

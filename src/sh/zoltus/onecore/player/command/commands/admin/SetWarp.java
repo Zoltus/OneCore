@@ -1,7 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.StringArgument;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.regular.Warp;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
@@ -12,8 +11,8 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.SETWARP_SET;
 
 public class SetWarp implements IOneCommand {
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
+    @Override
+    public void init() {
                 //setwarp <warp>
                 command(SETWARP_LABEL)
                         .withPermission(SETWARP_PERMISSION)
@@ -23,8 +22,7 @@ public class SetWarp implements IOneCommand {
                     String warp = (String) args[0];
                     Warp.getWarps().put(warp, new PreLocation(p.getLocation()));
                     p.sendMessage(SETWARP_SET.rp(WARP_PH, warp));
-                })
+                }).register();
                 //todo /setwarp <warp> <coords> new LocationArgument("location")
-        };
     }
 }

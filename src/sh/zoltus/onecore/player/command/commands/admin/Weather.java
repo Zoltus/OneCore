@@ -7,7 +7,6 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.configuration.yamls.Commands;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 
@@ -30,24 +29,24 @@ public class Weather implements IOneCommand {
         }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), WEATHER_SUGGESTIONS.getSplitArr())));
     }
 
-    public ApiCommand[] getCommands() {
-        //registerSingleWords();
-        return new ApiCommand[]{ //todo sameway than economy cmds
-                //weather <weather>
-                command(WEATHER_LABEL)
-                        .withPermission(WEATHER_PERMISSION)
-                        .withAliases(WEATHER_ALIASES)
-                        .withArguments(weatherArgument())
-                        .executesPlayer((p, args) -> {
+    @Override
+    public void init() {
+        //registerSingleWords(); //todo sameway than economy cmds
+        //weather <weather>
+        command(WEATHER_LABEL)
+                .withPermission(WEATHER_PERMISSION)
+                .withAliases(WEATHER_ALIASES)
+                .withArguments(weatherArgument())
+                .executesPlayer((p, args) -> {
                     changeWeather(p, args[0], p.getWorld());
-                }),
-                //weather <weather> <world>
-                command(WEATHER_LABEL)
-                        .withPermission(WEATHER_PERMISSION)
-                        .withAliases(WEATHER_ALIASES)
-                        .withArguments(weatherArgument(), new WorldsArgument())
-                        .executes((sender, args) -> changeWeather(sender, args[0], args[1]))
-        };
+                }).register();
+        //weather <weather> <world>
+        command(WEATHER_LABEL)
+                .withPermission(WEATHER_PERMISSION)
+                .withAliases(WEATHER_ALIASES)
+                .withArguments(weatherArgument(), new WorldsArgument())
+                .executes((sender, args) -> changeWeather(sender, args[0], args[1]))
+                .register();
     }
 
     /**

@@ -8,7 +8,6 @@ import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -51,28 +50,30 @@ public class Speed implements IOneCommand {
         }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), speedArgs.toArray(new String[0]))));
     }
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //speed <amount>
-                command(SPEED_LABEL)
-                        .withPermission(SPEED_PERMISSION)
-                        .withAliases(SPEED_ALIASES)
-                        .withArguments(speedIntArg())
-                        .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, (float) args[0], null)),
+    @Override
+    public void init() {
+        //speed <amount>
+        command(SPEED_LABEL)
+                .withPermission(SPEED_PERMISSION)
+                .withAliases(SPEED_ALIASES)
+                .withArguments(speedIntArg())
+                .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, (float) args[0], null))
+                .register();
 
-                //speed <amount> <player>
-                command(SPEED_LABEL)
-                        .withPermission(SPEED_PERMISSION_OTHER)
-                        .withAliases(SPEED_ALIASES)
-                        .withArguments(speedIntArg(), new OfflinePlayerArgument())
-                        .executes((player, args) -> handle(player, (OfflinePlayer) args[1], (float) args[0], null)),
-                //speed <amount> <player> <fly/walk>
-                command(SPEED_LABEL)
-                        .withPermission(SPEED_PERMISSION_OTHER)
-                        .withAliases(SPEED_ALIASES)
-                        .withArguments(speedIntArg(), new OfflinePlayerArgument(), speedModeArg())
-                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]))
-        };
+        //speed <amount> <player>
+        command(SPEED_LABEL)
+                .withPermission(SPEED_PERMISSION_OTHER)
+                .withAliases(SPEED_ALIASES)
+                .withArguments(speedIntArg(), new OfflinePlayerArgument())
+                .executes((player, args) -> handle(player, (OfflinePlayer) args[1], (float) args[0], null))
+                .register();
+        //speed <amount> <player> <fly/walk>
+        command(SPEED_LABEL)
+                .withPermission(SPEED_PERMISSION_OTHER)
+                .withAliases(SPEED_ALIASES)
+                .withArguments(speedIntArg(), new OfflinePlayerArgument(), speedModeArg())
+                .executes((sender, args) -> handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]))
+                .register();
     }
 
     private void handle(CommandSender sender, OfflinePlayer offTarget, float speed, String mode) {

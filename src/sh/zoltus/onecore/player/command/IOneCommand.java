@@ -1,6 +1,5 @@
 package sh.zoltus.onecore.player.command;
 
-import dev.jorel.commandapi.CommandAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -11,14 +10,13 @@ import sh.zoltus.onecore.configuration.IConfig;
 import sh.zoltus.onecore.configuration.OneYml;
 import sh.zoltus.onecore.configuration.Yamls;
 
-import java.util.stream.Stream;
-
 public interface IOneCommand {
 
     OneCore plugin = OneCore.getPlugin();
     OneYml cmds = Yamls.COMMANDS.getYml();
 
-    ApiCommand[] getCommands();
+    //Inits commands&registers sht
+    void init();
 
     //Short cut for making new ApiCommand("") todo add to ApiCommand class with static import
     default ApiCommand command(IConfig enumz) {
@@ -35,15 +33,13 @@ public interface IOneCommand {
         if (Listener.class.isAssignableFrom(getClass())) {
             Bukkit.getServer().getPluginManager().registerEvents((Listener) this, plugin);
         }
-        ApiCommand[] cmds = getCommands();
-        CommandAPI.unregister(cmds[0].getName(), true); //Gets cmd[0] so it unregisters core cmd only
-        //Override wont work because it would unregister other cmds,
-        //Override would work if all cmds would be as subcommands /home set, /home delete
-        //But instead I have /speed <amount> ect
+        init();
+        //todo check if needed
+        //CommandAPI.unregister(cmds[0].getName(), true); //Gets cmd[0] so it unregisters core cmd only
         //todo system/list for apicommands registered so could use overridelike system
-        Stream.of(cmds).forEach(ApiCommand::register);
     }
 
+    //For chatpreview
     default BaseComponent[] toComponents(String text) {
         return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', text));
     }

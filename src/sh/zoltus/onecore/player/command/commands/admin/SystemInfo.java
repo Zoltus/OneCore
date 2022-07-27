@@ -2,7 +2,6 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.io.File;
@@ -13,13 +12,13 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 public class SystemInfo implements IOneCommand {
 
     @Override
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                command(SYSTEM_LABEL)
-                        .withPermission(SYSTEM_PERMISSION)
-                        .withAliases(SYSTEM_ALIASES)
-                        .executes((sender, args) -> sendSystemInfo(sender))
-        };
+    public void init() {
+        command(SYSTEM_LABEL)
+                .withPermission(SYSTEM_PERMISSION)
+                .withAliases(SYSTEM_ALIASES)
+                .executes((sender, args) -> sendSystemInfo(sender))
+                .register();
+
     }
 
 

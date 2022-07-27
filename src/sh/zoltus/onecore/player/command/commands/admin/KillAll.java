@@ -7,7 +7,6 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.util.List;
@@ -17,28 +16,28 @@ import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class KillAll implements IOneCommand {
 
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                //killall <type>
-                command(KILLALL_LABEL)
-                        .withPermission(KILLALL_PERMISSION)
-                        .withAliases(KILLALL_ALIASES)
-                        .withArguments(entityArg())
-                        .executesPlayer((p, args) -> {
+    @Override
+    public void init() {
+        //killall <type>
+        command(KILLALL_LABEL)
+                .withPermission(KILLALL_PERMISSION)
+                .withAliases(KILLALL_ALIASES)
+                .withArguments(entityArg())
+                .executesPlayer((p, args) -> {
                     EntityType type = (EntityType) args[0];
                     removeEntities(p, type, "*", p.getWorld().getEntities());
-                }),
+                }).register();
 
-                //killall <type> <range>
-                command(KILLALL_LABEL)
-                        .withPermission(KILLALL_PERMISSION)
-                        .withAliases(KILLALL_ALIASES)
-                        .withArguments(entityArg(), rangeArgument())
-                        .executesPlayer((p, args) -> {
+        //killall <type> <range>
+        command(KILLALL_LABEL)
+                .withPermission(KILLALL_PERMISSION)
+                .withAliases(KILLALL_ALIASES)
+                .withArguments(entityArg(), rangeArgument())
+                .executesPlayer((p, args) -> {
                     double range = (double) args[1];
                     EntityType type = (EntityType) args[0];
                     removeEntities(p, type, String.valueOf(range), p.getNearbyEntities(range, range, range));
-                })};
+                }).register();
     }
 
     private EntityTypeArgument entityArg() {

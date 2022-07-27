@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import sh.zoltus.onecore.configuration.yamls.Config;
-import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 
@@ -32,12 +31,11 @@ public class Rtp implements IOneCommand {
     //todo /rtp <player>, todo rtp worker, max rtps per second to conig
     //every player in queue = teleport timer +1s
     @Override
-    public ApiCommand[] getCommands() {
-        return new ApiCommand[]{
-                command(RTP_LABEL)
-                        .withAliases(RTP_ALIASES)
-                        .withPermission(RTP_PERMISSION)
-                        .executesPlayer((p, args) -> {
+    public void init() {
+        command(RTP_LABEL)
+                .withAliases(RTP_ALIASES)
+                .withPermission(RTP_PERMISSION)
+                .executesPlayer((p, args) -> {
                     UUID uuid = p.getUniqueId();
                     Long rtpTime = timers.getOrDefault(uuid, System.currentTimeMillis());
                     long cooldownSeconds = (RTP_COOLDOWN_SECONDS.getInt() * 1000L);
@@ -48,8 +46,8 @@ public class Rtp implements IOneCommand {
                         long secondsLeft = (rtpTime + cooldownSeconds - System.currentTimeMillis()) / 1000;
                         p.sendMessage(RTP_ON_COOLDOWN.rp(SECONDS_PH, secondsLeft));
                     }
-                })
-        };
+                }).register();
+
     }
 
     //todo add to teleporter list and use premade teleport
@@ -95,7 +93,7 @@ public class Rtp implements IOneCommand {
      *
      * @param p   Player
      * @param loc Location
-     * @return    boolean
+     * @return boolean
      */
     private boolean canBreak(Player p, Location loc) {
         BlockBreakEvent breakEvent = new BlockBreakEvent(loc.getBlock(), p);

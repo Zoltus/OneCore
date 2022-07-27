@@ -43,8 +43,6 @@ public class ApiCommand extends CommandAPICommand {
         return this;
     }
 
-
-
     public ApiCommand withAliases(IConfig enumz) {
         if (!enumz.getString().isEmpty()) {
             String[] aliases = enumz.getSplitArr();
@@ -90,7 +88,6 @@ public class ApiCommand extends CommandAPICommand {
         }
         return this;
     }
-
 
     public ApiCommand executes(CommandExecutor executor) {
         super.executes(executor);
