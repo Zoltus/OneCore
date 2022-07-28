@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
+import static sh.zoltus.onecore.configuration.yamls.Commands.MESSAGE_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER2_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
@@ -18,7 +21,8 @@ public class Msg implements IOneCommand {
         command(MSG_LABEL)
                 .withPermission(MSG_PERMISSION)
                 .withAliases(MSG_ALIASES)
-                .withArguments(new PlayerArgument(), new ChatArgument(NODES_MESSAGE.getString()).withPreview(getPreview()))
+                .withArguments(new PlayerArgument(), new ChatArgument(NODES_MESSAGE.getString())//.withPreview(getPreview())
+                )
                 .executesPlayer((sender, args) -> {
                     Player target = (Player) args[0];
                     String message = BaseComponent.toPlainText((BaseComponent[]) args[1]);

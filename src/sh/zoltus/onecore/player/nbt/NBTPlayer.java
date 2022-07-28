@@ -34,15 +34,11 @@ public class NBTPlayer {
         this.data = NBTData.getOfflinePlayerData(uuid);
         this.nbt = data.getFile();
         this.abilities = nbt.getCompound("abilities");
-
-
-
         //Loads stats from world json file
         File statsFile = new File(getWorld().getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
         try {
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader(statsFile));
-
             this.stats = gson.fromJson(reader, NBTStats.class);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

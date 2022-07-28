@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.listeners;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -152,6 +153,12 @@ public class TestListener implements Listener {
                 case "/shtset" -> {
                     int i = Integer.parseInt(args[0]);
                     scheduler.reSchedule(i);
+                }
+
+                case "/tt1" -> {
+                    String a1 = "";
+                    String a2 = "";
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', a1));
                 }
             }
         }
