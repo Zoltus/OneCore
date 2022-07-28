@@ -61,8 +61,4 @@ public class Registerer {
             new Economy().register();
         }
     }
-
-    public void unregisterCommands() {
-        CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName()));
-    }
 }
