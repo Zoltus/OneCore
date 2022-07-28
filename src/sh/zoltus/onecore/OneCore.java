@@ -4,6 +4,7 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
 import dev.jorel.commandapi.arguments.ChatArgument;
+import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -76,18 +77,13 @@ public class OneCore extends JavaPlugin implements Listener {
     }
 
     public void testCmd() {
-        new CommandAPICommand("blah")
-                .withArguments(new ChatArgument("message").withPreview(info -> {
-                    // Convert parsed BaseComponent[] to plain text
-                    String plainText = BaseComponent.toPlainText(info.parsedInput());
 
-                    // Translate the & in plain text and generate a new BaseComponent[]
-                    return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', plainText));
-                }))
-                .executes((sender, args) -> {
-                    String message = BaseComponent.toPlainText((BaseComponent[]) args[0]);
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "PREFIX " + message));
-                })
+        new CommandAPICommand("test1")
+                .withArguments(
+                        new ChatArgument("node")
+                                .usePreview(true)
+                                .withPreview(info -> TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', "&9&lOnecore &8&l»&7" + info.input()))))
+                .executesPlayer((PlayerCommandExecutor) (sender, args) -> Bukkit.spigot().broadcast((BaseComponent[]) args[0]))
                 .override();
     }
 
@@ -97,7 +93,7 @@ public class OneCore extends JavaPlugin implements Listener {
         //todo mode database to mainclass instead of static
         Database.database().saveAll();
         System.out.println("Saved users & settings to database...");
-        registerer.unregisterCommands(); //Unregisters all cmds to better support reloading
+        CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
     }
 
     private void initMetrics() {
