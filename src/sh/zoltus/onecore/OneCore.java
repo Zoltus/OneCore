@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 @Author("Zoltus")
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
 @LogPrefix("OneCore")
-@ApiVersion(ApiVersion.Target.v1_18)
+@ApiVersion(ApiVersion.Target.v1_19)
 //@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)

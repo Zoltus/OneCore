@@ -186,10 +186,26 @@ Data:
     permission: spawn
     permission-other: spawn.other
   signedit:
-    aliases: ''
+    aliases: 'se'
     enabled: true
     label: signedit
     permission: signedit
+    set:
+        aliases: ''
+        label: set
+        permission: signedit.set
+    copy:
+        aliases: ''
+        label: copy
+        permission: signedit.copy
+    clear:
+        aliases: ''
+        label: clear
+        permission: signedit.clear
+    paste:
+        aliases: ''
+        label: paste
+        permission: signedit.paste
   speed:
     aliases: ''
     enabled: true
