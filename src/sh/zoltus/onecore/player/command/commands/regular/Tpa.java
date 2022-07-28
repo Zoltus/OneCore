@@ -18,6 +18,6 @@ public class Tpa implements IOneCommand {
                 .withAliases(TPA_ALIASES)
                 .withArguments(new UserArgument())
                 .executesUser((sender, args) -> Request.send(sender, (User) args[0], Request.TeleportType.TPA))
-                .register();
+                .override();
     }
 }

@@ -20,6 +20,6 @@ public class Invsee implements IOneCommand, Listener {
                 .executesPlayer((sender, args) -> {
                     OfflinePlayer offTarget = (OfflinePlayer) args[0];
                     InvSeeHandler.handle(sender, offTarget, false);
-                }).register();
+                }).override();
     }
 }

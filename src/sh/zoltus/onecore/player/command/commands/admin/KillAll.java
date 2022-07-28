@@ -26,7 +26,7 @@ public class KillAll implements IOneCommand {
                 .executesPlayer((p, args) -> {
                     EntityType type = (EntityType) args[0];
                     removeEntities(p, type, "*", p.getWorld().getEntities());
-                }).register();
+                }).override();
 
         //killall <type> <range>
         command(KILLALL_LABEL)

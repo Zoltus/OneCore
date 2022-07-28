@@ -25,7 +25,7 @@ public class Tp implements IOneCommand {
                     if (offlineTarget.isOnline()) {
                         sender.sendMessage(TPHERE_OFFLINE_TARGET.rp(PLAYER_PH, offlineTarget.getName()));
                     }
-                }).register();
+                }).override();
         //tp <player>
         command(TP_LABEL)
                 .withPermission(TP_PERMISSION)

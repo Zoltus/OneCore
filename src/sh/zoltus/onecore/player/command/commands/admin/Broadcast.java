@@ -2,7 +2,6 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.ChatArgument;
 import dev.jorel.commandapi.wrappers.PreviewLegacy;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.IOneCommand;
@@ -20,11 +19,10 @@ public class Broadcast implements IOneCommand {
         command(BROADCAST_LABEL)
                 .withPermission(BROADCAST_PERMISSION)
                 .withAliases(BROADCAST_ALIASES)
-                .withArguments(new ChatArgument(NODES_MESSAGE.getString())
-                        .withPreview((PreviewLegacy) info -> toComponents(PREFIX + info.input())))
-                .executes((sender, args) -> {
-                    String message = BaseComponent.toPlainText((BaseComponent[]) args[0]);
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', PREFIX + message));
-                }).register();
+                .withArguments(
+                        new ChatArgument(NODES_MESSAGE.getString())
+                                .usePreview(true)
+                                .withPreview((PreviewLegacy) info -> toComponents(PREFIX + info.input())))
+                .executes((sender, args) -> Bukkit.spigot().broadcast((BaseComponent[]) args[0])).override();
     }
 }

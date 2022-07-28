@@ -21,7 +21,7 @@ public class SetHome implements IOneCommand {
                 .withAliases(SETHOME_ALIASES)
                 .executesPlayer((p, args) -> {
                     HomeHandler.handle(p, p, null, HomeAction.SET);
-                }).register();
+                }).override();
         //sethome <home>
         command(SETHOME_LABEL)
                 .withPermission(SETHOME_PERMISSION)

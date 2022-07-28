@@ -25,7 +25,7 @@ public class PlayTime implements IOneCommand {
                     String timeMessage = secondsToTime(player.getStatistic(Statistic.PLAY_ONE_MINUTE));
                     String message = PLAYTIME_YOUR_PLAYTIME.rp(TIME_PH, timeMessage);
                     player.sendMessage(message);
-                }).register();
+                }).override();
         //playtime <player>
         command(PLAYTIME_LABEL)
                 .withPermission(PLAYTIME_OTHER_PERMISSION)

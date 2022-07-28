@@ -22,7 +22,7 @@ public class SetWarp implements IOneCommand {
                     String warp = (String) args[0];
                     Warp.getWarps().put(warp, new PreLocation(p.getLocation()));
                     p.sendMessage(SETWARP_SET.rp(WARP_PH, warp));
-                }).register();
+                }).override();
                 //todo /setwarp <warp> <coords> new LocationArgument("location")
     }
 }

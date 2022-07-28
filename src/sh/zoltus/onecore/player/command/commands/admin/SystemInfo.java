@@ -17,10 +17,8 @@ public class SystemInfo implements IOneCommand {
                 .withPermission(SYSTEM_PERMISSION)
                 .withAliases(SYSTEM_ALIASES)
                 .executes((sender, args) -> sendSystemInfo(sender))
-                .register();
-
+                .override();
     }
-
 
     private void sendSystemInfo(CommandSender sender) {
         File diskPartition = new File("/");
@@ -37,6 +35,4 @@ public class SystemInfo implements IOneCommand {
         sender.sendMessage(SYSTEM_DISK_USAGE.rp(USED_PH, usedSpace, TOTAL_PH, totalSpace));
         sender.sendMessage(SYSTEM_SERVER_VERSION.rp(VERSION_PH, Bukkit.getServer().getBukkitVersion()));
     }
-
-
 }

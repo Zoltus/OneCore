@@ -29,7 +29,7 @@ public class Economy implements IOneCommand {
                 // })
                 .withSubcommands(pay, give, transfer, set, take)
                 .withSeparateSubcommands(balance, balance2, pay, balTop)
-                .register();
+                .override();
     }
 
     // balance

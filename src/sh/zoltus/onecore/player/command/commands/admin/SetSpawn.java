@@ -21,7 +21,7 @@ public class SetSpawn implements IOneCommand {
                         .executesPlayer((p, args) -> {
                     Spawn.setSpawn(new PreLocation(p.getLocation()));
                     p.sendMessage(SETSPAWN_SET.getString());
-                }).register();
+                }).override();
                 //setspawn <location>
                 command(SETSPAWN_LABEL)
                         .withPermission(SETSPAWN_PERMISSION)

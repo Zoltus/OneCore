@@ -83,12 +83,12 @@
         </dependency>
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.-->
-          <dependency>
-             <groupId>org.spigotmc</groupId>
-             <artifactId>minecraft-server</artifactId>
-             <version>${spigot.server.version}</version>
-             <scope>provided</scope>
-         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>minecraft-server</artifactId>
+            <version>${spigot.server.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>plugin-annotations</artifactId>
@@ -179,10 +179,10 @@
                     </annotationProcessorPaths>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-            <!--  <compilerArgs>-enable-preview</compilerArgs> -->
-         </configuration>
-     </plugin>
-     <!-- For Shading -->
+                    <!--  <compilerArgs>-enable-preview</compilerArgs> -->
+                </configuration>
+            </plugin>
+            <!-- For Shading -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -197,7 +197,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- for release, faster compile <minimizeJar>true</minimizeJar>-->
+                    <minimizeJar>true</minimizeJar>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <filters>
                         <filter>
@@ -219,13 +219,9 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
                         </relocation>
-                        <!--<relocation>
-                         <pattern>dev.jorel</pattern>
-                         <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
-                     </relocation>-->
                         <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>sh.zoltus.apis.net.kyori</shadedPattern>
+                            <pattern>dev.jorel</pattern>
+                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.tr7zw</pattern>

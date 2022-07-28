@@ -49,7 +49,7 @@ public class Gamemode implements IOneCommand {
                     String gmName = getGmName(gm);
                     player.setGameMode(gm);
                     player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gmName));
-                }).register();
+                }).override();
         //gamemode creative <player>
         command(GAMEMODE_LABEL)
                 .withPermission(GAMEMODE_OTHER_PERMISSION)

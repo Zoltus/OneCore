@@ -58,7 +58,7 @@ public class Speed implements IOneCommand {
                 .withAliases(SPEED_ALIASES)
                 .withArguments(speedIntArg())
                 .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, (float) args[0], null))
-                .register();
+                .override();
 
         //speed <amount> <player>
         command(SPEED_LABEL)

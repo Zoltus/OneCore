@@ -16,6 +16,7 @@ public class TpToggle implements IOneCommand {
                 .executesUser((user, args) -> {
                     user.setTpEnabled(!user.isTpEnabled());
                     user.sendMessage(TP_TOGGLE_SWITCHED.rp(TOGGLE_PH, user.isTpEnabled()));
-                }).register();
+                })
+                .override();
     }
 }

@@ -18,7 +18,7 @@ public class Home implements IOneCommand {
                 .withAliases(HOME_ALIASES)
                 .executesPlayer((p, args) -> {
                     HomeHandler.handle(p, p, null, HomeAction.HOME);
-                }).register();
+                }).override();
         //home <home>
         command(HOME_LABEL)
                 .withPermission(HOME_PERMISSION)

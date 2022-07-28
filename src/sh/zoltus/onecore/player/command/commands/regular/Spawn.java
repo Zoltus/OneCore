@@ -32,7 +32,7 @@ public class Spawn implements IOneCommand {
                     } else {
                         user.teleportTimer(spawn.toLocation());
                     }
-                }).register();
+                }).override();
         //spawn <player>
         command(SPAWN_LABEL)
                 .withPermission(SPAWN_PERMISSION_OTHER)
