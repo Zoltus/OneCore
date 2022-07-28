@@ -21,7 +21,7 @@ public class Top implements IOneCommand {
                 .withAliases(TOP_ALIASES)
                 .executesPlayer((p, args) -> {
                     executes(p, p);
-                }).register();
+                }).override();
         //top <player>
         command(TOP_LABEL)
                 .withPermission(TOP_OTHER_PERMISSION)

@@ -17,6 +17,6 @@ public class TpaHere implements IOneCommand {
                 .withAliases(TPAHERE_ALIASES)
                 .withArguments(new UserArgument())
                 .executesUser((sender, args) -> Request.send(sender, (User) args[0], Request.TeleportType.TPHERE))
-                .register();
+                .override();
     }
 }

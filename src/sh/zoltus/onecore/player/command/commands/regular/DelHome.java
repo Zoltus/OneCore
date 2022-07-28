@@ -19,7 +19,7 @@ public class DelHome implements IOneCommand {
                 .withArguments(new HomeArg0())
                 .executesPlayer((p, args) -> {
                     HomeHandler.handle(p, p, (String) args[0], HomeAction.DELETE);
-                }).register();
+                }).override();
         //delhome <player> <home>
         command(DELHOME_LABEL)
                 .withPermission(DELHOME_PERMISSION)

@@ -60,7 +60,7 @@ public class SignEdit implements IOneCommand {
         //ApiCommand paste = command(SIGNEDIT_LABEL);
         command(SIGNEDIT_LABEL)
                 .withSubcommands(set, clear, clearLine)
-                .register();
+                .override();
 
 
         //signedit clear

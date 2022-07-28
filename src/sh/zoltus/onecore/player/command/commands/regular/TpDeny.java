@@ -18,7 +18,8 @@ public class TpDeny implements IOneCommand {
         command(TPDENY_LABEL)
                 .withPermission(TPDENY_PERMISSION)
                 .withAliases(TPDENY_ALIASES)
-                .executesUser((sender, args) -> handle(Request.getLatest(sender), sender)).register();
+                .executesUser((sender, args) -> handle(Request.getLatest(sender), sender))
+                .override();
         //tpdeny <player>
         command(TPDENY_LABEL)
                 .withPermission(TPDENY_PERMISSION)

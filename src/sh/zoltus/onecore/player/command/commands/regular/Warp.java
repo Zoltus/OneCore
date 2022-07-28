@@ -47,7 +47,7 @@ public class Warp implements IOneCommand {
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
                     p.sendMessage(WARP_LIST.rp(LIST_PH, warps.keySet().toString()));
-                }).register();
+                }).override();
         //warp <warp>
         command(WARP_LABEL)
                 .withPermission(WARP_PERMISSION)

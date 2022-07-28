@@ -44,7 +44,7 @@ public class Back implements IOneCommand, Listener {
                 .withAliases(BACK_ALIASES)
                 .executesPlayer((sender, args) -> {
                     executes(sender, 1, sender);
-                }).register();
+                }).override();
         // back <amount>
         command(BACK_LABEL)
                 .withPermission(BACK_PERMISSION)
@@ -75,7 +75,7 @@ public class Back implements IOneCommand, Listener {
                         // back <amount> <player>
                         .then(new PlayerArgument()
                                 .executes((CommandExecutor) (sender, args) -> executes(sender, (int) args[0], (Player) args[1])))
-                ).register();*/
+                ).override();*/
     }
 
     private Argument<?> backArg() {

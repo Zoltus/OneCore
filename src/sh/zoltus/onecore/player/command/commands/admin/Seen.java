@@ -24,6 +24,6 @@ public class Seen implements IOneCommand {
                     SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
                     String dateString = dateFormat.format(new Date(oTarget.getFirstPlayed()));
                     sender.sendMessage(SEEN_LAST_SEEN.rp(PLAYER_PH, oTarget.getName(), TIME_PH, dateString));
-                }).register();
+                }).override();
     }
 }

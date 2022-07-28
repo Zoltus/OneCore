@@ -18,6 +18,6 @@ public class ClearChat implements IOneCommand {
                         .executes((sender, args) -> {
                     Bukkit.broadcastMessage(StringUtils.repeat(" \n", 100));
                     Bukkit.broadcastMessage(CLEAR_PLAYER_CLEARED_CHAT.getString());
-                }).register();
+                }).override();
     }
 }

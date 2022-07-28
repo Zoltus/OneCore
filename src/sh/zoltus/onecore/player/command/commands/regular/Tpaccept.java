@@ -18,7 +18,7 @@ public class Tpaccept implements IOneCommand {
                 .withPermission(TPACCEPT_PERMISSION)
                 .withAliases(TPACCEPT_ALIASES)
                 .executesUser((sender, args) -> handle(Request.getLatest(sender), sender))
-                .register();
+                .override();
         //tpaccept <player>
         command(TPACCEPT_LABEL)
                 .withPermission(TPACCEPT_PERMISSION)

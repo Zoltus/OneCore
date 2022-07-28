@@ -35,7 +35,7 @@ public class Time implements IOneCommand {
                 .withArguments(timeArg())
                 .executesPlayer((p, args) -> {
                     changeTime(p, (long) args[0], p.getWorld());
-                }).register();
+                }).override();
         //TIME <TIME> <world>
         command(TIME_LABEL)
                 .withPermission(TIME_PERMISSION)

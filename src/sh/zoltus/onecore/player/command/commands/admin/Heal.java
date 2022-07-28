@@ -23,7 +23,7 @@ public class Heal implements IOneCommand {
                 .executesPlayer((player, args) -> {
                     heal(player);
                     player.sendMessage(HEAL_YOU_GOT_HEALED.getString());
-                }).register();
+                }).override();
         //heal <player>
         command(HEAL_LABEL)
                 .withPermission(HEAL_PERMISSION_OTHER)

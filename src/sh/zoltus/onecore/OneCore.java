@@ -1,15 +1,16 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
-import dev.jorel.commandapi.CommandTree;
-import dev.jorel.commandapi.arguments.LiteralArgument;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.ChatArgument;
 import lombok.Getter;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -70,42 +71,24 @@ public class OneCore extends JavaPlugin implements Listener {
         this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         System.out.println("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+        testConfig(); // Tests config for missing values
         testCmd();
     }
 
     public void testCmd() {
-        new CommandTree("akka")
-                .withHelp("aaa", "bbb").register();
+        new CommandAPICommand("blah")
+                .withArguments(new ChatArgument("message").withPreview(info -> {
+                    // Convert parsed BaseComponent[] to plain text
+                    String plainText = BaseComponent.toPlainText(info.parsedInput());
 
-        new CommandTree("akka2")
-                .executes((sender, args) -> {
-                    sender.sendMessage("aaa2!");
-                }).register();
-
-        new CommandTree("sayhi")
-                .withHelp("aaa2", "bbb2")
-                .executes((sender, args) -> {
-                    sender.sendMessage("Hi!");
-                })
-                .then(new PlayerArgument("target")
-                        .executes((sender, args) -> {
-                            Player target = (Player) args[0];
-                            target.sendMessage("Hi");
-                        }))
-                .register();
-
-        new CommandTree("test0")
-                .withPermission("test0")
-                .withAliases("test0")
-                .executesPlayer((sender, args) -> {
-                    System.out.println("test0");
-                })
-                .then(new LiteralArgument("test1").executesPlayer((sender, args) -> {
-                    System.out.println("test1");
+                    // Translate the & in plain text and generate a new BaseComponent[]
+                    return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', plainText));
                 }))
-                .then(new LiteralArgument("test2").executesPlayer((sender, args) -> {
-                    System.out.println("test2");
-                })).register();
+                .executes((sender, args) -> {
+                    String message = BaseComponent.toPlainText((BaseComponent[]) args[0]);
+                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "PREFIX " + message));
+                })
+                .override();
     }
 
     @Override

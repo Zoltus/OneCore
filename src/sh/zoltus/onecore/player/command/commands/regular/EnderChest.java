@@ -17,7 +17,7 @@ public class EnderChest implements IOneCommand, Listener {
                 .withAliases(EnderChest_ALIASES)
                 .executesPlayer((sender, args) -> {
                     sender.openInventory(sender.getEnderChest());
-                }).register();
+                }).override();
         //enderchest <player>
         command(EnderChest_LABEL)
                 .withPermission(EnderChest_OTHER_PERMISSION)

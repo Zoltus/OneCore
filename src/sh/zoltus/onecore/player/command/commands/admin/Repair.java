@@ -48,7 +48,7 @@ public class Repair implements IOneCommand {
                 .withAliases(REPAIR_ALIASES)
                 .executesPlayer((p, args) -> {
                     handleRepair(p, p, slots.get(0));
-                }).register();
+                }).override();
         //repair <hand/all>
         command(REPAIR_LABEL)
                 .withPermission(REPAIR_PERMISSION)

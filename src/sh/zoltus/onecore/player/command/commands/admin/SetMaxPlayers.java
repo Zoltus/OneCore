@@ -27,7 +27,7 @@ public class SetMaxPlayers implements IOneCommand {
                     } catch (ReflectiveOperationException e) {
                         p.sendMessage("Error changing max players!");
                     }
-                }).register();
+                }).override();
     }
 
     public static void setMaxPlayers(int amount) throws ReflectiveOperationException {

@@ -18,7 +18,7 @@ public class Ping implements IOneCommand {
                 .withAliases(PING_ALIASES)
                 .executesPlayer((player, args) -> {
                     player.sendMessage(PING_YOUR_PING.rp(PING_PH, player.getPing()));
-                }).register();
+                }).override();
         //Ping <player>
         command(PING_LABEL)
                 .withPermission(PING_OTHER_PERMISSION)

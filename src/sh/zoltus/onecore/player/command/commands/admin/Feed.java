@@ -19,7 +19,7 @@ public class Feed implements IOneCommand {
                 .withAliases(FEED_ALIASES)
                 .executesPlayer((player, args) -> {
                     feed(player);
-                }).register();
+                }).override();
         //feed <player>
         command(FEED_LABEL)
                 .withPermission(FEED_PERMISSION_OTHER)

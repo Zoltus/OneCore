@@ -17,24 +17,26 @@ public class Fly implements IOneCommand {
     //todo change to using oneuser only when needed
     @Override
     public void init() {
-                //fly
-                command(FLY_LABEL)
-                        .withPermission(FLY_PERMISSION)
-                        .withAliases(FLY_ALIASES)
-                        .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, null)).register();
-                //fly zoltus
-                command(FLY_LABEL)
-                        .withPermission(FLY_PERMISSION_OTHER)
-                        .withAliases(FLY_ALIASES)
-                        .withArguments(new OfflinePlayerArgument())
-                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], null))
-                                .register();
-                //fly zoltus true/false
-                command(FLY_LABEL)
-                        .withPermission(FLY_PERMISSION_OTHER)
-                        .withAliases(FLY_ALIASES)
-                        .withArguments(new OfflinePlayerArgument(), new BooleanArgument(NODES_TRUE_FALSE.getString()))
-                        .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], (Boolean) args[1])).register();
+        //fly
+        command(FLY_LABEL)
+                .withPermission(FLY_PERMISSION)
+                .withAliases(FLY_ALIASES)
+                .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, null))
+                .override();
+        //fly zoltus
+        command(FLY_LABEL)
+                .withPermission(FLY_PERMISSION_OTHER)
+                .withAliases(FLY_ALIASES)
+                .withArguments(new OfflinePlayerArgument())
+                .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], null))
+                .register();
+        //fly zoltus true/false
+        command(FLY_LABEL)
+                .withPermission(FLY_PERMISSION_OTHER)
+                .withAliases(FLY_ALIASES)
+                .withArguments(new OfflinePlayerArgument(), new BooleanArgument(NODES_TRUE_FALSE.getString()))
+                .executes((sender, args) -> handle(sender, (OfflinePlayer) args[0], (Boolean) args[1]))
+                .register();
     }
 
     private void handle(CommandSender sender, OfflinePlayer offP, Boolean fly) {

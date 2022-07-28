@@ -22,7 +22,7 @@ public class God implements IOneCommand {
                 .executesPlayer((p, args) -> {
                     p.setInvulnerable(!p.isInvulnerable());
                     p.sendMessage(GOD_SET_TO.rp(MODE_PH, p.isInvulnerable()));
-                }).register();
+                }).override();
         //god <pelaaja>
         command(GOD_LABEL)
                 .withPermission(GOD_PERMISSION)

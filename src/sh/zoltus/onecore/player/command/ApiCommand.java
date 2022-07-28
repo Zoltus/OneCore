@@ -29,7 +29,7 @@ public class ApiCommand extends CommandAPICommand {
     }
 
     /*public ApiCommand withSeparate() {
-        this.register();
+        this.override();
         return this;
     }
 
@@ -37,7 +37,7 @@ public class ApiCommand extends CommandAPICommand {
     //Registers commands also separately
     public ApiCommand withSeparateSubcommands(ApiCommand... cmds) {
         for (ApiCommand cmd : cmds) {
-            cmd.register();
+            cmd.override();
             this.withSubcommand(cmd);
         }
         return this;

@@ -46,8 +46,7 @@ public class Rtp implements IOneCommand {
                         long secondsLeft = (rtpTime + cooldownSeconds - System.currentTimeMillis()) / 1000;
                         p.sendMessage(RTP_ON_COOLDOWN.rp(SECONDS_PH, secondsLeft));
                     }
-                }).register();
-
+                }).override();
     }
 
     //todo add to teleporter list and use premade teleport

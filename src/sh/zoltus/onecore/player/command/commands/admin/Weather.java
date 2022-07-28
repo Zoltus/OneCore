@@ -39,7 +39,7 @@ public class Weather implements IOneCommand {
                 .withArguments(weatherArgument())
                 .executesPlayer((p, args) -> {
                     changeWeather(p, args[0], p.getWorld());
-                }).register();
+                }).override();
         //weather <weather> <world>
         command(WEATHER_LABEL)
                 .withPermission(WEATHER_PERMISSION)
