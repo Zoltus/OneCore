@@ -29,6 +29,8 @@
           - Fix teleporthandler
           - Custom oreshift generator
           - signedit
+          - economy balances loads all on enable
+          - does economy save?
         Important:
           - Rtp improvements to async & create worker.
         Not important:

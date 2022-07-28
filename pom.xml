@@ -80,6 +80,12 @@
             <artifactId>spigot</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-codec</artifactId>
+                    <groupId>commons-codec</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.-->

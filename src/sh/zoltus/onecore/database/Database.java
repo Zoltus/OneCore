@@ -51,7 +51,7 @@ public class Database {
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.OFF);
         createTables();
         backupTimer(); //Starts backup timer
-        // System.out.println("Loading server settings...");
+        // Bukkit.getConsoleSender().sendMessage("Loading server settings...");
         loadServerSettings();
         initAutoSaver();
     }
@@ -102,7 +102,7 @@ public class Database {
             }
             stmt.executeBatch();
         } catch (SQLException e) {
-            System.out.println("§4Database table creation failed!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class Database {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("§4Error loading server settings!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error loading server settings!\n §c" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -171,7 +171,7 @@ public class Database {
             }
             pStm.executeBatch();
         } catch (SQLException e) {
-            System.out.println("§4Error saving players!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
@@ -197,7 +197,7 @@ public class Database {
             pStm.addBatch();
             pStm.executeBatch();
         } catch (SQLException e) {
-            System.out.println("§4Error saving server settings!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error saving server settings!\n §c" + e.getMessage());
         }
     }
 
@@ -218,7 +218,7 @@ public class Database {
             }
             pStm.executeBatch();
         } catch (SQLException e) {
-            System.out.println("§4Error saving economy!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error saving economy!\n §c" + e.getMessage());
         }
     }
 
@@ -235,7 +235,7 @@ public class Database {
                     }
                 }
             } catch (SQLException e) {
-                System.out.println("§4Error loading economy: \n §c" + e.getMessage());
+                Bukkit.getConsoleSender().sendMessage("§4Error loading economy: \n §c" + e.getMessage());
             }
         });
     }
@@ -272,7 +272,7 @@ public class Database {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
             return false;
         }
     }
@@ -307,7 +307,7 @@ public class Database {
             //todo test if backup is done
             Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            System.out.println("§4Error backing up database!\n §c" + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("§4Error backing up database!\n §c" + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -71,7 +71,7 @@ public class OneCore extends JavaPlugin implements Listener {
         this.initMetrics(); // Inits metrics
         this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
-        System.out.println("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+        Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
         testCmd();
     }
@@ -92,20 +92,19 @@ public class OneCore extends JavaPlugin implements Listener {
         // Saves all users & settings on disable
         //todo mode database to mainclass instead of static
         Database.database().saveAll();
-        System.out.println("Saved users & settings to database...");
+        Bukkit.getConsoleSender().sendMessage("Saved users & settings to database...");
         CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
     }
 
     private void initMetrics() {
-        int pluginId = 12829;
-        new Metrics(this, pluginId);
+        new Metrics(this, 12829);
     }
 
     private void sendArt() {
         List.of("",
                 // "§f                     o O O",
                 "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
-                "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §fAll in one train!",
+                "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
                 "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{==§71.0§8==|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
                 "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
                 ""
@@ -126,7 +125,8 @@ public class OneCore extends JavaPlugin implements Listener {
             RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
             if (rsp != null) {
                 Economy econ = rsp.getProvider();
-                System.out.println("Economy hooked! (" + econ.getName() + ")");
+                Bukkit.getConsoleSender().sendMessage("Economy hooked! (" + econ.getName() + ")");
+                //todo to load eco perplayer not whole eco
                 Database.database().loadEconomyAsync();
                 return econ;
             }
@@ -136,11 +136,11 @@ public class OneCore extends JavaPlugin implements Listener {
 
     private void testConfig() {
         Stream.of(Config.values()).filter(Objects::isNull).filter(obj2 -> false)
-                .forEach(config -> System.out.println("§c" + config.name() + " is null!"));
+                .forEach(config -> Bukkit.getConsoleSender().sendMessage("§c" + config.name() + " is null!"));
         Stream.of(Commands.values()).filter(Objects::isNull).filter(obj1 -> false)
-                .forEach(cmd -> System.out.println("§c" + cmd.name() + " is null!"));
+                .forEach(cmd -> Bukkit.getConsoleSender().sendMessage("§c" + cmd.name() + " is null!"));
         Stream.of(Lang.values()).filter(Objects::isNull).filter(obj -> false)
-                .forEach(lang -> System.out.println("§c" + lang.name() + " is null!"));
-        System.out.println("§aTested config");
+                .forEach(lang -> Bukkit.getConsoleSender().sendMessage("§c" + lang.name() + " is null!"));
+        Bukkit.getConsoleSender().sendMessage("§aTested config");
     }
 }
