@@ -191,6 +191,10 @@ Data:
     is-not-set: '{p} spawn is not set, set it with /setspawn'
     # <player>
     target-sent: '{p} Sent target <player> to spawn'
+  signedit:
+    sign-updated: '{p} Sign updated'
+    sign-not-found: '{p} Sign not found'
+    sign-copied: '{p} Sign copied'
   speed:
     mode-fly: fly
     mode-invalid-mode: '{p} invalid mode'

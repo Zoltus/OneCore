@@ -77,7 +77,6 @@ public class OneCore extends JavaPlugin implements Listener {
     }
 
     public void testCmd() {
-
         new CommandAPICommand("test1")
                 .withArguments(
                         new ChatArgument("node")

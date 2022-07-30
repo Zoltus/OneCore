@@ -189,7 +189,10 @@ Data:
     aliases: 'se'
     enabled: true
     label: signedit
+    # Player can edit the sign if he has this permission and can break the sign.
     permission: signedit
+    # If player cant break block he can still edit sign with this permission
+    bypass-permission: signedit.bypass
     set:
         aliases: ''
         label: set

@@ -1,6 +1,7 @@
 # Here are the server configs
 
 Data:
+  prefix: '&9&lOnecore &8&l»&7'
   back-history-size: 10
   baltop-update-interval: 60
   chat-color-permission: chat.colors
@@ -17,7 +18,6 @@ Data:
   keep-users-in-cache: true
   kicked-for-spamming-bypass: kick.bypass
   permission-prefix: onecore.
-  prefix: '&9&lOnecore &8&l»&7'
   rtp-cooldown-seconds: 60
   rtp-radius: 10000
   sign-color-permission: sign.colors

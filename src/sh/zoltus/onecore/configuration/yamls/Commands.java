@@ -150,23 +150,27 @@ public enum Commands implements IConfig {
     SETWARP_LABEL("setwarp.label"),
     SETWARP_PERMISSION("setwarp.permission"),
 
-
     SIGNEDIT_ALIASES("signedit.aliases"),
     SIGNEDIT_ENABLED("signedit.enabled"),
     SIGNEDIT_LABEL("signedit.label"),
     SIGNEDIT_PERMISSION("signedit.permission"),
+    SIGNEDIT_BYPASS_PERMISSION("signedit.permission.bypass"),
 
     SIGNEDIT_SET_ALIASES("signedit.set.aliases"),
     SIGNEDIT_SET_LABEL("signedit.set.label"),
     SIGNEDIT_SET_PERMISSION("signedit.set.permission"),
 
+    SIGNEDIT_CLEAR_ALIASES("signedit.clear.aliases"),
+    SIGNEDIT_CLEAR_LABEL("signedit.clear.label"),
+    SIGNEDIT_CLEAR_PERMISSION("signedit.clear.permission"),
+
     SIGNEDIT_COPY_ALIASES("signedit.copy.aliases"),
     SIGNEDIT_COPY_LABEL("signedit.copy.label"),
     SIGNEDIT_COPY_PERMISSION("signedit.copy.permission"),
 
-    SIGNEDIT_CLEAR_ALIASES("signedit.clear.aliases"),
-    SIGNEDIT_CLEAR_LABEL("signedit.clear.label"),
-    SIGNEDIT_CLEAR_PERMISSION("signedit.clear.permission"),
+    SIGNEDIT_PASTE_ALIASES("signedit.paste.aliases"),
+    SIGNEDIT_PASTE_LABEL("signedit.paste.label"),
+    SIGNEDIT_PASTE_PERMISSION("signedit.paste.permission"),
 
     SPAWN_ALIASES("spawn.aliases"),
     SPAWN_ENABLED("spawn.enabled"),

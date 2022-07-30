@@ -69,6 +69,7 @@ public class Rtp implements IOneCommand {
         return System.currentTimeMillis() < rtpTime;
     }
 
+    //todo canbreak
     /**
      * Gets random location
      *
@@ -85,22 +86,5 @@ public class Rtp implements IOneCommand {
             loc = LocationUtils.getSafeLocation(p, b.getLocation());
         } while (loc == null);
         return b.getLocation().add(0.5, 1, 0.5);
-    }
-
-    /**
-     * Checks if player could break the block on the location
-     *
-     * @param p   Player
-     * @param loc Location
-     * @return boolean
-     */
-    private boolean canBreak(Player p, Location loc) {
-        BlockBreakEvent breakEvent = new BlockBreakEvent(loc.getBlock(), p);
-        Bukkit.getServer().getPluginManager().callEvent(breakEvent);
-        if (!breakEvent.isCancelled()) {
-            breakEvent.setCancelled(true);
-            return true;
-        }
-        return false;
     }
 }
