@@ -11,7 +11,7 @@ import sh.zoltus.onecore.player.command.commands.regular.*;
 import sh.zoltus.onecore.player.teleporting.TeleportHandler;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.EnderChest_ENABLED;
@@ -21,15 +21,15 @@ import static sh.zoltus.onecore.configuration.yamls.Config.*;
 public class Registerer {
     private final OneCore plugin;
 
-    //listeners which will always be registered
-    private final List<Listener> listeners = Arrays.asList(
+    //Listeners which will always be registered
+    private final List<Listener> listeners = new ArrayList<>(List.of(
             new JoinHandler(),
             new KickedForSpamming(),
             new PlayerJumpEvent(),
             new QuitListener(),
             new TeleportHandler(),
             new TestListener()
-    );
+    ));
 
     private final List<Class<? extends IOneCommand>> cmds = List.of(
             Back.class, Broadcast.class, ClearChat.class,
