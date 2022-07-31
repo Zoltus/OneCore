@@ -39,15 +39,12 @@ import java.util.stream.Stream;
 @LoadOrder(PluginLoadOrder.POSTWORLD)
 @Getter
 public class OneCore extends JavaPlugin implements Listener {
-
     @Getter
     private static OneCore plugin;
     private Economy vault;
     private Registerer registerer;
     private RTPHandler rtpHandler;
 
-    //https://github.com/GeertBraakman/xLib/blob/master/src/main/java/io/github/geertbraakman/v0_3_4/api/command/APICommand.java
-    //https://github.com/TheMode/CommandBuilder/tree/master/src/main/java/fr/themode/command
     @Override
     public void onLoad() {
         plugin = this;
@@ -59,10 +56,10 @@ public class OneCore extends JavaPlugin implements Listener {
         CommandAPI.onEnable(this); //Loads commandapi
         long time = System.currentTimeMillis();
         Database.init(this); // Loads db & baltop todo only obj or static
-        this.vault = hookEconomy();// Hooks economy if its enabled on config.
+        this.vault = hook();// Hooks economy if its enabled on config.
         this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
-        this.initMetrics(); // Inits metrics to bstats
+        new Metrics(this, 12829);; // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
@@ -76,10 +73,6 @@ public class OneCore extends JavaPlugin implements Listener {
         Database.database().saveAll();
         Bukkit.getConsoleSender().sendMessage("Saved users & settings to database...");
         CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
-    }
-
-    private void initMetrics() {
-        new Metrics(this, 12829);
     }
 
     /**
@@ -97,30 +90,6 @@ public class OneCore extends JavaPlugin implements Listener {
         ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 1);
     }
 
-    //todo move to other class
-    private Economy hookEconomy() {
-        Bukkit.getConsoleSender().sendMessage("Hooking economy...");
-        if (Config.ECONOMY.getBoolean()) {
-            if (getServer().getPluginManager().getPlugin("Vault") == null) {
-                getLogger().log(Level.WARNING, "Vault not found, Economy features disabled.");
-                return null;
-            }
-
-            if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
-                getServer().getServicesManager().register(Economy.class, new OneEconomy(this), this, ServicePriority.Highest);
-            }
-            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-            if (rsp != null) {
-                Economy econ = rsp.getProvider();
-                Bukkit.getConsoleSender().sendMessage("Economy hooked! (" + econ.getName() + ")");
-                //todo to load eco perplayer not whole eco
-                Database.database().loadEconomyAsync();
-                return econ;
-            }
-        }
-        return null;
-    }
-
     private void testConfig() {
         Stream.of(Config.values()).filter(Objects::isNull).filter(obj2 -> false)
                 .forEach(config -> Bukkit.getConsoleSender().sendMessage("§c" + config.name() + " is null!"));
@@ -129,5 +98,32 @@ public class OneCore extends JavaPlugin implements Listener {
         Stream.of(Lang.values()).filter(Objects::isNull).filter(obj -> false)
                 .forEach(lang -> Bukkit.getConsoleSender().sendMessage("§c" + lang.name() + " is null!"));
         Bukkit.getConsoleSender().sendMessage("§aTested config");
+    }
+
+    public Economy hook() {
+        if (!Config.ECONOMY.getBoolean()) {
+            return null;
+        }
+        Bukkit.getConsoleSender().sendMessage("Hooking economy...");
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            getLogger().log(Level.WARNING, "Vault not found, Economy features disabled.");
+            return null;
+        } else if (vault != null) {
+            Bukkit.getConsoleSender().sendMessage("Economy is already hooked");
+            return vault;
+        } else {
+            if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+                getServer().getServicesManager().register(Economy.class, new OneEconomy(this), this, ServicePriority.Highest);
+            }
+            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+            if (rsp != null) {
+                Economy econ = rsp.getProvider();
+                Bukkit.getConsoleSender().sendMessage("Economy hooked! (" + econ.getName() + ")");
+                //todo to load eco perplayer not whole eco?
+                Database.database().loadEconomyAsync();
+                return econ;
+            }
+        }
+        return null;
     }
 }
