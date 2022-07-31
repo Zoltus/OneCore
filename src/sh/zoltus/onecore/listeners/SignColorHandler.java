@@ -17,8 +17,7 @@ import sh.zoltus.onecore.OneCore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.SIGN_COLOR_PERMISSION;
-import static sh.zoltus.onecore.configuration.yamls.Config.SIGN_EDIT_PERMISSION;
+import static sh.zoltus.onecore.configuration.yamls.Config.*;
 
 public record SignColorHandler(OneCore plugin) implements Listener {
 
@@ -52,10 +51,11 @@ public record SignColorHandler(OneCore plugin) implements Listener {
     public void onSignEdit(PlayerSwapHandItemsEvent e) {
         Player p = e.getPlayer();
         Block b = p.getTargetBlockExact(5);
-
-        if (!p.hasPermission(SIGN_EDIT_PERMISSION.getAsPermission()) || !p.isSneaking() || b == null)
+        //If sign shift edit is disabled, return
+        if (!SIGN_SHIFT_EDIT_ENABLED.getBoolean()
+                || !p.hasPermission(SIGN_SHIFT_EDIT_PERMISSION.getAsPermission())
+                || !p.isSneaking() || b == null)
             return;
-
         BlockState state = b.getState();
         if (state instanceof Sign sign) {
             e.setCancelled(true);

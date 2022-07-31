@@ -2,38 +2,24 @@
     _||__|[]|  ______   ______   ______
     (        | |      | |      | |      |
     /-()---() ~ ()--() ~ ()--() ~ ()--()
-
-
     ╔═╗╔═╗
     ║ ║║
     ╚═╝╚═╝ OneCore
-
     ╔═╗╔═╗
     ║ ║║ OneCore
     ╚═╝╚═╝
-
-
       TODO:
-      ? = Mayby
-      @ = Done
-      * = Started
-      - = TODO
-
-        ((DedicatedServer) MinecraftServer.getServer()).propertyManager.setProperty(key, value);
-
-        - "https://www.spigotmc.org/resources/view-distance-tweaks-1-14-1-17.75164/"
-          - "https://github.com/YouHaveTrouble/-optimization"
-
         Todo-----------:
           - TEST EVERYTHING! (MOTIMMAA test)
           - Fix teleporthandler
-          - Custom oreshift generator
-          - signedit
           - economy balances loads all on enable
           - does economy save?
+          - test signedit cmd when cmdapi 8.5.1 comes
+          - register class recode
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - Mentions testing! remove requirement for @ ?
           - teleports dont work on spectatormode
           - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
           - listaliases option percommand
@@ -55,22 +41,20 @@
       OTHER:
         - dupe on crash server
         - "https://www.spigotmc.org/threads/how-to-create-custom-biomes.512105/page-2#post-4246285" prevent xray
-        TODO:
-          - !!IMPORTANT!!! Command to debug all maps/lists, easy to check memory leaks
-          - nbtplayer works only on world(0)
-          - /spigot reload
-          - IF u type / to console it says needs to be player to type ot
-          - check TextColor.fromHexString("#bb00fb"));
-          - recheck if invsee with multiple players work, check bimap
-          - tpa hover
-          - yml manager from cmi, has comments
-          - save server settings only if they have been edited, same with players,
-          - default messages
-          - offline users to batchlist
-          - only save edited players
-          jdependency
-        -----Need Testing 100%--
-        - Mentions
+      TODO1:
+        - !!IMPORTANT!!! Command to debug all maps/lists, easy to check memory leaks
+        - nbtplayer works only on world(0)
+        - /spigot reload
+        - IF u type / to console it says needs to be player to type ot
+        - check TextColor.fromHexString("#bb00fb"));
+        - recheck if invsee with multiple players work, check bimap
+        - tpa hover
+        - yml manager from cmi, has comments
+        - save server settings only if they have been edited, same with players,
+        - default messages
+        - offline users to batchlist
+        - only save edited players
+
       Invsee:
         - /invsee <player>
         - OfflineSupport
