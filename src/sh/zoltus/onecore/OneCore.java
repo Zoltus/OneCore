@@ -66,7 +66,7 @@ public class OneCore extends JavaPlugin implements Listener {
         long time = System.currentTimeMillis();
         Database.init(this); // Loads db & baltop todo only obj or static
         this.vault = hookEconomy();// Hooks economy if its enabled on config.
-        this.registerer = Registerer.init(this);// Register listeners & Commands
+        this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         this.initMetrics(); // Inits metrics
         this.sendArt(); // Sends console art

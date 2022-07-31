@@ -17,8 +17,7 @@ public class TeleportVelocity implements Listener {
         Player p = e.getPlayer();
         PlayerTeleportEvent.TeleportCause cause = e.getCause();
         if ((cause == PlayerTeleportEvent.TeleportCause.PLUGIN
-                || cause == PlayerTeleportEvent.TeleportCause.COMMAND)
-                && Config.TELEPORT_VELOCITY_RESET.getBoolean()) {
+                || cause == PlayerTeleportEvent.TeleportCause.COMMAND)) {
             p.setVelocity(p.getVelocity().zero());
         }
     }

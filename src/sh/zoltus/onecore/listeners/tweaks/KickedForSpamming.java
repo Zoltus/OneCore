@@ -7,7 +7,7 @@ import sh.zoltus.onecore.configuration.yamls.Config;
 
 import static sh.zoltus.onecore.configuration.yamls.Lang.KICKED_FOR_SPAMMING;
 
-public class Kick implements Listener {
+public class KickedForSpamming implements Listener {
     /**
      * Disabled Kicked for spamming kick event.
      *

@@ -63,7 +63,7 @@
         <repository>
             <id>oss.sonatype.org-snapshot</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </repository> -->
+        </repository>-->
     </repositories>
     <!-- Dependencies -->
     <dependencies>
@@ -131,7 +131,7 @@
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-shade</artifactId>
-            <version>8.5.0</version>
+            <version>${commandapi.version}</version>
         </dependency>
     </dependencies>
     <build>

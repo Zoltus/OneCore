@@ -53,7 +53,7 @@ public interface IOneCommand {
      *
      * @return boolean
      */
-    default boolean isEnabled() {
-        return cmds.getOrSetDefault("Data." + getClass().getSimpleName().toLowerCase() + ".enabled", true);
+    static boolean isEnabled(Class<? extends IOneCommand> clazz) {
+        return cmds.getOrSetDefault("Data." + clazz.getSimpleName().toLowerCase() + ".enabled", true);
     }
 }
