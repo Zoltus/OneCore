@@ -26,7 +26,6 @@ import static sh.zoltus.onecore.configuration.yamls.Config.CURRENCY_SINGULAR;
 public final class OneEconomy implements Economy {
     @Getter
     private static final LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
-    private static OneEconomy oneEconomy = null;
 
     private final Logger logger;
     private final OneCore plugin;

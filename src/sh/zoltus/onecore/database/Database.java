@@ -313,8 +313,10 @@ public class Database {
 
     public void saveAll() {
         saveUsers();
-        saveEconomy();
         saveServer();
+        if (plugin.getVault() != null) {
+            saveEconomy();
+        }
     }
     private static class HashMapTypeToken extends TypeToken<HashMap<String, PreLocation>> {
     }
