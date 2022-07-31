@@ -1,14 +1,8 @@
 package sh.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandAPIConfig;
-import dev.jorel.commandapi.arguments.ChatArgument;
-import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -69,21 +63,11 @@ public class OneCore extends JavaPlugin implements Listener {
         this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         this.initMetrics(); // Inits metrics
-        this.sendArt(); // Sends console art
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
-        testCmd();
-    }
-
-    public void testCmd() {
-        new CommandAPICommand("test1")
-                .withArguments(
-                        new ChatArgument("node")
-                                .usePreview(true)
-                                .withPreview(info -> TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', "&9&lOnecore &8&l»&7" + info.input()))))
-                .executesPlayer((PlayerCommandExecutor) (sender, args) -> Bukkit.spigot().broadcast((BaseComponent[]) args[0]))
-                .override();
+        // Sends console art
+        Bukkit.getScheduler().runTaskLater(this, this::sendArt,1);
     }
 
     @Override
