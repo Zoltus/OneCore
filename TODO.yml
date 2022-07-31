@@ -15,7 +15,6 @@
           - economy balances loads all on enable
           - does economy save?
           - test signedit cmd when cmdapi 8.5.1 comes
-          - register class recode
         Important:
           - Rtp improvements to async & create worker.
         Not important:

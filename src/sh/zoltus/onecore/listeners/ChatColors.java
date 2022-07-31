@@ -10,7 +10,6 @@ import static sh.zoltus.onecore.configuration.yamls.Config.CHAT_COLOR_PERMISSION
 
 public class ChatColors implements Listener {
 
-    //todo hexColors
     @EventHandler(priority = EventPriority.MONITOR)
     public void chatMention(AsyncPlayerChatEvent e) {
         if (e.getPlayer().hasPermission(CHAT_COLOR_PERMISSION.getAsPermission()))

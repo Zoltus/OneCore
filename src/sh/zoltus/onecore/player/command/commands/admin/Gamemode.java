@@ -60,6 +60,12 @@ public class Gamemode implements IOneCommand {
 
     }
 
+    /**
+     * Handle target gamemode command.
+     * @param sender Command sender
+     * @param offTarget Offline player
+     * @param gm Game mode
+     */
     private void handleTarget(CommandSender sender, OfflinePlayer offTarget, GameMode gm) {
         Player target = offTarget.getPlayer();
         String gmName = getGmName(gm);
@@ -91,6 +97,11 @@ public class Gamemode implements IOneCommand {
         }
     }
 
+    /**
+     *
+     * @param gm Gamemode
+     * @return Gamemode translation from config
+     */
     private String getGmName(GameMode gm) {
         return switch (gm) {
             case SURVIVAL -> GAMEMODE_SURVIVAL.getString();
@@ -100,6 +111,11 @@ public class Gamemode implements IOneCommand {
         };
     }
 
+    /**
+     *
+     * @param input gamemode string
+     * @return Gamemode based on aliases in config
+     */
     private GameMode getGamemode(String input) {
         Predicate<Commands> hasGm = (gamemodes) -> Arrays
                 .stream(gamemodes.getString().split(",")).anyMatch(input::equalsIgnoreCase);
