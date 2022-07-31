@@ -16,9 +16,13 @@ import java.util.logging.Level;
 
 public class OneYml extends YamlConfiguration {
 
-    //private final String name;
+    //* Yml file
     private final File file;
 
+    /**
+     * @param name of the file
+     * @param path of the file
+     */
     public OneYml(String name, File path) {
         this.file = new File(path, name);
         options().parseComments(true);
@@ -28,20 +32,36 @@ public class OneYml extends YamlConfiguration {
         save();
     }
 
-    public <T> T getOrDefault(String key, T def) {
-        T value = (T) get(key);
+    /**
+     * Gets value from config, if its null it returns default vlaue
+     *
+     * @param path for value
+     * @param def default value
+     * @return value
+     */
+    public <T> T getOrDefault(String path, T def) {
+        T value = (T) get(path);
         return value == null ? def : value;
     }
 
-    public <T> T getOrSetDefault(String key, T def) {
-        T value = getOrDefault(key, def);
-        boolean contains = contains(key);
+    /**
+     * Gets value from config, if its null it returns default value,
+     * if value is null it also sets default value
+     *
+     * @param path for value
+     * @param def default value
+     * @return value
+     */
+    public <T> T getOrSetDefault(String path, T def) {
+        T value = getOrDefault(path, def);
+        boolean contains = contains(path);
         if (!contains) {
-            set(key, def);
+            set(path, def);
         }
         return value;
     }
 
+    //* Reloads config from file
     public void save() {
         try {
             save(file);
@@ -50,6 +70,7 @@ public class OneYml extends YamlConfiguration {
         }
     }
 
+    //* Reloads config from file
     public void reload() {
         //Reloads loads file and sets defaults from source
         try {
@@ -72,6 +93,7 @@ public class OneYml extends YamlConfiguration {
 
     }
 
+    //* Gets resource from classpath
     private InputStream getResource(String filename) {
         try {
             URL url = getClass().getClassLoader().getResource(filename);
@@ -80,11 +102,10 @@ public class OneYml extends YamlConfiguration {
                 connection.setUseCaches(false);
                 return connection.getInputStream();
             }
-        } catch (IOException ignored) {
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return null;
     }
-
-    //autosave on edit? bulkedit?
 }
 
