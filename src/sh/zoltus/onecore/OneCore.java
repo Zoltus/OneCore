@@ -59,7 +59,7 @@ public class OneCore extends JavaPlugin implements Listener {
         this.vault = hook();// Hooks economy if its enabled on config.
         this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
-        new Metrics(this, 12829);; // Inits metrics to bstats
+        new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
