@@ -62,12 +62,11 @@ public class OneCore extends JavaPlugin implements Listener {
         this.vault = hookEconomy();// Hooks economy if its enabled on config.
         this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
-        this.initMetrics(); // Inits metrics
+        this.initMetrics(); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
-        // Sends console art
-        Bukkit.getScheduler().runTaskLater(this, this::sendArt,1);
+        sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
     }
 
     @Override
@@ -83,17 +82,22 @@ public class OneCore extends JavaPlugin implements Listener {
         new Metrics(this, 12829);
     }
 
+    /**
+     * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+     */
     private void sendArt() {
-        List.of("",
+        Bukkit.getScheduler().runTaskLater(this, () -> List.of(
+                "",
                 // "§f                     o O O",
                 "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
                 "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
                 "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{==§71.0§8==|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
                 "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
                 ""
-        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
+        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 1);
     }
 
+    //todo move to other class
     private Economy hookEconomy() {
         Bukkit.getConsoleSender().sendMessage("Hooking economy...");
         if (Config.ECONOMY.getBoolean()) {
