@@ -5,6 +5,8 @@ Data:
     invalid-range: '{p} Kelvoton säde'
     # <player>
     joined: '&a&l+ &7<player>'
+    # <player>
+    quit: '&c&l- &7<player>'
     kicked-for-spamming-reason: '{p} §cKicked for spamming!'
     mention-color: '&x&0&0&f&f&0&0&l'
     mention-permission: mention
@@ -12,8 +14,6 @@ Data:
     player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-only-command: '{p} Tämä komento on vain pelaajille!'
-    # <player>
-    quit: '&c&l- &7<player>'
     world-not-found: '{p} maailmaa ei löytynyt'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>

@@ -16,11 +16,14 @@ import sh.zoltus.onecore.OneCore;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 import static sh.zoltus.onecore.configuration.yamls.Config.*;
 
 public record SignColorHandler(OneCore plugin) implements Listener {
 
+    //todo https://github.com/Shopkeepers/Shopkeepers/blob/b776ac4163b24e38e6d7d3fe2b741607cfe94e52/src/main/java/com/nisovin/shopkeepers/util/TextUtils.java
+    //
     // for detecting #8f8f8f
     private static final Pattern pattern = Pattern.compile("#\\p{XDigit}{6}");
     // for detecting §x§8§f§8§f§8§f
@@ -76,10 +79,10 @@ public record SignColorHandler(OneCore plugin) implements Listener {
      * @param sign sign to be opened
      */
     private void handleSignOpen(Player p, Sign sign) {
-        for (int line = 0; line < sign.getLines().length; line++) {
+        IntStream.range(0, sign.getLines().length).forEach(line -> {
             String text = sign.getLine(line);
             sign.setLine(line, toNormal(text));
-        }
+        });
         sign.update(true);
         //prevents bug with 2tick delay
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.openSign(sign), 2L);
