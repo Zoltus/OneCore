@@ -26,7 +26,7 @@ import static sh.zoltus.onecore.configuration.yamls.Config.START_MONEY;
 public class User {
 
     private static OneCore plugin = OneCore.getPlugin();
-    private static Economy economy = plugin.getVault();
+   // private static Economy economy = plugin.getVault();
     @Getter
     private static final Map<UUID, User> users = new HashMap<>();
 
@@ -39,8 +39,11 @@ public class User {
 
     private boolean tpEnabled = false;
     private Map<String, PreLocation> homes = new HashMap<>();
+    private Economy economy;
 
     public User(OfflinePlayer offP) {
+        //todo move this
+        this.economy = plugin.getVault();
         this.offP = offP;
         this.uniqueId = offP.getUniqueId();
         //Default settings:
