@@ -52,6 +52,7 @@ public class OneCore extends JavaPlugin implements Listener {
     public void onEnable() {
         CommandAPI.onEnable(this); //Loads commandapi
         long time = System.currentTimeMillis();
+        //todo load spawn motd warps, from yml
         Database.init(this); // Loads db & baltop todo only obj
         this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
         this.registerer = Registerer.register(this);// Register listeners & Commands

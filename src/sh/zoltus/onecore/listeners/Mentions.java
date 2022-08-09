@@ -22,7 +22,7 @@ public class Mentions implements Listener {
     public void chatMention(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msgg = e.getMessage();
-        if (p.hasPermission(MENTION_PERMISSION.getString()) && msgg.contains(mentionTag)) {
+        if (p.hasPermission(MENTION_PERMISSION.getAsPermission()) && msgg.contains(mentionTag)) {
             StringBuilder sb = new StringBuilder();
             for (Player target : Bukkit.getOnlinePlayers()) {//todo use this method on chatbuilder
                 String name = target.getName();
