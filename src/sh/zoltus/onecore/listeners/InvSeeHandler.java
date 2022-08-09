@@ -111,7 +111,7 @@ public class InvSeeHandler implements Listener {
         BiMap<UUID, Inventory> invMap = isEnderChest ? eInventorys : inventorys;
 
         //If player has only viewperm to invs
-        String permission = isEnderChest ? EnderChest_EDIT_PERMISSION.getString() : INVSEE_EDIT_PERMISSION.getString();
+        String permission = isEnderChest ? EnderChest_EDIT_PERMISSION.getAsPermission() : INVSEE_EDIT_PERMISSION.getAsPermission();
 
         if (invMap.inverse().containsKey(inv) && !p.hasPermission(permission)) {
             //If player owns the inv he can freely edit it

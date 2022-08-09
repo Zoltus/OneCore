@@ -11,14 +11,13 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.commands.regular.Spawn;
 import sh.zoltus.onecore.player.command.commands.regular.Warp;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
 
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,7 +51,6 @@ public class Database {
         createTables();
         backupTimer(); //Starts backup timer
         // Bukkit.getConsoleSender().sendMessage("Loading server settings...");
-        loadServerSettings();
         initAutoSaver();
     }
 
@@ -112,36 +110,6 @@ public class Database {
             saveServerAsync();
             saveEconomyAsync();
         }, (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
-    }
-
-    public void loadServerSettingsAsync() { //todo
-        //CompletableFuture.completedFuture
-        //CompletableFuture.runAsync(() -> 213)
-        scheduler.runTaskAsynchronously(plugin, this::loadServerSettings);
-    }
-
-    private void loadServerSettings() {
-        Gson gson = new Gson();
-        Type type = new HashMapTypeToken().getType();
-
-        try (Connection con = connection()
-             ; PreparedStatement st = con.prepareStatement("SELECT * FROM Server")
-             ; ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                String key = rs.getString("key");
-                String value = rs.getString("value");
-                switch (key) {
-                    case "Spawn" -> Spawn.setSpawn(gson.fromJson(value, PreLocation.class));
-                    case "Motd" -> {
-                        //todo motd String motd = value;
-                    }
-                    case "Warps" -> Warp.setWarps(gson.fromJson(value, type));
-                }
-            }
-        } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error loading server settings!\n §c" + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     public void saveUsersAsync() {
