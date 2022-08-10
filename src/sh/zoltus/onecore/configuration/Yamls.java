@@ -16,7 +16,8 @@ public enum Yamls {
     COMMANDS("commands.yml"),
     CONFIG("config.yml"),
     Console_Filter("console_filter.yml"),
-    LANG("lang.yml");
+    LANG("lang.yml"),
+    WARPS("warps.yml");
 
     @Getter
     private final OneYml yml;

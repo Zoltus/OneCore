@@ -4,7 +4,6 @@ import dev.jorel.commandapi.arguments.LocationArgument;
 import org.bukkit.Location;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.regular.Spawn;
-import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_LOCATION;
@@ -19,7 +18,7 @@ public class SetSpawn implements IOneCommand {
                         .withPermission(SETSPAWN_PERMISSION)
                         .withAliases(SETSPAWN_ALIASES)
                         .executesPlayer((p, args) -> {
-                    Spawn.setSpawn(new PreLocation(p.getLocation()));
+                    Spawn.setSpawn(p.getLocation());
                     p.sendMessage(SETSPAWN_SET.getString());
                 }).override();
                 //setspawn <location>
@@ -28,7 +27,7 @@ public class SetSpawn implements IOneCommand {
                         .withAliases(SETSPAWN_ALIASES)
                         .withArguments(new LocationArgument(NODES_LOCATION.getString()))
                         .executesPlayer((p, args) -> {
-                    Spawn.setSpawn(new PreLocation((Location) args[0]));
+                    Spawn.setSpawn((Location) args[0]);
                     p.sendMessage(SETSPAWN_SET.getString());
                 }).register();
     }
