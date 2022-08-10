@@ -161,7 +161,7 @@ public enum Lang implements IConfig {
     TP_YOU_ALREADY_SENT_REQUEST("tp.you-already-sent-request"),
     TP_YOU_DENIED("tp.you-denied"),
     WARP_LIST("warp.list"),
-    WARP_NOT_SET("warp.not-set"),
+    WARP_NOT_FOUND("warp.not-found"),
     WARP_TARGET_SENT("warp.target-sent"),
     WEATHER_CHANGED("weather.changed"),
     WEATHER_INVALID_WEATHER("weather.invalid-weather"),

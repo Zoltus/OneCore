@@ -275,7 +275,7 @@ Data:
     # <list>
     list: 'Warps: <list>'
     # <list>
-    not-set: '{p} Warp is not set warps: <list>'
+    not-found: '{p} Warp not found, available warps: <list>'
     # <player>, <warp>
     target-sent: '{p} Sent target <player> to warp <warp>'
   weather:
