@@ -2,7 +2,6 @@ package sh.zoltus.onecore.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
@@ -14,16 +13,12 @@ import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.User;
-import sh.zoltus.onecore.player.command.commands.regular.Spawn;
-import sh.zoltus.onecore.player.command.commands.regular.Warp;
-import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -107,7 +102,6 @@ public class Database {
     private void initAutoSaver() {
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             saveUsersAsync();
-            saveServerAsync();
             saveEconomyAsync();
         }, (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
     }
@@ -140,32 +134,6 @@ public class Database {
             pStm.executeBatch();
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage("§4Error saving players!\n §c" + e.getMessage());
-        }
-    }
-
-    public void saveServerAsync() {
-        scheduler.runTaskAsynchronously(plugin, this::saveServer);
-    }
-
-    public void saveServer() {
-        try (Connection con = connection();
-             PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Server(key,value) VALUES(?,?)")) {
-            Gson gson = new Gson();
-            //Spawn
-            pStm.setString(1, "Spawn");
-            pStm.setString(2, gson.toJson(Spawn.getSpawn()));
-            pStm.addBatch();
-            //Motd
-            pStm.setString(1, "Motd");
-            pStm.setString(2, Bukkit.getMotd());
-            pStm.addBatch();
-            //Warps
-            pStm.setString(1, "Warps");
-            pStm.setString(2, gson.toJson(Warp.getWarps()));
-            pStm.addBatch();
-            pStm.executeBatch();
-        } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error saving server settings!\n §c" + e.getMessage());
         }
     }
 
@@ -281,11 +249,8 @@ public class Database {
 
     public void saveAll() {
         saveUsers();
-        saveServer();
         if (plugin.getVault() != null) {
             saveEconomy();
         }
-    }
-    private static class HashMapTypeToken extends TypeToken<HashMap<String, PreLocation>> {
     }
 }

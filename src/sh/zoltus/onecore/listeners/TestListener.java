@@ -68,11 +68,6 @@ public class TestListener implements Listener {
                     p.sendMessage("Took " + (System.currentTimeMillis() - start));
                 }
 
-                case "/sserver" -> {
-                    e.setCancelled(true);
-                    Database.database().saveServerAsync();
-                    p.sendMessage("serverstuffSaved");
-                }
                 case "/splayers" -> {
                     e.setCancelled(true);
                     Database.database().saveUsersAsync();

@@ -10,8 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - started moving warps&spawn to ymls
           - fix economy
-          - backup player.dat system
+          - backup player.dat system 
           - TEST EVERYTHING! (MOTIMMAA test)
           - spawn and warps to yml
           - Fix teleporthandler
