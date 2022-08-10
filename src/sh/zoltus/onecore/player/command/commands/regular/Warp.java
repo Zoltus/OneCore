@@ -4,38 +4,38 @@ import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.configuration.OneYml;
+import sh.zoltus.onecore.configuration.Yamls;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
-import sh.zoltus.onecore.player.teleporting.PreLocation;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
+import static sh.zoltus.onecore.configuration.yamls.Commands.LIST_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
+import static sh.zoltus.onecore.configuration.yamls.Commands.WARP_PH;
 import static sh.zoltus.onecore.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.configuration.yamls.Lang.*;
 
 public class Warp implements IOneCommand {
 
-    @Setter
-    @Getter
-    private static HashMap<String, PreLocation> warps = new LinkedHashMap<>();
+    private final OneYml warps = Yamls.WARPS.getYml();
+
+    record WarpObj(String name, Location location) {}
 
     private Argument<?> warpArg() {
         return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), (info) -> {
             String input = info.input();
-            if (!warps.containsKey(input)) {
-                throw new CustomArgument.CustomArgumentException(WARP_NOT_SET.rp(LIST_PH, warps.keySet().toString()));
+            Location warp = warps.getLocation(input);
+            if (warp == null) {
+                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.rp(LIST_PH, warps.getKeys(false)));
             } else {
-                return input;
+                return new WarpObj(input, warp);
             }
-        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), warps.keySet().toArray(new String[0]))));
+        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), warps.getKeys(false).toArray(new String[0]))));
     }
 
     //todo cleanup
@@ -46,7 +46,7 @@ public class Warp implements IOneCommand {
                 .withPermission(WARP_PERMISSION)
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
-                    p.sendMessage(WARP_LIST.rp(LIST_PH, warps.keySet().toString()));
+                    p.sendMessage(WARP_LIST.rp(LIST_PH, warps.getKeys(false).toString()));
                 }).override();
         //warp <warp>
         command(WARP_LABEL)
@@ -54,10 +54,9 @@ public class Warp implements IOneCommand {
                 .withAliases(WARP_ALIASES)
                 .withArguments(warpArg())
                 .executesPlayer((p, args) -> {
-                    String warpName = (String) args[0];
-                    PreLocation warp = warps.get(warpName);
+                    WarpObj warp = (WarpObj) args[0];
                     User user = User.of(p);
-                    user.teleportTimer(warp.toLocation());
+                    user.teleportTimer(warp.location());
                 }).register();
         //warp <warp> <player>
         command(WARP_LABEL)
@@ -65,16 +64,16 @@ public class Warp implements IOneCommand {
                 .withAliases(WARP_ALIASES)
                 .withArguments(warpArg(), new OfflinePlayerArgument())
                 .executes((sender, args) -> {
-                    String warpName = (String) args[0];
+                    WarpObj warp = (WarpObj) args[0];
+                    String warpName = warp.name();
                     OfflinePlayer offTarget = (OfflinePlayer) args[1];
                     Player p = offTarget.getPlayer();
-                    Location warp = warps.get(warpName).toLocation();
-
+                    Location loc = warp.location();
                     if (p != null) {
-                        p.teleport(warp);
+                        p.teleport(loc);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
-                        nbtPlayer.setLocation(warp);
+                        nbtPlayer.setLocation(loc);
                         nbtPlayer.save();
                     }
                     if (offTarget.getPlayer() != sender) {
