@@ -11,6 +11,7 @@ import sh.zoltus.onecore.database.Database;
 import java.util.logging.Level;
 
 public class EconomyHandler {
+
     public static Economy hook(OneCore plugin) {
         if (!Config.ECONOMY.getBoolean()) {
             return null;
@@ -40,4 +41,5 @@ public class EconomyHandler {
         }
         return null;
     }
+
 }

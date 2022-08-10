@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.economy.OneEconomy;
-import sh.zoltus.onecore.player.teleporting.Request;
-import sh.zoltus.onecore.player.teleporting.Teleport;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
+import sh.zoltus.onecore.player.teleporting.Request;
+import sh.zoltus.onecore.player.teleporting.Teleport;
 
 import java.util.*;
 
@@ -26,7 +26,7 @@ import static sh.zoltus.onecore.configuration.yamls.Config.START_MONEY;
 public class User {
 
     private static OneCore plugin = OneCore.getPlugin();
-   // private static Economy economy = plugin.getVault();
+    // private static Economy economy = economy;
     @Getter
     private static final Map<UUID, User> users = new HashMap<>();
 
@@ -35,23 +35,22 @@ public class User {
     private transient final List<Location> lastLocations = new ArrayList<>();
     //tomap
     private transient final List<Request> requests = new ArrayList<>();
-    //Database
-
+    private Economy economy;
     private boolean tpEnabled = false;
     private Map<String, PreLocation> homes = new HashMap<>();
-    private Economy economy;
 
     public User(OfflinePlayer offP) {
-        //todo move this
-        this.economy = plugin.getVault();
         this.offP = offP;
         this.uniqueId = offP.getUniqueId();
+        this.economy = plugin.getVault();
         //Default settings:
         users.put(uniqueId, this);
         Bukkit.broadcastMessage("§cNew");
         //Sets balance to 0 if it doesnt exist, for toplist
-        if (!OneEconomy.getBalances().containsKey(uniqueId)) {
-            OneEconomy.getBalances().put(uniqueId, START_MONEY.getDouble());
+        if (economy != null) {
+            if (!OneEconomy.getBalances().containsKey(uniqueId)) {
+                OneEconomy.getBalances().put(uniqueId, START_MONEY.getDouble());
+            }
         }
     }
 
@@ -211,7 +210,6 @@ public class User {
      *
      * @return amount of the money
      */
-    //todo cleanup
     public double getBalance() {
         return economy == null ? 0 : economy.getBalance(getPlayer());
     }
@@ -222,10 +220,8 @@ public class User {
      * @param amount of the money
      */
     public boolean setBalance(double amount) {
-        if (economy != null) {
-            if (economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
-                return economy.depositPlayer(offP, amount).transactionSuccess();
-            }
+        if (economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
+            return economy.depositPlayer(offP, amount).transactionSuccess();
         }
         return false;
     }
@@ -237,7 +233,7 @@ public class User {
      * @return e
      */
     public boolean deposit(double amount) {
-        return economy != null && economy.depositPlayer(offP, amount).transactionSuccess();
+        return economy.depositPlayer(offP, amount).transactionSuccess();
     }
 
     /**
@@ -247,6 +243,6 @@ public class User {
      * @return result
      */
     public boolean withdraw(double amount) {
-        return economy != null && economy.withdrawPlayer(offP, amount).transactionSuccess();
+        return economy.withdrawPlayer(offP, amount).transactionSuccess();
     }
 }
