@@ -143,18 +143,20 @@ public class Database {
     }
 
     public void saveEconomy() {
-        try (Connection con = connection();
-             PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,name,balance) VALUES(?,?,?)")) {
-            for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
-                UUID uuid = entry.getKey();
-                pStm.setString(1, uuid.toString());
-                pStm.setString(2, Bukkit.getOfflinePlayer(uuid).getName());
-                pStm.setDouble(3, entry.getValue());
-                pStm.addBatch();
+        if (plugin.getVault() != null) {
+            try (Connection con = connection();
+                 PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,name,balance) VALUES(?,?,?)")) {
+                for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
+                    UUID uuid = entry.getKey();
+                    pStm.setString(1, uuid.toString());
+                    pStm.setString(2, Bukkit.getOfflinePlayer(uuid).getName());
+                    pStm.setDouble(3, entry.getValue());
+                    pStm.addBatch();
+                }
+                pStm.executeBatch();
+            } catch (SQLException e) {
+                Bukkit.getConsoleSender().sendMessage("§4Error saving economy!\n §c" + e.getMessage());
             }
-            pStm.executeBatch();
-        } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error saving economy!\n §c" + e.getMessage());
         }
     }
 
@@ -249,8 +251,6 @@ public class Database {
 
     public void saveAll() {
         saveUsers();
-        if (plugin.getVault() != null) {
-            saveEconomy();
-        }
+        saveEconomy();
     }
 }
