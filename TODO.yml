@@ -10,11 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - warps to ymls
-          - fix economy
           - backup player.dat system 
           - TEST EVERYTHING! (MOTIMMAA test)
-          - spawn and warps to yml
           - Fix teleporthandler
           - economy balances loads all on enable
           - does economy save?
@@ -24,17 +21,16 @@
           - Rtp improvements to async & create worker.
         Not important:
           - cleanup config ymls
-          - Mentions testing! remove requirement for @ ?
+          - Mentions testing! remove requirement for @ ? optional
           - teleports dont work on spectatormode
           - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
           - listaliases option percommand
           - admin cant set more homes to user if limit is full on the user
           - permissions are in config and in language file
-          - lang homes to same category, undet home.sethome, home.delhome ect
+          - lang homes to same category, under home.sethome, home.delhome ect
           - https://www.youtube.com/watch?v=AbQeo6Zob_M
           - link balance table?
           - butcher, finish all cmds
-          - warps,motd,warps to settings class with @data, or any better system than current
           - Go throught yml namings & comments, messages
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
