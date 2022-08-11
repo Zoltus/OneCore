@@ -5,9 +5,8 @@ import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.io.File;
-
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SystemInfo implements IOneCommand {
 

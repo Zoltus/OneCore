@@ -6,9 +6,9 @@ import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.lang.reflect.Field;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_AMOUNT;
-import static sh.zoltus.onecore.configuration.yamls.Lang.SETMAXPLAYERS_SET;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_AMOUNT;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.SETMAXPLAYERS_SET;
 
 public class SetMaxPlayers implements IOneCommand {
 

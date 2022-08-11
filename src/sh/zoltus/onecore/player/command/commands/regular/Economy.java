@@ -3,7 +3,7 @@ package sh.zoltus.onecore.player.command.commands.regular;
 import dev.jorel.commandapi.arguments.DoubleArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
@@ -12,8 +12,8 @@ import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import java.util.*;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Economy implements IOneCommand {
 

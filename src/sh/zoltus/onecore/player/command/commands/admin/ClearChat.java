@@ -4,9 +4,8 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.CLEAR_PLAYER_CLEARED_CHAT;
-
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.CLEAR_PLAYER_CLEARED_CHAT;
 
 public class ClearChat implements IOneCommand {
 

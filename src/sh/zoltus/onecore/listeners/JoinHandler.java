@@ -8,11 +8,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import sh.zoltus.onecore.database.Database;
+import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.player.command.User;
 
-import static sh.zoltus.onecore.configuration.IConfig.PLAYER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Lang.JOINED;
+import static sh.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.JOINED;
 
 public record JoinHandler() implements Listener {
 

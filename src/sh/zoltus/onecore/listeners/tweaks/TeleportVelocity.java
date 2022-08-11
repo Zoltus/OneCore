@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import sh.zoltus.onecore.configuration.yamls.Config;
 
 public class TeleportVelocity implements Listener {
     /**

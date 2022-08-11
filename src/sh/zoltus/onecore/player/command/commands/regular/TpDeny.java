@@ -5,8 +5,8 @@ import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.RequestArgument;
 import sh.zoltus.onecore.player.teleporting.Request;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.TP_NO_REQUESTS;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 
 public class TpDeny implements IOneCommand {

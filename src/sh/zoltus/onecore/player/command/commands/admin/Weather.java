@@ -6,15 +6,15 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import sh.zoltus.onecore.configuration.yamls.Commands;
+import sh.zoltus.onecore.data.configuration.yamls.Commands;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Weather implements IOneCommand {
 

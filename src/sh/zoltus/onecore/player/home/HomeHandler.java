@@ -8,8 +8,8 @@ import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.util.Objects;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.HOME_DEFAULT_NAME;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class HomeHandler {
 

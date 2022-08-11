@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import sh.zoltus.onecore.player.command.OneArgument;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.WORLD_NOT_FOUND;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.WORLD_NOT_FOUND;
 
 public class WorldsArgument extends CustomArgument<World, String> implements OneArgument  {
 

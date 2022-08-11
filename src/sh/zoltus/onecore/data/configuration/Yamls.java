@@ -1,4 +1,4 @@
-package sh.zoltus.onecore.configuration;
+package sh.zoltus.onecore.data.configuration;
 
 
 import lombok.Getter;

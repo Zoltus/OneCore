@@ -6,12 +6,10 @@ import dev.jorel.commandapi.executors.CommandExecutor;
 import dev.jorel.commandapi.executors.ConsoleCommandExecutor;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.command.CommandSender;
-import sh.zoltus.onecore.configuration.IConfig;
+import sh.zoltus.onecore.data.configuration.IConfig;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
-import java.util.function.Predicate;
 
 public class ApiCommand extends CommandAPICommand {
 

@@ -5,9 +5,9 @@ import org.bukkit.Location;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.regular.Spawn;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_LOCATION;
-import static sh.zoltus.onecore.configuration.yamls.Lang.SETSPAWN_SET;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_LOCATION;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.SETSPAWN_SET;
 
 public class SetSpawn implements IOneCommand {
 

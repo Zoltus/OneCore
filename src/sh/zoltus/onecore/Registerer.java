@@ -14,9 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.EnderChest_ENABLED;
-import static sh.zoltus.onecore.configuration.yamls.Commands.INVSEE_ENABLED;
-import static sh.zoltus.onecore.configuration.yamls.Config.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
 
 public class Registerer {
     private final OneCore plugin;

@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.OneArgument;
 import sh.zoltus.onecore.player.command.User;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_PLAYER;
-import static sh.zoltus.onecore.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_PLAYER;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
 public class UserArgument extends CustomArgument<User, String> implements OneArgument  {
 

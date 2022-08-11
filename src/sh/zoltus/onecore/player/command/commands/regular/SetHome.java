@@ -7,8 +7,8 @@ import sh.zoltus.onecore.player.command.arguments.UserArgument;
 import sh.zoltus.onecore.player.home.HomeAction;
 import sh.zoltus.onecore.player.home.HomeHandler;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_HOME_NAME;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SetHome implements IOneCommand {
 

@@ -19,8 +19,8 @@ import sh.zoltus.onecore.utils.FakeBreak;
 
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements IOneCommand {
 

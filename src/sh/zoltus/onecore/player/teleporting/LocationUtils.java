@@ -7,7 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

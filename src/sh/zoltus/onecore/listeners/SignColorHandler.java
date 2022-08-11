@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
 
 public record SignColorHandler(OneCore plugin) implements Listener {
 

@@ -9,8 +9,8 @@ import sh.zoltus.onecore.player.command.User;
 
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.TELEPORT_EXPIRE;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Request {
 

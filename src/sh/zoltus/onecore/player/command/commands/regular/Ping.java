@@ -4,9 +4,9 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.PING_TARGETS_PING;
-import static sh.zoltus.onecore.configuration.yamls.Lang.PING_YOUR_PING;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.PING_TARGETS_PING;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.PING_YOUR_PING;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class Ping implements IOneCommand {
 

@@ -12,8 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.TELEPORT_DELAY;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.IConfig.SECONDS_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public final class Teleport {
 

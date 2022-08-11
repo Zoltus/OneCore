@@ -1,4 +1,4 @@
-package sh.zoltus.onecore.database;
+package sh.zoltus.onecore.data.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.User;
 
@@ -189,6 +189,7 @@ public class Database {
         String uuid = offP.getUniqueId().toString();
 
         //if target is loaded it returns, Not needed just incase.
+        //todo check this
         if (User.ofNullable(offP) != null) {
             return true;
         }
@@ -222,18 +223,18 @@ public class Database {
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             //backup on start
             if (UPTIMEHOURS == 0) {
-                backup("start");
+                backupDatabase("start");
             } else {
                 hours.stream() //backup every hour which is marked on list
                         .filter(integer -> UPTIMEHOURS % integer == 0)
-                        .forEach(integer -> backup(integer + "h"));
+                        .forEach(integer -> backupDatabase(integer + "h"));
             }
             //Yamls.COMMANDS.getYml().getIntegerList("")
             UPTIMEHOURS++;
         }, 0, 72000); //Every hour
     }
 
-    private void backup(String time) {
+    private void backupDatabase(String time) {
         final Path source = Paths.get(plugin.getDataFolder() + "/" + fileName + ".db");
         final Path target = Paths.get(plugin.getDataFolder() + "/backups/" + fileName + "(" + time + ").db");
         final Path f = target.getParent();

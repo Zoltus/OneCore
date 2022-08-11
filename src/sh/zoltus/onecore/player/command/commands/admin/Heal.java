@@ -9,9 +9,9 @@ import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.HEAL_YOU_GOT_HEALED;
-import static sh.zoltus.onecore.configuration.yamls.Lang.HEAL_YOU_HEALED_TARGET;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_GOT_HEALED;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_HEALED_TARGET;
 
 public class Heal implements IOneCommand {
     @Override

@@ -6,9 +6,9 @@ import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.GOD_CHANGED_TARGETS_GOD;
-import static sh.zoltus.onecore.configuration.yamls.Lang.GOD_SET_TO;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.GOD_CHANGED_TARGETS_GOD;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.GOD_SET_TO;
 
 public class God implements IOneCommand {
 
