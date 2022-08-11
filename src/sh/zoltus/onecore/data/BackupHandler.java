@@ -37,9 +37,8 @@ public class BackupHandler {
         }, 0, 72000); //Every hour
     }
 
-
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void createTarGz(File inputPath, File outputPath, String outputName) {
-        //todo a
         outputPath.mkdirs();
         try (FileOutputStream fileOutputStream = new FileOutputStream(outputPath + "/" + outputName + ".tar.gz");
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
