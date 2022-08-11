@@ -22,7 +22,7 @@ public class Spawn implements IOneCommand {
     }
 
     public static void setSpawn(Location location) {
-        config.set("spawn", location);
+        config.set("Data.spawn", location);
         config.save();
         config.reload();
     }

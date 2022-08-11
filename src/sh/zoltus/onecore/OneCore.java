@@ -42,6 +42,7 @@ public class OneCore extends JavaPlugin implements Listener {
     private Economy vault;
     private Registerer registerer;
     private RTPHandler rtpHandler;
+    private BackupHandler backupHandler;
 
     @Override
     public void onLoad() {
@@ -49,6 +50,7 @@ public class OneCore extends JavaPlugin implements Listener {
         CommandAPI.onLoad(new CommandAPIConfig().verboseOutput(false));  //Loads commandapi
     }
 
+    //todo backup interval to config
     @Override
     public void onEnable() {
         CommandAPI.onEnable(this); //Loads commandapi
@@ -63,7 +65,9 @@ public class OneCore extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
-        BackupHandler.backupTimer(); // Starts backup timer for player.dat files
+        this.backupHandler = new BackupHandler(this); // Initializes backup handler
+        backupHandler.start(); //todo convert to singleton
+
     }
 
     @Override
