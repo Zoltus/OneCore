@@ -44,7 +44,7 @@ public class Database {
         this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.OFF);
         createTables();
-        backupTimer(); //Starts backup timer
+       // backupTimer(); //Starts backup timer
         // Bukkit.getConsoleSender().sendMessage("Loading server settings...");
         initAutoSaver();
     }
@@ -223,7 +223,7 @@ public class Database {
         scheduler.runTaskTimerAsynchronously(plugin, () -> {
             //backup on start
             if (UPTIMEHOURS == 0) {
-                backupDatabase("start");
+                backupDatabase("startup");
             } else {
                 hours.stream() //backup every hour which is marked on list
                         .filter(integer -> UPTIMEHOURS % integer == 0)

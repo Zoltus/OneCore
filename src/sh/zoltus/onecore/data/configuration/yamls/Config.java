@@ -9,6 +9,9 @@ import sh.zoltus.onecore.data.configuration.Yamls;
 @AllArgsConstructor
 public enum Config implements IConfig {
     BACK_HISTORY_SIZE("back-history-size"),
+    BACKUPS_STATS_ENABLED("backups.stats-enabled"),
+    BACKUPS_DATABASE_ENABLED("backups.database-enabled"),
+    BACKUPS_PLAYERDATA_ENABLED("backups.playerdata-enabled"),
     BALTOP_UPDATE_INTERVAL("baltop-update-interval"),
     CHAT_COLOR_PERMISSION("chat-color-permission"),
     CHAT_COLORS_ENABLED("chat-colors-enabled"),
@@ -34,6 +37,8 @@ public enum Config implements IConfig {
     TELEPORT_VELOCITY_RESET("teleport-velocity-reset"),
     TELEPORT_WITH_VEHICLE("teleport-with-vehicle"),
     USER_CONSOLE_FILTER("user-console-filter");
+
+
 
     @Getter
     final String path;
