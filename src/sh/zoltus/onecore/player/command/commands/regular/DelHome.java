@@ -7,7 +7,7 @@ import sh.zoltus.onecore.player.command.arguments.HomeArg1;
 import sh.zoltus.onecore.player.home.HomeAction;
 import sh.zoltus.onecore.player.home.HomeHandler;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class DelHome implements IOneCommand {
     @Override

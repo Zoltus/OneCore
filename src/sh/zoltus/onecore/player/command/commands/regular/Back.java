@@ -16,9 +16,9 @@ import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
 import java.util.List;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Config.BACK_HISTORY_SIZE;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Back implements IOneCommand, Listener {
 

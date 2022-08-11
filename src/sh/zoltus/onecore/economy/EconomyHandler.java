@@ -5,8 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.configuration.yamls.Config;
-import sh.zoltus.onecore.database.Database;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
+import sh.zoltus.onecore.data.database.Database;
 
 import java.util.logging.Level;
 

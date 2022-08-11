@@ -1,15 +1,13 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.StringArgument;
-import sh.zoltus.onecore.configuration.OneYml;
-import sh.zoltus.onecore.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.OneYml;
+import sh.zoltus.onecore.data.configuration.Yamls;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.commands.regular.Warp;
-import sh.zoltus.onecore.player.teleporting.PreLocation;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_WARP_NAME;
-import static sh.zoltus.onecore.configuration.yamls.Lang.SETWARP_SET;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_WARP_NAME;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.SETWARP_SET;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class SetWarp implements IOneCommand {
 

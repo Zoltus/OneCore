@@ -2,8 +2,8 @@ package sh.zoltus.onecore.player.command.commands.regular;
 
 import sh.zoltus.onecore.player.command.IOneCommand;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.TP_TOGGLE_SWITCHED;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.TP_TOGGLE_SWITCHED;
 
 public class TpToggle implements IOneCommand {
 

@@ -7,18 +7,15 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.configuration.OneYml;
-import sh.zoltus.onecore.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.OneYml;
+import sh.zoltus.onecore.data.configuration.Yamls;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.LIST_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.WARP_PH;
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Warp implements IOneCommand {
 

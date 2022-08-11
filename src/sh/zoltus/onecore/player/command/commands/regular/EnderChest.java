@@ -5,8 +5,8 @@ import org.bukkit.event.Listener;
 import sh.zoltus.onecore.listeners.InvSeeHandler;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class EnderChest implements IOneCommand, Listener {
     @Override

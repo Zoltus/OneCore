@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.OneArgument;
 import sh.zoltus.onecore.player.command.User;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.HOME_PERMISSION_OTHER;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_HOME_NAME_OR_Player;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_PERMISSION_OTHER;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_HOME_NAME_OR_Player;
 
 public class HomeArg0 extends CustomArgument<String, String> implements OneArgument {
 

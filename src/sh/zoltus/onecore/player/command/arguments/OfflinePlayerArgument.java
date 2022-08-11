@@ -1,6 +1,6 @@
 package sh.zoltus.onecore.player.command.arguments;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_PLAYER;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_PLAYER;
 
 public class OfflinePlayerArgument extends dev.jorel.commandapi.arguments.OfflinePlayerArgument {
 

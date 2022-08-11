@@ -35,6 +35,7 @@ public class NBTPlayer {
         this.nbt = data.getFile();
         this.abilities = nbt.getCompound("abilities");
         //Loads stats from world json file
+        //todo convert to Bukkit.getworldocntainer
         File statsFile = new File(getWorld().getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
         try {
             Gson gson = new Gson();

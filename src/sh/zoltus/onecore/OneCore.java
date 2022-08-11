@@ -13,10 +13,11 @@ import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
-import sh.zoltus.onecore.configuration.yamls.Commands;
-import sh.zoltus.onecore.configuration.yamls.Config;
-import sh.zoltus.onecore.configuration.yamls.Lang;
-import sh.zoltus.onecore.database.Database;
+import sh.zoltus.onecore.data.BackupHandler;
+import sh.zoltus.onecore.data.configuration.yamls.Commands;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Lang;
+import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.economy.EconomyHandler;
 import sh.zoltus.onecore.listeners.ConsoleFilter;
 import sh.zoltus.onecore.player.teleporting.RTPHandler;
@@ -62,6 +63,7 @@ public class OneCore extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+        BackupHandler.backupTimer(); // Starts backup timer for player.dat files
     }
 
     @Override

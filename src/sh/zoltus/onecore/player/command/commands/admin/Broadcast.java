@@ -6,9 +6,9 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.BROADCAST_PREFIX;
-import static sh.zoltus.onecore.configuration.yamls.Lang.NODES_MESSAGE;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.BROADCAST_PREFIX;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_MESSAGE;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class Broadcast implements IOneCommand {
 

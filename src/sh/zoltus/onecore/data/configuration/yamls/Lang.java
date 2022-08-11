@@ -1,10 +1,10 @@
-package sh.zoltus.onecore.configuration.yamls;
+package sh.zoltus.onecore.data.configuration.yamls;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sh.zoltus.onecore.configuration.IConfig;
-import sh.zoltus.onecore.configuration.OneYml;
-import sh.zoltus.onecore.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.IConfig;
+import sh.zoltus.onecore.data.configuration.OneYml;
+import sh.zoltus.onecore.data.configuration.Yamls;
 
 @AllArgsConstructor
 public enum Lang implements IConfig {

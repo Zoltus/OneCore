@@ -116,7 +116,11 @@
             <scope>provided</scope>
         </dependency>
         <!-- CommandApi -->
-
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-shade</artifactId>
+            <version>${commandapi.version}</version>
+        </dependency>
         <!-- bstats -->
         <dependency>
             <groupId>org.bstats</groupId>
@@ -128,10 +132,11 @@
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>${nbtapi.version}</version>
         </dependency>
+        <!-- tar.gz -->
         <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-shade</artifactId>
-            <version>${commandapi.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.21</version>
         </dependency>
     </dependencies>
     <build>

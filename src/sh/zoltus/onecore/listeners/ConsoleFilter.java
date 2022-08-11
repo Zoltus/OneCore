@@ -9,9 +9,9 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 import org.bukkit.ChatColor;
-import sh.zoltus.onecore.configuration.OneYml;
-import sh.zoltus.onecore.configuration.Yamls;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.OneYml;
+import sh.zoltus.onecore.data.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 
 import java.util.ArrayList;
 import java.util.List;

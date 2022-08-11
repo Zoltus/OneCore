@@ -21,8 +21,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.EnderChest_EDIT_PERMISSION;
-import static sh.zoltus.onecore.configuration.yamls.Commands.INVSEE_EDIT_PERMISSION;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.EnderChest_EDIT_PERMISSION;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.INVSEE_EDIT_PERMISSION;
 
 public class InvSeeHandler implements Listener {
 

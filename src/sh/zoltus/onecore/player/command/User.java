@@ -18,8 +18,8 @@ import sh.zoltus.onecore.player.teleporting.Teleport;
 
 import java.util.*;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.HOME_AMOUNT_PERMISSION;
-import static sh.zoltus.onecore.configuration.yamls.Config.START_MONEY;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_AMOUNT_PERMISSION;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
 
 
 @Data

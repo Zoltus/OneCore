@@ -12,7 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Mentions implements Listener {
     private final String mentionColors = MENTION_COLOR.getString(); //

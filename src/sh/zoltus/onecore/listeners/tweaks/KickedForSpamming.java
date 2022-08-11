@@ -3,9 +3,9 @@ package sh.zoltus.onecore.listeners.tweaks;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.KICKED_FOR_SPAMMING;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.KICKED_FOR_SPAMMING;
 
 public class KickedForSpamming implements Listener {
     /**

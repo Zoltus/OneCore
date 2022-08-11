@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class TeleportHandler implements Listener {
 

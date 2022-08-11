@@ -8,7 +8,7 @@ import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sh.zoltus.onecore.configuration.yamls.Commands;
+import sh.zoltus.onecore.data.configuration.yamls.Commands;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -17,9 +17,9 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import static org.bukkit.GameMode.SURVIVAL;
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.PERMISSION_PREFIX;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Gamemode implements IOneCommand {
 

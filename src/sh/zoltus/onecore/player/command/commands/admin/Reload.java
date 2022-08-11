@@ -1,14 +1,13 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
 import org.bukkit.Bukkit;
-import sh.zoltus.onecore.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.Yamls;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.util.stream.Stream;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.RELOAD_RELOADED;
-import static sh.zoltus.onecore.configuration.yamls.Lang.RELOAD_RELOADING;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;;
 
 public class Reload implements IOneCommand {
 

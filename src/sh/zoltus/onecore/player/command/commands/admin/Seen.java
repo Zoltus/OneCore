@@ -7,9 +7,9 @@ import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.SEEN_DATE_FORMAT;
-import static sh.zoltus.onecore.configuration.yamls.Lang.SEEN_LAST_SEEN;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.SEEN_DATE_FORMAT;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.SEEN_LAST_SEEN;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class Seen implements IOneCommand {
 

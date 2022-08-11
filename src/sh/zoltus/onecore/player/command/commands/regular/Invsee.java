@@ -6,7 +6,7 @@ import sh.zoltus.onecore.listeners.InvSeeHandler;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class Invsee implements IOneCommand, Listener {
     //Todo armorcontents

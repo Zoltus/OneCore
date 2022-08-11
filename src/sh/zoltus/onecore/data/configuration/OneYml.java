@@ -1,4 +1,4 @@
-package sh.zoltus.onecore.configuration;
+package sh.zoltus.onecore.data.configuration;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;

@@ -1,11 +1,11 @@
-package sh.zoltus.onecore.configuration;
+package sh.zoltus.onecore.data.configuration;
 
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.PERMISSION_PREFIX;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.PERMISSION_PREFIX;
 
 public interface IConfig {
 

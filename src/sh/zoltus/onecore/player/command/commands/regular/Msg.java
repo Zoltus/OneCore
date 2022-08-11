@@ -10,8 +10,11 @@ import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
 import java.util.Arrays;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.MESSAGE_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Msg implements IOneCommand {
     //todo /r response

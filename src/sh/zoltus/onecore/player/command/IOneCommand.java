@@ -6,9 +6,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.configuration.IConfig;
-import sh.zoltus.onecore.configuration.OneYml;
-import sh.zoltus.onecore.configuration.Yamls;
+import sh.zoltus.onecore.data.configuration.IConfig;
+import sh.zoltus.onecore.data.configuration.OneYml;
+import sh.zoltus.onecore.data.configuration.Yamls;
 
 public interface IOneCommand {
 

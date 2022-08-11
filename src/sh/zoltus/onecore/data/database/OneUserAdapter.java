@@ -1,4 +1,4 @@
-package sh.zoltus.onecore.database;
+package sh.zoltus.onecore.data.database;
 
 import com.google.gson.InstanceCreator;
 import org.bukkit.OfflinePlayer;

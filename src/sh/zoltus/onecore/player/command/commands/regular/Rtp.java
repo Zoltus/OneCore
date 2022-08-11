@@ -5,8 +5,7 @@ import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
-import sh.zoltus.onecore.configuration.yamls.Config;
+import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 
@@ -16,10 +15,9 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Config.RTP_COOLDOWN_SECONDS;
-import static sh.zoltus.onecore.configuration.yamls.Lang.RTP_ON_COOLDOWN;
-import static sh.zoltus.onecore.configuration.yamls.Lang.RTP_TELEPORTED;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class Rtp implements IOneCommand {

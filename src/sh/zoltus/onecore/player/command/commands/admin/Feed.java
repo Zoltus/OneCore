@@ -6,9 +6,9 @@ import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import static sh.zoltus.onecore.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.configuration.yamls.Lang.FEED_YOU_FED_TARGET;
-import static sh.zoltus.onecore.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN_HEALED;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.FEED_YOU_FED_TARGET;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN_HEALED;
 
 public class Feed implements IOneCommand {
     @Override

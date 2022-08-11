@@ -6,22 +6,20 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicePriority;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.configuration.yamls.Config;
-import sh.zoltus.onecore.database.Database;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
-import java.util.logging.*;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.CURRENCY_PLURAL;
-import static sh.zoltus.onecore.configuration.yamls.Config.CURRENCY_SINGULAR;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.CURRENCY_PLURAL;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.CURRENCY_SINGULAR;
 
 public final class OneEconomy implements Economy {
     @Getter
@@ -29,9 +27,7 @@ public final class OneEconomy implements Economy {
 
     private final Logger logger;
     private final OneCore plugin;
-
-    @Getter
-    private final String name = "OneEconomy";
+    @Getter private final String name = "OneEconomy";
 
     public boolean isEnabled() {
         return (plugin.getVault() != null);

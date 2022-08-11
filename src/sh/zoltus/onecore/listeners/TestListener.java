@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.database.Database;
+import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;

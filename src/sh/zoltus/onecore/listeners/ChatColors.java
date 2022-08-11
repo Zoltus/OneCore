@@ -6,7 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import static sh.zoltus.onecore.configuration.yamls.Config.CHAT_COLOR_PERMISSION;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.CHAT_COLOR_PERMISSION;
 
 public class ChatColors implements Listener {
 
