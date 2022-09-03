@@ -10,7 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - backup player.dat system 
+          - U can get statistics from offlineplayer no nbt needed
+          - fix backup database.db
+          - test backup with motimaadata copy
           - TEST EVERYTHING! (MOTIMMAA test)
           - Fix teleporthandler
           - economy balances loads all on enable

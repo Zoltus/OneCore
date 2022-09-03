@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.annotation.dependency.Libraries;
+import org.bukkit.plugin.java.annotation.dependency.Library;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
@@ -35,7 +37,12 @@ import java.util.stream.Stream;
 //@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
+@Libraries({@Library("org.bstats:bstats-bukkit:3.0.0"),
+        @Library("org.apache.commons:commons-compress:1.21"),
+        @Library("dev.jorel:commandapi-shade:8.5.1")
+})
 @Getter
+
 public class OneCore extends JavaPlugin implements Listener {
     @Getter
     private static OneCore plugin;

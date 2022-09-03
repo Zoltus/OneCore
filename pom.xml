@@ -21,8 +21,9 @@
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>8.5.1-SNAPSHOT</commandapi.version>
+        <commandapi.version>8.5.1</commandapi.version>
         <nbtapi.version>2.10.0</nbtapi.version>
+        <apache-compress>1.21</apache-compress>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -80,12 +81,6 @@
             <artifactId>spigot</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-codec</artifactId>
-                    <groupId>commons-codec</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.-->
@@ -115,28 +110,31 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- CommandApi -->
+        <!-- CommandApi runtime -->
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-shade</artifactId>
             <version>${commandapi.version}</version>
+            <scope>provided</scope>
         </dependency>
-        <!-- bstats -->
+        <!-- bstats has to be compiled-->
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>${bstats.version}</version>
         </dependency>
+        <!-- tar.gz for backup system, runtime -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${apache-compress}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- NbtApi -->
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>${nbtapi.version}</version>
-        </dependency>
-        <!-- tar.gz -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.21</version>
         </dependency>
     </dependencies>
     <build>
@@ -219,21 +217,20 @@
                         </filter>
                     </filters>
                     <relocations>
+                        <!--
+                        <relocation>
+                            <pattern>dev.jorel</pattern>
+                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
+                        </relocation>
+                        -->
+                        <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>dev.jorel</pattern>
-                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>de.tr7zw</pattern>
                             <shadedPattern>sh.zoltus.apis.de.tr7zw</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>de.leonhard</pattern>
-                            <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
