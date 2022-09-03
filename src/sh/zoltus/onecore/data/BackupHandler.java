@@ -13,6 +13,9 @@ import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.data.configuration.yamls.Config;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class BackupHandler {
     private int UPTIMEHOURS = 0;
     //todo remove static plugins
     private final List<Integer> hours = List.of(4, 12, 24); //todo hours to config and uptime interval possibly,to singleton
-    private final List<Backup> backupFiles = new ArrayList<>();
+    private final List<File> backupFiles = new ArrayList<>();
     //output directory
     private final File dataFolder;
     private final File outputDirectory;
@@ -34,15 +37,12 @@ public class BackupHandler {
         this.outputDirectory = new File(dataFolder, "backups");
     }
 
-    record Backup(String name, File file) {
-    }
-
     //Backups based time from startup
     public void start() {
         //backups
-        Backup stats = new Backup("stats", new File(worldFolder, "stats"));
-        Backup database = new Backup("database", new File(dataFolder, "database.db"));
-        Backup playerdata = new Backup("playerdata", new File(worldFolder, "playerdata"));
+        File stats = new File(worldFolder, "stats");
+        File database = new File(dataFolder, "database.db");
+        File playerdata = new File(worldFolder, "playerdata");
 
         if (Config.BACKUPS_STATS_ENABLED.getBoolean()) {
             backupFiles.add(stats);
@@ -61,15 +61,24 @@ public class BackupHandler {
 
     private void startBackupTaskAsync(File outputDirectory) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
-            for (Backup backup : backupFiles) {
-                //backup on start
-                if (UPTIMEHOURS == 0) {
-                    createTarGz(backup.file(), outputDirectory, backup.name() + "-startup");
-                } else {
-                    hours.stream() //backup every hour which is marked on list
-                            .filter(integer -> UPTIMEHOURS % integer == 0)
-                            .forEach(integer -> createTarGz(backup.file(), outputDirectory, backup.name() + "-" + integer + "h"));
-                }
+            for (File file : backupFiles) {
+                String fileName = file.getName();
+                //todo fix db name ending
+                String name = UPTIMEHOURS == 0 ? fileName + "-startup" : fileName + "-" + UPTIMEHOURS + "h";
+                // final Path target = Paths.get(plugin.getDataFolder() + "/backups/" + "f" + "(" + "t" + ").db");
+                hours.stream() //backup every hour which is marked on list
+                        .filter(integer -> UPTIMEHOURS % integer == 0)
+                        .forEach(integer -> {
+                            try {
+                                if (file.isFile()) {
+                                    Files.copy(file.toPath(), Paths.get(outputDirectory + "/" + name), StandardCopyOption.REPLACE_EXISTING);
+                                } else {
+                                    createTarGz(file, outputDirectory, name);
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
             }
             UPTIMEHOURS++;
         }, 0, 72000); //Every hour
