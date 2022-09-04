@@ -28,15 +28,12 @@ public interface IOneCommand {
         return new ApiCommand(label);
     }
 
-    //Registers all ApiCommands in the command
+    //Registers all ApiCommands in the command and registers listeners
     default void register() {
         if (Listener.class.isAssignableFrom(getClass())) {
             Bukkit.getServer().getPluginManager().registerEvents((Listener) this, plugin);
         }
         init();
-        //todo check if needed
-        //CommandAPI.unregister(cmds[0].getName(), true); //Gets cmd[0] so it unregisters core cmd only
-        //todo system/list for apicommands registered so could use overridelike system
     }
 
     //For chatpreview

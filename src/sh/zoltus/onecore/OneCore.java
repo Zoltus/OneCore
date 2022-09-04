@@ -42,11 +42,12 @@ import java.util.stream.Stream;
         @Library("dev.jorel:commandapi-shade:8.5.1")
 })
 @Getter
-public class OneCore extends JavaPlugin implements Listener {
+public final class OneCore extends JavaPlugin implements Listener {
     @Getter
     private static OneCore plugin;
     private Economy vault;
-    private Registerer registerer;
+    private CommandHandler commandHandler;
+    private ListenerHandler listenerHandler;
     private RTPHandler rtpHandler;
     private BackupHandler backupHandler;
     private Database database;
@@ -65,7 +66,8 @@ public class OneCore extends JavaPlugin implements Listener {
         //todo load spawn motd warps, from yml
         this.database = Database.init(this); // Loads db & baltop todo only obj
         this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
-        this.registerer = Registerer.register(this);// Register listeners & Commands
+        this.listenerHandler = ListenerHandler.register(this); //Registers listeners if enabled
+        this.commandHandler = CommandHandler.Register(this); //Registers Commands if enabled
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set

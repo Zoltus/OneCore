@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Database {
-    private static Database database;
-
     private Connection connection;
     private final OneCore plugin;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
@@ -45,7 +43,8 @@ public class Database {
     }
 
     public static Database init(OneCore plugin) {
-        return database = database == null ? new Database(plugin) : database;
+        Database database = plugin.getDatabase();
+        return database == null ? new Database(plugin) : database;
     }
 
     @SneakyThrows

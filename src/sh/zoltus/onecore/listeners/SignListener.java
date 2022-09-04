@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
 
-public record SignColorHandler(OneCore plugin) implements Listener {
+public record SignListener(OneCore plugin) implements Listener {
 
     //todo https://github.com/Shopkeepers/Shopkeepers/blob/b776ac4163b24e38e6d7d3fe2b741607cfe94e52/src/main/java/com/nisovin/shopkeepers/util/TextUtils.java
     //
