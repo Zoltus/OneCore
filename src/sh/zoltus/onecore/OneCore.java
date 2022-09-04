@@ -34,15 +34,14 @@ import java.util.stream.Stream;
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
 @LogPrefix("OneCore")
 @ApiVersion(ApiVersion.Target.v1_19)
-//@Dependency("CommandAPI")
 @SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
-@Libraries({@Library("org.bstats:bstats-bukkit:3.0.0"),
+@Libraries({
+        @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
         @Library("dev.jorel:commandapi-shade:8.5.1")
 })
 @Getter
-
 public class OneCore extends JavaPlugin implements Listener {
     @Getter
     private static OneCore plugin;
@@ -73,8 +72,7 @@ public class OneCore extends JavaPlugin implements Listener {
         testConfig(); // Tests config for missing values
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
-        backupHandler.start(); //todo convert to singleton
-
+        backupHandler.start(); //todo to singleton
     }
 
     @Override
