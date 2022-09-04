@@ -24,6 +24,7 @@
         <commandapi.version>8.5.1</commandapi.version>
         <nbtapi.version>2.10.0</nbtapi.version>
         <apache-compress>1.21</apache-compress>
+        <log4j.version>2.18.0</log4j.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -96,7 +97,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.18.0</version>
+            <version>${log4j.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Spigot Server,

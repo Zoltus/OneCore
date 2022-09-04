@@ -21,6 +21,7 @@ public enum Config implements IConfig {
     DATA_SAVE_INTERVAL("data-save-interval-minutes"),
     ECONOMY("economy.enabled"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
+    //todo remove this?
     KEEP_USERS_IN_CACHE("keep-users-in-cache"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass"),
     MENTIONS_ENABLED("mentions-enabled"),
