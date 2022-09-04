@@ -10,6 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - cleanup registerer
+          - orm later
           - fix backup database.db
           - test backup with motimaadata copy
           - TEST EVERYTHING! (MOTIMMAA test)

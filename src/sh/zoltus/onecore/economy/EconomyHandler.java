@@ -34,7 +34,7 @@ public class EconomyHandler {
                     vault = rsp.getProvider();
                     Bukkit.getConsoleSender().sendMessage("Economy hooked! (" + vault.getName() + ")");
                     //todo to load eco perplayer not whole eco?
-                    Database.database().loadEconomyAsync();
+                    plugin.getDatabase().loadEconomyAsync();
                     return vault;
                 }
             }

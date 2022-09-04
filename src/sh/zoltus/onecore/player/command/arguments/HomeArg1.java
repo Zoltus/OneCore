@@ -4,6 +4,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
+import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.OneArgument;
@@ -38,7 +39,8 @@ public class HomeArg1 extends CustomArgument<String, String> implements OneArgum
             if (info.currentArg().isEmpty()) {
                 //tryLoad(prevArg);
                 //Tries to load player
-                Database.database().loadPlayer(Bukkit.getOfflinePlayer(prevArg));
+                //todo
+                OneCore.getPlugin().getDatabase().loadPlayer(Bukkit.getOfflinePlayer(prevArg));
             }
             User target = getPrevArgTarget(prevArg);
             if (target != null) {

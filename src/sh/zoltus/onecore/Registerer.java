@@ -22,7 +22,6 @@ public class Registerer {
 
     //Listeners which will always be registered
     private final List<Listener> listeners = new ArrayList<>(List.of(
-            new JoinHandler(),
             new KickedForSpamming(),
             new PlayerJumpEvent(),
             new QuitListener(),
@@ -58,14 +57,15 @@ public class Registerer {
         registerCommands();
     }
 
+    //todo cleanup
     private void registerListeneres() {
-        //todo new instance only if enabled
         //Adds listeners only if config is enabled
         addIfEnabled(new Mentions(), MENTIONS_ENABLED.getBoolean());
         addIfEnabled(new ChatColors(), CHAT_COLORS_ENABLED.getBoolean());
         addIfEnabled(new TeleportVelocity(), TELEPORT_VELOCITY_RESET.getBoolean());
         //Sign colors & ShiftEdit if enabled
         addIfEnabled(new InvSeeHandler(), INVSEE_ENABLED.getBoolean() || EnderChest_ENABLED.getBoolean());
+        listeners.add(new JoinHandler(plugin));
         listeners.add(new SignColorHandler(plugin));
         listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }

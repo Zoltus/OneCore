@@ -8,13 +8,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import sh.zoltus.onecore.data.database.Database;
+import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.player.command.User;
 
 import static sh.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.JOINED;
 
-public record JoinHandler() implements Listener {
+public record JoinHandler(OneCore plugin) implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(AsyncPlayerPreLoginEvent e) {
@@ -22,7 +22,7 @@ public record JoinHandler() implements Listener {
         if (result == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(e.getUniqueId());
             if (!User.getUsers().containsKey(offP.getUniqueId())) {
-                if (!Database.database().loadPlayer(offP)) { //If user isnt on db it creates new one
+                if (!plugin.getDatabase().loadPlayer(offP)) { //If user isnt on db it creates new one
                     new User(offP);
                 }
             }
