@@ -28,17 +28,11 @@ public class ApiCommand extends CommandAPICommand {
                 .toArray(String[]::new);
     }
 
-    /*public ApiCommand withSeparate() {
-        this.override();
-        return this;
-    }
-
-     */
     //Registers commands also separately
     public ApiCommand withSeparateSubcommands(ApiCommand... cmds) {
         for (ApiCommand cmd : cmds) {
             cmd.override();
-            this.withSubcommand(cmd);
+            withSubcommand(cmd);
         }
         return this;
     }
@@ -58,6 +52,23 @@ public class ApiCommand extends CommandAPICommand {
         return this;
     }
 
+    public ApiCommand withSubcommand(ApiCommand subcommand) {
+        super.withSubcommand(subcommand);
+        return this;
+    }
+
+    public ApiCommand withSubcommands(ApiCommand... cmds) {
+        for (ApiCommand cmd : cmds) {
+            this.withSubcommand(cmd);
+        }
+        return this;
+    }
+
+    public ApiCommand executes(CommandExecutor executor) {
+        super.executes(executor);
+        return this;
+    }
+
     @Override
     public ApiCommand withPermission(String permission) {
         super.withPermission(permission);
@@ -74,25 +85,6 @@ public class ApiCommand extends CommandAPICommand {
     @Override
     public ApiCommand withArguments(Argument... args) {
         super.withArguments(args);
-        return this;
-    }
-
-    public ApiCommand withSubcommand(ApiCommand subcommand) {
-        super.withSubcommand(subcommand);
-        return this;
-    }
-
-    public ApiCommand withSubcommands(ApiCommand... cmds) {
-        for (ApiCommand cmd : cmds) {
-            this.withSubcommand(cmd);
-        }
-        return this;
-    }
-
-
-
-    public ApiCommand executes(CommandExecutor executor) {
-        super.executes(executor);
         return this;
     }
 

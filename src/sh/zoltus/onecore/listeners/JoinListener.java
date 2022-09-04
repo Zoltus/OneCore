@@ -14,7 +14,7 @@ import sh.zoltus.onecore.player.command.User;
 import static sh.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.JOINED;
 
-public record JoinHandler(OneCore plugin) implements Listener {
+public record JoinListener(OneCore plugin) implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(AsyncPlayerPreLoginEvent e) {

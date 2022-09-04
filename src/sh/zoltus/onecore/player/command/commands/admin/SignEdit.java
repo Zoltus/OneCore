@@ -12,7 +12,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import sh.zoltus.onecore.listeners.SignColorHandler;
+import sh.zoltus.onecore.listeners.SignListener;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.utils.FakeBreak;
@@ -121,18 +121,18 @@ public class SignEdit implements IOneCommand {
     }
 
     private void setLine(CommandSender sender, Sign sign, int line, String text) {
-        sign.setLine(line, SignColorHandler.toMineHex(text));
+        sign.setLine(line, SignListener.toMineHex(text));
         sign.update(true);
         sender.sendMessage(SIGNEDIT_SIGN_UPDATED.getString());
     }
 
     private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.getString())
-            .withPreview((PreviewLegacy) info -> toComponents(SignColorHandler.toMineHex(info.input())))
+            .withPreview((PreviewLegacy) info -> toComponents(SignListener.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
                 Integer line = (Integer) info.previousArgs()[0] - 1;
                 if (sign != null && sign.getLines().length != 0) {
-                    return List.of(SignColorHandler.toNormal(sign.getLine(line))).toArray(new String[0]);
+                    return List.of(SignListener.toNormal(sign.getLine(line))).toArray(new String[0]);
                 } else {
                     return new String[0];
                 }
