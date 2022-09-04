@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CommandHandler {
 
-    public static CommandHandler Register(OneCore plugin) {
+    public static CommandHandler register(OneCore plugin) {
         CommandHandler handler = plugin.getCommandHandler();
         return handler == null ? new CommandHandler(plugin) : handler;
     }

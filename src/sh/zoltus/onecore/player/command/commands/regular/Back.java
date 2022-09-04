@@ -3,7 +3,6 @@ package sh.zoltus.onecore.player.command.commands.regular;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

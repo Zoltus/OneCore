@@ -5,14 +5,12 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.OneArgument;
 import sh.zoltus.onecore.player.command.User;
 
 import java.util.concurrent.CompletableFuture;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class HomeArg1 extends CustomArgument<String, String> implements OneArgument  {

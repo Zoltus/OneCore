@@ -8,8 +8,6 @@ import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.TIME_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
