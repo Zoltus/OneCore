@@ -25,9 +25,7 @@ public class NBTPlayer {
 
     private final PlayerData data;
     private final NBTFile nbt;
-
-    @Getter
-    private final NBTStats stats;
+    @Getter private final NBTStats stats;
 
     private final NBTCompound abilities;
     public NBTPlayer(UUID uuid) {
