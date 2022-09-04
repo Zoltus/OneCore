@@ -39,6 +39,7 @@ import java.util.stream.Stream;
 @Libraries({
         @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
+        @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
         @Library("dev.jorel:commandapi-shade:8.5.1")
 })
 @Getter
@@ -67,7 +68,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.database = Database.init(this); // Loads db & baltop todo only obj
         this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
         this.listenerHandler = ListenerHandler.register(this); //Registers listeners if enabled
-        this.commandHandler = CommandHandler.Register(this); //Registers Commands if enabled
+        this.commandHandler = CommandHandler.register(this); //Registers Commands if enabled
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set

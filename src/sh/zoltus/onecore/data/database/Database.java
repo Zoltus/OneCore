@@ -12,12 +12,7 @@ import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.User;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -206,41 +201,6 @@ public class Database {
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
             return false;
-        }
-    }
-
-    private static int UPTIMEHOURS = 0;
-
-    //Backups based time from startup
-    private void backupTimer() {
-        List<Integer> hours = List.of(1, 5, 12, 24, 48); //todo hours to config and uptime interval possibly,to singleton
-        scheduler.runTaskTimerAsynchronously(plugin, () -> {
-            //backup on start
-            if (UPTIMEHOURS == 0) {
-                backupDatabase("startup");
-            } else {
-                hours.stream() //backup every hour which is marked on list
-                        .filter(integer -> UPTIMEHOURS % integer == 0)
-                        .forEach(integer -> backupDatabase(integer + "h"));
-            }
-            //Yamls.COMMANDS.getYml().getIntegerList("")
-            UPTIMEHOURS++;
-        }, 0, 72000); //Every hour
-    }
-
-    private void backupDatabase(String time) {
-        final Path source = Paths.get(plugin.getDataFolder() + "/" + fileName + ".db");
-        final Path target = Paths.get(plugin.getDataFolder() + "/backups/" + fileName + "(" + time + ").db");
-        final Path f = target.getParent();
-        try {
-            if (!Files.exists(f) || (Files.exists(f) && !Files.isDirectory(f))) {
-                Files.createDirectory(f);
-            }
-            //todo test if backup is done
-            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error backing up database!\n §c" + e.getMessage());
-            e.printStackTrace();
         }
     }
 
