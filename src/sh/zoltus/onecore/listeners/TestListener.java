@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.player.command.User;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class TestListener implements Listener {
-
 
     @EventHandler
     public void onChatt(PlayerCommandPreprocessEvent e) {
@@ -70,7 +68,7 @@ public class TestListener implements Listener {
 
                 case "/splayers" -> {
                     e.setCancelled(true);
-                    Database.database().saveUsersAsync();
+                    OneCore.getPlugin().getDatabase().saveUsersAsync();
                     p.sendMessage("saved all users");
                 }
 
@@ -96,7 +94,7 @@ public class TestListener implements Listener {
                     p.sendMessage("finished testing users");
                 }
                 //  clickCommands.put("/" + this.hashCode() + key, consumer);
-                case "/dbtest" -> Database.database().loadEconomyAsync();
+                case "/dbtest" -> OneCore.getPlugin().getDatabase().loadEconomyAsync();
                 case "/test22" -> {
                     p.sendMessage("asdasd");
                     p.teleport(user.getHomes().get(user.getHomeArray()[0]).toLocation());

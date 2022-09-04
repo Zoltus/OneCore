@@ -49,6 +49,7 @@ public class OneCore extends JavaPlugin implements Listener {
     private Registerer registerer;
     private RTPHandler rtpHandler;
     private BackupHandler backupHandler;
+    private Database database;
 
     @Override
     public void onLoad() {
@@ -62,7 +63,7 @@ public class OneCore extends JavaPlugin implements Listener {
         CommandAPI.onEnable(this); //Loads commandapi
         long time = System.currentTimeMillis();
         //todo load spawn motd warps, from yml
-        Database.init(this); // Loads db & baltop todo only obj
+        this.database = Database.init(this); // Loads db & baltop todo only obj
         this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
         this.registerer = Registerer.register(this);// Register listeners & Commands
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
@@ -79,7 +80,7 @@ public class OneCore extends JavaPlugin implements Listener {
     public void onDisable() {
         // Saves all users & settings on disable
         //todo mode database to mainclass instead of static
-        Database.database().saveAll();
+        database.saveAll();
         Bukkit.getConsoleSender().sendMessage("Saved users & settings to database...");
         CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
     }

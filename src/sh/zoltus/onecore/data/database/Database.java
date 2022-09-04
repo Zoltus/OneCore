@@ -2,9 +2,7 @@ package sh.zoltus.onecore.data.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.experimental.Accessors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -24,9 +22,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Database {
-
-    @Getter
-    @Accessors(fluent = true)
     private static Database database;
 
     private Connection connection;
