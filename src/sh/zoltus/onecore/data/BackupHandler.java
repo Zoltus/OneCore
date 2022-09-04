@@ -39,22 +39,16 @@ public class BackupHandler {
 
     //Backups based time from startup
     public void start() {
-        //backups
-        File stats = new File(worldFolder, "stats");
-        File database = new File(dataFolder, "database.db");
-        File playerdata = new File(worldFolder, "playerdata");
-
         if (Config.BACKUPS_STATS_ENABLED.getBoolean()) {
-            backupFiles.add(stats);
+            backupFiles.add(new File(worldFolder, "stats"));
         }
         if (Config.BACKUPS_DATABASE_ENABLED.getBoolean()) {
-            backupFiles.add(database);
+            backupFiles.add(new File(dataFolder, "database.db"));
         }
         if (Config.BACKUPS_PLAYERDATA_ENABLED.getBoolean()) {
-            backupFiles.add(playerdata);
+            backupFiles.add(new File(worldFolder, "playerdata"));
         }
-        //Starts backup task if there is any backup files.
-        if (!backupFiles.isEmpty()) {
+        if (!backupFiles.isEmpty()) {//Starts backup task if there is any backup files.
             startBackupTaskAsync(outputDirectory);
         }
     }
@@ -95,7 +89,7 @@ public class BackupHandler {
             tarArchiveOutputStream.setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
             List<File> files = new ArrayList<>(FileUtils.listFiles(
                     inputPath,
-                    new RegexFileFilter("^(.*?)"),
+                    new RegexFileFilter("^(.*?)"), //todo document?
                     DirectoryFileFilter.DIRECTORY
             ));
             for (File currentFile : files) {

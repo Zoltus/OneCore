@@ -10,20 +10,19 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - cleanup registerer
-          - orm later
-          - fix backup database.db
+          - userargument only works for online players. wont work for sethome,economy,etc
+          - Fix backup database.db
+          - Fix teleporthandler
+          - Remove keep users on cache?
+          - Does economy save?
           - test backup with motimaadata copy
           - TEST EVERYTHING! (MOTIMMAA test)
-          - Fix teleporthandler
-          - does economy save?
-          - test signedit cmd when cmdapi 8.5.1 comes
-          - offline users to batchlist
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - ormlite
           - cleanup config ymls
-          - Mentions testing! remove requirement for @ ? optional
+          - Mentions testing! remove requirement for @? config for it?
           - teleports dont work on spectatormode
           - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
           - listaliases option percommand
@@ -34,6 +33,7 @@
           - link balance table?
           - butcher, finish all cmds
           - Go throught yml namings & comments, messages
+          - create custom command aliases to execute multiple cmds
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
         - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue
