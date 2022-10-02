@@ -2,7 +2,7 @@ package sh.zoltus.onecore.data.database;
 
 import com.google.gson.InstanceCreator;
 import org.bukkit.OfflinePlayer;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 
 import java.lang.reflect.Type;
 

@@ -54,7 +54,7 @@ public enum Lang implements IConfig {
     HEAL_YOU_HEALED_TARGET("heal.you-healed-target"),
     HOME_LIST("home.list"),
     HOME_NO_HOMES("home.no-homes"),
-    HOME_SENT_TARGET("home.sent-target"),
+    HOME_TELEPORT_OTHERS("home.teleport-other"),
     INVALID_AMOUNT("other.invalid-amount"),
     INVALID_RANGE("other.invalid-range"),
     JOINED("other.joined"),

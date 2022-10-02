@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 
 import java.util.List;
 

@@ -113,3 +113,4 @@ public final class OneCore extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage("§aTested config");
     }
 }
+

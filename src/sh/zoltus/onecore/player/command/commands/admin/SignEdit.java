@@ -143,7 +143,7 @@ public class SignEdit implements IOneCommand {
         Player p = (Player) sender;
         Sign sign = getTargetSign(p);
         if (sign != null && FakeBreak.canBreak(p, sign.getLocation())
-                || sender.hasPermission(SIGNEDIT_BYPASS_PERMISSION.getAsPermission())) {
+                || sender.hasPermission(SIGNEDIT_BYPASS_PERMISSION.asPermission())) {
             return sign;
         } else {
             p.sendMessage(SIGNEDIT_SIGN_NOT_FOUND.getString());

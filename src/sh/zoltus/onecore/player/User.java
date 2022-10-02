@@ -1,5 +1,6 @@
-package sh.zoltus.onecore.player.command;
+package sh.zoltus.onecore.player;
 
+import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
@@ -17,37 +18,40 @@ import sh.zoltus.onecore.player.teleporting.Request;
 import sh.zoltus.onecore.player.teleporting.Teleport;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_AMOUNT_PERMISSION;
 import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
 
 
 @Data
+@DatabaseTable(tableName = "users")
 public class User {
-
-    private static OneCore plugin = OneCore.getPlugin();
-    // private static Economy economy = economy;
+    //todo remove transient
     @Getter
     private static final Map<UUID, User> users = new HashMap<>();
-
-    private transient final UUID uniqueId;
+    private static OneCore plugin = OneCore.getPlugin();
+    private static Economy economy = plugin.getVault();
+    // private static Economy economy = economy;
     private transient final OfflinePlayer offP;
     private transient final List<Location> lastLocations = new ArrayList<>();
-    //tomap
-    private transient final List<Request> requests = new ArrayList<>();
-    private Economy economy;
-    private boolean tpEnabled = false;
+    private transient final List<Request> requests = new ArrayList<>();//todo tomap?
+
+    //@DatabaseField(id = true)
+    private final UUID uniqueId;
+    //@DatabaseField(canBeNull = false, defaultValue = "true")
+    private boolean tpEnabled = true;
+    //@DatabaseField(dataType = DataType.SERIALIZABLE)
     private Map<String, PreLocation> homes = new HashMap<>();
 
     public User(OfflinePlayer offP) {
         this.offP = offP;
         this.uniqueId = offP.getUniqueId();
-        this.economy = plugin.getVault();
         //Default settings:
         users.put(uniqueId, this);
         Bukkit.broadcastMessage("§cNew");
         //Sets balance to 0 if it doesnt exist, for toplist
-        if (economy != null) {
+        if (plugin.getVault() != null) {
             if (!OneEconomy.getBalances().containsKey(uniqueId)) {
                 OneEconomy.getBalances().put(uniqueId, START_MONEY.getDouble());
             }
@@ -66,18 +70,16 @@ public class User {
      * @param p player
      * @return OneUser
      */
-    public static User of(Player p) {
+    public static User get(Player p) {
         return users.get(p.getUniqueId());
     }
 
-    /**
-     * Used only for economy arg @ cmd.
-     *
-     * @param offP offlinePlayer
-     * @return OneUser or null
-     */
-    public static User ofNullable(OfflinePlayer offP) {
-        return users.getOrDefault(offP.getUniqueId(), null);
+    public static User get(OfflinePlayer offP) {
+        return users.get(offP.getUniqueId());
+    }
+
+    public static CompletableFuture<User> loadAsync(OfflinePlayer offP) {
+        return plugin.getDatabase().loadUserAsync(offP);
     }
 
     public void sendMessage(String message) {
@@ -184,7 +186,7 @@ public class User {
 
     public boolean hasHomeSlots() {
         Player p = getPlayer();
-        String permPrefix = HOME_AMOUNT_PERMISSION.getAsPermission();
+        String permPrefix = HOME_AMOUNT_PERMISSION.asPermission();
         if (p.hasPermission(permPrefix + ".*")) {
             return true;
         }
@@ -204,6 +206,9 @@ public class User {
     /*
      * Economy
      */
+
+    //todo remove from oneuser? because now offlineusers require userargument with onlineplayer
+
 
     /**
      * Get balance of the user.

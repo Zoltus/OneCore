@@ -28,8 +28,8 @@ public class Gamemode implements IOneCommand {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
                 throw new CustomArgument.CustomArgumentException(GAMEMODE_INVALID_GAMEMODE.getString());
-            } else if (!info.sender().hasPermission(GAMEMODE_MODE_PERMISSION.getAsPermission() + gm.name().toLowerCase())) {
-                throw new CustomArgument.CustomArgumentException(GAMEMODE_MODE_PERMISSION_MISSING.rp(MODE_PH, PERMISSION_PREFIX.getAsPermission() + gm.name().toLowerCase()));
+            } else if (!info.sender().hasPermission(GAMEMODE_MODE_PERMISSION.asPermission() + gm.name().toLowerCase())) {
+                throw new CustomArgument.CustomArgumentException(GAMEMODE_MODE_PERMISSION_MISSING.rp(MODE_PH, PERMISSION_PREFIX.asPermission() + gm.name().toLowerCase()));
             } else {
                 return gm;
             }

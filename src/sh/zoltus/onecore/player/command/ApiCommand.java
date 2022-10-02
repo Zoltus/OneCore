@@ -7,6 +7,7 @@ import dev.jorel.commandapi.executors.ConsoleCommandExecutor;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.apache.commons.lang.StringUtils;
 import sh.zoltus.onecore.data.configuration.IConfig;
+import sh.zoltus.onecore.player.User;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
@@ -18,7 +19,7 @@ public class ApiCommand extends CommandAPICommand {
     }
 
     public ApiCommand withPermission(IConfig enumz) {
-        super.withPermission(enumz.getAsPermission());
+        super.withPermission(enumz.asPermission());
         return this;
     }
 
@@ -47,7 +48,7 @@ public class ApiCommand extends CommandAPICommand {
 
     public ApiCommand executesUser(BiConsumer<User, Object[]> executor) {
         super.executesPlayer((sender, args) -> {
-            executor.accept(User.of(sender), args);
+            executor.accept(User.get(sender), args);
         });
         return this;
     }

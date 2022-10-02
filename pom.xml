@@ -24,7 +24,8 @@
         <commandapi.version>8.5.1</commandapi.version>
         <nbtapi.version>2.10.0</nbtapi.version>
         <apache-compress>1.21</apache-compress>
-        <log4j.version>2.18.0</log4j.version>
+        <log4j.version>2.19.0</log4j.version>
+        <ormlite.version>6.1</ormlite.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -32,6 +33,7 @@
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
     </properties>
 
+    <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>
         <pluginRepository>
             <id>apache.snapshots</id>
@@ -153,6 +155,11 @@
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>${nbtapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.j256.ormlite</groupId>
+            <artifactId>ormlite-jdbc</artifactId>
+            <version>${ormlite.version}</version>
         </dependency>
     </dependencies>
     <build>

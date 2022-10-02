@@ -1,7 +1,7 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.UserArgument;
 import sh.zoltus.onecore.player.teleporting.Request;
 

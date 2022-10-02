@@ -1,14 +1,13 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.StringArgument;
+import org.bukkit.OfflinePlayer;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.User;
-import sh.zoltus.onecore.player.command.arguments.UserArgument;
-import sh.zoltus.onecore.player.home.HomeAction;
-import sh.zoltus.onecore.player.home.HomeHandler;
+import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_HOME_NAME;
 
 public class SetHome implements IOneCommand {
 
@@ -20,7 +19,7 @@ public class SetHome implements IOneCommand {
                 .withPermission(SETHOME_PERMISSION)
                 .withAliases(SETHOME_ALIASES)
                 .executesPlayer((p, args) -> {
-                    HomeHandler.handle(p, p, null, HomeAction.SET);
+                    Home.handle(p, User.get(p), null, Home.Action.SET);
                 }).override();
         //sethome <home>
         command(SETHOME_LABEL)
@@ -28,18 +27,24 @@ public class SetHome implements IOneCommand {
                 .withAliases(SETHOME_ALIASES)
                 .withArguments(new StringArgument(NODES_HOME_NAME.getString()))
                 .executesPlayer((p, args) -> {
-                    HomeHandler.handle(p, p, (String) args[0], HomeAction.SET);
+                    Home.handle(p, User.get(p), (String) args[0], Home.Action.SET);
                 }).register();
         //sethome <home> <player> //todo messages
         command(SETHOME_LABEL)
                 .withPermission(SETHOME_PERMISSION_OTHER)
                 .withAliases(SETHOME_ALIASES)
                 .withArguments(new StringArgument(NODES_HOME_NAME.getString()))
-                .withArguments(new UserArgument())
+                .withArguments(new OfflinePlayerArgument())
                 .executes((p, args) -> {
                     //todo setothermsg
-                    User target = (User) args[0];
-                    HomeHandler.handle(p, target.getPlayer(), (String) args[0], HomeAction.SET);
+                    OfflinePlayer target = (OfflinePlayer) args[0];
+                    Home.handleOther(p, target.getPlayer(), (String) args[0], Home.Action.SET);
                 }).register();
     }
 }
+
+
+/*
+
+
+ */

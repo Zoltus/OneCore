@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 
 import static sh.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.JOINED;
@@ -21,10 +21,10 @@ public record JoinListener(OneCore plugin) implements Listener {
         AsyncPlayerPreLoginEvent.Result result = e.getLoginResult();
         if (result == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(e.getUniqueId());
-            if (!User.getUsers().containsKey(offP.getUniqueId())) {
-                if (!plugin.getDatabase().loadPlayer(offP)) { //If user isnt on db it creates new one
-                    new User(offP);
-                }
+            //todo can be speedup if checking hasplayedbefore but that will break if playerfiles are deleted
+            //If user isnt in map or in the database it creates new one
+            if (plugin.getDatabase().loadUser(offP) == null) {
+                new User(offP);
             }
         }
     }
