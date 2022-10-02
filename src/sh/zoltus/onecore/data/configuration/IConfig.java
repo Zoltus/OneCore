@@ -49,7 +49,7 @@ public interface IConfig {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    default String getAsPermission() {
+    default String asPermission() {
         String configValue = yml().getOrDefault("Data." + getPath(), "null");
         return PERMISSION_PREFIX.get() + configValue;
     }

@@ -7,15 +7,21 @@ import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import java.util.*;
 
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class Economy implements IOneCommand {
+public class EconomyCMD implements IOneCommand {
+
+    //private Economy economy = plugin.getVault();
 
     @Override
     public void init() {
@@ -192,5 +198,47 @@ public class Economy implements IOneCommand {
                     .rp(PLAYER_PH, target.getName(), BALANCE_PH, balance));
         }
     }
+
+
+    /** Todo
+     * Get balance of the user.
+     *
+     * @return amount of the money
+     */
+   /* public double getBalance() {
+        return economy == null ? 0 : economy.getBalance(getPlayer());
+    }
+
+    /**
+     * Sets money to user.
+     *
+     * @param amount of the money
+     */
+   /* public boolean setBalance(double amount) {
+        if (economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
+            return economy.depositPlayer(offP, amount).transactionSuccess();
+        }
+        return false;
+    }
+
+    /**
+     * Adds money to user.
+     *
+     * @param amount of the money
+     * @return e
+     */
+    /*public boolean deposit(double amount) {
+        return economy.depositPlayer(offP, amount).transactionSuccess();
+    }
+
+    /**
+     * Removes money from user.
+     *
+     * @param amount of the money
+     * @return result
+     */
+   /* public boolean withdraw(double amount) {
+        return economy.withdrawPlayer(offP, amount).transactionSuccess();
+    }*/
 
 }

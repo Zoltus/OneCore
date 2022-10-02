@@ -13,6 +13,4 @@ public interface OneArgument {
         return ApiCommand.filter(input, Bukkit.getWorlds().stream()
                 .map(World::getName).toArray(String[]::new));
     }
-
-
 }

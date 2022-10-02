@@ -2,7 +2,6 @@ package sh.zoltus.onecore.data.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -10,11 +9,12 @@ import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.data.configuration.yamls.Config;
 import sh.zoltus.onecore.economy.OneEconomy;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 
 import java.sql.*;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class Database {
     private Connection connection;
@@ -24,15 +24,16 @@ public class Database {
     private final String fileName = Config.DATABASE_NAME.getString();
     private final SQLiteConfig config = new SQLiteConfig();
 
+    //todo async
     private Database(OneCore plugin) {
         Bukkit.getConsoleSender().sendMessage("Loading database...");
         this.plugin = plugin;
         this.connection = connection(); //test
         this.config.setJournalMode(SQLiteConfig.JournalMode.WAL);
         this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
-        this.config.setSynchronous(SQLiteConfig.SynchronousMode.OFF);
+        this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
         createTables();
-       // backupTimer(); //Starts backup timer
+        // backupTimer(); //Starts backup timer
         // Bukkit.getConsoleSender().sendMessage("Loading server settings...");
         initAutoSaver();
     }
@@ -42,13 +43,12 @@ public class Database {
         return database == null ? new Database(plugin) : database;
     }
 
-    @SneakyThrows
     private Connection connection() {
         try {
             String url = "jdbc:sqlite:" + plugin.getDataFolder() + "/" + fileName + ".db";
             return connection = connection == null || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
-        } catch (SQLException e) {
-            throw new SQLException("§4Database connection failed!\n §c" + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("§4Database connection failed!\n §c" + e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class Database {
             }
             stmt.executeBatch();
         } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Database table creation failed!\n §c" + e.getMessage());
+            throw new RuntimeException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
@@ -122,7 +122,7 @@ public class Database {
             }
             pStm.executeBatch();
         } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error saving players!\n §c" + e.getMessage());
+            throw new RuntimeException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
@@ -144,7 +144,7 @@ public class Database {
                 }
                 pStm.executeBatch();
             } catch (SQLException e) {
-                Bukkit.getConsoleSender().sendMessage("§4Error saving economy!\n §c" + e.getMessage());
+                throw new RuntimeException("§4Error saving economy!\n §c" + e.getMessage());
             }
         }
     }
@@ -162,45 +162,46 @@ public class Database {
                     }
                 }
             } catch (SQLException e) {
-                Bukkit.getConsoleSender().sendMessage("§4Error loading economy: \n §c" + e.getMessage());
+                throw new RuntimeException("§4Error loading economy: \n §c" + e.getMessage());
             }
         });
     }
 
     /**
-     * Use only on async.
-     * Should only be executed async
      *
      * @param offP offlinePlayer
      * @return OneUser
      */
-    public boolean loadPlayer(OfflinePlayer offP) {
-        String uuid = offP.getUniqueId().toString();
-            //todo check how parrots pl has done it
-        //if target is loaded it returns, Not needed just incase.
-        //todo check this
-        if (User.ofNullable(offP) != null) {
-            return true;
-        }
+    public CompletableFuture<User> loadUserAsync(OfflinePlayer offP) {
+        return CompletableFuture.supplyAsync(() -> loadUser(offP));
+    }
 
-        try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM Players WHERE uuid = ?")) {
-            pStm.setString(1, uuid);
-            try (ResultSet rs = pStm.executeQuery()) {
-                if (!rs.next()) { //Goes here if new user onasyncprelogin
-                    return false;
-                } else {
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
-                    Gson gson = builder.create();
-                    Bukkit.getConsoleSender().sendMessage("§bFrom db");
-                    gson.fromJson(rs.getString("data"), User.class);
-                    return true;
+    public User loadUser(OfflinePlayer offP) {
+        String uuid = offP.getUniqueId().toString();
+        //todo check how parrots pl has done it
+        //if target is loaded it returns, Not needed just incase.//todo check this
+        //todo check playedbefore?
+        User user = User.getUsers().get(offP.getUniqueId());
+        if (user != null) {
+            return user;
+        } else {
+            try (Connection con = connection()
+                 ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM Players WHERE uuid = ?")) {
+                pStm.setString(1, uuid);
+                try (ResultSet rs = pStm.executeQuery()) {
+                    if (!rs.next()) { //Goes here if new user onasyncprelogin
+                        return null;
+                    } else {
+                        GsonBuilder builder = new GsonBuilder();
+                        builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
+                        Gson gson = builder.create();
+                        Bukkit.getConsoleSender().sendMessage("§bFrom db");
+                        return gson.fromJson(rs.getString("data"), User.class);
+                    }
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
             }
-        } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
-            return false;
         }
     }
 

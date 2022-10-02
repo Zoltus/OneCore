@@ -36,7 +36,7 @@ public record SignListener(OneCore plugin) implements Listener {
      */
     @EventHandler
     public void onSignSave(SignChangeEvent e) {
-        if (e.getPlayer().hasPermission(SIGN_COLOR_PERMISSION.getAsPermission())) {
+        if (e.getPlayer().hasPermission(SIGN_COLOR_PERMISSION.asPermission())) {
             for (int line = 0; line < e.getLines().length; line++) {
                 String text = e.getLine(line);
                 e.setLine(line, toMineHex(text));
@@ -56,7 +56,7 @@ public record SignListener(OneCore plugin) implements Listener {
         Block b = p.getTargetBlockExact(5);
         //If sign shift edit is disabled, return
         if (!SIGN_SHIFT_EDIT_ENABLED.getBoolean()
-                || !p.hasPermission(SIGN_SHIFT_EDIT_PERMISSION.getAsPermission())
+                || !p.hasPermission(SIGN_SHIFT_EDIT_PERMISSION.asPermission())
                 || !p.isSneaking() || b == null)
             return;
         BlockState state = b.getState();

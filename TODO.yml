@@ -10,7 +10,13 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - userargument only works for online players. wont work for sethome,economy,etc
+          - max db scans per player for home suggestions arg
+          -userOfnullable 
+          - - offline and onlineUser?
+          - online and offlineuserarguments?
+          - ormlite for simpler user class
+          - userargument only works for online players. 
+          wont work for sethome,economy,etc
           - Fix backup database.db
           - Fix teleporthandler
           - Remove keep users on cache?

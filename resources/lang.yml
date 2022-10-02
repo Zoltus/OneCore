@@ -126,7 +126,8 @@ Data:
     list: '{p} Kotia ei löytynyt. Homet <list>'
     no-homes: '{p} Ei homeja'
     # <player>, <home>
-    sent-target: '{p} Sent <player> to home: <home>.'
+    # Used when teleporting to other players home.
+    teleport-other: '{p} Teleported players: <player> home: <home>.'
   killall:
     # <amount>, <type>, <radius>
     removed-entitys: '{p} Killed <amount> with type <type> from radius <radius>'

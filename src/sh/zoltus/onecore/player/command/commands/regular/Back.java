@@ -11,7 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class Back implements IOneCommand, Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onTeleport(PlayerTeleportEvent e) {
-        User user = User.of(e.getPlayer());
+        User user = User.get(e.getPlayer());
         List<Location> lastLocations = user.getLastLocations();
         // If player does /Back it wont read the location to the backs where he goes
         if (!lastLocations.contains(e.getTo())) {
@@ -89,7 +89,7 @@ public class Back implements IOneCommand, Listener {
     }
 
     private void executes(CommandSender sender, int backAmount, Player target) {
-        User targetUser = User.of(target);
+        User targetUser = User.get(target);
         if (targetUser.getLastLocations().isEmpty()) {
             sender.sendMessage(BACK_NO_HISTORY.rp(PLAYER_PH, target.getName()));
         } else if (backAmount > targetUser.getLastLocations().size()) {

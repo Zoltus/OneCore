@@ -12,7 +12,7 @@ public class ChatColors implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void chatMention(AsyncPlayerChatEvent e) {
-        if (e.getPlayer().hasPermission(CHAT_COLOR_PERMISSION.getAsPermission()))
+        if (e.getPlayer().hasPermission(CHAT_COLOR_PERMISSION.asPermission()))
             e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
     }
 }

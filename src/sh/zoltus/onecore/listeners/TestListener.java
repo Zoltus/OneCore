@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 import sh.zoltus.onecore.utils.SlowingScheduler;
@@ -33,7 +33,7 @@ public class TestListener implements Listener {
         String cmd = argsList.get(0);
         argsList.remove(0);
         String[] args = argsList.toArray(new String[0]);
-        User user = User.of(p);
+        User user = User.get(p);
 
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {

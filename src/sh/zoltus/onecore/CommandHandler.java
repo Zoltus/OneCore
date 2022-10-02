@@ -18,7 +18,7 @@ public class CommandHandler {
         Bukkit.getConsoleSender().sendMessage("Registering commands...");
         //Registers economy commands only if vault has been loaded successfully
         if (plugin.getVault() != null) {
-            new Economy().register();
+            new EconomyCMD().register();
         }
         //Creates instanceof the class if its enabled and then registers it.
         //faster startup when disabling cmds

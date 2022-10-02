@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.data.configuration.OneYml;
 import sh.zoltus.onecore.data.configuration.Yamls;
 import sh.zoltus.onecore.player.command.IOneCommand;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
@@ -52,7 +52,7 @@ public class Warp implements IOneCommand {
                 .withArguments(warpArg())
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args[0];
-                    User user = User.of(p);
+                    User user = User.get(p);
                     user.teleportTimer(warp.location());
                 }).register();
         //warp <warp> <player>

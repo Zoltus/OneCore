@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.OneCore;
-import sh.zoltus.onecore.player.command.User;
+import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.utils.SlowingScheduler;
 
 import java.util.UUID;
@@ -41,7 +41,7 @@ public class RTPHandler {
                     unQueue(uuid);
                     Bukkit.broadcastMessage("Player is null");
                 } else {
-                    User user = User.of(player);
+                    User user = User.get(player);
                     CompletableFuture<Location> loc = getRandomLocAsync(player);
                     loc.thenAccept(location -> {
                         user.sendMessage("teleporttimer");
