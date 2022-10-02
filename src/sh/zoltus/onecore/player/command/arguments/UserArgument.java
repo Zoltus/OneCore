@@ -13,6 +13,7 @@ import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 //Only for online players
 public class UserArgument extends CustomArgument<User, String> implements OneArgument  {
 
+    //todo remove
     public UserArgument() {
         this("");
     }
