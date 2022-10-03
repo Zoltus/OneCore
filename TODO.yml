@@ -10,6 +10,7 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - logger to not use log4j
           - table creation to single string
           - sql to enums?
           - Onecore messages prefix

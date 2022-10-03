@@ -1,7 +1,6 @@
 package sh.zoltus.onecore.economy;
 
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import sh.zoltus.onecore.OneCore;

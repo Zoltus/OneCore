@@ -1,6 +1,5 @@
 package sh.zoltus.onecore;
 
-import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.commands.admin.*;
 import sh.zoltus.onecore.player.command.commands.regular.*;

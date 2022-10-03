@@ -72,12 +72,13 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
-        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
         backupHandler.start(); //todo to singleton
         //Starts caching users
+        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+
         if (Config.USERS_CACHE_ALL_ON_STARTUP.getBoolean()) {
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> database.cacheUsers());
         }
