@@ -10,9 +10,6 @@ import sh.zoltus.onecore.player.command.arguments.HomeArg0;
 import sh.zoltus.onecore.player.command.arguments.HomeArg1;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.LIST_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 

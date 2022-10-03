@@ -7,7 +7,7 @@ import sh.zoltus.onecore.player.command.IOneCommand;
 import java.util.stream.Stream;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Reload implements IOneCommand {
 

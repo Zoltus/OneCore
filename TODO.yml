@@ -10,6 +10,7 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - rtp not finished
           - ormlite for simpler user class
           - economy class
           - Fix backup database.db
