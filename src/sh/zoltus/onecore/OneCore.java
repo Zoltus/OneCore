@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,8 +23,10 @@ import sh.zoltus.onecore.data.configuration.yamls.Lang;
 import sh.zoltus.onecore.data.database.Database;
 import sh.zoltus.onecore.economy.EconomyHandler;
 import sh.zoltus.onecore.listeners.ConsoleFilter;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 import sh.zoltus.onecore.player.teleporting.RTPHandler;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -62,6 +65,10 @@ public final class OneCore extends JavaPlugin implements Listener {
     //todo backup interval to config
     @Override
     public void onEnable() {
+        HashMap<String, PreLocation> homes = new HashMap<>();
+        homes.put("home", new PreLocation(new Location(Bukkit.getWorld("world"), 0, 0, 0)));
+        homes.put("home2", new PreLocation(new Location(Bukkit.getWorld("world"), 0, 0, 0)));
+        plugin.getLogger().info("§aaaaaaa" + homes);
         CommandAPI.onEnable(this); //Loads commandapi
         long time = System.currentTimeMillis();
         //todo load spawn motd warps, from yml
@@ -78,7 +85,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         backupHandler.start(); //todo to singleton
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
-
+        plugin.getLogger().info("§aaaaaaa" + homes);
         if (Config.USERS_CACHE_ALL_ON_STARTUP.getBoolean()) {
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> database.cacheUsers());
         }
@@ -87,8 +94,7 @@ public final class OneCore extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Saves all users & settings on disable
-        //todo mode database to mainclass instead of static
-        database.saveAll();
+        database.saveUsers();
         plugin.getLogger().info("Saved users & settings to database...");
         CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
     }

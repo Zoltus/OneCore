@@ -10,7 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - user cache load can it override normal logins?
+          - -for (;;) ?
+          - use for getting offline balance, offlineuser
           - if economy loading gets stuck playerdata will not load
             async checks for economy stuff, just like users work
           - rtp not finished
