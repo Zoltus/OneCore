@@ -110,10 +110,10 @@ public class Database {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance")
+             ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance FROM player")
              ; ResultSet rs = pStm.executeQuery()) {
             double size = con.createStatement() //Counts players for percentage calculation
-                    .executeQuery("SELECT COUNT(*) FROM players")
+                    .executeQuery("SELECT COUNT(*) FROM player")
                     .getInt(1);
             int index = 0;
             while (rs.next()) {
