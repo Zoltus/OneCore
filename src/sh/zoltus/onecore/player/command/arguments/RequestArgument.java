@@ -22,11 +22,11 @@ public class RequestArgument extends CustomArgument<User, String> implements One
             if (player == null) {
                 throw new CustomArgument.CustomArgumentException(PLAYER_NOT_FOUND.getString());
             } else {
-                return User.get(player);
+                return User.of(player);
             }
         });
         replaceSuggestions(ArgumentSuggestions
-                .strings(info -> ApiCommand.filter(info.currentArg(), User.get((Player) info.sender())
+                .strings(info -> ApiCommand.filter(info.currentArg(), User.of((Player) info.sender())
                 .getRequests()
                 .stream().map(request -> request.getSender().getName())
                 .toArray(String[]::new))));

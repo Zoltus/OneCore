@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_AMOUNT_PERMISSION;
@@ -68,16 +67,12 @@ public class User {
      * @param p player
      * @return OneUser
      */
-    public static User get(Player p) {
+    public static User of(Player p) {
         return users.get(p.getUniqueId());
     }
 
-    public static User get(OfflinePlayer offP) {
+    public static User of(OfflinePlayer offP) {
         return users.get(offP.getUniqueId());
-    }
-
-    public static CompletableFuture<User> loadAsync(OfflinePlayer offP) {
-        return plugin.getDatabase().loadUserAsync(offP);
     }
 
     public void sendMessage(String message) {
@@ -99,11 +94,13 @@ public class User {
     }
 
     public void teleportTimer(Location loc) {
-        Player p = getPlayer();
-        if (p.hasPermission("bypass")) {
-            LocationUtils.teleportSafeAsync(p, loc);
-        } else {
-            Teleport.start(this, null, loc);
+        if (isOnline()) {
+            Player p = getPlayer();
+            if (p.hasPermission("bypass")) {
+                LocationUtils.teleportSafeAsync(p, loc);
+            } else {
+                Teleport.start(this, null, loc);
+            }
         }
     }
 
@@ -204,9 +201,6 @@ public class User {
     /*
      * Economy
      */
-
-    //todo remove from oneuser? because now offlineusers require userargument with onlineplayer
-
 
     /**
      * Get balance of the user.

@@ -20,8 +20,6 @@ public enum Config implements IConfig {
     DATA_SAVE_INTERVAL("data-save-interval-minutes"),
     ECONOMY("economy.enabled"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
-    USERS_KEEP_IN_CACHE("users.keep-in-cache"),
-    USERS_CACHE_ALL_ON_STARTUP("users.cache-all-on-startup"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass"),
     MENTIONS_ENABLED("mentions-enabled"),
     PERMISSION_PREFIX("permission-prefix"),
@@ -37,8 +35,6 @@ public enum Config implements IConfig {
     TELEPORT_VELOCITY_RESET("teleport-velocity-reset"),
     TELEPORT_WITH_VEHICLE("teleport-with-vehicle"),
     USER_CONSOLE_FILTER("user-console-filter");
-
-
 
     @Getter
     final String path;

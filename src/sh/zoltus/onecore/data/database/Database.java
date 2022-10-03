@@ -15,7 +15,6 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class Database {
     private Connection connection;
@@ -88,15 +87,9 @@ public class Database {
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
-                UUID uuid = entry.getKey();
                 User user = entry.getValue();
                 userToDatabase(user, pStm);
                 pStm.addBatch();
-                if (!user.isOnline()  //If player has left the server
-                        && !Config.USERS_KEEP_IN_CACHE.getBoolean()
-                        && !Config.USERS_CACHE_ALL_ON_STARTUP.getBoolean()) {
-                    User.getUsers().remove(uuid);
-                }
             }
             pStm.executeBatch();
         } catch (SQLException e) {
@@ -130,7 +123,7 @@ public class Database {
                     }*/
                 String uuid = rs.getString("uuid");
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                if (User.get(offP) == null) { //If user havent been loaded yet by login it loads it
+                if (User.of(offP) == null) { //If user havent been loaded yet by login it loads it
                     userFromResult(offP, rs); // without this loading could happen twice
                 }
                 index++;
@@ -156,7 +149,7 @@ public class Database {
         return newUser;
     }
 
-
+    /*
     public CompletableFuture<User> loadUserAsync(OfflinePlayer offP) {
         return CompletableFuture.supplyAsync(() -> loadUser(offP));
     }
@@ -185,5 +178,5 @@ public class Database {
                 throw new RuntimeException("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
             }
         }
-    }
+    }*/
 }

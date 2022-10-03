@@ -48,7 +48,7 @@ public class ApiCommand extends CommandAPICommand {
 
     public ApiCommand executesUser(BiConsumer<User, Object[]> executor) {
         super.executesPlayer((sender, args) -> {
-            executor.accept(User.get(sender), args);
+            executor.accept(User.of(sender), args);
         });
         return this;
     }

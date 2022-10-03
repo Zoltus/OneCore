@@ -52,7 +52,7 @@ public class Warp implements IOneCommand {
                 .withArguments(warpArg())
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args[0];
-                    User user = User.get(p);
+                    User user = User.of(p);
                     user.teleportTimer(warp.location());
                 }).register();
         //warp <warp> <player>

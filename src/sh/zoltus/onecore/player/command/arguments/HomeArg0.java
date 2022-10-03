@@ -19,7 +19,7 @@ public class HomeArg0 extends StringArgument implements OneArgument {
         super(NODES_HOME_NAME_OR_Player.getString());
         replaceSuggestions(ArgumentSuggestions.strings(info -> {
             CommandSender sender = info.sender();
-            User target = User.get((Player) sender);
+            User target = User.of((Player) sender);
             String[] homes = target.getHomeArray();
             if (!sender.hasPermission(HOME_PERMISSION_OTHER.asPermission())) {
                 return homes;
