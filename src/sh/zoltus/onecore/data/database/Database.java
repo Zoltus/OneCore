@@ -59,27 +59,28 @@ public class Database {
         //todo join table uuid,name ect balance
         // "PRAGMA mmap_size = 30000000000;
         //"PRAGMA foreign_keys = ON;
-        final String table = """
-                        CREATE TABLE IF NOT EXISTS Balances(
-                                "uuid TEXT NOT NULL UNIQUE, 
-                                "balance REAL NOT NULL DEFAULT 0, 
-                                "PRIMARY KEY (uuid) 
-                                "); 
-
-                        CREATE TABLE IF NOT EXISTS Players(
-                                uuid TEXT NOT NULL UNIQUE, 
-                                data TEXT, 
-                                PRIMARY KEY (uuid) 
-                                ); 
-
-                        CREATE TABLE IF NOT EXISTS Server(
-                                key TEXT UNIQUE PRIMARY KEY, 
-                                value TEXT);
-                """;
+        final String table1 = """
+                CREATE TABLE IF NOT EXISTS balances(
+                    uuid TEXT NOT NULL UNIQUE,
+                    balance REAL NOT NULL DEFAULT 0,
+                    PRIMARY KEY (uuid));""";
+        final String table2 = """
+                CREATE TABLE IF NOT EXISTS players(
+                    uuid TEXT NOT NULL UNIQUE,
+                    data TEXT,
+                    PRIMARY KEY (uuid));""";
+        final String table3 = """   
+                CREATE TABLE IF NOT EXISTS server(
+                    key TEXT UNIQUE,
+                    value TEXT,
+                    PRIMARY KEY (key));""";
         //Creates tables
         try (Connection con = connection();
              Statement stmt = con.createStatement()) {
-            stmt.execute(table);
+            stmt.addBatch(table1);
+            stmt.addBatch(table2);
+            stmt.addBatch(table3);
+            stmt.executeBatch();
         } catch (
                 SQLException e) {
             throw new RuntimeException("§4Database table creation failed!\n §c" + e.getMessage());
@@ -101,7 +102,7 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO Players(uuid, data) VALUES(?,?)";
+        final String sql = "INSERT OR REPLACE INTO players(uuid, data) VALUES(?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
@@ -133,7 +134,7 @@ public class Database {
     public void saveEconomy() {
         if (plugin.getVault() != null) {
             try (Connection con = connection()
-                 ; PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,balance) VALUES(?,?)")) {
+                 ; PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO balances(uuid,balance) VALUES(?,?)")) {
                 for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
                     UUID uuid = entry.getKey();
                     pStm.setString(1, uuid.toString());
@@ -152,7 +153,7 @@ public class Database {
             try (Connection con = connection()
                  ; Statement st = con.createStatement()) {
                 //todo select *?
-                try (ResultSet rs = st.executeQuery("SELECT uuid, balance FROM Balances")) {
+                try (ResultSet rs = st.executeQuery("SELECT uuid, balance FROM balances")) {
                     plugin.getLogger().info("Loading economy"); //tdo economy loading from1 place
                     while (rs.next()) {
                         UUID uuid = UUID.fromString(rs.getString("uuid"));
@@ -186,7 +187,7 @@ public class Database {
             return null;
         } else {
             try (Connection con = connection()
-                 ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM Players WHERE uuid = ?")) {
+                 ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM players WHERE uuid = ?")) {
                 pStm.setString(1, uuid);
                 try (ResultSet rs = pStm.executeQuery()) {
                     if (!rs.next()) { //Goes here if new user onasyncprelogin
@@ -205,11 +206,11 @@ public class Database {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM Players;")
+             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM players")
              ; ResultSet rs = pStm.executeQuery()) {
             //Counts players for percentage calculation
             double size = con.createStatement()
-                    .executeQuery("SELECT COUNT(*) FROM Players;")
+                    .executeQuery("SELECT COUNT(*) FROM players")
                     .getInt(1);
             double index = 0;
             while (rs.next()) {
@@ -222,7 +223,7 @@ public class Database {
                 dataToGson(uuid, data);
                 index++;
             }
-            plugin.getLogger().info("Cached users in " + (System.currentTimeMillis() - l) + "ms");
+            plugin.getLogger().info("Finished caching users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
             throw new RuntimeException("§4Error caching users: \n §c" + e.getMessage());
         }
@@ -244,7 +245,7 @@ public class Database {
     }
 
     public void fillTest(int amount) {
-        final String sql = "INSERT OR REPLACE INTO Players(uuid, data) VALUES(?,?)";
+        final String sql = "INSERT OR REPLACE INTO players(uuid, data) VALUES(?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             int size = 5000;
