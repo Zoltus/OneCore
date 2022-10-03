@@ -18,6 +18,7 @@ import sh.zoltus.onecore.player.teleporting.Teleport;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_AMOUNT_PERMISSION;
 import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
@@ -28,7 +29,7 @@ import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
 public class User {
     //todo remove transient
     @Getter
-    private static final Map<UUID, User> users = new HashMap<>();
+    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     // private static Economy economy = economy;

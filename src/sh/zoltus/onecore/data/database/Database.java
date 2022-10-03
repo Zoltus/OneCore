@@ -35,7 +35,6 @@ public class Database {
         this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
         createTables();
-        // backupTimer(); //Starts backup timer
         // plugin.getLogger().info("Loading server settings...");
         initAutoSaver();
     }
@@ -193,7 +192,7 @@ public class Database {
                     if (!rs.next()) { //Goes here if new user onasyncprelogin
                         return null;
                     } else {
-                        return dataToGson(rs.getString("data"), uuid);
+                        return dataToGson(offP, rs.getString("data"));
                     }
                 }
             } catch (SQLException e) {
@@ -220,17 +219,21 @@ public class Database {
                     }*/
                 String uuid = rs.getString("uuid");
                 String data = rs.getString("data");
-                dataToGson(uuid, data);
+                OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                //If user havent been loaded yet by login it loads it
+                //without this loading could happen twice
+                if (User.get(offP) == null) {
+                   dataToGson(offP, data);
+                }
                 index++;
             }
-            plugin.getLogger().info("Finished caching users, took: " + (System.currentTimeMillis() - l) + "ms");
+            plugin.getLogger().info("Finished caching " + index + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
             throw new RuntimeException("§4Error caching users: \n §c" + e.getMessage());
         }
     }
 
-    private User dataToGson(String uuid, String data) {
-        OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+    private User dataToGson(OfflinePlayer offP, String data) {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
         Gson gson = builder.create();
@@ -248,11 +251,10 @@ public class Database {
         final String sql = "INSERT OR REPLACE INTO players(uuid, data) VALUES(?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
-            int size = 5000;
             int index = 0;
 
-            while (index != 5000) {
-                int percent = (100 * index) / size;
+            while (index != amount) {
+                int percent = (100 * index) / amount;
                 if (percent % 10 == 0) {
                     plugin.getLogger().info("Filling users: " + percent + "%");
                 }

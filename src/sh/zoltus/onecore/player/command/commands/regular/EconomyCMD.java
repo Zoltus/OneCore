@@ -11,6 +11,7 @@ import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
@@ -50,9 +51,9 @@ public class EconomyCMD implements IOneCommand {
                     return;
                 }
 
-                LinkedHashMap<UUID, Double> top = OneEconomy.getBalances();
+                ConcurrentHashMap<UUID, Double> top = OneEconomy.getBalances();
                 if (!top.isEmpty()) { //todo cleanup
-                    LinkedHashMap<UUID, Double> sortedMap = new LinkedHashMap<>();
+                    ConcurrentHashMap<UUID, Double> sortedMap = new ConcurrentHashMap<>();
                     top.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) //todo improve
                             .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
                     Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
