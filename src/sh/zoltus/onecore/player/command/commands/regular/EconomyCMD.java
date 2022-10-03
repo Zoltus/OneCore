@@ -12,10 +12,6 @@ import sh.zoltus.onecore.player.command.arguments.UserArgument;
 
 import java.util.*;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -200,7 +196,7 @@ public class EconomyCMD implements IOneCommand {
     }
 
 
-    /** Todo
+    /* Todo
      * Get balance of the user.
      *
      * @return amount of the money
