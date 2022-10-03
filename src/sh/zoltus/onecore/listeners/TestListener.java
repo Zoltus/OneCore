@@ -43,14 +43,12 @@ public class TestListener implements Listener {
                 }
                 case "/loc" -> {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                    if (target.hasPlayedBefore()) {
-                        NBTPlayer nbtP = new NBTPlayer(target);
-                        p.sendMessage("§aInv: " + nbtP.getInventoryItems());
-                        p.sendMessage("§bh: " + nbtP.getHealth());
-                        nbtP.setHealth(5);
-                        p.sendMessage("§ch2: " + nbtP.getHealth());
-                        nbtP.save();
-                    }
+                    NBTPlayer nbtP = new NBTPlayer(target);
+                    p.sendMessage("§aInv: " + nbtP.getInventoryItems());
+                    p.sendMessage("§bh: " + nbtP.getHealth());
+                    nbtP.setHealth(5);
+                    p.sendMessage("§ch2: " + nbtP.getHealth());
+                    nbtP.save();
                 }
                 case "/repeatcmd" -> {
                     e.setCancelled(true);
@@ -140,7 +138,7 @@ public class TestListener implements Listener {
                 }
                 case "/sht" -> {
                     int i = Integer.parseInt(args[0]);
-                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i,false, () -> p.sendMessage("Task " + i));
+                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i, false, () -> p.sendMessage("Task " + i));
                 }
 
                 case "/shtset" -> {
@@ -156,5 +154,6 @@ public class TestListener implements Listener {
             }
         }
     }
+
     public static SlowingScheduler scheduler;
 }
