@@ -31,8 +31,6 @@ public class EconomyHandler {
                 if (rsp != null) {
                     vault = rsp.getProvider();
                     plugin.getLogger().info("Economy hooked! (" + vault.getName() + ")");
-                    //todo to load eco perplayer not whole eco?
-                    plugin.getDatabase().loadEconomyAsync();
                     return vault;
                 }
             }

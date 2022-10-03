@@ -81,7 +81,8 @@ public final class OneEconomy implements Economy {
     }
 
     /**
-     * Format amount into a human readable String This provides translation into economy specific formatting to improve consistency between plugins.
+     * Format amount into a human readable String This provides translation into economy specific formatting
+     * to improve consistency between plugins.
      *
      * @param summ money
      * @return Human readable string describing amount
@@ -92,7 +93,8 @@ public final class OneEconomy implements Economy {
 
     /**
      * todo to settings
-     * Some economy plugins round off after a certain number of digits. This function returns the number of digits the plugin keeps or -1 if no rounding occurs.
+     * Some economy plugins round off after a certain number of digits.
+     * This function returns the number of digits the plugin keeps or -1 if no rounding occurs.
      *
      * @return roundedAmount
      */
@@ -107,6 +109,7 @@ public final class OneEconomy implements Economy {
 
     @Override
     public double getBalance(OfflinePlayer offP) {
+        //todo xxx
         return balances.get(offP.getUniqueId());
         //  return balances.compute(offP.getUniqueId(), (k, v) -> v == null ? 0 : v);
     }
@@ -162,6 +165,7 @@ public final class OneEconomy implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer offP) {
+        //todo xxxx
         return balances.containsKey(offP.getUniqueId());
     }
 
@@ -324,6 +328,4 @@ public final class OneEconomy implements Economy {
         return "OneEconomy[" +
                 "plugin=" + plugin + ']';
     }
-
-
 }

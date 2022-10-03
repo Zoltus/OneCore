@@ -1,6 +1,5 @@
 package sh.zoltus.onecore.player;
 
-import com.j256.ormlite.table.DatabaseTable;
 import lombok.Data;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
@@ -16,7 +15,10 @@ import sh.zoltus.onecore.player.teleporting.PreLocation;
 import sh.zoltus.onecore.player.teleporting.Request;
 import sh.zoltus.onecore.player.teleporting.Teleport;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,7 +27,6 @@ import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
 
 
 @Data
-@DatabaseTable(tableName = "users")
 public class User {
     //todo remove transient
     @Getter
@@ -37,12 +38,9 @@ public class User {
     private transient final List<Location> lastLocations = new ArrayList<>();
     private transient final List<Request> requests = new ArrayList<>();//todo tomap?
 
-    //@DatabaseField(id = true)
     private final UUID uniqueId;
-    //@DatabaseField(canBeNull = false, defaultValue = "true")
     private boolean tpEnabled = true;
-    //@DatabaseField(dataType = DataType.SERIALIZABLE)
-    private Map<String, PreLocation> homes = new HashMap<>();
+    private HashMap<String, PreLocation> homes = new HashMap<>();
 
     public User(OfflinePlayer offP) {
         this.offP = offP;

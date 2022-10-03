@@ -91,7 +91,6 @@ public class TestListener implements Listener {
                     p.sendMessage("finished testing users");
                 }
                 //  clickCommands.put("/" + this.hashCode() + key, consumer);
-                case "/dbtest" -> OneCore.getPlugin().getDatabase().loadEconomyAsync();
                 case "/test22" -> {
                     p.sendMessage("asdasd");
                     p.teleport(user.getHomes().get(user.getHomeArray()[0]).toLocation());
@@ -99,9 +98,6 @@ public class TestListener implements Listener {
                 case "/dump" -> {
                     // user.getSettings().forEach((s, o) -> p.sendMessage("§7s: " + s + " o:" + o));
                     // user.getHomes().forEach((s, o) -> p.sendMessage("§as: " + s + " o:" + o));
-                }
-                case "/generateusers" -> {
-                    OneCore.getPlugin().getDatabase().fillTest(5000);
                 }
                 case "/jointest" -> //When used remove OnePlayer.of from hashmap if statement
                         Bukkit.getScheduler().runTaskAsynchronously(OneCore.getPlugin(), () -> {

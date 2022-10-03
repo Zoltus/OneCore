@@ -1,17 +1,18 @@
 package sh.zoltus.onecore.data.database;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.data.configuration.yamls.Config;
-import sh.zoltus.onecore.economy.OneEconomy;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -29,13 +30,12 @@ public class Database {
         this.plugin = plugin;
         this.connection = connection(); //test
         //todo if these are normal settings anyways
-        //todo link balances with players
-        //todo dont save name to db?
+        // "PRAGMA mmap_size = 30000000000;
         this.config.setJournalMode(SQLiteConfig.JournalMode.WAL);
         this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
+        this.config.setPragma(SQLiteConfig.Pragma.FOREIGN_KEYS, "1");
         createTables();
-        // plugin.getLogger().info("Loading server settings...");
         initAutoSaver();
     }
 
@@ -55,42 +55,25 @@ public class Database {
 
     //Creates tables if doesnt exist async?
     private void createTables() {
-        //todo join table uuid,name ect balance
-        // "PRAGMA mmap_size = 30000000000;
-        //"PRAGMA foreign_keys = ON;
-        final String table1 = """
-                CREATE TABLE IF NOT EXISTS balances(
-                    uuid TEXT NOT NULL UNIQUE,
-                    balance REAL NOT NULL DEFAULT 0,
-                    PRIMARY KEY (uuid));""";
-        final String table2 = """
-                CREATE TABLE IF NOT EXISTS players(
-                    uuid TEXT NOT NULL UNIQUE,
-                    data TEXT,
-                    PRIMARY KEY (uuid));""";
-        final String table3 = """   
-                CREATE TABLE IF NOT EXISTS server(
-                    key TEXT UNIQUE,
-                    value TEXT,
-                    PRIMARY KEY (key));""";
         //Creates tables
         try (Connection con = connection();
              Statement stmt = con.createStatement()) {
-            stmt.addBatch(table1);
-            stmt.addBatch(table2);
-            stmt.addBatch(table3);
-            stmt.executeBatch();
-        } catch (
-                SQLException e) {
+            stmt.execute("""
+                    CREATE TABLE IF NOT EXISTS player(
+                        uuid VARCHAR(36) NOT NULL UNIQUE,
+                        tpenabled BOOLEAN NOT NULL DEFAULT 1,
+                        balance DOUBLE NOT NULL DEFAULT 0,
+                        homes TEXT,
+                        PRIMARY KEY (uuid)
+                        );""");
+        } catch (SQLException e) {
             throw new RuntimeException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
     private void initAutoSaver() {
-        scheduler.runTaskTimerAsynchronously(plugin, () -> {
-            saveUsersAsync();
-            saveEconomyAsync();
-        }, (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
+        scheduler.runTaskTimerAsynchronously(plugin, this::saveUsersAsync,
+                (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
     }
 
     public void saveUsersAsync() {
@@ -101,17 +84,13 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO players(uuid, data) VALUES(?,?)";
+        final String sql = "INSERT OR REPLACE INTO player(uuid, tpenabled, homes, balance) VALUES(?,?,?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
                 UUID uuid = entry.getKey();
-                String uuidString = uuid.toString();
                 User user = entry.getValue();
-                GsonBuilder builder = new GsonBuilder().registerTypeAdapter(User.class, new OneUserAdapter(user.getOffP()));
-                Gson gson = builder.create();
-                pStm.setString(1, uuidString);
-                pStm.setString(2, gson.toJson(user));
+                userToDatabase(user, pStm);
                 pStm.addBatch();
                 if (!user.isOnline()  //If player has left the server
                         && !Config.USERS_KEEP_IN_CACHE.getBoolean()
@@ -125,105 +104,34 @@ public class Database {
         }
     }
 
-    //todo if economy disabled it would return
-    public void saveEconomyAsync() {
-        scheduler.runTaskAsynchronously(plugin, this::saveEconomy);
-    }
-
-    public void saveEconomy() {
-        if (plugin.getVault() != null) {
-            try (Connection con = connection()
-                 ; PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO balances(uuid,balance) VALUES(?,?)")) {
-                for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
-                    UUID uuid = entry.getKey();
-                    pStm.setString(1, uuid.toString());
-                    pStm.setDouble(2, entry.getValue());
-                    pStm.addBatch();
-                }
-                pStm.executeBatch();
-            } catch (SQLException e) {
-                throw new RuntimeException("§4Error saving economy!\n §c" + e.getMessage());
-            }
-        }
-    }
-
-    public void loadEconomyAsync() {
-        scheduler.runTaskAsynchronously(plugin, () -> {
-            try (Connection con = connection()
-                 ; Statement st = con.createStatement()) {
-                //todo select *?
-                try (ResultSet rs = st.executeQuery("SELECT uuid, balance FROM balances")) {
-                    plugin.getLogger().info("Loading economy"); //tdo economy loading from1 place
-                    while (rs.next()) {
-                        UUID uuid = UUID.fromString(rs.getString("uuid"));
-                        double balance = rs.getDouble("balance");
-                        OneEconomy.getBalances().put(uuid, balance);
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException("§4Error loading economy: \n §c" + e.getMessage());
-            }
-        });
-    }
-
-    /**
-     * Used only for home other, admin cmd
-     *
-     * @param offP offlinePlayer
-     * @return OneUser
-     */
-    public CompletableFuture<User> loadUserAsync(OfflinePlayer offP) {
-        return CompletableFuture.supplyAsync(() -> loadUser(offP));
-    }
-
-    public User loadUser(OfflinePlayer offP) {
-        String uuid = offP.getUniqueId().toString();
-        //if target is loaded it returns, Not needed just incase.
-        User user = User.getUsers().get(offP.getUniqueId());
-        if (user != null) {
-            return user;
-        } else if (!offP.hasPlayedBefore()) {
-            return null;
-        } else {
-            try (Connection con = connection()
-                 ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM players WHERE uuid = ?")) {
-                pStm.setString(1, uuid);
-                try (ResultSet rs = pStm.executeQuery()) {
-                    if (!rs.next()) { //Goes here if new user onasyncprelogin
-                        return null;
-                    } else {
-                        return dataToGson(offP, rs.getString("data"));
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
-            }
-        }
+    private void userToDatabase(User user, PreparedStatement pStm) throws SQLException {
+        UUID uuid = user.getUniqueId();
+        pStm.setString(1, uuid.toString());
+        pStm.setBoolean(2, user.isTpEnabled());
+        pStm.setDouble(4, user.getBalance());
+        String homes = new Gson().toJson(user.getHomes(), HashMap.class);
+        pStm.setString(3, homes);
     }
 
     public void cacheUsers() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM players")
+             ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance")
              ; ResultSet rs = pStm.executeQuery()) {
-            //Counts players for percentage calculation
-            double size = con.createStatement()
+            double size = con.createStatement() //Counts players for percentage calculation
                     .executeQuery("SELECT COUNT(*) FROM players")
                     .getInt(1);
-            double index = 0;
+            int index = 0;
             while (rs.next()) {
                 double percent = (100 * index) / size;
                     /*if (percent % 10 == 0) {//todo debug toggle
                         plugin.getLogger().info("Caching users: " + percent + "%");
                     }*/
                 String uuid = rs.getString("uuid");
-                String data = rs.getString("data");
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                //If user havent been loaded yet by login it loads it
-                //without this loading could happen twice
-                if (User.get(offP) == null) {
-                   dataToGson(offP, data);
+                if (User.get(offP) == null) { //If user havent been loaded yet by login it loads it
+                    userFromResult(offP, rs); // without this loading could happen twice
                 }
                 index++;
             }
@@ -233,42 +141,49 @@ public class Database {
         }
     }
 
-    private User dataToGson(OfflinePlayer offP, String data) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
-        Gson gson = builder.create();
-        //Todo debug toggle
-        // plugin.getLogger().info("§bFrom db");
-        return gson.fromJson(data, User.class);
+    private User userFromResult(OfflinePlayer offP, ResultSet rs) throws SQLException {
+        boolean tpenabled = rs.getBoolean("tpenabled");
+        String homes = rs.getString("homes");
+        double balance = rs.getDouble("balance");
+        User newUser = new User(offP);
+        newUser.setBalance(balance);
+        newUser.setTpEnabled(tpenabled);
+        Gson gson = new Gson();
+        if (homes != null) {
+            newUser.setHomes(gson.fromJson(homes, new TypeToken<Map<String, PreLocation>>() {
+            }.getType()));
+        }
+        return newUser;
     }
 
-    public void saveAll() {
-        saveUsers();
-        saveEconomy();
+
+    public CompletableFuture<User> loadUserAsync(OfflinePlayer offP) {
+        return CompletableFuture.supplyAsync(() -> loadUser(offP));
     }
 
-    public void fillTest(int amount) {
-        final String sql = "INSERT OR REPLACE INTO players(uuid, data) VALUES(?,?)";
-        try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement(sql)) {
-            int index = 0;
-
-            while (index != amount) {
-                int percent = (100 * index) / amount;
-                if (percent % 10 == 0) {
-                    plugin.getLogger().info("Filling users: " + percent + "%");
+    public User loadUser(OfflinePlayer offP) {
+        String uuid = offP.getUniqueId().toString();
+        User user = User.getUsers().get(offP.getUniqueId());
+        if (user != null) { //Prevents loading user twice
+            return user;
+        } else if (!offP.hasPlayedBefore()) {
+            return null;
+        } else {
+            try (Connection con = connection()
+                 ; PreparedStatement pStm = con.prepareStatement("""
+                    SELECT tpenabled, homes, balance
+                    FROM player WHERE player.uuid = ?""")) {
+                pStm.setString(1, uuid);
+                try (ResultSet rs = pStm.executeQuery()) {
+                    if (!rs.next()) {
+                        return null;
+                    } else {
+                        return userFromResult(offP, rs); //dataToGson(offP, rs.getString("data"));
+                    }
                 }
-                User user = new User(Bukkit.getOfflinePlayer(UUID.randomUUID()));
-                GsonBuilder builder = new GsonBuilder().registerTypeAdapter(User.class, new OneUserAdapter(user.getOffP()));
-                Gson gson = builder.create();
-                pStm.setString(1, user.getUniqueId().toString());
-                pStm.setString(2, gson.toJson(user));
-                pStm.addBatch();
-                index++;
-            }//1063, 10959 10504
-            pStm.executeBatch();
-        } catch (SQLException e) {
-            throw new RuntimeException("§4Error saving players!\n §c" + e.getMessage());
+            } catch (SQLException e) {
+                throw new RuntimeException("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
+            }
         }
     }
 }
