@@ -49,7 +49,7 @@ public class User {
         this.uniqueId = offP.getUniqueId();
         //Default settings:
         users.put(uniqueId, this);
-        Bukkit.broadcastMessage("§cNew");
+        //Bukkit.broadcastMessage("§cNew");
         //Sets balance to 0 if it doesnt exist, for toplist
         if (plugin.getVault() != null) {
             if (!OneEconomy.getBalances().containsKey(uniqueId)) {

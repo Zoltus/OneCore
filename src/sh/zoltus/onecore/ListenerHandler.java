@@ -23,7 +23,7 @@ public class ListenerHandler {
     }
 
     public ListenerHandler(OneCore plugin) {
-        Bukkit.getConsoleSender().sendMessage("Registering listeners...");
+        plugin.getLogger().info("Registering listeners...");
         //Adds listeners to list if enabled and then registers them.
         addIfEnabled(new Mentions(), MENTIONS_ENABLED.getBoolean());
         addIfEnabled(new ChatColors(), CHAT_COLORS_ENABLED.getBoolean());

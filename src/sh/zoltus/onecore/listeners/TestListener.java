@@ -15,7 +15,6 @@ import sh.zoltus.onecore.player.nbt.NBTPlayer;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 import sh.zoltus.onecore.utils.SlowingScheduler;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -101,17 +100,8 @@ public class TestListener implements Listener {
                     // user.getSettings().forEach((s, o) -> p.sendMessage("§7s: " + s + " o:" + o));
                     // user.getHomes().forEach((s, o) -> p.sendMessage("§as: " + s + " o:" + o));
                 }
-                case "/asynctest" -> {
-                    long time = System.currentTimeMillis();
-                    int i = Integer.parseInt(args[0]);
-                    SecureRandom random = new SecureRandom();
-                    while (i != 0) {
-                        //OneEconomy.getBalances().put(UUID.randomUUID(), random.nextDouble(100000));
-                        i--;
-                    }//1063, 10959 10504
-                    p.sendMessage("took:  " + (System.currentTimeMillis() - time));
-                    // user.getSettings().forEach((s, o) -> p.sendMessage("§7s: " + s + " o:" + o));
-                    // user.getHomes().forEach((s, o) -> p.sendMessage("§as: " + s + " o:" + o));
+                case "/generateusers" -> {
+                    OneCore.getPlugin().getDatabase().fillTest(5000);
                 }
                 case "/jointest" -> //When used remove OnePlayer.of from hashmap if statement
                         Bukkit.getScheduler().runTaskAsynchronously(OneCore.getPlugin(), () -> {
