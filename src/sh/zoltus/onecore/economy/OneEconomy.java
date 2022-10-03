@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -23,7 +24,7 @@ import static sh.zoltus.onecore.data.configuration.yamls.Config.CURRENCY_SINGULA
 
 public final class OneEconomy implements Economy {
     @Getter
-    private static final LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
+    private static final ConcurrentHashMap<UUID, Double> balances = new ConcurrentHashMap<>();
 
     private final Logger logger;
     private final OneCore plugin;

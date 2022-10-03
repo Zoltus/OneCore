@@ -10,12 +10,10 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - logger to not use log4j
-          - table creation to single string
-          - sql to enums?
-          - Onecore messages prefix
+          - user cache load can it override normal logins?
+          - if economy loading gets stuck playerdata will not load
+            async checks for economy stuff, just like users work
           - rtp not finished
-          - ormlite for simpler user class
           - economy class
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?
