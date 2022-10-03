@@ -13,14 +13,15 @@ Data:
   chat-colors-enabled: true
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
-  database-name: database
   economy:
     currency-plural: €
     currency-singular: €
     enabled: true
     use-oneeconomy: true
     start-money: 500
-  keep-users-in-cache: true
+  users:
+    keep-in-cache: true
+    cache-all-on-startup: true
   kicked-for-spamming-bypass: kick.bypass
   permission-prefix: onecore.
   rtp-cooldown-seconds: 60

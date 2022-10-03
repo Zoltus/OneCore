@@ -21,12 +21,11 @@ public class Database {
     private final OneCore plugin;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
     private final int saveInterval = Config.DATA_SAVE_INTERVAL.getInt();
-    private final String fileName = Config.DATABASE_NAME.getString();
     private final SQLiteConfig config = new SQLiteConfig();
 
     //todo async
     private Database(OneCore plugin) {
-        Bukkit.getConsoleSender().sendMessage("Loading database...");
+        plugin.getLogger().info("Loading database...");
         this.plugin = plugin;
         this.connection = connection(); //test
         //todo if these are normal settings anyways
@@ -37,7 +36,7 @@ public class Database {
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
         createTables();
         // backupTimer(); //Starts backup timer
-        // Bukkit.getConsoleSender().sendMessage("Loading server settings...");
+        // plugin.getLogger().info("Loading server settings...");
         initAutoSaver();
     }
 
@@ -48,7 +47,7 @@ public class Database {
 
     private Connection connection() {
         try {
-            String url = "jdbc:sqlite:" + plugin.getDataFolder() + "/" + fileName + ".db";
+            String url = "jdbc:sqlite:" + plugin.getDataFolder() + "/database.db";
             return connection = connection == null || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
         } catch (Exception e) {
             throw new RuntimeException("§4Database connection failed!\n §c" + e.getMessage());
@@ -57,34 +56,32 @@ public class Database {
 
     //Creates tables if doesnt exist async?
     private void createTables() {
-        //@Language("SQLite")
-        final String[] tables = { //todo join table uuid,name ect balance
-                // "PRAGMA mmap_size = 30000000000;",
-                //"PRAGMA foreign_keys = ON;",
-                "CREATE TABLE IF NOT EXISTS Balances(" +
-                        "uuid TEXT NOT NULL UNIQUE, " +
-                        "balance REAL NOT NULL DEFAULT 0, " +
-                        "PRIMARY KEY (uuid) " +
-                        "); ",
+        //todo join table uuid,name ect balance
+        // "PRAGMA mmap_size = 30000000000;
+        //"PRAGMA foreign_keys = ON;
+        final String table = """
+                        CREATE TABLE IF NOT EXISTS Balances(
+                                "uuid TEXT NOT NULL UNIQUE, 
+                                "balance REAL NOT NULL DEFAULT 0, 
+                                "PRIMARY KEY (uuid) 
+                                "); 
 
-                "CREATE TABLE IF NOT EXISTS Players(" +
-                        "uuid TEXT NOT NULL UNIQUE, " +
-                        "data TEXT, " +
-                        "PRIMARY KEY (uuid) " +
-                        "); ",
+                        CREATE TABLE IF NOT EXISTS Players(
+                                uuid TEXT NOT NULL UNIQUE, 
+                                data TEXT, 
+                                PRIMARY KEY (uuid) 
+                                ); 
 
-                "CREATE TABLE IF NOT EXISTS Server(" +
-                        "key TEXT UNIQUE PRIMARY KEY, " +
-                        "value TEXT);"
-        };
+                        CREATE TABLE IF NOT EXISTS Server(
+                                key TEXT UNIQUE PRIMARY KEY, 
+                                value TEXT);
+                """;
         //Creates tables
-        try (Connection con = connection()
-             ; Statement stmt = con.createStatement()) {
-            for (final String table : tables) {
-                stmt.addBatch(table);
-            }
-            stmt.executeBatch();
-        } catch (SQLException e) {
+        try (Connection con = connection();
+             Statement stmt = con.createStatement()) {
+            stmt.execute(table);
+        } catch (
+                SQLException e) {
             throw new RuntimeException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
@@ -116,7 +113,9 @@ public class Database {
                 pStm.setString(1, uuidString);
                 pStm.setString(2, gson.toJson(user));
                 pStm.addBatch();
-                if (!user.isOnline() && !Config.KEEP_USERS_IN_CACHE.getBoolean()) {
+                if (!user.isOnline()  //If player has left the server
+                        && !Config.USERS_KEEP_IN_CACHE.getBoolean()
+                        && !Config.USERS_CACHE_ALL_ON_STARTUP.getBoolean()) {
                     User.getUsers().remove(uuid);
                 }
             }
@@ -133,8 +132,8 @@ public class Database {
 
     public void saveEconomy() {
         if (plugin.getVault() != null) {
-            try (Connection con = connection();
-                 PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,balance) VALUES(?,?)")) {
+            try (Connection con = connection()
+                 ; PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,balance) VALUES(?,?)")) {
                 for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
                     UUID uuid = entry.getKey();
                     pStm.setString(1, uuid.toString());
@@ -154,7 +153,7 @@ public class Database {
                  ; Statement st = con.createStatement()) {
                 //todo select *?
                 try (ResultSet rs = st.executeQuery("SELECT uuid, balance FROM Balances")) {
-                    Bukkit.getConsoleSender().sendMessage("§bLoading economy"); //tdo economy loading from1 place
+                    plugin.getLogger().info("Loading economy"); //tdo economy loading from1 place
                     while (rs.next()) {
                         UUID uuid = UUID.fromString(rs.getString("uuid"));
                         double balance = rs.getDouble("balance");
@@ -179,9 +178,7 @@ public class Database {
 
     public User loadUser(OfflinePlayer offP) {
         String uuid = offP.getUniqueId().toString();
-        //todo check how parrots pl has done it
-        //if target is loaded it returns, Not needed just incase.//todo check this
-        //todo check playedbefore?
+        //if target is loaded it returns, Not needed just incase.
         User user = User.getUsers().get(offP.getUniqueId());
         if (user != null) {
             return user;
@@ -195,11 +192,7 @@ public class Database {
                     if (!rs.next()) { //Goes here if new user onasyncprelogin
                         return null;
                     } else {
-                        GsonBuilder builder = new GsonBuilder();
-                        builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
-                        Gson gson = builder.create();
-                        Bukkit.getConsoleSender().sendMessage("§bFrom db");
-                        return gson.fromJson(rs.getString("data"), User.class);
+                        return dataToGson(rs.getString("data"), uuid);
                     }
                 }
             } catch (SQLException e) {
@@ -208,8 +201,71 @@ public class Database {
         }
     }
 
+    public void cacheUsers() {
+        long l = System.currentTimeMillis();
+        plugin.getLogger().info("Caching users");
+        try (Connection con = connection()
+             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM Players;")
+             ; ResultSet rs = pStm.executeQuery()) {
+            //Counts players for percentage calculation
+            double size = con.createStatement()
+                    .executeQuery("SELECT COUNT(*) FROM Players;")
+                    .getInt(1);
+            double index = 0;
+            while (rs.next()) {
+                double percent = (100 * index) / size;
+                    /*if (percent % 10 == 0) {//todo debug toggle
+                        plugin.getLogger().info("Caching users: " + percent + "%");
+                    }*/
+                String uuid = rs.getString("uuid");
+                String data = rs.getString("data");
+                dataToGson(uuid, data);
+                index++;
+            }
+            plugin.getLogger().info("Cached users in " + (System.currentTimeMillis() - l) + "ms");
+        } catch (SQLException e) {
+            throw new RuntimeException("§4Error caching users: \n §c" + e.getMessage());
+        }
+    }
+
+    private User dataToGson(String uuid, String data) {
+        OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(User.class, new OneUserAdapter(offP));
+        Gson gson = builder.create();
+        //Todo debug toggle
+        // plugin.getLogger().info("§bFrom db");
+        return gson.fromJson(data, User.class);
+    }
+
     public void saveAll() {
         saveUsers();
         saveEconomy();
+    }
+
+    public void fillTest(int amount) {
+        final String sql = "INSERT OR REPLACE INTO Players(uuid, data) VALUES(?,?)";
+        try (Connection con = connection()
+             ; PreparedStatement pStm = con.prepareStatement(sql)) {
+            int size = 5000;
+            int index = 0;
+
+            while (index != 5000) {
+                int percent = (100 * index) / size;
+                if (percent % 10 == 0) {
+                    plugin.getLogger().info("Filling users: " + percent + "%");
+                }
+                User user = new User(Bukkit.getOfflinePlayer(UUID.randomUUID()));
+                GsonBuilder builder = new GsonBuilder().registerTypeAdapter(User.class, new OneUserAdapter(user.getOffP()));
+                Gson gson = builder.create();
+                pStm.setString(1, user.getUniqueId().toString());
+                pStm.setString(2, gson.toJson(user));
+                pStm.addBatch();
+                index++;
+            }//1063, 10959 10504
+            pStm.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException("§4Error saving players!\n §c" + e.getMessage());
+        }
     }
 }
