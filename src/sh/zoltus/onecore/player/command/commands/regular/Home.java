@@ -51,15 +51,11 @@ public class Home implements IOneCommand {
     //sethome <player> <home>
     //DelHome <player> <home>
     public static void handleOther(CommandSender sender, OfflinePlayer input, String home, Action action) {
-        if (!input.hasPlayedBefore()) {
-            sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.rp(PLAYER_PH, input.getName()));
+        User user = User.get(input);
+        if (user == null) {
+            User.loadAsync(input).thenAccept(target -> handle(sender, target, home, action));
         } else {
-            User user = User.get(input);
-            if (user == null) {
-                User.loadAsync(input).thenAccept(target -> handle(sender, target, home, action));
-            } else {
-                handle(sender, user, home, action);
-            }
+            handle(sender, user, home, action);
         }
     }
 
@@ -68,7 +64,9 @@ public class Home implements IOneCommand {
     }
 
     static void handle(CommandSender sender, User target, String home, Action action) {
-        if (target != null) {
+        if (target == null) {
+            sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
+        } else {
             //todo ? if has default home, it uses it, else takes first home from list
             home = home.toLowerCase();
             String message = "";
@@ -102,12 +100,9 @@ public class Home implements IOneCommand {
                     message = HOME_TELEPORT_OTHERS.rp(PLAYER_PH, target.getName(), HOME_PH, home);
                 }
             }
-
             if (!sender.equals(target.getPlayer())) {
                 sender.sendMessage(message);
             }
-        } else {
-            sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
         }
     }
 }

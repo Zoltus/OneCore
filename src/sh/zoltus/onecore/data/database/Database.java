@@ -29,6 +29,9 @@ public class Database {
         Bukkit.getConsoleSender().sendMessage("Loading database...");
         this.plugin = plugin;
         this.connection = connection(); //test
+        //todo if these are normal settings anyways
+        //todo link balances with players
+        //todo dont save name to db?
         this.config.setJournalMode(SQLiteConfig.JournalMode.WAL);
         this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
         this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
@@ -60,14 +63,12 @@ public class Database {
                 //"PRAGMA foreign_keys = ON;",
                 "CREATE TABLE IF NOT EXISTS Balances(" +
                         "uuid TEXT NOT NULL UNIQUE, " +
-                        "name TEXT, " +
                         "balance REAL NOT NULL DEFAULT 0, " +
                         "PRIMARY KEY (uuid) " +
                         "); ",
 
                 "CREATE TABLE IF NOT EXISTS Players(" +
                         "uuid TEXT NOT NULL UNIQUE, " +
-                        "name TEXT, " +
                         "data TEXT, " +
                         "PRIMARY KEY (uuid) " +
                         "); ",
@@ -103,7 +104,7 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO Players(uuid, name, data) VALUES(?,?,?)";
+        final String sql = "INSERT OR REPLACE INTO Players(uuid, data) VALUES(?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
@@ -113,8 +114,7 @@ public class Database {
                 GsonBuilder builder = new GsonBuilder().registerTypeAdapter(User.class, new OneUserAdapter(user.getOffP()));
                 Gson gson = builder.create();
                 pStm.setString(1, uuidString);
-                pStm.setString(2, user.getName());
-                pStm.setString(3, gson.toJson(user));
+                pStm.setString(2, gson.toJson(user));
                 pStm.addBatch();
                 if (!user.isOnline() && !Config.KEEP_USERS_IN_CACHE.getBoolean()) {
                     User.getUsers().remove(uuid);
@@ -134,12 +134,11 @@ public class Database {
     public void saveEconomy() {
         if (plugin.getVault() != null) {
             try (Connection con = connection();
-                 PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,name,balance) VALUES(?,?,?)")) {
+                 PreparedStatement pStm = con.prepareStatement("INSERT OR REPLACE INTO Balances(uuid,balance) VALUES(?,?)")) {
                 for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
                     UUID uuid = entry.getKey();
                     pStm.setString(1, uuid.toString());
-                    pStm.setString(2, Bukkit.getOfflinePlayer(uuid).getName());
-                    pStm.setDouble(3, entry.getValue());
+                    pStm.setDouble(2, entry.getValue());
                     pStm.addBatch();
                 }
                 pStm.executeBatch();
@@ -153,6 +152,7 @@ public class Database {
         scheduler.runTaskAsynchronously(plugin, () -> {
             try (Connection con = connection()
                  ; Statement st = con.createStatement()) {
+                //todo select *?
                 try (ResultSet rs = st.executeQuery("SELECT uuid, balance FROM Balances")) {
                     Bukkit.getConsoleSender().sendMessage("§bLoading economy"); //tdo economy loading from1 place
                     while (rs.next()) {
@@ -168,6 +168,7 @@ public class Database {
     }
 
     /**
+     * Used only for home other, admin cmd
      *
      * @param offP offlinePlayer
      * @return OneUser
@@ -184,6 +185,8 @@ public class Database {
         User user = User.getUsers().get(offP.getUniqueId());
         if (user != null) {
             return user;
+        } else if (!offP.hasPlayedBefore()) {
+            return null;
         } else {
             try (Connection con = connection()
                  ; PreparedStatement pStm = con.prepareStatement("SELECT data FROM Players WHERE uuid = ?")) {

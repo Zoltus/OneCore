@@ -10,22 +10,26 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - max db scans per player for home suggestions arg
-          -userOfnullable 
-          - - offline and onlineUser?
-          - online and offlineuserarguments?
           - ormlite for simpler user class
-          - userargument only works for online players. 
-          wont work for sethome,economy,etc
+          - economy class
           - Fix backup database.db
-          - Fix teleporthandler
-          - Remove keep users on cache?
+          - Fix teleporthandler?? is it fixed?
           - Does economy save?
           - test backup with motimaadata copy
           - TEST EVERYTHING! (MOTIMMAA test)
+          - plugin, database to ionecommand
+          - remove apicommand?
+          - clean database class
+          - look coreprotect sqlite settings
+          - magnus
+          - gson vs no gsonn test sqlite
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - rename all
+          - toggleable cache users on load
+          - toggleable cache economy?
+          - all to commandtrees, test peformance
           - ormlite
           - cleanup config ymls
           - Mentions testing! remove requirement for @? config for it?
