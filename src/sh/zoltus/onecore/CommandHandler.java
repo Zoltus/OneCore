@@ -15,7 +15,7 @@ public class CommandHandler {
     }
 
     private CommandHandler(OneCore plugin) {
-        Bukkit.getConsoleSender().sendMessage("Registering commands...");
+        plugin.getLogger().info("Registering commands...");
         //Registers economy commands only if vault has been loaded successfully
         if (plugin.getVault() != null) {
             new EconomyCMD().register();

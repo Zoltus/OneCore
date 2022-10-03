@@ -10,6 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - table creation to single string
+          - sql to enums?
+          - Onecore messages prefix
           - rtp not finished
           - ormlite for simpler user class
           - economy class
@@ -27,8 +30,9 @@
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - if config is added it adds it to yml
           - rename all
-          - toggleable cache users on load
+          - cache users just like plotsquared async
           - toggleable cache economy?
           - all to commandtrees, test peformance
           - ormlite

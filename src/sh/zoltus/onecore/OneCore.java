@@ -72,11 +72,15 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
-        Bukkit.getConsoleSender().sendMessage("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         testConfig(); // Tests config for missing values
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
         backupHandler.start(); //todo to singleton
+        //Starts caching users
+        if (Config.USERS_CACHE_ALL_ON_STARTUP.getBoolean()) {
+            Bukkit.getScheduler().runTaskAsynchronously(this, () -> database.cacheUsers());
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         // Saves all users & settings on disable
         //todo mode database to mainclass instead of static
         database.saveAll();
-        Bukkit.getConsoleSender().sendMessage("Saved users & settings to database...");
+        plugin.getLogger().info("Saved users & settings to database...");
         CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
     }
 
@@ -105,12 +109,12 @@ public final class OneCore extends JavaPlugin implements Listener {
 
     private void testConfig() {
         Stream.of(Config.values()).filter(Objects::isNull).filter(obj2 -> false)
-                .forEach(config -> Bukkit.getConsoleSender().sendMessage("§c" + config.name() + " is null!"));
+                .forEach(config -> plugin.getLogger().info("§c" + config.name() + " is null!"));
         Stream.of(Commands.values()).filter(Objects::isNull).filter(obj1 -> false)
-                .forEach(cmd -> Bukkit.getConsoleSender().sendMessage("§c" + cmd.name() + " is null!"));
+                .forEach(cmd -> plugin.getLogger().info("§c" + cmd.name() + " is null!"));
         Stream.of(Lang.values()).filter(Objects::isNull).filter(obj -> false)
-                .forEach(lang -> Bukkit.getConsoleSender().sendMessage("§c" + lang.name() + " is null!"));
-        Bukkit.getConsoleSender().sendMessage("§aTested config");
+                .forEach(lang -> plugin.getLogger().info("§c" + lang.name() + " is null!"));
+        plugin.getLogger().info("§aTested config");
     }
 }
 

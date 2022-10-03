@@ -65,7 +65,7 @@ public class RTPHandler {
             Location loc;
             Supplier<Integer> randomInt = () -> ThreadLocalRandom.current().nextInt(-100, 100);
             do {
-                Bukkit.getConsoleSender().sendMessage("ScanLoc");
+                plugin.getLogger().info("ScanLoc");
                 b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
                 loc = LocationUtils.getSafeLocation(p, b.getLocation());
             } while (loc == null);
