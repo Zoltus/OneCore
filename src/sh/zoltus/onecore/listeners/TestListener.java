@@ -32,7 +32,7 @@ public class TestListener implements Listener {
         String cmd = argsList.get(0);
         argsList.remove(0);
         String[] args = argsList.toArray(new String[0]);
-        User user = User.get(p);
+        User user = User.of(p);
 
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {

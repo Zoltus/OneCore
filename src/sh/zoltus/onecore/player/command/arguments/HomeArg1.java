@@ -5,7 +5,6 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.ApiCommand;
 import sh.zoltus.onecore.player.command.OneArgument;
@@ -36,11 +35,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements OneArgum
 
             //If arg lenght 0 it will try to asyncload first argument as oneuser from db
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
-            User target = User.get(offP);
-            //todo can crash server if spammed, its admin only anywyas
-            if (target == null && info.currentArg().isEmpty()) {
-                target = OneCore.getPlugin().getDatabase().loadUser(offP);   //Tries to load player
-            }
+            User target = User.of(offP);
 
             if (target != null) {
                 return ApiCommand.filter(info.currentArg(), target.getHomeArray());

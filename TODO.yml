@@ -10,10 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - -for (;;) ?
-          - use for getting offline balance, offlineuser
-          - if economy loading gets stuck playerdata will not load
-            async checks for economy stuff, just like users work
+          - -for (;;) = infintite 
+          - homeslots wont work for offlineplayer and other stuff 
+            needs fixing with async stuff and offline/online players
           - rtp not finished
           - economy class
           - Fix backup database.db

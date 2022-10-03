@@ -41,7 +41,7 @@ public class RTPHandler {
                     unQueue(uuid);
                     Bukkit.broadcastMessage("Player is null");
                 } else {
-                    User user = User.get(player);
+                    User user = User.of(player);
                     CompletableFuture<Location> loc = getRandomLocAsync(player);
                     loc.thenAccept(location -> {
                         user.sendMessage("teleporttimer");

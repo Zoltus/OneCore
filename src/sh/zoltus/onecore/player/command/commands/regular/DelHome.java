@@ -1,6 +1,7 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.HomeArg0;
@@ -17,17 +18,17 @@ public class DelHome implements IOneCommand {
                 .withAliases(DELHOME_ALIASES)
                 .withArguments(new HomeArg0())
                 .executesPlayer((p, args) -> {
-                    Home.handle(p, User.get(p), (String) args[0], Home.Action.DELETE);
+                    Home.handle(p, User.of(p), (String) args[0], Home.Action.DELETE);
                 }).override();
         //delhome <player> <home>
         command(DELHOME_LABEL)
                 .withPermission(DELHOME_PERMISSION)
                 .withAliases(DELHOME_ALIASES)
                 .withArguments(new HomeArg0(), new HomeArg1())
-                .executes((sender, args) -> Home
-                        .handleOther(sender, Bukkit.getOfflinePlayer((String) args[0]),
-                                (String) args[0], Home.Action.DELETE))
-                .register();
+                .executes((sender, args) -> {
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
+                    Home.handle(sender, User.of(offP), (String) args[1], Home.Action.DELETE);
+                }).register();
     }
 }
 

@@ -25,7 +25,7 @@ public class UserArgument extends CustomArgument<User, String> implements OneArg
             if (player == null) {
                 throw new CustomArgument.CustomArgumentException(PLAYER_NOT_FOUND.getString());
             } else {
-                return User.get(player);
+                return User.of(player);
             }
         });
         replaceSuggestions(ArgumentSuggestions

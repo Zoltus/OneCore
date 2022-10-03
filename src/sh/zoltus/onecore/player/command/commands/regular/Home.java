@@ -22,7 +22,7 @@ public class Home implements IOneCommand {
                 .withPermission(HOME_PERMISSION)
                 .withAliases(HOME_ALIASES)
                 .executesPlayer((p, args) -> {
-                    handle(p, User.get(p), null, Action.HOME);
+                    handle(p, User.of(p), null, Action.HOME);
                 }).override();
         //home <home>
         command(HOME_LABEL)
@@ -30,30 +30,17 @@ public class Home implements IOneCommand {
                 .withAliases(HOME_ALIASES)
                 .withArguments(new HomeArg0()) //String
                 .executesPlayer((p, args) -> {
-                    handle(p, User.get(p), (String) args[0], Action.HOME);
+                    handle(p, User.of(p), (String) args[0], Action.HOME);
                 }).register();
         //home <player> <home>
         command(HOME_LABEL)
                 .withPermission(HOME_PERMISSION)
                 .withAliases(HOME_ALIASES)
                 .withArguments(new HomeArg0(), new HomeArg1())
-                .executes((sender, args) ->
-                        handleOther(sender, Bukkit.getOfflinePlayer((String) args[0]),
-                                (String) args[1], Action.HOME))
-                .register();
-    }
-
-
-    //home <player> <home>
-    //sethome <player> <home>
-    //DelHome <player> <home>
-    public static void handleOther(CommandSender sender, OfflinePlayer input, String home, Action action) {
-        User user = User.get(input);
-        if (user == null) {
-            User.loadAsync(input).thenAccept(target -> handle(sender, target, home, action));
-        } else {
-            handle(sender, user, home, action);
-        }
+                .executes((sender, args) -> {
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
+                    handle(sender, User.of(offP), (String) args[1], Action.HOME);
+                }).register();
     }
 
     enum Action {
@@ -86,7 +73,7 @@ public class Home implements IOneCommand {
                 }
                 case HOME -> { //todo default to homes 0
                     PreLocation loc = target.getHome(home);
-                    User user = User.get((Player) sender); //Cant be other than player
+                    User user = User.of((Player) sender); //Cant be other than player
                     //HOME_DEFAULT_NAME.getString().toLowerCase()
                     if (loc != null) {
                         user.teleportTimer(loc.toLocation());

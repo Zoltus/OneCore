@@ -31,7 +31,7 @@ public class ListenerHandler {
         addIfEnabled(new InvSeeHandler(), INVSEE_ENABLED.getBoolean() || EnderChest_ENABLED.getBoolean());
         listeners.addAll(List.of(
                 new SignListener(plugin),
-                new JoinListener(plugin),
+                new JoinListener(),
                 new KickedForSpamming(),
                 new KickedForSpamming(),
                 new QuitListener(),

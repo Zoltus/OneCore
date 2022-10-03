@@ -24,7 +24,7 @@ public class Back implements IOneCommand, Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onTeleport(PlayerTeleportEvent e) {
-        User user = User.get(e.getPlayer());
+        User user = User.of(e.getPlayer());
         List<Location> lastLocations = user.getLastLocations();
         // If player does /Back it wont read the location to the backs where he goes
         if (!lastLocations.contains(e.getTo())) {
@@ -89,7 +89,7 @@ public class Back implements IOneCommand, Listener {
     }
 
     private void executes(CommandSender sender, int backAmount, Player target) {
-        User targetUser = User.get(target);
+        User targetUser = User.of(target);
         if (targetUser.getLastLocations().isEmpty()) {
             sender.sendMessage(BACK_NO_HISTORY.rp(PLAYER_PH, target.getName()));
         } else if (backAmount > targetUser.getLastLocations().size()) {

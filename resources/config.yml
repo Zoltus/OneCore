@@ -2,10 +2,6 @@
 
 Data:
   spawn: []
-  backups:
-    stats-enabled: true
-    playerdata-enabled: true
-    database-enabled: true
   prefix: '&9&lOnecore &8&l»&7'
   back-history-size: 10
   baltop-update-interval: 60
@@ -13,15 +9,6 @@ Data:
   chat-colors-enabled: true
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
-  economy:
-    currency-plural: €
-    currency-singular: €
-    enabled: true
-    use-oneeconomy: true
-    start-money: 500
-  users:
-    keep-in-cache: true
-    cache-all-on-startup: true
   kicked-for-spamming-bypass: kick.bypass
   permission-prefix: onecore.
   rtp-cooldown-seconds: 60
@@ -36,3 +23,13 @@ Data:
   teleport-with-vehicle: true
   user-console-filter: true
   mentions-enabled: true
+  economy:
+    currency-plural: €
+    currency-singular: €
+    enabled: true
+    use-oneeconomy: true
+    start-money: 500
+  backups:
+    stats-enabled: true
+    playerdata-enabled: true
+    database-enabled: true
