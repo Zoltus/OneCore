@@ -27,15 +27,15 @@ import static sh.zoltus.onecore.data.configuration.yamls.Config.START_MONEY;
 
 @Data
 public class User {
-    //todo remove transient
-    @Getter
+
+    @Getter //Concurrent becaue of async
     private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     // private static Economy economy = economy;
-    private transient final OfflinePlayer offP;
-    private transient final List<Location> lastLocations = new ArrayList<>();
-    private transient final List<Request> requests = new ArrayList<>();//todo tomap?
+    private final OfflinePlayer offP;
+    private final List<Location> lastLocations = new ArrayList<>();
+    private final List<Request> requests = new ArrayList<>();//todo tomap?
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
@@ -60,16 +60,6 @@ public class User {
      OneUser -> never -> null
      OneUser -> never -> new
      */
-
-    /**
-     * Only for OnlinePlayers
-     *
-     * @param p player
-     * @return OneUser
-     */
-    public static User of(Player p) {
-        return users.get(p.getUniqueId());
-    }
 
     public static User of(OfflinePlayer offP) {
         return users.get(offP.getUniqueId());
@@ -179,7 +169,7 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    public boolean hasHomeSlots() {
+    public boolean hasFreeHomeSlots() {
         Player p = getPlayer();
         String permPrefix = HOME_AMOUNT_PERMISSION.asPermission();
         if (p.hasPermission(permPrefix + ".*")) {
@@ -208,7 +198,7 @@ public class User {
      * @return amount of the money
      */
     public double getBalance() {
-        return economy == null ? 0 : economy.getBalance(getPlayer());
+        return economy == null ? 0 : economy.getBalance(offP);
     }
 
     /**
