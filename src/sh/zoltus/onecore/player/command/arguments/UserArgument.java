@@ -4,11 +4,11 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import sh.zoltus.onecore.player.command.OneArgument;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.OneArgument;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.NODES_PLAYER;
+import static sh.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
 //Only for online players
 public class UserArgument extends CustomArgument<User, String> implements OneArgument  {
@@ -21,11 +21,11 @@ public class UserArgument extends CustomArgument<User, String> implements OneArg
     public UserArgument(String add) {
         super(new StringArgument(NODES_PLAYER.getString() + add), (info) -> {
             String input = info.input();
-            Player player = Bukkit.getPlayer(input);
-            if (player == null) {
-                throw new CustomArgument.CustomArgumentException(PLAYER_NOT_FOUND.getString());
+            User user = User.of(Bukkit.getOfflinePlayer(input));
+            if (user == null) {
+                throw new CustomArgument.CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
             } else {
-                return User.of(player);
+                return user;
             }
         });
         replaceSuggestions(ArgumentSuggestions
