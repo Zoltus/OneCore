@@ -10,9 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - make everything use User argument?
+          - make everything use User argument?, or cleanup argument stuff
           - OC art needs OneCore text
-          - -for (;;) = infintite 
           - test homecommands
           - needs fixing with async stuff and offline/online players?
           - rtp not finished

@@ -156,11 +156,11 @@ public class NBTPlayer {
     }
 
     public float getYaw() {
-        return (float) nbt.getCompoundList("Rotation").get(0).getCompound();
+        return nbt.getFloatList("Rotation").get(0);
     }
 
     public float getPitch() {
-        return (float) nbt.getCompoundList("Rotation").get(1).getCompound();
+        return nbt.getFloatList("Rotation").get(1);
     }
 
     public World getWorld() {
