@@ -22,6 +22,8 @@ public class Tp implements IOneCommand {
                     OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
                     tp(offlineTarget, sender.getLocation());
                     if (offlineTarget.isOnline()) {
+                        sender.sendMessage(TPHERE_TELEPORTED.rp(PLAYER_PH, offlineTarget.getName()));
+                    } else {
                         sender.sendMessage(TPHERE_OFFLINE_TARGET.rp(PLAYER_PH, offlineTarget.getName()));
                     }
                 }).override();
@@ -34,7 +36,12 @@ public class Tp implements IOneCommand {
                     OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
                     Location destination = getLoc(offlineTarget);
                     sender.teleport(destination);
-                    sender.sendMessage(TP_OFFLINE_TARGET.rp(PLAYER_PH, offlineTarget.getName()));
+                    if (offlineTarget.isOnline()) {
+                        sender.sendMessage(TP_TELEPORTED_TARGET.rp(PLAYER_PH, offlineTarget.getName()));
+                    } else {
+                        sender.sendMessage(TP_TELEPORTED_OFFLINE_TARGET.rp(PLAYER_PH, offlineTarget.getName()));
+                    }
+
                 }).register();
         //tp <player> <player>
         command(TP_LABEL)
@@ -47,8 +54,10 @@ public class Tp implements IOneCommand {
                     OfflinePlayer target = (OfflinePlayer) args[1];
                     Location destination = getLoc(target);
                     tp(fromOff, destination);
-                    if (!fromOff.isOnline() || !target.isOnline()) {
-                        sender.sendMessage(TP_OFFLINE_TARGETS.getString());
+                    if (fromOff.isOnline() && target.isOnline()) {
+                        sender.sendMessage(TP_TELEPORTED_TARGETS.rp(PLAYER_PH, fromOff.getName(), PLAYER2_PH, target.getName()));
+                    } else {
+                        sender.sendMessage(TP_TELEPORTED_OFFLINE_TARGETS.rp(PLAYER_PH, fromOff.getName(), PLAYER2_PH, target.getName()));
                     }
                 }).register();
     }

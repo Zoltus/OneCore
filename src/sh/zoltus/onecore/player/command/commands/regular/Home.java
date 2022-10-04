@@ -10,9 +10,6 @@ import sh.zoltus.onecore.player.command.arguments.HomeArg0;
 import sh.zoltus.onecore.player.command.arguments.HomeArg1;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.LIST_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -25,7 +22,7 @@ public class Home implements IOneCommand {
                 .withPermission(HOME_PERMISSION)
                 .withAliases(HOME_ALIASES)
                 .executesPlayer((p, args) -> {
-                    handle(p, User.of(p), null, Action.HOME);
+                    teleportHome(p, p, null);
                 }).override();
         //home <home>
         command(HOME_LABEL)
@@ -33,7 +30,7 @@ public class Home implements IOneCommand {
                 .withAliases(HOME_ALIASES)
                 .withArguments(new HomeArg0()) //String
                 .executesPlayer((p, args) -> {
-                    handle(p, User.of(p), (String) args[0], Action.HOME);
+                    teleportHome(p, p, (String) args[0]);
                 }).register();
         //home <player> <home>
         command(HOME_LABEL)
@@ -42,58 +39,27 @@ public class Home implements IOneCommand {
                 .withArguments(new HomeArg0(), new HomeArg1())
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
-                    handle(sender, User.of(offP), (String) args[1], Action.HOME);
+                    teleportHome(sender, offP, (String) args[1]);
                 }).register();
     }
 
-    enum Action {
-        DELETE, SET, HOME
-    }
-
-    static void handle(CommandSender sender, User target, String home, Action action) {
-
+    private void teleportHome(CommandSender sender, OfflinePlayer offP, String home) {
+        User target = User.of(offP);
         if (target == null) {
             sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            OfflinePlayer offP = target.getOffP();
-            boolean isSelf = sender.getName().equals(offP.getName());
-            //todo ? if has default home, it uses it, else takes first home from list
             home = home.toLowerCase();
-            String message = "";
-            switch (action) {
-                case DELETE -> {
-                    //todo check if user has home
-                    target.delHome(home);
-                    target.sendMessage(DELHOME_DELETED.rp(HOME_PH, home));
-                    message = DELHOME_OTHER.rp(PLAYER_PH, target.getName(), HOME_PH, home);
-                }
-                case SET -> {
-                    Player p;
-                    boolean canHaveMoreHomes = isSelf || target.hasFreeHomeSlots();
-                    if (target.hasHome(home) || canHaveMoreHomes) {
-                        target.setHome(home, target.getPlayer().getLocation());
-                        target.sendMessage(SETHOME_SET.rp(HOME_PH, home));
-                    } else {
-                        target.sendMessage(SETHOME_FULL_HOMES.getString());
-                        return;
-                    }
-                    message = SETHOME_OTHER.rp(PLAYER_PH, target.getName(), HOME_PH, home);
-                }
-                case HOME -> { //todo default to homes 0
-                    PreLocation loc = target.getHome(home);
-                    User user = User.of((Player) sender); //Cant be other than player
-                    //HOME_DEFAULT_NAME.getString().toLowerCase()
-                    if (loc != null) {
-                        user.teleportTimer(loc.toLocation());
-                    } else {
-                        sender.sendMessage(HOME_LIST.rp(LIST_PH, target.getHomes().keySet()));
-                        return;
-                    }
-                    message = HOME_TELEPORT_OTHERS.rp(PLAYER_PH, target.getName(), HOME_PH, home);
-                }
+            PreLocation loc = target.getHome(home);
+            User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
+            if (loc != null) {
+                user.teleportTimer(loc.toLocation());
+            } else {
+                sender.sendMessage(HOME_LIST.rp(LIST_PH, target.getHomes().keySet()));
+                return;
             }
+            boolean isSelf = sender.getName().equals(offP.getName());
             if (!isSelf) {
-                sender.sendMessage(message);
+                sender.sendMessage(HOME_TELEPORT_OTHERS.rp(PLAYER_PH, target.getName(), HOME_PH, home));
             }
         }
     }
