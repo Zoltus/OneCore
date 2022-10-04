@@ -10,6 +10,9 @@ import sh.zoltus.onecore.player.command.arguments.HomeArg0;
 import sh.zoltus.onecore.player.command.arguments.HomeArg1;
 import sh.zoltus.onecore.player.teleporting.PreLocation;
 
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.HOME_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.LIST_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -48,9 +51,12 @@ public class Home implements IOneCommand {
     }
 
     static void handle(CommandSender sender, User target, String home, Action action) {
+
         if (target == null) {
             sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
+            OfflinePlayer offP = target.getOffP();
+            boolean isSelf = sender.getName().equals(offP.getName());
             //todo ? if has default home, it uses it, else takes first home from list
             home = home.toLowerCase();
             String message = "";
@@ -62,7 +68,9 @@ public class Home implements IOneCommand {
                     message = DELHOME_OTHER.rp(PLAYER_PH, target.getName(), HOME_PH, home);
                 }
                 case SET -> {
-                    if (target.hasHome(home) || target.hasHomeSlots()) {
+                    Player p;
+                    boolean canHaveMoreHomes = isSelf || target.hasFreeHomeSlots();
+                    if (target.hasHome(home) || canHaveMoreHomes) {
                         target.setHome(home, target.getPlayer().getLocation());
                         target.sendMessage(SETHOME_SET.rp(HOME_PH, home));
                     } else {
@@ -84,7 +92,7 @@ public class Home implements IOneCommand {
                     message = HOME_TELEPORT_OTHERS.rp(PLAYER_PH, target.getName(), HOME_PH, home);
                 }
             }
-            if (!sender.equals(target.getPlayer())) {
+            if (!isSelf) {
                 sender.sendMessage(message);
             }
         }
