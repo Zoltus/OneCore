@@ -143,7 +143,7 @@ public class Database {
         newUser.setTpEnabled(tpenabled);
         Gson gson = new Gson();
         if (homes != null) {
-            newUser.setHomes(gson.fromJson(homes, new TypeToken<Map<String, PreLocation>>() {
+            newUser.setHomes(gson.fromJson(homes, new TypeToken<HashMap<String, PreLocation>>() {
             }.getType()));
         }
         return newUser;
