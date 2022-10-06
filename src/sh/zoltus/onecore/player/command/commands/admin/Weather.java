@@ -21,12 +21,12 @@ public class Weather implements IOneCommand {
     private Argument<?> weatherArgument() {
         return new CustomArgument<>(new StringArgument(NODES_WEATHER.getString()), (info) -> {
             String input = info.input();
-            if (!Arrays.asList(WEATHER_SUGGESTIONS.getSplitArr()).contains(input.toLowerCase())) {
+            if (!Arrays.asList(WEATHER_SUGGESTIONS.getAsArray()).contains(input.toLowerCase())) {
                 throw new CustomArgument.CustomArgumentException(WEATHER_INVALID_WEATHER.getString());
             } else {
                 return input;
             }
-        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), WEATHER_SUGGESTIONS.getSplitArr())));
+        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), WEATHER_SUGGESTIONS.getAsArray())));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Weather implements IOneCommand {
      * Registers single word weather commands
      */
     private void registerSingleWords() {
-        for (String suggestion : WEATHER_SINGLE_WORD_CMDS.getSplitArr()) {
+        for (String suggestion : WEATHER_SINGLE_WORD_CMDS.getAsArray()) {
             command(suggestion)
                     .withPermission(WEATHER_PERMISSION)
                     .executesPlayer((player, args) -> {
@@ -79,6 +79,6 @@ public class Weather implements IOneCommand {
     }
 
     private boolean containsIgnoreCase(Commands langArr, String contains) {
-        return Stream.of(langArr.getSplitArr()).anyMatch(s -> s.equalsIgnoreCase(contains));
+        return Stream.of(langArr.getAsArray()).anyMatch(s -> s.equalsIgnoreCase(contains));
     }
 }

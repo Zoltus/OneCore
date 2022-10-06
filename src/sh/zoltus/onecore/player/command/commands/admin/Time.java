@@ -20,7 +20,7 @@ public class Time implements IOneCommand {
     private Argument<?> timeArg() {
         return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> toTime(info.input()))
                 .replaceSuggestions(ArgumentSuggestions.strings(info ->
-                        toSuggestion(info.currentArg(), TIME_SUGGESTIONS.getSplitArr())
+                        toSuggestion(info.currentArg(), TIME_SUGGESTIONS.getAsArray())
                 ));
     }
 
@@ -48,7 +48,7 @@ public class Time implements IOneCommand {
      * Registers single word time commands
      */
     private void registerSingleWordTime() {
-        for (String suggestion : TIME_SINGLE_WORD_CMDS.getSplitArr()) {
+        for (String suggestion : TIME_SINGLE_WORD_CMDS.getAsArray()) {
             command(suggestion)
                     .withPermission(TIME_PERMISSION)
                     .executesPlayer((player, args) -> {
@@ -81,7 +81,7 @@ public class Time implements IOneCommand {
     }
 
     private boolean containsIgnoreCase(Commands langArr, String contains) {
-        return Stream.of(langArr.getSplitArr()).anyMatch(s -> s.equalsIgnoreCase(contains));
+        return Stream.of(langArr.getAsArray()).anyMatch(s -> s.equalsIgnoreCase(contains));
     }
 
     //todo clean up

@@ -34,7 +34,7 @@ public class Gamemode implements IOneCommand {
                 return gm;
             }
         }).replaceSuggestions(ArgumentSuggestions
-                .strings((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getSplitArr())));
+                .strings((info) -> toSuggestion(info.currentArg(), GAMEMODE_SUGGESTIONS.getAsArray())));
     }
 
     @Override

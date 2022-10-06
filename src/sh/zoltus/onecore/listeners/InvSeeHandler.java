@@ -2,6 +2,7 @@ package sh.zoltus.onecore.listeners;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
@@ -26,8 +27,9 @@ import static sh.zoltus.onecore.data.configuration.yamls.Commands.INVSEE_EDIT_PE
 
 public class InvSeeHandler implements Listener {
 
-    private static final BiMap<UUID, Inventory> inventorys = HashBiMap.create();
-    private static final BiMap<UUID, Inventory> eInventorys = HashBiMap.create();
+    //In bimap you can easily get key from value
+    private static final BiMap<UUID, Inventory> inventorys = Maps.synchronizedBiMap(HashBiMap.create());
+    private static final BiMap<UUID, Inventory> eInventorys = Maps.synchronizedBiMap(HashBiMap.create());
 
     public static void handle(Player sender, OfflinePlayer offTarget, boolean isEnderChest) {
         Inventory inv;
@@ -87,8 +89,11 @@ public class InvSeeHandler implements Listener {
             //opens players inv to viewers and ignores inv owner
             //Opens online inventory for all the users
             for (HumanEntity humanEntity : offlineInv.getViewers()) {
-                if (!humanEntity.equals(target))
-                    humanEntity.openInventory(onlineInv);
+                if (!humanEntity.equals(target)){
+                    humanEntity.closeInventory();
+                    Bukkit.broadcastMessage("opening");
+                    humanEntity.openInventory(target.getInventory());
+                }
             }
         }
     }
