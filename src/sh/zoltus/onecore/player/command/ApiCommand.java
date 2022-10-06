@@ -40,7 +40,7 @@ public class ApiCommand extends CommandAPICommand {
 
     public ApiCommand withAliases(IConfig enumz) {
         if (!enumz.getString().isEmpty()) {
-            String[] aliases = enumz.getSplitArr();
+            String[] aliases = enumz.getAsArray();
             super.withAliases(aliases);
         }
         return this;

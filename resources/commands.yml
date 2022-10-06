@@ -6,295 +6,411 @@
 
 Data:
   back:
-    aliases: ''
     enabled: true
     label: back
     permission: back
+    # Remove '[]' and # from the lines below to aliases
+    aliases: []
+    #  - examplealias1
+    #  - examplealias2
   broadcast:
-    aliases: bc
     enabled: true
     label: broadcast
     permission: broadcast
+    aliases:
+      - bc
   clearchat:
-    aliases: cc
     enabled: true
     label: clearchat
     permission: clearchat
+    aliases:
+      - cc
   delhome:
-    aliases: poistakoti
     enabled: true
     label: delhome
     permission: delhome
+    aliases: [ ]
+    #  - examplealias1
   economy:
-    aliases: eco
     enabled: true
     label: economy
     permission: economy
+    aliases:
+      - eco
     balance:
-      aliases: bal,raha
       label: balance
       permission: balance
+      aliases:
+        - bal
     baltop:
-      aliases: ''
       label: baltop
       permission: baltop
+      aliases: [ ]
+      #  - examplealias1
     give:
-      aliases: ''
       label: give
       permission: give
+      aliases: [ ]
+      #  - examplealias1
     pay:
-      aliases: maksa
       label: pay
       permission: pay
+      aliases: [ ]
+      #  - examplealias1
     set:
-      aliases: ''
       label: set
       permission: set
+      aliases: [ ]
+      #  - examplealias1
     take:
-      aliases: ''
       label: take
       permission: set
+      aliases: [ ]
+      #  - examplealias1
     transfer:
-      aliases: ''
       label: transfer
       permission: transfer
+      aliases: [ ]
+      #  - examplealias1
   enderchest:
-    aliases: ''
     edit-permission: enderchest.edit
     enabled: true
     label: enderchest
     other-permission: enderchest
     permission: enderchest
+    aliases:
+      - ec
   feed:
-    aliases: ''
     enabled: true
     label: feed
     permission: feed
     permission-other: feed.other
+    aliases: [ ]
+    #  - examplealias1
   fly:
-    aliases: ''
     enabled: true
     label: fly
     permission: Fly
     permission-other: Fly.other
+    aliases: [ ]
+    #  - examplealias1
   gamemode:
-    aliases: gm,pelimuoto
-    aliases-adventure: 2,a,adv,adventure,seik,seikkailu,se,sei
-    aliases-creative: 1,c,creative,crea,luo,luova,lu,l
-    aliases-spectator: 3,sp,spec,spe,spectator,k,kat,katselu
-    aliases-survival: 0,s,survival,surv,selviytyminen,selviytyjä
+    aliases-adventure:
+     - 2
+     - a
+     - adv
+     - adventure
+     - seik
+     - seikkailu
+     - se
+     - sei
+    aliases-creative:
+     - 1
+     - c
+     - creative
+     - crea
+     - luo
+     - luova
+     - lu
+     - l
+    aliases-spectator:
+     - 3
+     - sp
+     - spec
+     - spe
+     - spectator
+     - k
+     - kat
+     - katselu
+    aliases-survival:
+     - 0
+     - s
+     - survival
+     - surv
+     - selviytyminen
+     - selviytyjä
     enabled: true
     label: gamemode
     other-permission: gamemode.other
     # Used as gamemode.creative, etc.
     mode-permission: gamemode.
     permission: gamemode
-    suggestions: survival,creative,spectator
+    aliases:
+     - gm
+    suggestions:
+     - survival
+     - creative
+     - spectator
   god:
-    aliases: ''
     enabled: true
     label: god
     permission: god
     permission-other: god.other
+    aliases: [ ]
+    #  - examplealias1
   heal:
-    aliases: ''
     enabled: true
     label: heal
     permission: heal
     permission-other: heal.other
+    aliases: [ ]
+    #  - examplealias1
   home:
-    aliases: koti
-    default-name: Koti
+    #Default homename if player types only /sethome
+    default-name: koti
     enabled: true
     label: home
     permission: home
     permission-amount: home
     permission-other: home.other
+    aliases: [ ]
+    #  - examplealias1
   invsee:
-    aliases: ''
     edit-permission: invsee.edit
     enabled: true
     label: invsee
     permission: invsee.view
+    aliases: [ ]
+    #  - examplealias1
   killall:
-    aliases: butcher
     enabled: true
     label: killall
     permission: killall
+    aliases: [ ]
+    #  - examplealias1
   msg:
-    aliases: ''
     enabled: true
     label: msg
     permission: msg
+    aliases: [ ]
+    #  - examplealias1
   ping:
-    aliases: ''
     enabled: true
     label: pinga
     other-permission: Ping.other
     permission: ping
+    aliases: [ ]
+    #  - examplealias1
   playtime:
-    aliases: ''
     enabled: true
     label: playtime
     other-permission: playtime.other
     permission: playtime
+    aliases: [ ]
+    #  - examplealias1
   reload:
-    aliases: ''
     enabled: true
     label: reload
     permission: onecore.reload
+    aliases: [ ]
+    #  - examplealias1
   repair:
-    aliases: ''
     enabled: true
     label: repair
     permission: repair
+    aliases: [ ]
+    #  - examplealias1
   rtp:
-    aliases: ''
     enabled: true
     label: Rtp
     permission: rtp
+    aliases: [ ]
+    #  - examplealias1
   seen:
-    aliases: ''
     enabled: true
     label: seen
     permission: seen
+    aliases: [ ]
+    #  - examplealias1
   sethome:
-    aliases: asetakoti
     enabled: true
     label: sethome
     permission: sethome
     other-permission: sethome.other
+    aliases: [ ]
+    #  - examplealias1
   setmaxplayers:
-    aliases: ''
     enabled: true
     label: setmaxplayers
     permission: setmaxplayers
+    aliases: [ ]
+    #  - examplealias1
   setspawn:
-    aliases: setspawn
     enabled: true
     label: setspawn
     permission: setspawn
+    aliases: [ ]
+    #  - examplealias1
   setwarp:
-    aliases: ''
     enabled: true
     label: setwarp
     permission: setwarp
+    aliases: [ ]
+    #  - examplealias1
   spawn:
-    aliases: spawn,spawni
     enabled: true
     label: spawn
     permission: spawn
     permission-other: spawn.other
+    aliases: [ ]
+    #  - examplealias1
   signedit:
-    aliases: 'se'
     enabled: true
     label: signedit
     # Player can edit the sign if he has this permission and can break the sign.
     permission: signedit
     # If player cant break block he can still edit sign with this permission
     bypass-permission: signedit.bypass
+    aliases:
+      - se
     set:
-        aliases: ''
         label: set
         permission: signedit.set
+        aliases: [ ]
+        #  - examplealias1
     copy:
-        aliases: ''
         label: copy
         permission: signedit.copy
+        aliases: [ ]
+        #  - examplealias1
     clear:
-        aliases: ''
         label: clear
         permission: signedit.clear
+        aliases: [ ]
+        #  - examplealias1
     paste:
-        aliases: ''
         label: paste
         permission: signedit.paste
+        aliases: [ ]
+        #  - examplealias1
   speed:
-    aliases: ''
     enabled: true
     label: speed
     permission: speed
     permission-other: speed.other
-  fly-aliases: lento
-  walk-aliases: kävely
+    fly-aliases: lento
+    walk-aliases: kävely
+    aliases: [ ]
+    #  - examplealias1
   system:
-    aliases: ''
     enabled: true
     label: system
     permission: system
-  systeminfo:
-    enabled: true
+    aliases: [ ]
+    #  - examplealias1
   time:
     afternoon-aliases: afternoon
-    aliases: ''
     day-aliases: day
     enabled: true
     label: time
     morning-aliases: morning
     night-aliases: night
     permission: time
-    single-word-cmds: day,night,afternoon,morning
-    suggestions: day,night,afternoon,morning
+    single-word-cmds:
+     - day
+     - night
+     - afternoon
+     - morning
+    suggestions:
+     - day
+     - night
+     - afternoon
+     - morning
+    aliases: [ ]
+    #  - examplealias1
   top:
-    aliases: ''
     enabled: true
     label: top
     other-permission: top.other
     permission: top
+    aliases: [ ]
+    #  - examplealias1
   tp:
-    aliases: tpo,tpother
     enabled: true
     label: tp
     permission: tp
     permission-other: tp.other
+    aliases:
+      - tpo
+      - tpother
   tpa:
-    aliases: ''
     enabled: true
     label: tpa
     permission: tpa
+    aliases: [ ]
+    #  - examplealias1
   tpaccept:
-    aliases: tpyes
     enabled: true
     label: tpaccept
     permission: tpaccept
+    aliases:
+      - ypyes
+      - tpy
   tpahere:
-    aliases: tpah
     enabled: true
     label: tpahere
     permission: tpahere
+    aliases:
+      - tpah
   tpdeny:
-    aliases: tpno
     enabled: true
     label: tpdeny
     permission: tpdeny
+    aliases:
+      - tpno
   tphere:
-    aliases: tpohere
     enabled: true
     label: tphere
     permission: tphere
+    aliases:
+      - tpohere
   tptoggle:
-    aliases: ''
     enabled: true
     label: tptoggle
     permission: tptoggle
+    aliases: [ ]
+    #  - examplealias1
   warp:
-    aliases: ''
     enabled: true
     label: warp
     permission: warp
     permission-other: warp.other
+    aliases: [ ]
+    #  - examplealias1
   weather:
-    aliases: sää,saa,sun,storm,clear,rain
-    clear-aliases: c,clear,s,sun
+    clear-aliases:
+     - c
+     - clear
+     - s
+     - sun
     enabled: true
     label: weather
     permission: weather
-    rain-aliases: rain,r,sade
-    single-word-cmds: sun,storm,rain
-    storm-aliases: storm,lightning,salama
-    suggestions: sun,storm,rain,clear
+    rain-aliases:
+     - rain
+     - r
+     - sade
+    single-word-cmds:
+     - sun
+     - storm
+     - rain
+    storm-aliases:
+     - storm
+     - lightning
+     - salama
+    suggestions:
+     - sun
+     - storm
+     - rain
+     - clear
+    aliases:
+      - sun
+      - storm
+      - rain
+      - clear
   worldmanager:
-    aliases: wm
     enabled: true
     label: worldmanager
     permission: world
+    aliases:
+      - wm

@@ -10,6 +10,16 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - on inventory offline if playerlogs in while inv is open
+          - java.util.ConcurrentModificationException: null
+        at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013) ~[?:?]
+        at java.util.ArrayList$Itr.next(ArrayList.java:967) ~[?:?]
+        at sh.zoltus.onecore.listeners.InvSeeHandler.handleJoin(InvSeeHandler.java:89) ~[OneCore.jar:?]
+        at sh.zoltus.onecore.listeners.InvSeeHandler.onJoin(InvSeeHandler.java:64) ~[OneCore.jar:?]
+        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor31.execute(Unknown Source) ~[?:?]
+        at org.bukkit.plugin.EventExecutor.lambda$create$1(EventExecutor.java:75) ~[purpur-api-1.19.2-R0.1-SNAPSHOT.j
+          - if invsee open and player joins its error
+          - if offphasplayeebefore and doesnt have User, it creates it
           - make everything use User argument?, or cleanup argument stuff
           - OC art needs OneCore text
           - test homecommands
@@ -18,7 +28,6 @@
           - economy class
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?
-          - Does economy save?
           - test backup with motimaadata copy
           - TEST EVERYTHING! (MOTIMMAA test)
           - plugin, database to ionecommand
@@ -30,10 +39,9 @@
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - messsages multline support
           - if config is added it adds it to yml
           - rename all
-          - cache users just like plotsquared async
-          - toggleable cache economy?
           - all to commandtrees, test peformance
           - ormlite
           - cleanup config ymls
