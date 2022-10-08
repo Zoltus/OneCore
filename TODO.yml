@@ -10,14 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - reading nbt file to async? or is it admin only?
           - on inventory offline if playerlogs in while inv is open
-          - java.util.ConcurrentModificationException: null
-        at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013) ~[?:?]
-        at java.util.ArrayList$Itr.next(ArrayList.java:967) ~[?:?]
-        at sh.zoltus.onecore.listeners.InvSeeHandler.handleJoin(InvSeeHandler.java:89) ~[OneCore.jar:?]
-        at sh.zoltus.onecore.listeners.InvSeeHandler.onJoin(InvSeeHandler.java:64) ~[OneCore.jar:?]
-        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor31.execute(Unknown Source) ~[?:?]
-        at org.bukkit.plugin.EventExecutor.lambda$create$1(EventExecutor.java:75) ~[purpur-api-1.19.2-R0.1-SNAPSHOT.j
           - if invsee open and player joins its error
           - if offphasplayeebefore and doesnt have User, it creates it
           - make everything use User argument?, or cleanup argument stuff
