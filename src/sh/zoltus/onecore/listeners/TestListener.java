@@ -43,7 +43,7 @@ public class TestListener implements Listener {
                 case "/loc" -> {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                     NBTPlayer nbtP = new NBTPlayer(target);
-                    p.sendMessage("§aInv: " + nbtP.getInventoryItems());
+                    p.sendMessage("§aInv: " + nbtP.getInventory());
                     p.sendMessage("§bh: " + nbtP.getHealth());
                     nbtP.setHealth(5);
                     p.sendMessage("§ch2: " + nbtP.getHealth());

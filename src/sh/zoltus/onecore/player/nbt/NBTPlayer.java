@@ -116,7 +116,7 @@ public class NBTPlayer {
         nbt.setFloat("foodExhaustionLevel", f);
     }
 
-    public Map<Integer, ItemStack> getInventoryItems() {
+    public Map<Integer, ItemStack> getInventory() {
         return getItems("Inventory");
     }
 
