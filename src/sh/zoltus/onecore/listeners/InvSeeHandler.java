@@ -2,7 +2,6 @@ package sh.zoltus.onecore.listeners;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
@@ -16,10 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.EnderChest_EDIT_PERMISSION;
@@ -27,9 +23,9 @@ import static sh.zoltus.onecore.data.configuration.yamls.Commands.INVSEE_EDIT_PE
 
 public class InvSeeHandler implements Listener {
 
-    //In bimap you can easily get key from value
-    private static final BiMap<UUID, Inventory> inventorys = Maps.synchronizedBiMap(HashBiMap.create());
-    private static final BiMap<UUID, Inventory> eInventorys = Maps.synchronizedBiMap(HashBiMap.create());
+    //in bimap you can easily get key from value
+    private static final BiMap<UUID, Inventory> inventorys = HashBiMap.create();
+    private static final BiMap<UUID, Inventory> eInventorys = HashBiMap.create();
 
     public static void handle(Player sender, OfflinePlayer offTarget, boolean isEnderChest) {
         Inventory inv;
@@ -47,9 +43,18 @@ public class InvSeeHandler implements Listener {
             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
             inv = Bukkit.createInventory(null, 36);
             //Chooses if it uses enderchesitems or normal inv items
-            Map<Integer, ItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventoryItems();
-            items.forEach(inv::setItem);
+            System.out.println("isEnderChest: " + isEnderChest);
 
+            Map<Integer, ItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventory();
+            System.out.println("items: " + items.size());
+            System.out.println("items2: " + inv.getSize());
+            items.forEach((key, item) -> {
+                int slot = key;
+                //Check it to make sure inv is same size, and will only set storage contents
+                if (slot < inv.getSize()) {
+                    inv.setItem(slot, item);
+                }
+            });
         }
         //Puts inventory to the list
         invMap.put(uuid, inv);
@@ -88,12 +93,11 @@ public class InvSeeHandler implements Listener {
             onlineInv.setStorageContents(offlineInv.getStorageContents());
             //opens players inv to viewers and ignores inv owner
             //Opens online inventory for all the users
-            for (HumanEntity humanEntity : offlineInv.getViewers()) {
-                if (!humanEntity.equals(target)){
-                    humanEntity.closeInventory();
-                    Bukkit.broadcastMessage("opening");
-                    humanEntity.openInventory(target.getInventory());
-                }
+            List<HumanEntity> viewers = offlineInv.getViewers();
+            //Will loop backwards since opening other inv will remove viewer from list
+            //And would create concurrent modification exception
+            for (int i = viewers.size() - 1; i >= 0; --i) {
+                viewers.get(i).openInventory(target.getInventory());
             }
         }
     }
@@ -125,7 +129,7 @@ public class InvSeeHandler implements Listener {
             //Prevents player from editing his own enderchest
             //Todo cleanup this shit
             if (isEnderChest) {
-                if (invMap.get(p.getUniqueId()) != p.getEnderChest()) {
+                if (!invMap.get(p.getUniqueId()).equals(p.getEnderChest())) {
                     e.setCancelled(true);
                 }
             } else {
