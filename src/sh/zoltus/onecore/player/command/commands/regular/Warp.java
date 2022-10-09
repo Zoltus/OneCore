@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -9,8 +10,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.data.configuration.OneYml;
 import sh.zoltus.onecore.data.configuration.Yamls;
-import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.Command;
+import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
 
@@ -21,7 +23,8 @@ public class Warp implements IOneCommand {
 
     private final OneYml warps = Yamls.WARPS.getYml();
 
-    record WarpObj(String name, Location location) {}
+    record WarpObj(String name, Location location) {
+    }
 
     private Argument<?> warpArg() {
         return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), (info) -> {
@@ -32,34 +35,23 @@ public class Warp implements IOneCommand {
             } else {
                 return new WarpObj(input, warp);
             }
-        }).replaceSuggestions(ArgumentSuggestions.strings(info -> toSuggestion(info.currentArg(), warps.getKeys(false).toArray(new String[0]))));
+        }).replaceSuggestions(ArgumentSuggestions
+                .strings(info -> toSuggestion(info.currentArg(), warps.getKeys(false)
+                        .toArray(new String[0]))));
     }
 
     //todo cleanup
     @Override
     public void init() {
-        //warp, warps
-        command(WARP_LABEL)
-                .withPermission(WARP_PERMISSION)
-                .withAliases(WARP_ALIASES)
-                .executesPlayer((p, args) -> {
-                    p.sendMessage(WARP_LIST.rp(LIST_PH, warps.getKeys(false).toString()));
-                }).override();
         //warp <warp>
-        command(WARP_LABEL)
-                .withPermission(WARP_PERMISSION)
-                .withAliases(WARP_ALIASES)
-                .withArguments(warpArg())
+        ArgumentTree arg0 = warpArg()
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args[0];
                     User user = User.of(p);
                     user.teleportTimer(warp.location());
-                }).register();
+                });
         //warp <warp> <player>
-        command(WARP_LABEL)
-                .withPermission(WARP_PERMISSION_OTHER)
-                .withAliases(WARP_ALIASES)
-                .withArguments(warpArg(), new OfflinePlayerArgument())
+        ArgumentTree arg1 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     WarpObj warp = (WarpObj) args[0];
                     String warpName = warp.name();
@@ -76,7 +68,15 @@ public class Warp implements IOneCommand {
                     if (offTarget.getPlayer() != sender) {
                         sender.sendMessage(WARP_TARGET_SENT.rp(PLAYER_PH, offTarget.getName(), WARP_PH, warpName));
                     }
-                }).register();
+                });
+        //warp, warps
+        new Command(WARP_LABEL)
+                .withPermission(WARP_PERMISSION)
+                .withAliases(WARP_ALIASES)
+                .executesPlayer((p, args) -> {
+                    p.sendMessage(WARP_LIST.rp(LIST_PH, warps.getKeys(false).toString()));
+                }).then(arg0.then(arg1))
+                .override();
     }
 }
 

@@ -1,10 +1,13 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.data.configuration.OneYml;
 import sh.zoltus.onecore.data.configuration.Yamls;
+import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -29,23 +32,8 @@ public class Spawn implements IOneCommand {
 
     @Override
     public void init() {
-        //spawn
-        command(SPAWN_LABEL)
-                .withPermission(SPAWN_PERMISSION)
-                .withAliases(SPAWN_ALIASES)
-                .executesUser((user, args) -> {
-                    Location spawn = getSpawn();
-                    if (spawn == null) {
-                        user.sendMessage(SPAWN_IS_NOT_SET.getString());
-                    } else {
-                        user.teleportTimer(spawn);
-                    }
-                }).override();
         //spawn <player>
-        command(SPAWN_LABEL)
-                .withPermission(SPAWN_PERMISSION_OTHER)
-                .withAliases(SPAWN_ALIASES)
-                .withArguments(new OfflinePlayerArgument())
+        ArgumentTree arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     Location spawn = getSpawn();
                     if (spawn == null) {
@@ -64,6 +52,20 @@ public class Spawn implements IOneCommand {
                             sender.sendMessage(SPAWN_TARGET_SENT.rp(PLAYER_PH, offTarget.getName()));
                         }
                     }
-                }).register();
+                });
+        //spawn
+        new Command(SPAWN_LABEL)
+                .withPermission(SPAWN_PERMISSION)
+                .withAliases(SPAWN_ALIASES)
+                .executesPlayer((player, args) -> {
+                    User user = User.of(player);
+                    Location spawn = getSpawn();
+                    if (spawn == null) {
+                        user.sendMessage(SPAWN_IS_NOT_SET.getString());
+                    } else {
+                        user.teleportTimer(spawn);
+                    }
+                }).then(arg0)
+                .override();
     }
 }

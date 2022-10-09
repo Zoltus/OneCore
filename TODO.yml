@@ -10,6 +10,8 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - remove apicommand, finish signedit and economy cmd classes and reload
+          - commandtrees
           - rtp not finished
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?

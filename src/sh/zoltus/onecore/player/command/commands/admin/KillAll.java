@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.EntityTypeArgument;
@@ -7,6 +8,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.util.List;
@@ -19,25 +21,22 @@ public class KillAll implements IOneCommand {
     @Override
     public void init() {
         //killall <type>
-        command(KILLALL_LABEL)
-                .withPermission(KILLALL_PERMISSION)
-                .withAliases(KILLALL_ALIASES)
-                .withArguments(entityArg())
+        ArgumentTree arg0 = entityArg()
                 .executesPlayer((p, args) -> {
                     EntityType type = (EntityType) args[0];
                     removeEntities(p, type, "*", p.getWorld().getEntities());
-                }).override();
-
+                });
         //killall <type> <range>
-        command(KILLALL_LABEL)
-                .withPermission(KILLALL_PERMISSION)
-                .withAliases(KILLALL_ALIASES)
-                .withArguments(entityArg(), rangeArgument())
+        ArgumentTree arg1 = rangeArgument()
                 .executesPlayer((p, args) -> {
                     double range = (double) args[1];
                     EntityType type = (EntityType) args[0];
                     removeEntities(p, type, String.valueOf(range), p.getNearbyEntities(range, range, range));
-                }).register();
+                });
+        new Command(KILLALL_LABEL)
+                .withPermission(KILLALL_PERMISSION)
+                .withAliases(KILLALL_ALIASES)
+                .then(arg0.then(arg1)).override();
     }
 
     private EntityTypeArgument entityArg() {

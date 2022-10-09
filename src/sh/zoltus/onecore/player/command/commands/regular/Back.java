@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
@@ -11,13 +12,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
 import java.util.List;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
-import static sh.zoltus.onecore.data.configuration.yamls.Commands.SIZE_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
@@ -40,44 +40,25 @@ public class Back implements IOneCommand, Listener {
 
     @Override
     public void init() {
-        // back
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .executesPlayer((sender, args) -> {
-                    executes(sender, 1, sender);
-                }).override();
         // back <amount>
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .withArguments(backArg())
+        ArgumentTree arg0 = backArg()
                 .executesPlayer((sender, args) -> {
                     executes(sender, (int) args[0], sender);
-                }).register();
+                });
         // back <amount> <player>
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .withArguments(backArg(), new PlayerArgument())
-                .executes((sender, args) -> executes(sender, (int) args[0], (Player) args[1]))
-                .register();
-               /* // back
-        new CommandTree(BACK_LABEL.getString())
+        ArgumentTree arg1 = new PlayerArgument()
+                .executes((sender, args) -> {
+                    executes(sender, (int) args[0], (Player) args[1]);
+                });
+        // back
+        new Command(BACK_LABEL.getString())
                 .withPermission(BACK_PERMISSION.getString())
-                .withAliases(BACK_ALIASES.getString())
+                .withAliases(BACK_ALIASES.getAsArray())
                 .executesPlayer((sender, args) -> {
                     executes(sender, 1, sender);
                 })
-                // back <amount>
-                .then(backArg()
-                        .executesPlayer((sender, args) -> {
-                            executes(sender, (int) args[0], sender);
-                        })
-                        // back <amount> <player>
-                        .then(new PlayerArgument()
-                                .executes((CommandExecutor) (sender, args) -> executes(sender, (int) args[0], (Player) args[1])))
-                ).override();*/
+                .then(arg0.then(arg1))
+                .override();
     }
 
     private Argument<?> backArg() {
@@ -105,4 +86,30 @@ public class Back implements IOneCommand, Listener {
             targetUser.teleportTimer(targetUser.getLastLocation(backAmount));
         }
     }
+
+    /*
+            // back
+        command(BACK_LABEL)
+                .withPermission(BACK_PERMISSION)
+                .withAliases(BACK_ALIASES)
+                .executesPlayer((sender, args) -> {
+                    executes(sender, 1, sender);
+                }).override();
+        // back <amount>
+        command(BACK_LABEL)
+                .withPermission(BACK_PERMISSION)
+                .withAliases(BACK_ALIASES)
+                .withArguments(backArg())
+                .executesPlayer((sender, args) -> {
+                    executes(sender, (int) args[0], sender);
+                }).register();
+        // back <amount> <player>
+        command(BACK_LABEL)
+                .withPermission(BACK_PERMISSION)
+                .withAliases(BACK_ALIASES)
+                .withArguments(backArg(), new PlayerArgument())
+                .executes((sender, args) -> executes(sender, (int) args[0], (Player) args[1]))
+                .register();
+
+     */
 }

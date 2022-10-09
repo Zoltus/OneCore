@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -9,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.data.configuration.yamls.Commands;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -40,24 +42,22 @@ public class Gamemode implements IOneCommand {
     @Override
     public void init() {
         //gamemode creative
-        command(GAMEMODE_LABEL)
-                .withPermission(GAMEMODE_PERMISSION)
-                .withAliases(GAMEMODE_ALIASES)
-                .withArguments(gamemodeArgument())
+        ArgumentTree arg0 = gamemodeArgument()
                 .executesPlayer((player, args) -> {
                     GameMode gm = (GameMode) args[0];
                     String gmName = getGmName(gm);
                     player.setGameMode(gm);
                     player.sendMessage(GAMEMODE_CHANGED.rp(MODE_PH, gmName));
-                }).override();
+                });
         //gamemode creative <player>
-        command(GAMEMODE_LABEL)
-                .withPermission(GAMEMODE_OTHER_PERMISSION)
+        ArgumentTree arg1 = new OfflinePlayerArgument()
+                .executes((sender, args) -> {
+                    handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0]);
+                });
+        new Command(GAMEMODE_LABEL)
+                .withPermission(GAMEMODE_PERMISSION)
                 .withAliases(GAMEMODE_ALIASES)
-                .withArguments(gamemodeArgument(), new OfflinePlayerArgument())
-                .executes((sender, args) -> handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0]))
-                .register();
-
+                .then(arg0.then(arg1)).override();
     }
 
     /**

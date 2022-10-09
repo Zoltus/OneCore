@@ -10,7 +10,7 @@ Data:
     label: back
     permission: back
     # Remove '[]' and # from the lines below to aliases
-    aliases: []
+    aliases: [ ]
     #  - examplealias1
     #  - examplealias2
   broadcast:
@@ -25,12 +25,6 @@ Data:
     permission: clearchat
     aliases:
       - cc
-  delhome:
-    enabled: true
-    label: delhome
-    permission: delhome
-    aliases: [ ]
-    #  - examplealias1
   economy:
     enabled: true
     label: economy
@@ -96,39 +90,39 @@ Data:
     #  - examplealias1
   gamemode:
     aliases-adventure:
-     - 2
-     - a
-     - adv
-     - adventure
-     - seik
-     - seikkailu
-     - se
-     - sei
+      - 2
+      - a
+      - adv
+      - adventure
+      - seik
+      - seikkailu
+      - se
+      - sei
     aliases-creative:
-     - 1
-     - c
-     - creative
-     - crea
-     - luo
-     - luova
-     - lu
-     - l
+      - 1
+      - c
+      - creative
+      - crea
+      - luo
+      - luova
+      - lu
+      - l
     aliases-spectator:
-     - 3
-     - sp
-     - spec
-     - spe
-     - spectator
-     - k
-     - kat
-     - katselu
+      - 3
+      - sp
+      - spec
+      - spe
+      - spectator
+      - k
+      - kat
+      - katselu
     aliases-survival:
-     - 0
-     - s
-     - survival
-     - surv
-     - selviytyminen
-     - selviytyjä
+      - 0
+      - s
+      - survival
+      - surv
+      - selviytyminen
+      - selviytyjä
     enabled: true
     label: gamemode
     other-permission: gamemode.other
@@ -136,11 +130,11 @@ Data:
     mode-permission: gamemode.
     permission: gamemode
     aliases:
-     - gm
+      - gm
     suggestions:
-     - survival
-     - creative
-     - spectator
+      - survival
+      - creative
+      - spectator
   god:
     enabled: true
     label: god
@@ -155,16 +149,30 @@ Data:
     permission-other: heal.other
     aliases: [ ]
     #  - examplealias1
-  home:
-    #Default homename if player types only /sethome
-    default-name: koti
-    enabled: true
-    label: home
-    permission: home
-    permission-amount: home
-    permission-other: home.other
-    aliases: [ ]
-    #  - examplealias1
+  homes:
+    home:
+      #Default homename if player types only /sethome
+      default-name: koti
+      enabled: true
+      label: home
+      permission: home
+      permission-amount: home
+      permission-other: home.other
+      aliases: [ ]
+      #  - examplealias1
+    delete:
+      enabled: true
+      label: delhome
+      permission: delhome
+      aliases: [ ]
+      #  - examplealias1
+    set:
+      enabled: true
+      label: sethome
+      permission: sethome
+      other-permission: sethome.other
+      aliases: [ ]
+      #  - examplealias1
   invsee:
     edit-permission: invsee.edit
     enabled: true
@@ -222,13 +230,6 @@ Data:
     permission: seen
     aliases: [ ]
     #  - examplealias1
-  sethome:
-    enabled: true
-    label: sethome
-    permission: sethome
-    other-permission: sethome.other
-    aliases: [ ]
-    #  - examplealias1
   setmaxplayers:
     enabled: true
     label: setmaxplayers
@@ -264,25 +265,25 @@ Data:
     aliases:
       - se
     set:
-        label: set
-        permission: signedit.set
-        aliases: [ ]
-        #  - examplealias1
+      label: set
+      permission: signedit.set
+      aliases: [ ]
+      #  - examplealias1
     copy:
-        label: copy
-        permission: signedit.copy
-        aliases: [ ]
-        #  - examplealias1
+      label: copy
+      permission: signedit.copy
+      aliases: [ ]
+      #  - examplealias1
     clear:
-        label: clear
-        permission: signedit.clear
-        aliases: [ ]
-        #  - examplealias1
+      label: clear
+      permission: signedit.clear
+      aliases: [ ]
+      #  - examplealias1
     paste:
-        label: paste
-        permission: signedit.paste
-        aliases: [ ]
-        #  - examplealias1
+      label: paste
+      permission: signedit.paste
+      aliases: [ ]
+      #  - examplealias1
   speed:
     enabled: true
     label: speed
@@ -307,15 +308,15 @@ Data:
     night-aliases: night
     permission: time
     single-word-cmds:
-     - day
-     - night
-     - afternoon
-     - morning
+      - day
+      - night
+      - afternoon
+      - morning
     suggestions:
-     - day
-     - night
-     - afternoon
-     - morning
+      - day
+      - night
+      - afternoon
+      - morning
     aliases: [ ]
     #  - examplealias1
   top:
@@ -379,30 +380,30 @@ Data:
     #  - examplealias1
   weather:
     clear-aliases:
-     - c
-     - clear
-     - s
-     - sun
+      - c
+      - clear
+      - s
+      - sun
     enabled: true
     label: weather
     permission: weather
     rain-aliases:
-     - rain
-     - r
-     - sade
+      - rain
+      - r
+      - sade
     single-word-cmds:
-     - sun
-     - storm
-     - rain
+      - sun
+      - storm
+      - rain
     storm-aliases:
-     - storm
-     - lightning
-     - salama
+      - storm
+      - lightning
+      - salama
     suggestions:
-     - sun
-     - storm
-     - rain
-     - clear
+      - sun
+      - storm
+      - rain
+      - clear
     aliases:
       - sun
       - storm

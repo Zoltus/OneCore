@@ -1,10 +1,12 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.HomeArg0;
 import sh.zoltus.onecore.player.command.arguments.HomeArg1;
@@ -17,30 +19,25 @@ public class Home implements IOneCommand {
 
     @Override
     public void init() {
+        //home <home>
+        ArgumentTree homeArg0 = new HomeArg0() //String
+                .executesPlayer((p, args) -> {
+                    teleportHome(p, p, (String) args[0]);
+                });
+        //home <player> <home>
+        ArgumentTree homeArg1 = new HomeArg1() //
+                .executes((sender, args) -> {
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
+                    teleportHome(sender, offP, (String) args[1]);
+                });
         //home
-        command(HOME_LABEL)
+        new Command(HOME_LABEL)
                 .withPermission(HOME_PERMISSION)
                 .withAliases(HOME_ALIASES)
                 .executesPlayer((p, args) -> {
                     teleportHome(p, p, null);
-                }).override();
-        //home <home>
-        command(HOME_LABEL)
-                .withPermission(HOME_PERMISSION)
-                .withAliases(HOME_ALIASES)
-                .withArguments(new HomeArg0()) //String
-                .executesPlayer((p, args) -> {
-                    teleportHome(p, p, (String) args[0]);
-                }).register();
-        //home <player> <home>
-        command(HOME_LABEL)
-                .withPermission(HOME_PERMISSION)
-                .withAliases(HOME_ALIASES)
-                .withArguments(new HomeArg0(), new HomeArg1())
-                .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
-                    teleportHome(sender, offP, (String) args[1]);
-                }).register();
+                }).then(homeArg0.then(homeArg1))
+                .override();
     }
 
     private void teleportHome(CommandSender sender, OfflinePlayer offP, String home) {
@@ -48,7 +45,7 @@ public class Home implements IOneCommand {
         if (target == null) {
             sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            home = home.toLowerCase();
+            home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {

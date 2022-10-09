@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
@@ -42,29 +44,24 @@ public class Repair implements IOneCommand {
 
     @Override
     public void init() {
-        //repair (hand)
-        command(REPAIR_LABEL)
+        //repair <hand/all>
+        ArgumentTree args1 = slotArg()
+                .executesPlayer((p, args) -> {
+                    handleRepair(p, p, (String) args[0]);
+                });
+        //repair <hand/all> <player>
+        ArgumentTree args2 = new PlayerArgument()
+                .executes((sender, args) -> {
+                    handleRepair(sender, (Player) args[1], (String) args[0]);
+                });
+        //repair (hand) default
+        new Command(REPAIR_LABEL)
                 .withPermission(REPAIR_PERMISSION)
                 .withAliases(REPAIR_ALIASES)
                 .executesPlayer((p, args) -> {
                     handleRepair(p, p, slots.get(0));
-                }).override();
-        //repair <hand/all>
-        command(REPAIR_LABEL)
-                .withPermission(REPAIR_PERMISSION)
-                .withAliases(REPAIR_ALIASES)
-                .withArguments(slotArg())
-                .executesPlayer((p, args) -> {
-                    handleRepair(p, p, (String) args[0]);
-                }).register();
-
-        //repair <hand/all> <player>
-        command(REPAIR_LABEL)
-                .withPermission(REPAIR_PERMISSION)
-                .withAliases(REPAIR_ALIASES)
-                .withArguments(slotArg(), new PlayerArgument())
-                .executes((sender, args) -> handleRepair(sender, (Player) args[1], (String) args[0]))
-                .register();
+                }).then(args1.then(args2))
+                .override();
     }
 
     private void handleRepair(CommandSender sender, Player target, String slot) {

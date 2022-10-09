@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -8,6 +9,7 @@ import lombok.SneakyThrows;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.data.configuration.yamls.Commands;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 
@@ -28,20 +30,21 @@ public class Time implements IOneCommand {
     public void init() {
         registerSingleWordTime();
         //TIME <TIME>
-        command(TIME_LABEL)
-                .withPermission(TIME_PERMISSION)
-                .withAliases(TIME_ALIASES)
-                .withArguments(timeArg())
+        ArgumentTree arg0 = timeArg()
                 .executesPlayer((p, args) -> {
                     changeTime(p, (long) args[0], p.getWorld());
-                }).override();
+                });
         //TIME <TIME> <world>
-        command(TIME_LABEL)
+        ArgumentTree arg1 = new WorldsArgument()
+                .executes((sender, args) -> {
+                    changeTime(sender, (long) args[0], (World) args[1]);
+                });
+        new Command(TIME_LABEL)
                 .withPermission(TIME_PERMISSION)
                 .withAliases(TIME_ALIASES)
-                .withArguments(timeArg(), new WorldsArgument())
-                .executes((sender, args) -> changeTime(sender, (long) args[0], (World) args[1]))
-                .register();
+                .then(arg0.then(arg1))
+                .override();
+
     }
 
     /**
@@ -49,7 +52,7 @@ public class Time implements IOneCommand {
      */
     private void registerSingleWordTime() {
         for (String suggestion : TIME_SINGLE_WORD_CMDS.getAsArray()) {
-            command(suggestion)
+            new Command(suggestion)
                     .withPermission(TIME_PERMISSION)
                     .executesPlayer((player, args) -> {
                         changeTime(player, toTime(suggestion), player.getWorld());

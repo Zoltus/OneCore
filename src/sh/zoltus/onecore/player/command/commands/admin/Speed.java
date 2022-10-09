@@ -1,13 +1,14 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -53,27 +54,25 @@ public class Speed implements IOneCommand {
     @Override
     public void init() {
         //speed <amount>
-        command(SPEED_LABEL)
-                .withPermission(SPEED_PERMISSION)
-                .withAliases(SPEED_ALIASES)
-                .withArguments(speedIntArg())
-                .executesPlayer((PlayerCommandExecutor) (sender, args) -> handle(sender, sender, (float) args[0], null))
-                .override();
-
+        ArgumentTree arg0 = speedIntArg()
+                .executesPlayer((sender, args) -> {
+                    handle(sender, sender, (float) args[0], null);
+                });
         //speed <amount> <player>
-        command(SPEED_LABEL)
-                .withPermission(SPEED_PERMISSION_OTHER)
-                .withAliases(SPEED_ALIASES)
-                .withArguments(speedIntArg(), new OfflinePlayerArgument())
-                .executes((player, args) -> handle(player, (OfflinePlayer) args[1], (float) args[0], null))
-                .register();
+        ArgumentTree arg1 = new OfflinePlayerArgument()
+                .executes((player, args) -> {
+                    handle(player, (OfflinePlayer) args[1], (float) args[0], null);
+                });
         //speed <amount> <player> <fly/walk>
-        command(SPEED_LABEL)
+        ArgumentTree arg2 = speedModeArg()
+                .executes((sender, args) -> {
+                    handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]);
+                });
+        new Command(SPEED_LABEL)
                 .withPermission(SPEED_PERMISSION_OTHER)
                 .withAliases(SPEED_ALIASES)
-                .withArguments(speedIntArg(), new OfflinePlayerArgument(), speedModeArg())
-                .executes((sender, args) -> handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]))
-                .register();
+                .then(arg0.then(arg1.then(arg2)))
+                .override();
     }
 
     private void handle(CommandSender sender, OfflinePlayer offTarget, float speed, String mode) {

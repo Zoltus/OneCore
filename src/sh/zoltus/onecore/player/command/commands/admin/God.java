@@ -1,7 +1,9 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -15,19 +17,8 @@ public class God implements IOneCommand {
 
     @Override
     public void init() {
-        //god
-        command(GOD_LABEL)
-                .withPermission(GOD_PERMISSION)
-                .withAliases(GOD_ALIASES)
-                .executesPlayer((p, args) -> {
-                    p.setInvulnerable(!p.isInvulnerable());
-                    p.sendMessage(GOD_SET_TO.rp(MODE_PH, p.isInvulnerable()));
-                }).override();
         //god <pelaaja>
-        command(GOD_LABEL)
-                .withPermission(GOD_PERMISSION)
-                .withAliases(GOD_ALIASES)
-                .withArguments(new OfflinePlayerArgument())
+        ArgumentTree arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     OfflinePlayer target = (OfflinePlayer) args[0];
                     boolean result;
@@ -46,7 +37,15 @@ public class God implements IOneCommand {
                         String msg = GOD_CHANGED_TARGETS_GOD.rp(PLAYER_PH, target.getName(), MODE_PH, result);
                         sender.sendMessage(msg);
                     }
-                }).register();
+                });
+        //god
+        new Command(GOD_LABEL)
+                .withPermission(GOD_PERMISSION)
+                .withAliases(GOD_ALIASES)
+                .executesPlayer((p, args) -> {
+                    p.setInvulnerable(!p.isInvulnerable());
+                    p.sendMessage(GOD_SET_TO.rp(MODE_PH, p.isInvulnerable()));
+                }).then(arg0).override();
     }
 }
 

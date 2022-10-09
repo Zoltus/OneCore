@@ -1,9 +1,11 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
@@ -16,19 +18,8 @@ import static sh.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_HEALED_TA
 public class Heal implements IOneCommand {
     @Override
     public void init() {
-        //heal
-        command(HEAL_LABEL)
-                .withPermission(HEAL_PERMISSION)
-                .withAliases(HEAL_ALIASES)
-                .executesPlayer((player, args) -> {
-                    heal(player);
-                    player.sendMessage(HEAL_YOU_GOT_HEALED.getString());
-                }).override();
         //heal <player>
-        command(HEAL_LABEL)
-                .withPermission(HEAL_PERMISSION_OTHER)
-                .withAliases(HEAL_ALIASES)
-                .withArguments(new OfflinePlayerArgument())
+        ArgumentTree arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     User target = (User) args[0];
                     Player onlineTarget = target.getPlayer();
@@ -36,7 +27,15 @@ public class Heal implements IOneCommand {
                     if (sender != target.getPlayer()) {
                         sender.sendMessage(HEAL_YOU_HEALED_TARGET.rp(MODE_PH, target.getName()));
                     }
-                }).register();
+                });
+        //heal
+        new Command(HEAL_LABEL)
+                .withPermission(HEAL_PERMISSION)
+                .withAliases(HEAL_ALIASES)
+                .executesPlayer((player, args) -> {
+                    heal(player);
+                    player.sendMessage(HEAL_YOU_GOT_HEALED.getString());
+                }).then(arg0).override();
     }
 
     private void heal(OfflinePlayer target) {

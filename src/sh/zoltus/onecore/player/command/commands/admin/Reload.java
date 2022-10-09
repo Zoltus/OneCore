@@ -13,6 +13,11 @@ public class Reload implements IOneCommand {
 
     @Override
     public void init() {
+       //ArgumentTree arg0 =
+
+       // new Command(plugin.getName())
+        //        .withAliases("oc");
+
         //onecore reload todo onecore reload all/config
         command(plugin.getName())
                 .withAliases("oc")

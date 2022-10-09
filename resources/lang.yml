@@ -131,7 +131,7 @@ Data:
       set: '{p} Asetit kodin: <home>'
       # <home>, <player>
       other: '{p} Koti <home> asetettu pelaajalle <player>'
-    delhome:
+    delete:
       # <home>
       deleted: '{p} Koti poistettu <home>'
       # <home>, <player>
