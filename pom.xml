@@ -137,12 +137,6 @@
             <version>${commandapi.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- bstats has to be compiled-->
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>${bstats.version}</version>
-        </dependency>
         <!-- tar.gz for backup system, runtime -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -150,16 +144,17 @@
             <version>${apache-compress}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- bstats has to be compiled-->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>${bstats.version}</version>
+        </dependency>
         <!-- NbtApi -->
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>${nbtapi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.j256.ormlite</groupId>
-            <artifactId>ormlite-jdbc</artifactId>
-            <version>${ormlite.version}</version>
         </dependency>
     </dependencies>
     <build>

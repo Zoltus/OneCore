@@ -46,11 +46,6 @@ Data:
     prefix: '&8&l[&c&lIlmoitus&8&l] &7'
   clear:
     player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&lcleared'
-  delhome:
-    # <home>
-    deleted: '{p} Koti poistettu <home>'
-    # <home>, <player>
-    other: '{p} Koti <home> poistettu pelaajalta <player>'
   economy:
     balance:
       # <player>, <balance>
@@ -121,13 +116,26 @@ Data:
     you-got-healed: '{p} You have been healed'
     # <player>
     you-healed-target: '{p} You healed player: <player>'
-  home:
-    # <list>
-    list: '{p} Kotia ei löytynyt. Homet <list>'
-    no-homes: '{p} Ei homeja'
-    # <player>, <home>
-    # Used when teleporting to other players home.
-    teleport-other: '{p} Teleported players: <player> home: <home>.'
+  homes:
+    home:
+      # <list>
+      list: '{p} Kotia ei löytynyt. Homet <list>'
+      no-homes: '{p} Ei homeja'
+      # <player>, <home>
+      # Used when teleporting to other players home.
+      teleport-other: '{p} Teleported players: <player> home: <home>.'
+    set:
+      # <home>
+      full-homes: '{p} Sinulla on jo täysi määrä koteja, poista /delhome <home>'
+      # <home>
+      set: '{p} Asetit kodin: <home>'
+      # <home>, <player>
+      other: '{p} Koti <home> asetettu pelaajalle <player>'
+    delhome:
+      # <home>
+      deleted: '{p} Koti poistettu <home>'
+      # <home>, <player>
+      other: '{p} Koti <home> poistettu pelaajalta <player>'
   killall:
     # <amount>, <type>, <radius>
     removed-entitys: '{p} Killed <amount> with type <type> from radius <radius>'
@@ -173,13 +181,6 @@ Data:
     date-format: dd.MM.yyyy | HH:mm
     # <player>, <time>
     last-seen: '{p} <player> was last seen <time>'
-  sethome:
-    # <home>
-    full-homes: '{p} Sinulla on jo täysi määrä koteja, poista /delhome <home>'
-    # <home>
-    set: '{p} Asetit kodin: <home>'
-    # <home>, <player>
-    other: '{p} Koti <home> asetettu pelaajalle <player>'
   setmaxplayers:
     # <amount>
     set: '{p} Max players set to <amount>'

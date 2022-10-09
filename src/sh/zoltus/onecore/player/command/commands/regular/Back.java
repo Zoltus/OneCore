@@ -10,14 +10,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
 import java.util.List;
 
-import static sh.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static sh.zoltus.onecore.data.configuration.yamls.Commands.SIZE_PH;
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static sh.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Back implements IOneCommand, Listener {
