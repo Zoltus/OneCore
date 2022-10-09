@@ -10,16 +10,7 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - reading nbt file to async? or is it admin only?
-          - on inventory offline if playerlogs in while inv is open
-          - if invsee open and player joins its error
-          - if offphasplayeebefore and doesnt have User, it creates it
-          - make everything use User argument?, or cleanup argument stuff
-          - OC art needs OneCore text
-          - test homecommands
-          - needs fixing with async stuff and offline/online players?
           - rtp not finished
-          - economy class
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?
           - test backup with motimaadata copy
@@ -28,29 +19,22 @@
           - remove apicommand?
           - clean database class
           - look coreprotect sqlite settings
-          - magnus
-          - gson vs no gsonn test sqlite
         Important:
           - Rtp improvements to async & create worker.
         Not important:
-          - messsages multline support
+          - make everything use User argument?, or cleanup argument stuff
+          - OC art needs OneCore text
+          - reading nbt file to async? or is it admin only?
+          - on inventory offline if playerlogs in while inv is open
+          - messages multline support
           - if config is added it adds it to yml
           - rename all
           - all to commandtrees, test peformance
-          - ormlite
-          - cleanup config ymls
           - Mentions testing! remove requirement for @? config for it?
           - teleports dont work on spectatormode
           - Chatcolor listener and others -> implements registale and chaecks from config or exnteds
-          - listaliases option percommand
-          - admin cant set more homes to user if limit is full on the user
-          - permissions are in config and in language file
-          - lang homes to same category, under home.sethome, home.delhome ect
           - https://www.youtube.com/watch?v=AbQeo6Zob_M
-          - link balance table?
-          - butcher, finish all cmds
           - Go throught yml namings & comments, messages
-          - create custom command aliases to execute multiple cmds
       Testing:
         - Test every cmd by executing them 1000-5000x/s.
         - stresstest, connect 100x fakeplayers same time with code, cheat to make oneuser objects, and load only when needed to prevent 200+ connects issue
@@ -210,12 +194,10 @@
                 ----------------Extra--------------------:
                 a:
                   - ADMINMODE
-                  - TIMESTAMPS perplayer packets
                   - skycolors
                   - https://github.com/dscalzi/SkyChanger/blob/master/skychanger-bukkit/src/main/java/com/dscalzi/skychanger/bukkit/internal/SkyChangeImpl.java
                     https://github.com/dscalzi/SkyChanger/blob/master/skychanger-bukkit/src/main/java/com/dscalzi/skychanger/bukkit/internal/ReflectionUtil.java
                     //not priority after release can be fondeasdd
-                  - sethome <name> <player>
                   - No Black Sky <world>
                   - BRIGHTNESS
                   - joka yö spawnaa 1 giant zombi ja superloottii
