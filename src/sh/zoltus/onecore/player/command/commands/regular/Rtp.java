@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import sh.zoltus.onecore.data.configuration.yamls.Config;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.teleporting.LocationUtils;
 
@@ -30,7 +31,7 @@ public class Rtp implements IOneCommand {
     //every player in queue = teleport timer +1s
     @Override
     public void init() {
-        command(RTP_LABEL)
+        new Command(RTP_LABEL)
                 .withAliases(RTP_ALIASES)
                 .withPermission(RTP_PERMISSION)
                 .executesPlayer((p, args) -> {

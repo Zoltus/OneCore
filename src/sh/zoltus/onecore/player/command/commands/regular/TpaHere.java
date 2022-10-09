@@ -1,7 +1,9 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
-import sh.zoltus.onecore.player.command.IOneCommand;
+import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.User;
+import sh.zoltus.onecore.player.command.Command;
+import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.UserArgument;
 import sh.zoltus.onecore.player.teleporting.Request;
 
@@ -11,11 +13,14 @@ public class TpaHere implements IOneCommand {
     @Override
     public void init() {
         //tpa <player>
-        command(TPAHERE_LABEL)
+        new Command(TPAHERE_LABEL)
                 .withPermission(TPAHERE_PERMISSION)
                 .withAliases(TPAHERE_ALIASES)
-                .withArguments(new UserArgument())
-                .executesUser((sender, args) -> Request.send(sender, (User) args[0], Request.TeleportType.TPHERE))
-                .override();
+                .then(new UserArgument()
+                .executesPlayer((player, args) -> {
+                    User user = User.of(player);
+                    User target = User.of((Player) args[0]);
+                    Request.send(user, target, Request.TeleportType.TPHERE);
+                })).override();
     }
 }

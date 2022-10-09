@@ -2,6 +2,7 @@ package sh.zoltus.onecore.player.command.commands.regular;
 
 import org.bukkit.OfflinePlayer;
 import sh.zoltus.onecore.listeners.InvSeeHandler;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 
@@ -12,13 +13,13 @@ public class Invsee implements IOneCommand {
     @Override
     public void init() {
         //invsee <player>
-        command(INVSEE_LABEL)
+        new Command(INVSEE_LABEL)
                 .withPermission(INVSEE_PERMISSION)
                 .withAliases(INVSEE_ALIASES)
-                .withArguments(new OfflinePlayerArgument())
-                .executesPlayer((sender, args) -> {
-                    OfflinePlayer offTarget = (OfflinePlayer) args[0];
-                    InvSeeHandler.handle(sender, offTarget, false);
-                }).override();
+                .then(new OfflinePlayerArgument()
+                        .executesPlayer((sender, args) -> {
+                            OfflinePlayer offTarget = (OfflinePlayer) args[0];
+                            InvSeeHandler.handle(sender, offTarget, false);
+                        })).override();
     }
 }

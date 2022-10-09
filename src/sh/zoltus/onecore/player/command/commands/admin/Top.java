@@ -1,9 +1,11 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
 
@@ -14,20 +16,19 @@ import static sh.zoltus.onecore.data.configuration.yamls.Lang.TOP_TELPORTED;
 public class Top implements IOneCommand {
     @Override
     public void init() {
+        //top <player>
+        ArgumentTree arg0 = new PlayerArgument()
+                .executes((sender, args) -> {
+                    executes(sender, (Player) args[0]);
+                });
         //top
-        command(TOP_LABEL)
+        new Command(TOP_LABEL)
                 .withPermission(TOP_PERMISSION)
                 .withAliases(TOP_ALIASES)
                 .executesPlayer((p, args) -> {
                     executes(p, p);
-                }).override();
-        //top <player>
-        command(TOP_LABEL)
-                .withPermission(TOP_OTHER_PERMISSION)
-                .withAliases(TOP_ALIASES)
-                .withArguments(new PlayerArgument())
-                .executes((sender, args) -> executes(sender, (Player) args[0]))
-                .register();
+                }).then(arg0)
+                .override();
     }
 
     private void executes(CommandSender sender, Player target) {

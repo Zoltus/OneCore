@@ -2,6 +2,7 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import org.bukkit.Bukkit;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.lang.reflect.Field;
@@ -15,19 +16,19 @@ public class SetMaxPlayers implements IOneCommand {
     @Override
     public void init() {
         //setmaxplayers <amount>
-        command(SETMAXPLAYERS_LABEL)
+        new Command(SETMAXPLAYERS_LABEL)
                 .withPermission(SETMAXPLAYERS_PERMISSION)
                 .withAliases(SETMAXPLAYERS_ALIASES)
-                .withArguments(new IntegerArgument(NODES_AMOUNT.getString()))
-                .executesPlayer((p, args) -> {
-                    try {
-                        int maxPlayers = (int) args[0];
-                        setMaxPlayers(maxPlayers);
-                        p.sendMessage(SETMAXPLAYERS_SET.rp(AMOUNT_PH, maxPlayers));
-                    } catch (ReflectiveOperationException e) {
-                        p.sendMessage("Error changing max players!");
-                    }
-                }).override();
+                .then(new IntegerArgument(NODES_AMOUNT.getString())
+                        .executesPlayer((p, args) -> {
+                            try {
+                                int maxPlayers = (int) args[0];
+                                setMaxPlayers(maxPlayers);
+                                p.sendMessage(SETMAXPLAYERS_SET.rp(AMOUNT_PH, maxPlayers));
+                            } catch (ReflectiveOperationException e) {
+                                p.sendMessage("Error changing max players!");
+                            }
+                        })).override();
     }
 
     public static void setMaxPlayers(int amount) throws ReflectiveOperationException {
@@ -37,12 +38,4 @@ public class SetMaxPlayers implements IOneCommand {
         maxplayers.setAccessible(true);
         maxplayers.set(playerlist, amount);
     }
-
-    /*
-        .executesPlayer((p, args) -> {
-        int maxPlayers = (int) args[0];
-        Bukkit.getServer().setMaxPlayers(maxPlayers);
-        p.sendMessage(SETMAXPLAYERS_SET.rp(AMOUNT_PH, maxPlayers));
-        }),
-     */
 }

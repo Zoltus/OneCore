@@ -6,6 +6,7 @@ import sh.zoltus.onecore.player.command.commands.regular.*;
 
 import java.util.List;
 
+@SuppressWarnings("InstantiationOfUtilityClass")
 public class CommandHandler {
 
     public static CommandHandler register(OneCore plugin) {
@@ -42,7 +43,7 @@ public class CommandHandler {
                     IOneCommand iOneCommand = cmd.getDeclaredConstructor().newInstance();
                     iOneCommand.register();
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException("cmd: " + cmd.getName() + e.getMessage());
                 }
             }
         }

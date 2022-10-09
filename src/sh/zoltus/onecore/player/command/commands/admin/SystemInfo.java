@@ -2,6 +2,7 @@ package sh.zoltus.onecore.player.command.commands.admin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 
 import java.io.File;
@@ -12,7 +13,7 @@ public class SystemInfo implements IOneCommand {
 
     @Override
     public void init() {
-        command(SYSTEM_LABEL)
+        new Command(SYSTEM_LABEL)
                 .withPermission(SYSTEM_PERMISSION)
                 .withAliases(SYSTEM_ALIASES)
                 .executes((sender, args) -> sendSystemInfo(sender))

@@ -1,7 +1,9 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -13,25 +15,22 @@ import static sh.zoltus.onecore.data.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN
 public class Feed implements IOneCommand {
     @Override
     public void init() {
-        //feed
-        command(FEED_LABEL)
-                .withPermission(FEED_PERMISSION)
-                .withAliases(FEED_ALIASES)
-                .executesPlayer((player, args) -> {
-                    feed(player);
-                }).override();
         //feed <player>
-        command(FEED_LABEL)
-                .withPermission(FEED_PERMISSION_OTHER)
-                .withAliases(FEED_ALIASES)
-                .withArguments(new OfflinePlayerArgument())
+        ArgumentTree arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     OfflinePlayer target = (OfflinePlayer) args[0];
                     feed(target);
                     if (target.getPlayer() != sender) {
                         sender.sendMessage(FEED_YOU_FED_TARGET.rp(PLAYER_PH, target.getName()));
                     }
-                }).register();
+                });
+        //feed
+        new Command(FEED_LABEL)
+                .withPermission(FEED_PERMISSION)
+                .withAliases(FEED_ALIASES)
+                .executesPlayer((player, args) -> {
+                    feed(player);
+                }).then(arg0).override();
     }
 
     // Feeds player

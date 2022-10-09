@@ -3,7 +3,6 @@ package sh.zoltus.onecore.player.command;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.executors.CommandExecutor;
-import dev.jorel.commandapi.executors.ConsoleCommandExecutor;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import org.apache.commons.lang.StringUtils;
 import sh.zoltus.onecore.data.configuration.IConfig;
@@ -39,8 +38,8 @@ public class ApiCommand extends CommandAPICommand {
     }
 
     public ApiCommand withAliases(IConfig enumz) {
-        if (!enumz.getString().isEmpty()) {
-            String[] aliases = enumz.getAsArray();
+        String[] aliases = enumz.getAsArray();
+        if (aliases != null) {
             super.withAliases(aliases);
         }
         return this;
@@ -71,19 +70,6 @@ public class ApiCommand extends CommandAPICommand {
     }
 
     @Override
-    public ApiCommand withPermission(String permission) {
-        super.withPermission(permission);
-        return this;
-    }
-
-    @Override
-    public ApiCommand withAliases(String... aliases) {
-        if (aliases.length != 0)
-            super.withAliases(aliases);
-        return this;
-    }
-
-    @Override
     public ApiCommand withArguments(Argument... args) {
         super.withArguments(args);
         return this;
@@ -92,12 +78,6 @@ public class ApiCommand extends CommandAPICommand {
     @Override
     public ApiCommand executesPlayer(PlayerCommandExecutor executor) {
         super.executesPlayer(executor);
-        return this;
-    }
-
-    @Override
-    public ApiCommand executesConsole(ConsoleCommandExecutor executor) {
-        super.executesConsole(executor);
         return this;
     }
 }

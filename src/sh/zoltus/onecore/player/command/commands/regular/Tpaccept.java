@@ -1,5 +1,8 @@
 package sh.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
+import org.bukkit.entity.Player;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.command.arguments.RequestArgument;
@@ -13,26 +16,27 @@ public class Tpaccept implements IOneCommand {
 
     @Override
     public void init() {
-        //tpaccept
-        command(TPACCEPT_LABEL)
-                .withPermission(TPACCEPT_PERMISSION)
-                .withAliases(TPACCEPT_ALIASES)
-                .executesUser((sender, args) -> handle(Request.getLatest(sender), sender))
-                .override();
         //tpaccept <player>
-        command(TPACCEPT_LABEL)
+        ArgumentTree arg0 = new RequestArgument()
+                .executesPlayer((player, args) -> {
+                    handle((Player) args[0], player);
+                });
+        //tpaccept
+        new Command(TPACCEPT_LABEL)
                 .withPermission(TPACCEPT_PERMISSION)
                 .withAliases(TPACCEPT_ALIASES)
-                .withArguments(new RequestArgument())
-                .executesUser((sender, args) -> handle(Request.get((User) args[0], sender), sender))
-                .register();
+                .executesPlayer((player, args) -> {
+                    handle(player, player);
+                }).then(arg0)
+                .override();
     }
 
-    private void handle(Request request, User sender) {
-        if (request == null) {
-            sender.sendMessage(TP_NO_REQUESTS.getString());
+    private void handle(Player target, Player player) {
+        Request latest = Request.getLatest(User.of(target));
+        if (latest == null) {
+            player.sendMessage(TP_NO_REQUESTS.getString());
         } else {
-            request.accept();
+            latest.accept();
         }
     }
 }

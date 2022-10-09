@@ -1,5 +1,6 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -7,6 +8,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import sh.zoltus.onecore.data.configuration.yamls.Commands;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.WorldsArgument;
 
@@ -33,20 +35,20 @@ public class Weather implements IOneCommand {
     public void init() {
         //registerSingleWords(); //todo sameway than economy cmds
         //weather <weather>
-        command(WEATHER_LABEL)
-                .withPermission(WEATHER_PERMISSION)
-                .withAliases(WEATHER_ALIASES)
-                .withArguments(weatherArgument())
+        ArgumentTree arg0 = weatherArgument()
                 .executesPlayer((p, args) -> {
                     changeWeather(p, args[0], p.getWorld());
-                }).override();
+                });
         //weather <weather> <world>
-        command(WEATHER_LABEL)
+        ArgumentTree arg1 = new WorldsArgument()
+                .executes((sender, args) -> {
+                    changeWeather(sender, args[0], args[1]);
+                });
+        new Command(WEATHER_LABEL)
                 .withPermission(WEATHER_PERMISSION)
                 .withAliases(WEATHER_ALIASES)
-                .withArguments(weatherArgument(), new WorldsArgument())
-                .executes((sender, args) -> changeWeather(sender, args[0], args[1]))
-                .register();
+                .then(arg0.then(arg1))
+                .override();
     }
 
     /**
