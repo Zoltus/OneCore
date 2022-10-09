@@ -94,7 +94,7 @@ public final class OneCore extends JavaPlugin implements Listener {
     private void sendArt() {
         Bukkit.getScheduler().runTaskLater(this, () -> List.of(
                 "",
-                // "§f                     o O O",
+                "§f                    o O O",
                 "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
                 "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
                 "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{==§71.0§8==|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
