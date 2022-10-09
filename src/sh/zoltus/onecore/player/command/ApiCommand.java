@@ -11,6 +11,7 @@ import sh.zoltus.onecore.player.User;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
+@Deprecated(forRemoval=true)
 public class ApiCommand extends CommandAPICommand {
 
     public ApiCommand(String commandName) {
