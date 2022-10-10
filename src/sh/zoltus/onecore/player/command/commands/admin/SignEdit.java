@@ -5,6 +5,7 @@ import dev.jorel.commandapi.arguments.*;
 import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,13 +14,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import sh.zoltus.onecore.data.configuration.IConfig;
-import sh.zoltus.onecore.listeners.SignListener;
 import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
+import sh.zoltus.onecore.utils.ChatUtils;
 import sh.zoltus.onecore.utils.FakeBreak;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
@@ -116,8 +119,8 @@ public class SignEdit implements IOneCommand {
                         }
                     }
                 });
-        //signedit paste <text> <line>
-        paste.then(new IntegerArgument("1-4", 1, 4)
+        //signedit paste <line> <text>
+        paste.then(new IntegerArgument("1-44", 1, 4)
                 .then(new IntegerArgument("1-4", 1, 4)
                         .executesPlayer((player, args) -> {
                             Sign sign = canEdit(player);
@@ -138,18 +141,17 @@ public class SignEdit implements IOneCommand {
     }
 
     private void setLine(CommandSender sender, Sign sign, int line, String text) {
-        sign.setLine(line, SignListener.toMineHex(text));
+        sign.setLine(line, ChatUtils.toMineHex(text));
         sign.update(true);
         sender.sendMessage(SIGNEDIT_SIGN_UPDATED.getString());
     }
 
     private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
-            .withPreview((PreviewLegacy) info -> toComponents(SignListener.toMineHex(info.input())))
+            .withPreview((PreviewLegacy) info -> ChatUtils.toComponents(ChatUtils.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
-                int line = (int) info.previousArgs()[1] - 1;
                 if (sign != null && sign.getLines().length != 0) {
-                    return List.of(SignListener.toNormal(sign.getLine(line))).toArray(new String[0]);
+                    return Stream.of(sign.getLines()).map(ChatUtils::toNormal).toArray(String[]::new);
                 } else {
                     return new String[0];
                 }

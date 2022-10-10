@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
+import sh.zoltus.onecore.utils.ChatUtils;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static sh.zoltus.onecore.data.configuration.yamls.Lang.BROADCAST_PREFIX;
@@ -22,7 +23,8 @@ public class Broadcast implements IOneCommand {
                 .withAliases(BROADCAST_ALIASES)
                 .then(new ChatArgument(NODES_MESSAGE.getString())
                         .usePreview(true)
-                        .withPreview((PreviewLegacy) info -> toComponents(PREFIX + info.input()))
+                        .withPreview((PreviewLegacy) info ->
+                                ChatUtils.toComponents(PREFIX + info.input()))
                         .executes((sender, args) -> {
                             Bukkit.spigot().broadcast((BaseComponent[]) args[0]);
                         })

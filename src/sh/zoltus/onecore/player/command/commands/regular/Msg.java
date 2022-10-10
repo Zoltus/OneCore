@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.player.command.arguments.PlayerArgument;
+import sh.zoltus.onecore.utils.ChatUtils;
 
 import java.util.Arrays;
 
@@ -28,7 +29,7 @@ public class Msg implements IOneCommand {
                     String target = args[1];
                     String sender = info.player().getName();
                     String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-                    return toComponents(toSendMessage(target, sender, message));
+                    return ChatUtils.toComponents(toSendMessage(target, sender, message));
                 })
                 .executesPlayer((sender, args) -> {
             Player target = (Player) args[0];

@@ -1,8 +1,5 @@
 package sh.zoltus.onecore.player.command;
 
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import sh.zoltus.onecore.OneCore;
@@ -34,11 +31,6 @@ public interface IOneCommand {
             Bukkit.getServer().getPluginManager().registerEvents((Listener) this, plugin);
         }
         init();
-    }
-
-    //For chatpreview
-    default BaseComponent[] toComponents(String text) {
-        return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', text));
     }
 
     default String[] toSuggestion(String input, String[] list) {
