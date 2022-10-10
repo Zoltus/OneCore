@@ -3,12 +3,15 @@ package sh.zoltus.onecore.listeners;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import sh.zoltus.onecore.OneCore;
 import sh.zoltus.onecore.player.User;
 import sh.zoltus.onecore.player.nbt.NBTPlayer;
@@ -36,6 +39,19 @@ public class TestListener implements Listener {
 
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {
+                case "/t22" -> {
+                    NamespacedKey line1 = new NamespacedKey(OneCore.getPlugin(), "line1");
+                    NamespacedKey line2 = new NamespacedKey(OneCore.getPlugin(), "line2");
+                    NamespacedKey line3 = new NamespacedKey(OneCore.getPlugin(), "line3");
+                    NamespacedKey line4 = new NamespacedKey(OneCore.getPlugin(), "line4");
+                    PersistentDataContainer cont = p.getPersistentDataContainer();
+                    p.sendMessage("line1: " + cont.get(line1, PersistentDataType.STRING));
+                    p.sendMessage("line2: " + cont.get(line2, PersistentDataType.STRING));
+                    p.sendMessage("line3: " + cont.get(line3, PersistentDataType.STRING));
+                    p.sendMessage("line4: " + cont.get(line4, PersistentDataType.STRING));
+                    p.sendMessage(cont.toString());
+
+                }
                 case "/testa" -> {
                     p.sendMessage("&a&lpatea");
                     p.sendMessage("│§8¸ᐧᑊ            §f│");//l &l &l &l &l &l &l

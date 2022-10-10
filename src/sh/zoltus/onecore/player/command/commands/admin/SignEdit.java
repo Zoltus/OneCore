@@ -1,22 +1,24 @@
 package sh.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.arguments.Argument;
-import dev.jorel.commandapi.arguments.ArgumentSuggestions;
-import dev.jorel.commandapi.arguments.ChatArgument;
-import dev.jorel.commandapi.arguments.IntegerArgument;
+import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.*;
 import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import sh.zoltus.onecore.data.configuration.IConfig;
 import sh.zoltus.onecore.listeners.SignListener;
-import sh.zoltus.onecore.player.command.ApiCommand;
+import sh.zoltus.onecore.player.command.Command;
 import sh.zoltus.onecore.player.command.IOneCommand;
 import sh.zoltus.onecore.utils.FakeBreak;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Commands.*;
@@ -24,29 +26,42 @@ import static sh.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements IOneCommand {
 
-    private final NamespacedKey signData = new NamespacedKey(plugin, "copied_sign");
+    private final NamespacedKey line1 = new NamespacedKey(plugin, "line1");
+    private final NamespacedKey line2 = new NamespacedKey(plugin, "line2");
+    private final NamespacedKey line3 = new NamespacedKey(plugin, "line3");
+    private final NamespacedKey line4 = new NamespacedKey(plugin, "line4");
+
+    private List<String> getLines(Player p) {
+        PersistentDataContainer cont = p.getPersistentDataContainer();
+        List<String> lines = Arrays.asList("", "", "", "");
+        lines.set(0, cont.get(line1, PersistentDataType.STRING));
+        lines.set(1, cont.get(line2, PersistentDataType.STRING));
+        lines.set(2, cont.get(line3, PersistentDataType.STRING));
+        lines.set(3, cont.get(line4, PersistentDataType.STRING));
+        return lines;
+    }
+
+    private void setLine(Player p, int line, String text) {
+        text = text == null ? "" : text;
+        PersistentDataContainer cont = p.getPersistentDataContainer();
+        switch (line) {
+            case 0 -> cont.set(line1, PersistentDataType.STRING, text);
+            case 1 -> cont.set(line2, PersistentDataType.STRING, text);
+            case 2 -> cont.set(line3, PersistentDataType.STRING, text);
+            case 3 -> cont.set(line4, PersistentDataType.STRING, text);
+        }
+    }
 
     //todo cleanup, color perms?
     @Override
     public void init() {
         //signedit set <line> <text>
-        ApiCommand set = command(SIGNEDIT_SET_LABEL)
-                .withPermission(SIGNEDIT_SET_PERMISSION)
-                .withAliases(SIGNEDIT_SET_ALIASES)
-                .withArguments(new IntegerArgument("1-4", 1, 4), signTextArg)
-                .executesPlayer((player, args) -> {
-                    Sign sign = canEdit(player);
-                    if (sign != null) {
-                        int line = (int) args[0] - 1;
-                        String text = BaseComponent.toPlainText((BaseComponent[]) args[1]);
-                        setLine(player, sign, line, text);
-                    }
-
-                });
+        ArgumentTree set = multiLiteralArgument(SIGNEDIT_SET_LABEL, SIGNEDIT_SET_ALIASES) //SIGNEDIT_SET_LABEL
+                .then(new IntegerArgument("1-4", 1, 4)
+                        .then(signTextArg));
         //signedit clear
-        ApiCommand clear = command(SIGNEDIT_CLEAR_LABEL)
-                .withPermission(SIGNEDIT_CLEAR_PERMISSION)
-                .withAliases(SIGNEDIT_CLEAR_ALIASES)
+        ArgumentTree clear = multiLiteralArgument(SIGNEDIT_CLEAR_LABEL, SIGNEDIT_CLEAR_ALIASES) // SIGNEDIT_CLEAR_LABEL
+                .withPermission(SIGNEDIT_CLEAR_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
@@ -56,67 +71,69 @@ public class SignEdit implements IOneCommand {
                     }
                 });
         //signedit clear <line>
-        ApiCommand clearLine = command(SIGNEDIT_CLEAR_LABEL)
-                .withPermission(SIGNEDIT_CLEAR_PERMISSION)
-                .withAliases(SIGNEDIT_CLEAR_ALIASES)
-                .withArguments(new IntegerArgument("1-4", 1, 4))
+        clear.then(new IntegerArgument("1-4", 1, 4)
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
                         int line = (int) args[0] - 1;
                         setLine(player, sign, line, "");
                     }
-                });
+                }));
         //signedit copy
-        ApiCommand copy = command(SIGNEDIT_COPY_LABEL)
-                .withPermission(SIGNEDIT_COPY_PERMISSION)
-                .withAliases(SIGNEDIT_COPY_ALIASES)
+        ArgumentTree copy = multiLiteralArgument(SIGNEDIT_COPY_LABEL, SIGNEDIT_COPY_ALIASES) // SIGNEDIT_COPY_ALIASES
+                .withPermission(SIGNEDIT_COPY_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        player.getPersistentDataContainer()
-                                .set(signData, PersistentDataType.STRING, String.join("\n", sign.getLines()));
+                        String[] signLines = sign.getLines();
+                        for (int i = 0, signLinesLength = signLines.length; i < signLinesLength; i++) {
+                            setLine(player, i, signLines[i]);
+                        }
                         player.sendMessage(SIGNEDIT_SIGN_COPIED.getString());
                     }
                 });
+        //signedit copy <line>
+        copy.then(new IntegerArgument("1-4", 1, 4)
+                .executesPlayer((player, args) -> {
+                    Sign sign = canEdit(player);
+                    if (sign != null) {
+                        for (int i = 0; i < 4; i++) {
+                            setLine(player, i, sign.getLine(i));
+                        }
+                        player.sendMessage(SIGNEDIT_SIGN_COPIED.getString());
+                    }
+                }));
         //signedit paste
-        ApiCommand paste = command(SIGNEDIT_PASTE_LABEL)
-                .withPermission(SIGNEDIT_PASTE_PERMISSION)
-                .withAliases(SIGNEDIT_PASTE_ALIASES)
+        ArgumentTree paste = multiLiteralArgument(SIGNEDIT_PASTE_LABEL, SIGNEDIT_PASTE_ALIASES) // SIGNEDIT_PASTE_LABEL
+                .withPermission(SIGNEDIT_PASTE_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        String signData = player.getPersistentDataContainer()
-                                .get(this.signData, PersistentDataType.STRING);
-                        if (signData != null) {
-                            String[] lines = signData.split("\n");
-                            for (int line = 0; line < 4; line++) {
-                                setLine(player, sign, line, lines[line]);
+                        List<String> lines = getLines(player);
+                        for (int i = 0; i < lines.size(); i++) {
+                            String line = lines.get(i);
+                            setLine(player, sign, i, line);
+                        }
+                    }
+                });
+        //signedit paste <text> <line>
+        paste.then(new IntegerArgument("1-4", 1, 4)
+                .then(new IntegerArgument("1-4", 1, 4)
+                        .executesPlayer((player, args) -> {
+                            Sign sign = canEdit(player);
+                            if (sign != null) {
+                                int i = (int) args[1] - 1;
+                                List<String> lines = getLines(player);
+                                setLine(player, sign, i, lines.get(i));
                             }
-                        }
-                    }
-                });
-        //signedit paste <line>
-        ApiCommand pasteLine = command(SIGNEDIT_PASTE_LABEL)
-                .withPermission(SIGNEDIT_PASTE_PERMISSION)
-                .withAliases(SIGNEDIT_PASTE_ALIASES)
-                .withArguments(new IntegerArgument("1-4", 1, 4))
-                .executesPlayer((player, args) -> {
-                    Sign sign = canEdit(player);
-                    if (sign != null) {
-                        int line = (int) args[0] - 1;
-                        String signData = player.getPersistentDataContainer()
-                                .get(this.signData, PersistentDataType.STRING);
-                        if (signData != null) {
-                            setLine(player, sign, line, signData);
-                        }
-                    }
-                });
-
-        command(SIGNEDIT_LABEL)
+                        })));
+        new Command(SIGNEDIT_LABEL)
                 .withAliases(SIGNEDIT_ALIASES)
                 .withPermission(SIGNEDIT_PERMISSION)
-                .withSubcommands(set, clear, clearLine, copy, paste, pasteLine)
+                .then(set)
+                .then(clear)
+                .then(copy)
+                .then(paste)
                 .override();
     }
 
@@ -126,17 +143,29 @@ public class SignEdit implements IOneCommand {
         sender.sendMessage(SIGNEDIT_SIGN_UPDATED.getString());
     }
 
-    private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.getString())
+    private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
             .withPreview((PreviewLegacy) info -> toComponents(SignListener.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
-                Integer line = (Integer) info.previousArgs()[0] - 1;
+                int line = (int) info.previousArgs()[1] - 1;
                 if (sign != null && sign.getLines().length != 0) {
                     return List.of(SignListener.toNormal(sign.getLine(line))).toArray(new String[0]);
                 } else {
                     return new String[0];
                 }
-            }));
+            }))
+            .executesPlayer((player, args) -> {
+                Sign sign = canEdit(player);
+                if (sign != null) {
+                    int line = (int) args[1] - 1;
+                    String text = BaseComponent.toPlainText((BaseComponent[]) args[2]);
+                    setLine(player, sign, line, text);
+                }
+            });
+
+    public Argument<String> multiLiteralArgument(IConfig label, IConfig aliases) {
+        return new MultiLiteralArgument(ArrayUtils.add(aliases.getAsArray(), label.getString()));
+    }
 
     //checks if player can edit sign, and break it
     private Sign canEdit(CommandSender sender) {
