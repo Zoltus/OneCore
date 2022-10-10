@@ -10,7 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - remove apicommand, finish signedit and economy cmd classes and reload
+          - signedit remake, paste "text from copied" to line
+          - sign edit copy <line>
+          - remove apicommand, economy cmd classes and reload
           - rtp not finished
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?
