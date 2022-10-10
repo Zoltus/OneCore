@@ -1,7 +1,6 @@
 package sh.zoltus.onecore.listeners;
 
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -13,22 +12,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import sh.zoltus.onecore.OneCore;
+import sh.zoltus.onecore.utils.ChatUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import static sh.zoltus.onecore.data.configuration.yamls.Config.*;
 
 public record SignListener(OneCore plugin) implements Listener {
 
-    //todo https://github.com/Shopkeepers/Shopkeepers/blob/b776ac4163b24e38e6d7d3fe2b741607cfe94e52/src/main/java/com/nisovin/shopkeepers/util/TextUtils.java
-    //
-    // for detecting #8f8f8f
-    private static final Pattern pattern = Pattern.compile("#\\p{XDigit}{6}");
-    // for detecting §x§8§f§8§f§8§f
-    private static final Pattern pattern2 = Pattern
-            .compile("&x&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}");
+    //todo check https://github.com/Shopkeepers/Shopkeepers/blob/b776ac4163b24e38e6d7d3fe2b741607cfe94e52/src/main/java/com/nisovin/shopkeepers/util/TextUtils.java
+
     /**
      * Sign save converts Readable colors to Minecraft colors §.
      *
@@ -39,7 +32,7 @@ public record SignListener(OneCore plugin) implements Listener {
         if (e.getPlayer().hasPermission(SIGN_COLOR_PERMISSION.asPermission())) {
             for (int line = 0; line < e.getLines().length; line++) {
                 String text = e.getLine(line);
-                e.setLine(line, toMineHex(text));
+                e.setLine(line, ChatUtils.toMineHex(text));
             }
         }
     }
@@ -81,46 +74,10 @@ public record SignListener(OneCore plugin) implements Listener {
     private void handleSignOpen(Player p, Sign sign) {
         IntStream.range(0, sign.getLines().length).forEach(line -> {
             String text = sign.getLine(line);
-            sign.setLine(line, toNormal(text));
+            sign.setLine(line, ChatUtils.toNormal(text));
         });
         sign.update(true);
         //prevents bug with 2tick delay
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.openSign(sign), 2L);
-    }
-
-
-    /**
-     * Converts §x§8§f§8§f§8§f to #8f8f8f
-     *
-     * @param message Message containing symbolized hex (§x§8§f§8§f§8§f)
-     * @return returns converted message
-     */
-    public static String toNormal(String message) {
-        message = message.replaceAll("§", "&");
-        Matcher matcher = pattern2.matcher(message);
-        StringBuilder sb = new StringBuilder(message);
-        while (matcher.find()) {
-            String hex = matcher.group()
-                    .replaceAll("&", "")
-                    .replaceFirst("x", "#");
-            sb.replace(matcher.start(), matcher.end(), hex);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Converts #8f8f8f to §x§8§f§8§f§8§f
-     *
-     * @param message Message containing hex (#8f8f8f)
-     * @return returns converted message
-     */
-    public static String toMineHex(String message) {
-        Matcher matcher = pattern.matcher(message);
-        StringBuilder sb = new StringBuilder(message);
-        while (matcher.find()) {
-            String color = matcher.group();
-            sb.replace(matcher.start(), matcher.end(), String.valueOf(ChatColor.of(color)));
-        }
-        return ChatColor.translateAlternateColorCodes('&', sb.toString());
     }
 }
