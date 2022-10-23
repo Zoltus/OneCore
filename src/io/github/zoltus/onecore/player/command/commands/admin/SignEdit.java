@@ -1,15 +1,18 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.ArgumentTree;
-import dev.jorel.commandapi.arguments.*;
+import dev.jorel.commandapi.arguments.Argument;
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
+import dev.jorel.commandapi.arguments.ChatArgument;
+import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.wrappers.PreviewLegacy;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.utils.ChatUtils;
+import io.github.zoltus.onecore.utils.FakeBreak;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -17,8 +20,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import io.github.zoltus.onecore.utils.ChatUtils;
-import io.github.zoltus.onecore.utils.FakeBreak;
 
 import java.util.Arrays;
 import java.util.List;
@@ -161,10 +162,6 @@ public class SignEdit implements IOneCommand {
                     setLine(player, sign, line, text);
                 }
             });
-
-    public Argument<String> multiLiteralArgument(IConfig label, IConfig aliases) {
-        return new MultiLiteralArgument(ArrayUtils.add(aliases.getAsArray(), label.getString()));
-    }
 
     //checks if player can edit sign, and break it
     private Sign canEdit(CommandSender sender) {

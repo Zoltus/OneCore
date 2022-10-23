@@ -2,11 +2,11 @@ package io.github.zoltus.onecore.player.command.arguments;
 
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.PlayerArgument;
-import io.github.zoltus.onecore.player.command.ApiCommand;
-import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.OneArgument;
+import org.bukkit.entity.Player;
 
-public class RequestArgument extends PlayerArgument {
+public class RequestArgument extends PlayerArgument implements OneArgument {
     public RequestArgument() {
         this("");
     }
@@ -14,7 +14,7 @@ public class RequestArgument extends PlayerArgument {
     public RequestArgument(String add) {
         super(add);
         replaceSuggestions(ArgumentSuggestions
-                .strings(info -> ApiCommand.filter(info.currentArg(), User.of((Player) info.sender())
+                .strings(info -> filter(info.currentArg(), User.of((Player) info.sender())
                 .getRequests()
                 .stream().map(request -> request.getSender().getName())
                 .toArray(String[]::new))));

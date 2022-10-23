@@ -1,11 +1,14 @@
 package io.github.zoltus.onecore.player.command;
 
+import dev.jorel.commandapi.arguments.Argument;
+import dev.jorel.commandapi.arguments.MultiLiteralArgument;
 import io.github.zoltus.onecore.OneCore;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 
 public interface IOneCommand extends OneArgument {
 
@@ -14,16 +17,6 @@ public interface IOneCommand extends OneArgument {
 
     //Inits commands&registers sht
     void init();
-
-    //Short cut for making new ApiCommand("") todo add to ApiCommand class with static import
-    default ApiCommand command(IConfig enumz) {
-        return command(enumz.getString());
-    }
-
-    //Short cut for making new ApiCommand("")
-    default ApiCommand command(String label) {
-        return new ApiCommand(label);
-    }
 
     //Registers all ApiCommands in the command and registers listeners
     default void register() {
@@ -34,7 +27,7 @@ public interface IOneCommand extends OneArgument {
     }
 
     default String[] toSuggestion(String input, String[] list) {
-        return ApiCommand.filter(input, list);
+        return filter(input, list);
     }
 
     /**
@@ -44,5 +37,9 @@ public interface IOneCommand extends OneArgument {
      */
     static boolean isEnabled(Class<? extends IOneCommand> clazz) {
         return cmds.getOrSetDefault("Data." + clazz.getSimpleName().toLowerCase() + ".enabled", true);
+    }
+
+    default Argument<String> multiLiteralArgument(IConfig label, IConfig aliases) {
+        return new MultiLiteralArgument(ArrayUtils.add(aliases.getAsArray(), label.getString()));
     }
 }

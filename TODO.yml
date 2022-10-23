@@ -10,27 +10,27 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - /DAY DOESNT work
+          - economy needs to use offlineusers or userarg
           - signedit remake, paste "text from copied" to line
           - sign edit copy <line>
           - remove apicommand, economy cmd classes and reload
           - rtp not finished
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?
-          - test backup with motimaadata copy
+        Test:
           - TEST EVERYTHING! (MOTIMMAA test)
-          - plugin, database to ionecommand
-          - remove apicommand?
-          - clean database class
-          - look coreprotect sqlite settings
+          - test backup with motimaadata copy
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - clean database class
+          - look coreprotect sqlite settings
           - variable arguments to own classes
           - make everything use User argument?, or cleanup argument stuff
           - OC art needs OneCore text
-          - reading nbt file to async? or is it admin only?
+          - reading nbt file to async? it is admin only?
           - on inventory offline if playerlogs in while inv is open
+          - inventory closeevent if inv owner is offline it opens the offlineinv
           - messages multline support
           - if config is added it adds it to yml
           - rename all
