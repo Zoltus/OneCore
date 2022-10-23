@@ -46,12 +46,13 @@ import java.util.stream.Stream;
 public final class OneCore extends JavaPlugin implements Listener {
     @Getter
     private static OneCore plugin;
+
     private Economy vault;
-    private CommandHandler commandHandler;
-    private ListenerHandler listenerHandler;
+    private Database database;
     private RTPHandler rtpHandler;
     private BackupHandler backupHandler;
-    private Database database;
+    private CommandHandler commandHandler;
+    private ListenerHandler listenerHandler;
 
     @Override
     public void onLoad() {
