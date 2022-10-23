@@ -1,18 +1,29 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
+import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.DoubleArgument;
-import io.github.zoltus.onecore.player.command.ApiCommand;
-import io.github.zoltus.onecore.player.command.IOneCommand;
-import io.github.zoltus.onecore.player.command.arguments.UserArgument;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.ApiCommand;
+import io.github.zoltus.onecore.player.command.Command;
+import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.command.arguments.UserArgument;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -23,25 +34,53 @@ public class EconomyCMD implements IOneCommand {
     @Override
     public void init() {
         // Economy
-        command(ECONOMY_LABEL)
+       /* command(ECONOMY_LABEL)
                 .withPermission(ECONOMY_PERMISSION)
                 .withAliases(ECONOMY_ALIASES)
                 // .executes((sender, args) -> {
                 //todo
                 //    sender.sendMessage("not done");
                 // })
-                .withSubcommands(pay, give, transfer, set, take)
-                .withSeparateSubcommands(balance, balance2, pay, balTop)
+                //.withSubcommands(pay, give, transfer, set, take)
+               // .withSeparateSubcommands(balance, balance2, pay, balTop)
+                .override();*/
+
+        // balance //ECONOMY_BALANCE_LABEL
+        ArgumentTree balance = multiLiteralArgument(ECONOMY_BALANCE_LABEL, ECONOMY_BALANCE_ALIASES)
+                .withPermission(ECONOMY_BALANCE_PERMISSION.getString())
+                .executesPlayer((sender, args) -> {
+                    handleBalance(sender.getPlayer(), User.of(sender));
+                });
+
+        // balance <player>
+        ArgumentTree balanceOther = new OfflinePlayerArgument()
+                .withPermission(ECONOMY_BALANCE_PERMISSION.getString())
+                .executes((sender, args) -> {
+                    handleBalance(sender, User.of((OfflinePlayer) args[0]));
+                });
+
+        ArgumentTree pay = multiLiteralArgument(ECONOMY_PAY_LABEL, ECONOMY_PAY_ALIASES)
+                .withPermission(ECONOMY_PAY_PERMISSION.getString())
+                .then(new OfflinePlayerArgument()
+                        .then(new DoubleArgument(NODES_AMOUNT.getString())
+                                .executes((sender, args) -> {
+                                    transfer(User.of((OfflinePlayer) sender), (User) args[0], (double) args[1], null)
+                                })));
+
+
+
+
+        new Command(ECONOMY_LABEL)
+                .withPermission(ECONOMY_PERMISSION)
+                .withAliases(ECONOMY_ALIASES)
+                .executes((sender, args) -> sender.sendMessage("not done"))
+                .then(balance.then(balanceOther))
+                .then(pay)
                 .override();
+
     }
 
-    // balance
-    private final ApiCommand balance = command(ECONOMY_BALANCE_LABEL)
-            .withPermission(ECONOMY_BALANCE_PERMISSION)
-            .withAliases(ECONOMY_BALANCE_ALIASES)
-            .executesUser((sender, args) -> handleBalance(sender.getPlayer(), sender));
-
-    // baltop, /baltop reloadn
+    // baltop, /baltop reload
     private final ApiCommand balTop = command(ECONOMY_BALTOP_LABEL) //todo make toplist only work with oneeconomy
             .withPermission(ECONOMY_BALTOP_PERMISSION)
             .withAliases(ECONOMY_BALTOP_ALIASES)
@@ -73,20 +112,6 @@ public class EconomyCMD implements IOneCommand {
                     sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
                 }
             });
-
-    // balance <player>
-    private final ApiCommand balance2 = command(ECONOMY_BALANCE_LABEL)
-            .withPermission(ECONOMY_BALANCE_PERMISSION)
-            .withAliases(ECONOMY_BALANCE_ALIASES)
-            .withArguments(new UserArgument())
-            .executes((sender, args) -> handleBalance(sender, (User) args[0]));
-
-    // pay <player> <amount>
-    private final ApiCommand pay = command(ECONOMY_PAY_LABEL)
-            .withPermission(ECONOMY_PAY_PERMISSION)
-            .withAliases(ECONOMY_PAY_ALIASES)
-            .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
-            .executesUser((sender, args) -> transfer(sender, (User) args[0], (double) args[1], null));
 
     // give <player> <amount>
     private final ApiCommand give = command(ECONOMY_GIVE_LABEL)
@@ -195,47 +220,4 @@ public class EconomyCMD implements IOneCommand {
                     .rp(PLAYER_PH, target.getName(), BALANCE_PH, balance));
         }
     }
-
-
-    /* Todo
-     * Get balance of the user.
-     *
-     * @return amount of the money
-     */
-   /* public double getBalance() {
-        return economy == null ? 0 : economy.getBalance(getPlayer());
-    }
-
-    /**
-     * Sets money to user.
-     *
-     * @param amount of the money
-     */
-   /* public boolean setBalance(double amount) {
-        if (economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
-            return economy.depositPlayer(offP, amount).transactionSuccess();
-        }
-        return false;
-    }
-
-    /**
-     * Adds money to user.
-     *
-     * @param amount of the money
-     * @return e
-     */
-    /*public boolean deposit(double amount) {
-        return economy.depositPlayer(offP, amount).transactionSuccess();
-    }
-
-    /**
-     * Removes money from user.
-     *
-     * @param amount of the money
-     * @return result
-     */
-   /* public boolean withdraw(double amount) {
-        return economy.withdrawPlayer(offP, amount).transactionSuccess();
-    }*/
-
 }
