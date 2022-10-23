@@ -283,7 +283,7 @@
                      <option>-dontoptimize</option>
                      <option>-repackageclasses 'sh.zoltus.onecore'</option>
                      <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
-                     <option>-keep public class sh.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
+                     <option>-keep public class io.github.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
                      <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
                  </options>
              </configuration>

@@ -10,6 +10,7 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - /DAY DOESNT work
           - signedit remake, paste "text from copied" to line
           - sign edit copy <line>
           - remove apicommand, economy cmd classes and reload
@@ -25,6 +26,7 @@
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - variable arguments to own classes
           - make everything use User argument?, or cleanup argument stuff
           - OC art needs OneCore text
           - reading nbt file to async? or is it admin only?
