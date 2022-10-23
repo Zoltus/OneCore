@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data.configuration;
 
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.PERMISSION_PREFIX;
@@ -70,7 +71,11 @@ public interface IConfig {
     }
 
     default String[] getAsArray() {
-        return yml().getStringList("Data." + getPath()).toArray(String[]::new);
+        return getList().toArray(String[]::new);
+    }
+
+    default List<String> getList() {
+        return yml().getStringList("Data." + getPath());
     }
 
     /*default List<String> getList() {
