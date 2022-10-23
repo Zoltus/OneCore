@@ -3,11 +3,10 @@ package io.github.zoltus.onecore.player.command.arguments;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.player.command.ApiCommand;
+import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.OneArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import io.github.zoltus.onecore.player.User;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -38,9 +37,9 @@ public class HomeArg1 extends CustomArgument<String, String> implements OneArgum
             User target = User.of(offP);
 
             if (target != null) {
-                return ApiCommand.filter(info.currentArg(), target.getHomeArray());
+                return filter(info.currentArg(), target.getHomeArray());
             } else {
-                return ApiCommand.filter(info.currentArg());
+                return filter(info.currentArg());
             }
         })));
     }
