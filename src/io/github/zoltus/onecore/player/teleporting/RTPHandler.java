@@ -1,13 +1,13 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.utils.SlowingScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.utils.SlowingScheduler;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;

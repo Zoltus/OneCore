@@ -3,8 +3,6 @@ package io.github.zoltus.onecore;
 import io.github.zoltus.onecore.player.command.IOneCommand;
 import io.github.zoltus.onecore.player.command.commands.admin.*;
 import io.github.zoltus.onecore.player.command.commands.regular.*;
-import sh.zoltus.onecore.player.command.commands.admin.*;
-import sh.zoltus.onecore.player.command.commands.regular.*;
 
 import java.util.List;
 

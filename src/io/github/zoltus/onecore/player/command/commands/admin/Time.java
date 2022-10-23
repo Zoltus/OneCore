@@ -11,18 +11,26 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.IOneCommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
-import lombok.SneakyThrows;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Time implements IOneCommand {
 
     private Argument<?> timeArg() {
         return new CustomArgument<>(new StringArgument(Lang.NODES_TIME.getString()), info -> toTime(info.input()))
-                .replaceSuggestions(ArgumentSuggestions.strings(info ->
-                        toSuggestion(info.currentArg(), Commands.TIME_SUGGESTIONS.getAsArray())
+                .replaceSuggestions(ArgumentSuggestions.strings(info -> {
+                            ArrayList<String> suggestions = new ArrayList<>() {{
+                                addAll(Commands.TIME_DAY_ALIASES.getList());
+                                addAll(Commands.TIME_NIGHT_ALIASES.getList());
+                                addAll(Commands.TIME_MORNING_ALIASES.getList());
+                                addAll(Commands.TIME_AFTERNOON_ALIASES.getList());
+                            }};
+                            return toSuggestion(info.currentArg(), suggestions.toArray(new String[0]));
+                        }
                 ));
     }
 
@@ -51,36 +59,49 @@ public class Time implements IOneCommand {
      * Registers single word time commands
      */
     private void registerSingleWordTime() {
-        for (String suggestion : Commands.TIME_SINGLE_WORD_CMDS.getAsArray()) {
-            new Command(suggestion)
-                    .withPermission(Commands.TIME_PERMISSION)
-                    .executesPlayer((player, args) -> {
-                        changeTime(player, toTime(suggestion), player.getWorld());
-                    }).override();
+        doo(Commands.TIME_DAY_ALIASES.getList(),
+                Commands.TIME_NIGHT_ALIASES.getList(),
+                Commands.TIME_MORNING_ALIASES.getList(),
+                Commands.TIME_AFTERNOON_ALIASES.getList()
+        );
+    }
+
+    @SafeVarargs
+    private void doo(List<String>... list) {
+        for (List<String> strings : list) {
+            for (String suggestion : strings) {
+                new Command(suggestion)
+                        .withPermission(Commands.TIME_PERMISSION)
+                        .executesPlayer((p, args) -> {
+                            changeTime(p, toTime(suggestion), p.getWorld());
+                        }).override();
+            }
         }
     }
 
-    //todo clean up
-    @SneakyThrows
-    private long toTime(String arg) {
+    private Long toTime(String arg) {
         if (isTicks(arg)) {
             return Long.parseLong(arg);
         } else if (containsIgnoreCase(Commands.TIME_DAY_ALIASES, arg)) {
-            return 0;
+            return 0L;
         } else if (containsIgnoreCase(Commands.TIME_NIGHT_ALIASES, arg)) {
-            return 14000;
+            return 14000L;
         } else if (containsIgnoreCase(Commands.TIME_MORNING_ALIASES, arg)) {
-            return 23000;
+            return 23000L;
         } else if (containsIgnoreCase(Commands.TIME_AFTERNOON_ALIASES, arg)) {
-            return 12000;
+            return 12000L;
         } else {
-            throw new CustomArgument.CustomArgumentException(Lang.TIME_INVALID_TIME.getString());
+            return null;
         }
     }
 
-    private void changeTime(CommandSender sender, long time, World w) {
-        w.setTime(time);
-        sender.sendMessage(Lang.TIME_CHANGED.rp(IConfig.TIME_PH, w.getTime(), IConfig.WORLD_PH, w.getName()));
+    private void changeTime(CommandSender sender, Long time, World w) {
+        if (time == null) {
+            sender.sendMessage(Lang.TIME_INVALID_TIME.getString());
+        } else {
+            w.setTime(time);
+            sender.sendMessage(Lang.TIME_CHANGED.rp(IConfig.TIME_PH, w.getTime(), IConfig.WORLD_PH, w.getName()));
+        }
     }
 
     private boolean containsIgnoreCase(Commands langArr, String contains) {

@@ -8,7 +8,6 @@ import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import sh.zoltus.onecore.listeners.*;
 
 import java.util.ArrayList;
 import java.util.List;

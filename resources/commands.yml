@@ -300,25 +300,25 @@ Data:
     aliases: [ ]
     #  - examplealias1
   time:
-    afternoon-aliases: afternoon
-    day-aliases: day
     enabled: true
     label: time
-    morning-aliases: morning
-    night-aliases: night
     permission: time
-    single-word-cmds:
-      - day
-      - night
-      - afternoon
-      - morning
-    suggestions:
-      - day
-      - night
-      - afternoon
-      - morning
+    # Aliases for time
     aliases: [ ]
     #  - examplealias1
+    single-word-aliases:
+      # Sets time to
+      day:
+        - day
+      # Sets time to
+      night:
+        - night
+      # Sets time to
+      morning:
+        - morning
+      # Sets time to
+      afternoon:
+        - afternoon
   top:
     enabled: true
     label: top
