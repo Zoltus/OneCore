@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Time implements IOneCommand {
+public class Time implements ICommand {
 
     private Argument<?> timeArg() {
         return new CustomArgument<>(new StringArgument(Lang.NODES_TIME.getString()), info -> toTime(info.input()))

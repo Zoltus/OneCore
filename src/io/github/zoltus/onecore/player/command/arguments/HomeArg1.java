@@ -4,7 +4,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_HOME_NAME;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
-public class HomeArg1 extends CustomArgument<String, String> implements OneArgument {
+public class HomeArg1 extends CustomArgument<String, String> implements IArgument {
     //home <player> <home> <--
     //Delhome <player> <home> <--
     //Returns String

@@ -7,7 +7,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
@@ -16,7 +16,7 @@ import io.github.zoltus.onecore.utils.ChatUtils;
 
 import java.util.Arrays;
 
-public class Msg implements IOneCommand {
+public class Msg implements ICommand {
     //todo /r response
     @Override
     public void init() {

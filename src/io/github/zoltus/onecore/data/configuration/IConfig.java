@@ -78,11 +78,6 @@ public interface IConfig {
         return yml().getStringList("Data." + getPath());
     }
 
-    /*default List<String> getList() {
-        return yml().getStringList("Data." + getPath());
-    }*/
-
-    //todo cleanup
     default String rp(Object... replaces) {
         String ph = null;
         String message = getString();

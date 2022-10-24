@@ -6,7 +6,7 @@ import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import org.bukkit.OfflinePlayer;
@@ -16,9 +16,8 @@ import org.bukkit.entity.Player;
 import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.IConfig.TOGGLE_PH;
 
-public class Fly implements IOneCommand {
+public class Fly implements ICommand {
 
-    //todo change to using oneuser only when needed
     @Override
     public void init() {
         //fly <player>

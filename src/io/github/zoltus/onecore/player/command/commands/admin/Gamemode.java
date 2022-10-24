@@ -3,7 +3,7 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 import dev.jorel.commandapi.ArgumentTree;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.GamemodeArgument;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 
-public class Gamemode implements IOneCommand {
+public class Gamemode implements ICommand {
 
     @Override
     public void init() {

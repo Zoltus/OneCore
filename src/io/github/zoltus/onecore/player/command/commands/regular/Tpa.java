@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.player.teleporting.Request;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 
-public class Tpa implements IOneCommand {
+public class Tpa implements ICommand {
 
     @Override
     public void init() {

@@ -7,7 +7,7 @@ import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
-public class Spawn implements IOneCommand {
+public class Spawn implements ICommand {
 
     private static final OneYml config = Yamls.CONFIG.getYml();
 

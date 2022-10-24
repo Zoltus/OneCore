@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
@@ -21,7 +21,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Config.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-public class Rtp implements IOneCommand {
+public class Rtp implements ICommand {
 
     private static final int RADIUS = Config.RTP_RADIUS.getInt();
     private static final HashMap<UUID, Long> timers = new HashMap<>();

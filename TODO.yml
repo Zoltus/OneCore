@@ -10,12 +10,13 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - IArgument to util class?
           - economy singlewords
           - start using userargument
           - economy needs to use offlineusers or userarg
           - signedit remake, paste "text from copied" to line
           - sign edit copy <line>
-          - remove apicommand, economy cmd classes and reload
+          - economy cmd classes and reload
           - rtp not finished
           - Fix backup database.db
           - Fix teleporthandler?? is it fixed?

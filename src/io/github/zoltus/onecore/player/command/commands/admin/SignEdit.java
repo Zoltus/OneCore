@@ -9,7 +9,7 @@ import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.utils.ChatUtils;
 import io.github.zoltus.onecore.utils.FakeBreak;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class SignEdit implements IOneCommand {
+public class SignEdit implements ICommand {
 
     private final NamespacedKey line1 = new NamespacedKey(plugin, "line1");
     private final NamespacedKey line2 = new NamespacedKey(plugin, "line2");

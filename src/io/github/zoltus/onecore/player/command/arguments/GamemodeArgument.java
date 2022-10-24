@@ -5,14 +5,14 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-public class GamemodeArgument extends CustomArgument<GameMode, String> implements OneArgument {
+public class GamemodeArgument extends CustomArgument<GameMode, String> implements IArgument {
 
     public GamemodeArgument() {
         super(new StringArgument(Lang.NODES_GAMEMODE.getString()), (info) -> {

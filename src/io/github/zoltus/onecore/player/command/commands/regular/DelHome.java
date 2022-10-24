@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.ArgumentTree;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
 import org.bukkit.Bukkit;
@@ -13,7 +13,7 @@ import io.github.zoltus.onecore.player.command.Command;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class DelHome implements IOneCommand {
+public class DelHome implements ICommand {
     @Override
     public void init() {
         //delhome <home>

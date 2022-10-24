@@ -23,7 +23,6 @@ public class BackupHandler {
 
     private final OneCore plugin;
     private int UPTIMEHOURS = 0;
-    //todo remove static plugins
     private final List<Integer> hours = List.of(4, 12, 24); //todo hours to config and uptime interval possibly,to singleton
     private final List<File> backupFiles = new ArrayList<>();
     //output directory
@@ -89,7 +88,7 @@ public class BackupHandler {
             tarArchiveOutputStream.setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
             List<File> files = new ArrayList<>(FileUtils.listFiles(
                     inputPath,
-                    new RegexFileFilter("^(.*?)"), //todo document?
+                    new RegexFileFilter("^(.*?)"), //todo document
                     DirectoryFileFilter.DIRECTORY
             ));
             for (File currentFile : files) {

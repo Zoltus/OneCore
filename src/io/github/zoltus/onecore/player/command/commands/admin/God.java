@@ -5,13 +5,13 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
-public class God implements IOneCommand {
+public class God implements ICommand {
 
 
     @Override

@@ -4,13 +4,13 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_PLAYER;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
-public class UserArgument extends CustomArgument<User, String> implements OneArgument {
+public class UserArgument extends CustomArgument<User, String> implements IArgument {
 
     public UserArgument() {
         this("");

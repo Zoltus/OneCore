@@ -5,12 +5,12 @@ import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import io.github.zoltus.onecore.utils.ChatUtils;
 
-public class Broadcast implements IOneCommand {
+public class Broadcast implements ICommand {
 
     private final String PREFIX = Lang.BROADCAST_PREFIX.getString();
 

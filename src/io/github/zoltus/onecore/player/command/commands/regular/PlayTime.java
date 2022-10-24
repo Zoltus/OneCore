@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.ArgumentTree;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
@@ -13,7 +13,7 @@ import java.util.Date;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class PlayTime implements IOneCommand {
+public class PlayTime implements ICommand {
 
     @Override
     public void init() {

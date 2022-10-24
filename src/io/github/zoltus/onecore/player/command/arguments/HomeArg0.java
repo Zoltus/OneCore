@@ -2,7 +2,7 @@ package io.github.zoltus.onecore.player.command.arguments;
 
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,10 +11,9 @@ import io.github.zoltus.onecore.player.User;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_PERMISSION_OTHER;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_HOME_NAME_OR_Player;
 
-public class HomeArg0 extends StringArgument implements OneArgument {
+public class HomeArg0 extends StringArgument implements IArgument {
 
     //try to register cmd as /home <player> and /home <string>
-    //todo DONE, Test
     public HomeArg0() {
         super(NODES_HOME_NAME_OR_Player.getString());
         replaceSuggestions(ArgumentSuggestions.strings(info -> {
