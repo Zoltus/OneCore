@@ -14,6 +14,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.IConfig.TOGGLE_PH;
+
 public class Fly implements IOneCommand {
 
     //todo change to using oneuser only when needed
@@ -39,7 +42,7 @@ public class Fly implements IOneCommand {
     private void handle(CommandSender sender, OfflinePlayer offP, Boolean fly) {
         boolean result = offP.getPlayer() != null ? setOnlineFly(offP.getPlayer(), fly) : setOfflineFly(offP, fly);
         if (sender != offP.getPlayer()) {
-            sender.sendMessage(Lang.FLY_YOU_SWITCHED_TARGET.rp(IConfig.PLAYER_PH, offP.getName(), IConfig.TOGGLE_PH, result));
+            sender.sendMessage(Lang.FLY_YOU_SWITCHED_TARGET.rp(PLAYER_PH, offP.getName(), TOGGLE_PH, result));
         }
     }
 
@@ -47,7 +50,7 @@ public class Fly implements IOneCommand {
         boolean flyResult = fly == null ? onlTarget.getAllowFlight() : fly;
         onlTarget.setAllowFlight(!flyResult);
         onlTarget.setFlying(!flyResult);
-        onlTarget.sendMessage(Lang.FLY_YOUR_FLIGHT_IS_NOW.rp(IConfig.TOGGLE_PH, flyResult));
+        onlTarget.sendMessage(Lang.FLY_YOUR_FLIGHT_IS_NOW.rp(TOGGLE_PH, flyResult));
         return flyResult;
     }
 
