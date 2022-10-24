@@ -55,7 +55,7 @@ public class Weather implements IOneCommand {
      */
     private void registerSingleWords() {
         for (String suggestion : Commands.WEATHER_SINGLE_WORD_CMDS.getAsArray()) {
-            command(suggestion)
+            new Command(suggestion)
                     .withPermission(Commands.WEATHER_PERMISSION)
                     .executesPlayer((player, args) -> {
                         changeWeather(player, suggestion, player.getWorld());
