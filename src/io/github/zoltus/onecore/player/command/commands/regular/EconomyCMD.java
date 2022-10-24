@@ -19,10 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
