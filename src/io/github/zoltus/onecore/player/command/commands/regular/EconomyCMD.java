@@ -36,14 +36,12 @@ public class EconomyCMD implements IOneCommand {
                 .executesPlayer((sender, args) -> {
                     handleBalance(sender.getPlayer(), User.of(sender));
                 });
-
         // balance <player>
         ArgumentTree balanceOther = new OfflinePlayerArgument()
                 .withPermission(ECONOMY_BALANCE_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     handleBalance(sender, User.of((OfflinePlayer) args[0]));
                 });
-
         // pay <player> <amount>
         ArgumentTree pay = multiLiteralArgument(ECONOMY_PAY_LABEL, ECONOMY_PAY_ALIASES)
                 .withPermission(ECONOMY_PAY_PERMISSION.asPermission())
@@ -53,14 +51,19 @@ public class EconomyCMD implements IOneCommand {
                                     transfer(User.of((OfflinePlayer) sender), (User) args[0], (double) args[1], null);
                                 }))
                 );
-
         // give <player> <amount>
         ArgumentTree give = multiLiteralArgument(ECONOMY_GIVE_LABEL, ECONOMY_GIVE_ALIASES)
                 .withPermission(ECONOMY_GIVE_PERMISSION.asPermission())
                 .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
                         .executes((sender, args) -> {
-                            User target = (User) args[0];
-                            double amount = (double) args[1];
+                            for (Object s  : args) {
+                                Bukkit.getConsoleSender().sendMessage(s.toString());
+                            }
+                            Bukkit.getConsoleSender().sendMessage("@@@@@@@@@@a11");
+                            User target = (User) args[1];
+                            Bukkit.getConsoleSender().sendMessage("a22");
+                            double amount = (double) args[2];
+                            Bukkit.getConsoleSender().sendMessage("a33");
                             if (target.deposit(amount)) {
                                 sender.sendMessage(ECONOMY_GIVE_GAVE.rp(
                                         PLAYER_PH, target.getName(),
