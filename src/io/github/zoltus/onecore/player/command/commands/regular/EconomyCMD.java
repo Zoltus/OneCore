@@ -78,7 +78,7 @@ public class EconomyCMD implements IOneCommand {
         // transfer <player> <player> <amount>
         ArgumentTree transfer = multiLiteralArgument(ECONOMY_TRANSFER_LABEL, ECONOMY_TRANSFER_PERMISSION)
                 .withPermission(ECONOMY_TRANSFER_PERMISSION.asPermission())
-                .then(new UserArgument().then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
+                .then(new UserArgument("1").then(new UserArgument("2").then(new DoubleArgument(NODES_AMOUNT.getString())
                         .executes((sender, args) -> {
                             double amount = (double) args[2];
                             transfer((User) args[0], (User) args[1], amount, sender);
