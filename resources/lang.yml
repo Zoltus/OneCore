@@ -105,8 +105,6 @@ Data:
     target-already-in-gamemode: '{p} <player> is already in <mode>'
     # <player> <mode>
     targets-gamemode-changed: '{p} You changed players <player> gamemode to <mode>'
-    # <mode>
-    mode-permission-missing: 'Missing permission <mode>!'
   god:
     # <player> <mode>
     changed-targets-god: '{p} You made <player> god to: <mode>'
