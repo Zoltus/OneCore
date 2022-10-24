@@ -88,10 +88,10 @@ Data:
     you-fed-target: '{p} You Fed player: <player>'
     you-have-been-healed: '{p} You have been Fed'
   fly:
-    # <player> <mode>
-    you-switched-target: '{p} You switched players <player> fly to : <mode>'
-    # <mode>
-    your-flight-is-now: '{p} Your flight was changed to <mode>!'
+    # <player> <toggle>
+    you-switched-target: '{p} You switched players <player> fly to : <toggle>'
+    # <toggle>
+    your-flight-is-now: '{p} Your flight was changed to <toggle>!'
   gamemode:
     # <mode> will be replaced with the gamemode name
     survival: 'survival'
