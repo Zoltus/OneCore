@@ -246,11 +246,11 @@
                         <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>sh.zoltus.apis.bstats</shadedPattern>
+                            <shadedPattern>io.github.zoltus.lib.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.tr7zw</pattern>
-                            <shadedPattern>sh.zoltus.apis.de.tr7zw</shadedPattern>
+                            <shadedPattern>io.github.zoltus.lib.de.tr7zw</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
