@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.ArgumentTree;
-import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.IOneCommand;
@@ -13,13 +12,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.function.Predicate;
-
 import static io.github.zoltus.onecore.data.configuration.IConfig.MODE_PH;
 import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static org.bukkit.GameMode.SURVIVAL;
 
 public class Gamemode implements IOneCommand {
 
@@ -95,26 +90,5 @@ public class Gamemode implements IOneCommand {
             case ADVENTURE -> Lang.GAMEMODE_ADVENTURE.getString();
             case SPECTATOR -> Lang.GAMEMODE_SPECTATOR.getString();
         };
-    }
-
-    /**
-     *
-     * @param input gamemode string
-     * @return Gamemode based on aliases in config
-     */
-    private GameMode getGamemode(String input) {
-        Predicate<Commands> hasGm = (gamemodes) -> Arrays
-                .stream(gamemodes.getString().split(",")).anyMatch(input::equalsIgnoreCase);
-        if (hasGm.test(Commands.GAMEMODE_ALIASES_SURVIVAL)) {
-            return SURVIVAL;
-        } else if (hasGm.test(Commands.GAMEMODE_ALIASES_CREATIVE)) {
-            return GameMode.CREATIVE;
-        } else if (hasGm.test(Commands.GAMEMODE_ALIASES_ADVENTURE)) {
-            return GameMode.ADVENTURE;
-        } else if (hasGm.test(Commands.GAMEMODE_ALIASES_SPECTATOR)) {
-            return GameMode.SPECTATOR;
-        } else {
-            return null;
-        }
     }
 }

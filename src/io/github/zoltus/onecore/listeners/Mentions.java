@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore.listeners;
 
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,24 +16,24 @@ import java.util.regex.Pattern;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Mentions implements Listener {
-    private final String mentionColors = MENTION_COLOR.getString(); //
-    private final String mentionTag = MENTION_TAG.getString();
+    private final String MENTION_COLORS = MENTION_COLOR.getString();
+    private final String MENTION_TAG = Lang.MENTION_TAG.getString();
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void chatMention(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msgg = e.getMessage();
-        if (p.hasPermission(MENTION_PERMISSION.asPermission()) && msgg.contains(mentionTag)) {
+        if (p.hasPermission(MENTION_PERMISSION.asPermission()) && msgg.contains(MENTION_TAG)) {
             StringBuilder sb = new StringBuilder();
             for (Player target : Bukkit.getOnlinePlayers()) {//todo use this method on chatbuilder
                 String name = target.getName();
-                String pattern = "(?i)" + mentionTag + name;
+                String pattern = "(?i)" + MENTION_TAG + name;
                 Matcher match = Pattern.compile(pattern).matcher(msgg);
                 while (match.find()) {
                     int start = match.start();
                     String beforeColor = ChatColor.getLastColors(msgg.substring(0, start));
                     String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                    match.appendReplacement(sb, mentionColors + name + continueColor);
+                    match.appendReplacement(sb, MENTION_COLORS + name + continueColor);
                 }
                 match.appendTail(sb);
             }
