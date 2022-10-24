@@ -5,14 +5,14 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Top implements IOneCommand {
+public class Top implements ICommand {
     @Override
     public void init() {
         //top <player>

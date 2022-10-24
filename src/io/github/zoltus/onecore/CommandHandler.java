@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore;
 
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.commands.admin.*;
 import io.github.zoltus.onecore.player.command.commands.regular.*;
 
@@ -22,7 +22,7 @@ public class CommandHandler {
         }
         //Creates instanceof the class if its enabled and then registers it.
         //faster startup when disabling cmds
-        List<Class<? extends IOneCommand>> cmds = List.of(
+        List<Class<? extends ICommand>> cmds = List.of(
                 Back.class, Broadcast.class, ClearChat.class,
                 DelHome.class, Feed.class,
                 Fly.class, Gamemode.class, God.class,
@@ -37,11 +37,11 @@ public class CommandHandler {
                 TpToggle.class, Time.class, Top.class,
                 Warp.class, Weather.class
         );
-        for (Class<? extends IOneCommand> cmd : cmds) {
-            if (IOneCommand.isEnabled(cmd)) {
+        for (Class<? extends ICommand> cmd : cmds) {
+            if (ICommand.isEnabled(cmd)) {
                 try {
-                    IOneCommand iOneCommand = cmd.getDeclaredConstructor().newInstance();
-                    iOneCommand.register();
+                    ICommand iCommand = cmd.getDeclaredConstructor().newInstance();
+                    iCommand.register();
                 } catch (Exception e) {
                     throw new RuntimeException("cmd: " + cmd.getName() + e.getMessage());
                 }

@@ -7,9 +7,9 @@ import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 
-public class SetWarp implements IOneCommand {
+public class SetWarp implements ICommand {
 
     private final OneYml warps = Yamls.WARPS.getYml();
 

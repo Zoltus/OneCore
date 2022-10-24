@@ -6,7 +6,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import org.bukkit.Bukkit;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class EconomyCMD implements IOneCommand {
+public class EconomyCMD implements ICommand {
 
     @Override
     public void init() {

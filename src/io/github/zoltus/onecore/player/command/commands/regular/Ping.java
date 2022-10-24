@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.ArgumentTree;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.command.Command;
@@ -10,7 +10,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PING_TARGETS_PING;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PING_YOUR_PING;
 
-public class Ping implements IOneCommand {
+public class Ping implements ICommand {
 
     @Override
     public void init() {

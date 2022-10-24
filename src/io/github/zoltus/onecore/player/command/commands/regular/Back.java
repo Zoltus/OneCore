@@ -4,7 +4,7 @@ import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -22,7 +22,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class Back implements IOneCommand, Listener {
+public class Back implements ICommand, Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onTeleport(PlayerTeleportEvent e) {
@@ -51,9 +51,9 @@ public class Back implements IOneCommand, Listener {
                     executes(sender, (int) args[0], (Player) args[1]);
                 });
         // back
-        new Command(BACK_LABEL.getString())
-                .withPermission(BACK_PERMISSION.getString())
-                .withAliases(BACK_ALIASES.getAsArray())
+        new Command(BACK_LABEL)
+                .withPermission(BACK_PERMISSION)
+                .withAliases(BACK_ALIASES)
                 .executesPlayer((sender, args) -> {
                     executes(sender, 1, sender);
                 })

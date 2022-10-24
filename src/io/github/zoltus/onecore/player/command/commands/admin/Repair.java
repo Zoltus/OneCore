@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 
-public class Repair implements IOneCommand {
+public class Repair implements ICommand {
 
     //todo cleanup, to enum
     private final List<String> slots = Arrays.asList(

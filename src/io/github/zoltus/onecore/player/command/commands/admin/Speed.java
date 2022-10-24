@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -19,7 +19,7 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import java.util.Arrays;
 import java.util.List;
 
-public class Speed implements IOneCommand {
+public class Speed implements ICommand {
 
     private final List<String> speedArgs = Arrays.asList(Lang.SPEED_MODE_FLY.getString(), Lang.SPEED_MODE_WALK.getString());
 

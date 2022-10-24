@@ -5,7 +5,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
 import org.bukkit.Bukkit;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 
-public class Home implements IOneCommand {
+public class Home implements ICommand {
 
     @Override
     public void init() {

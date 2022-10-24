@@ -238,7 +238,6 @@ public final class OneEconomy implements Economy {
         return depositPlayer(player, amount);
     }
 
-    //Todo bank support
     @Override
     public boolean hasBankSupport() {
         return false;

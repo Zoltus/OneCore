@@ -6,14 +6,14 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import io.github.zoltus.onecore.player.User;
 
-public class SetHome implements IOneCommand {
+public class SetHome implements ICommand {
 
     //todo homelimit test
     @Override

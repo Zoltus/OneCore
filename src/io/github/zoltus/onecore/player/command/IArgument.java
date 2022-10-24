@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
-public interface OneArgument {
+public interface IArgument {
 
     default String[] toSuggestion(String input, String[] list) {
         return filter(input, list);

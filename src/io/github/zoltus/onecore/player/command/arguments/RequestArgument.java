@@ -3,10 +3,10 @@ package io.github.zoltus.onecore.player.command.arguments;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.entity.Player;
 
-public class RequestArgument extends PlayerArgument implements OneArgument {
+public class RequestArgument extends PlayerArgument implements IArgument {
     public RequestArgument() {
         this("");
     }

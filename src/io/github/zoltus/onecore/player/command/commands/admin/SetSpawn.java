@@ -5,11 +5,11 @@ import dev.jorel.commandapi.arguments.LocationArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Location;
 
-public class SetSpawn implements IOneCommand {
+public class SetSpawn implements ICommand {
 
     @Override
     public void init() {

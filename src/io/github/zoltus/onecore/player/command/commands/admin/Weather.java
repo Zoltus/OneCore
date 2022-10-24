@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Weather implements IOneCommand {
+public class Weather implements ICommand {
 
     private Argument<?> weatherArgument() {
         return new CustomArgument<>(new StringArgument(Lang.NODES_WEATHER.getString()), (info) -> {
@@ -32,7 +32,7 @@ public class Weather implements IOneCommand {
 
     @Override
     public void init() {
-        //registerSingleWords(); //todo sameway than economy cmds
+        registerSingleWords(); //todo sameway than economy cmds
         //weather <weather>
         ArgumentTree arg0 = weatherArgument()
                 .executesPlayer((p, args) -> {

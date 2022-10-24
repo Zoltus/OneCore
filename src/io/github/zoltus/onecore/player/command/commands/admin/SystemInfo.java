@@ -4,13 +4,13 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
 
-public class SystemInfo implements IOneCommand {
+public class SystemInfo implements ICommand {
 
     @Override
     public void init() {

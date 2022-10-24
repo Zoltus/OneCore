@@ -6,7 +6,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.Yamls;
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -19,7 +19,7 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class Warp implements IOneCommand {
+public class Warp implements ICommand {
 
     private final OneYml warps = Yamls.WARPS.getYml();
 

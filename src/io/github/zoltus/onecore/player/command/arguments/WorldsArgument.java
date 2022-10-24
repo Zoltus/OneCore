@@ -3,13 +3,13 @@ package io.github.zoltus.onecore.player.command.arguments;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.player.command.OneArgument;
+import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WORLD_NOT_FOUND;
 
-public class WorldsArgument extends CustomArgument<World, String> implements OneArgument {
+public class WorldsArgument extends CustomArgument<World, String> implements IArgument {
 
     public WorldsArgument() {
         this("");

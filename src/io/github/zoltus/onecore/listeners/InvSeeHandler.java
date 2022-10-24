@@ -125,12 +125,7 @@ public class InvSeeHandler implements Listener {
             if (inv != null && inv.getHolder() != null && inv.getHolder() == p)
                 return;
             //Prevents player from editing his own enderchest
-            //Todo cleanup this shit
-            if (isEnderChest) {
-                if (!invMap.get(p.getUniqueId()).equals(p.getEnderChest())) {
-                    e.setCancelled(true);
-                }
-            } else {
+            if (!isEnderChest || !invMap.get(p.getUniqueId()).equals(p.getEnderChest())) {
                 e.setCancelled(true);
             }
         }

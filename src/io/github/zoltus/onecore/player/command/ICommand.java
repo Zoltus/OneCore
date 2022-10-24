@@ -10,7 +10,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
-public interface IOneCommand extends OneArgument {
+public interface ICommand extends IArgument {
 
     OneCore plugin = OneCore.getPlugin();
     OneYml cmds = Yamls.COMMANDS.getYml();
@@ -35,7 +35,7 @@ public interface IOneCommand extends OneArgument {
      *
      * @return boolean
      */
-    static boolean isEnabled(Class<? extends IOneCommand> clazz) {
+    static boolean isEnabled(Class<? extends ICommand> clazz) {
         return cmds.getOrSetDefault("Data." + clazz.getSimpleName().toLowerCase() + ".enabled", true);
     }
 

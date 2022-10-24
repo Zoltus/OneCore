@@ -1,13 +1,13 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import io.github.zoltus.onecore.player.command.IOneCommand;
+import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_TOGGLE_SWITCHED;
 
-public class TpToggle implements IOneCommand {
+public class TpToggle implements ICommand {
 
     @Override
     public void init() {
