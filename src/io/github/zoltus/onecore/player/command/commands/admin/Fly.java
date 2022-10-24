@@ -3,7 +3,6 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.BooleanArgument;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
