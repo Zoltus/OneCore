@@ -26,6 +26,7 @@
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - fakebreak class change. custom event?
           - clean database class
           - look coreprotect sqlite settings
           - variable arguments to own classes
