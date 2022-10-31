@@ -23,7 +23,7 @@
         <vault.version>1.7.1</vault.version>
         <commandapi.version>8.5.1</commandapi.version>
         <nbtapi.version>2.10.0</nbtapi.version>
-        <apache-compress>1.21</apache-compress>
+        <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <ormlite.version>6.1</ormlite.version>
         <!-- Maven -->
