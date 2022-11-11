@@ -80,6 +80,7 @@ public class OneYml extends YamlConfiguration {
             load(file);
             InputStream defaultStream = getResource(file.getName());
             if (defaultStream != null) {
+                //todo switch to use Files.bufferedreader
                 YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, Charsets.UTF_8));
                 //Copies header
                 options().setHeader(defaultConfig.options().getHeader());
@@ -94,6 +95,7 @@ public class OneYml extends YamlConfiguration {
     }
 
     //* Gets resource from classpath
+    //why not plugin.saveresource
     private InputStream getResource(String filename) {
         try {
             URL url = getClass().getClassLoader().getResource(filename);
