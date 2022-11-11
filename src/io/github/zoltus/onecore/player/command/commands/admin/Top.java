@@ -12,6 +12,9 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class Top implements ICommand {
     @Override
     public void init() {
@@ -39,10 +42,10 @@ public class Top implements ICommand {
         target.setFallDistance(0);
         //Resets player velocity so player is falling and teleports to water floating, it wont just fall throught because of the velocity
         target.teleport(loc);
-        if (target == sender)
-            sender.sendMessage(Lang.TOP_TELPORTED.getString());
-        else {
-            sender.sendMessage(Lang.TOP_TELEPORTED_TARGET.rp(IConfig.PLAYER_PH, target.getName()));
+        if (target == sender) {
+            TOP_TELPORTED.send(target);
+        } else {
+            TOP_TELEPORTED_TARGET.send(target, PLAYER_PH, target.getName());
         }
     }
 }

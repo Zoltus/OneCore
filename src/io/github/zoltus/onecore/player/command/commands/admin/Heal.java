@@ -1,18 +1,20 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.ArgumentTree;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
+import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.nbt.NBTPlayer;
+
+import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_GOT_HEALED;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_HEALED_TARGET;
 
 public class Heal implements ICommand {
     @Override
@@ -24,7 +26,7 @@ public class Heal implements ICommand {
                     Player onlineTarget = target.getPlayer();
                     heal(onlineTarget);
                     if (sender != target.getPlayer()) {
-                        sender.sendMessage(Lang.HEAL_YOU_HEALED_TARGET.rp(IConfig.MODE_PH, target.getName()));
+                        HEAL_YOU_HEALED_TARGET.send(sender, PLAYER_PH, target.getName());
                     }
                 });
         //heal
@@ -33,7 +35,6 @@ public class Heal implements ICommand {
                 .withAliases(Commands.HEAL_ALIASES)
                 .executesPlayer((player, args) -> {
                     heal(player);
-                    player.sendMessage(Lang.HEAL_YOU_GOT_HEALED.getString());
                 }).then(arg0).override();
     }
 
@@ -44,7 +45,7 @@ public class Heal implements ICommand {
             if (amount != null) {
                 p.setHealth(amount.getDefaultValue());
             }
-            p.sendMessage(Lang.HEAL_YOU_GOT_HEALED.getString());
+            HEAL_YOU_GOT_HEALED.send(p);
         } else {
             NBTPlayer nbtPlayer = new NBTPlayer(target);
             nbtPlayer.setHealth(nbtPlayer.getMaxHealth());

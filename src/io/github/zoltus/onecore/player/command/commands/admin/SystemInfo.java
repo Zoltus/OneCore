@@ -10,6 +10,9 @@ import org.bukkit.command.CommandSender;
 
 import java.io.File;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class SystemInfo implements ICommand {
 
     @Override
@@ -27,13 +30,14 @@ public class SystemInfo implements ICommand {
         long freeSpace = diskPartition.getUsableSpace() / (1024 * 1024 * 1024);
         long usedSpace = totalSpace - freeSpace;
 
-        sender.sendMessage(Lang.SYSTEM_OS.rp(IConfig.SYSTEM_PH, System.getProperty("os.name") + " " + System.getProperty("os.arch")));
-        sender.sendMessage(Lang.SYSTEM_VERSION.rp(IConfig.VERSION_PH, System.getProperty("os.version")));
-        sender.sendMessage(Lang.SYSTEM_USERNAME.rp(IConfig.USERNAME_PH, System.getProperty("user.name")));
-        sender.sendMessage(Lang.SYSTEM_PROCESSORS.rp(IConfig.PROCESSORS_PH, String.valueOf(Runtime.getRuntime().availableProcessors())));
-        sender.sendMessage(Lang.SYSTEM_JAVA_VERSION.rp(IConfig.VERSION_PH, System.getProperty("java.version")));
-        sender.sendMessage(Lang.SYSTEM_RAM_USAGE.rp(IConfig.USED_PH, String.valueOf(Runtime.getRuntime().freeMemory() / 1048576), IConfig.TOTAL_PH, String.valueOf((Runtime.getRuntime().maxMemory() / 1048576))));
-        sender.sendMessage(Lang.SYSTEM_DISK_USAGE.rp(IConfig.USED_PH, usedSpace, IConfig.TOTAL_PH, totalSpace));
-        sender.sendMessage(Lang.SYSTEM_SERVER_VERSION.rp(IConfig.VERSION_PH, Bukkit.getServer().getBukkitVersion()));
+        SYSTEM_OS.send(sender, SYSTEM_PH, System.getProperty("os.name") + " " + System.getProperty("os.arch"));
+        SYSTEM_VERSION.send(sender, VERSION_PH, System.getProperty("os.version"));
+        SYSTEM_USERNAME.send(sender, USERNAME_PH, System.getProperty("user.name"));
+        SYSTEM_PROCESSORS.send(sender, PROCESSORS_PH, String.valueOf(Runtime.getRuntime().availableProcessors()));
+        SYSTEM_JAVA_VERSION.send(sender, VERSION_PH, System.getProperty("java.version"));
+        SYSTEM_RAM_USAGE.send(sender, USED_PH, String.valueOf(Runtime.getRuntime().freeMemory() / 1048576), TOTAL_PH, String.valueOf((Runtime.getRuntime().maxMemory() / 1048576)));
+        SYSTEM_DISK_USAGE.send(sender, USED_PH, usedSpace, TOTAL_PH, totalSpace);
+        SYSTEM_SERVER_VERSION.send(sender, VERSION_PH, Bukkit.getServer().getBukkitVersion());
+
     }
 }

@@ -18,10 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TIME_INVALID_TIME;
+
 public class Time implements ICommand {
 
     private Argument<?> timeArg() {
-        return new CustomArgument<>(new StringArgument(Lang.NODES_TIME.getString()), info -> toTime(info.input()))
+        return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> toTime(info.input()))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                             ArrayList<String> suggestions = new ArrayList<>() {{
                                 addAll(Commands.TIME_DAY_ALIASES.getList());
@@ -97,10 +101,10 @@ public class Time implements ICommand {
 
     private void changeTime(CommandSender sender, Long time, World w) {
         if (time == null) {
-            sender.sendMessage(Lang.TIME_INVALID_TIME.getString());
+            TIME_INVALID_TIME.send(sender);
         } else {
             w.setTime(time);
-            sender.sendMessage(Lang.TIME_CHANGED.rp(IConfig.TIME_PH, w.getTime(), IConfig.WORLD_PH, w.getName()));
+            TIME_CHANGED.send(sender, TIME_PH, w.getTime(), WORLD_PH, w.getName());
         }
     }
 

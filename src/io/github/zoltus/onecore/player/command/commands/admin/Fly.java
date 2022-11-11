@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 
 import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.IConfig.TOGGLE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FLY_YOUR_FLIGHT_IS_NOW;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FLY_YOU_SWITCHED_TARGET;
 
 public class Fly implements ICommand {
 
@@ -40,7 +42,7 @@ public class Fly implements ICommand {
     private void handle(CommandSender sender, OfflinePlayer offP, Boolean fly) {
         boolean result = offP.getPlayer() != null ? setOnlineFly(offP.getPlayer(), fly) : setOfflineFly(offP, fly);
         if (sender != offP.getPlayer()) {
-            sender.sendMessage(Lang.FLY_YOU_SWITCHED_TARGET.rp(PLAYER_PH, offP.getName(), TOGGLE_PH, result));
+            FLY_YOU_SWITCHED_TARGET.send(sender, PLAYER_PH, offP.getName(), TOGGLE_PH, result);
         }
     }
 
@@ -48,7 +50,7 @@ public class Fly implements ICommand {
         boolean flyResult = fly == null ? onlTarget.getAllowFlight() : fly;
         onlTarget.setAllowFlight(!flyResult);
         onlTarget.setFlying(!flyResult);
-        onlTarget.sendMessage(Lang.FLY_YOUR_FLIGHT_IS_NOW.rp(TOGGLE_PH, flyResult));
+        FLY_YOUR_FLIGHT_IS_NOW.send(onlTarget, TOGGLE_PH, flyResult);
         return flyResult;
     }
 

@@ -21,21 +21,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class Repair implements ICommand {
 
     //todo cleanup, to enum
     private final List<String> slots = Arrays.asList(
-            Lang.REPAIR_SLOT_HAND.getString().toLowerCase(),
-            Lang.REPAIR_SLOT_ALL.getString().toLowerCase(),
-            Lang.REPAIR_SLOT_OFFHAND.getString().toLowerCase(),
-            Lang.REPAIR_SLOT_ARMOR.getString().toLowerCase(),
-            Lang.REPAIR_SLOT_INVENTORY.getString().toLowerCase());
+            REPAIR_SLOT_HAND.getString().toLowerCase(),
+            REPAIR_SLOT_ALL.getString().toLowerCase(),
+            REPAIR_SLOT_OFFHAND.getString().toLowerCase(),
+            REPAIR_SLOT_ARMOR.getString().toLowerCase(),
+            REPAIR_SLOT_INVENTORY.getString().toLowerCase());
 
     private Argument<?> slotArg() {
-        return new CustomArgument<>(new StringArgument(Lang.NODES_SLOT.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_SLOT.getString()), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
-                throw new CustomArgument.CustomArgumentException(Lang.REPAIR_SLOT_INVALID_SLOT.getString());
+                throw new CustomArgument.CustomArgumentException(REPAIR_SLOT_INVALID_SLOT.getString());
             } else {
                 return input;
             }
@@ -81,12 +84,12 @@ public class Repair implements ICommand {
         }
 
         if (!fixedAny) {
-            sender.sendMessage(Lang.REPAIR_NOTHING_TO_FIX.rp(IConfig.SLOT_PH, slot));
+            REPAIR_NOTHING_TO_FIX.send(sender, SLOT_PH, slot);
         } else if (sender == target.getPlayer()) {
-            sender.sendMessage(Lang.REPAIR_SELF_REPAIRED.rp(IConfig.SLOT_PH, slot));
+            REPAIR_SELF_REPAIRED.send(target, SLOT_PH, slot);
         } else {
-            sender.sendMessage(Lang.REPAIR_YOU_REPAIRED_TARGET.rp(IConfig.SLOT_PH, slot, IConfig.PLAYER_PH, target.getName()));
-            target.sendMessage(Lang.REPAIR_YOUR_ITEMS_GOT_REPAIRED.rp(IConfig.SLOT_PH, slot));
+            REPAIR_YOU_REPAIRED_TARGET.send(sender, SLOT_PH, slot, PLAYER_PH, target.getName());
+            REPAIR_YOUR_ITEMS_GOT_REPAIRED.send(target, SLOT_PH, slot);
         }
     }
 

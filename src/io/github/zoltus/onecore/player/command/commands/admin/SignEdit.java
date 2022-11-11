@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class SignEdit implements ICommand {
 
     private final NamespacedKey line1 = new NamespacedKey(plugin, "line1");
@@ -90,7 +92,7 @@ public class SignEdit implements ICommand {
                         for (int i = 0, signLinesLength = signLines.length; i < signLinesLength; i++) {
                             setLine(player, i, signLines[i]);
                         }
-                        player.sendMessage(Lang.SIGNEDIT_SIGN_COPIED.getString());
+                        SIGNEDIT_SIGN_COPIED.send(player);
                     }
                 });
         //signedit copy <line>
@@ -101,7 +103,8 @@ public class SignEdit implements ICommand {
                         for (int i = 0; i < 4; i++) {
                             setLine(player, i, sign.getLine(i));
                         }
-                        player.sendMessage(Lang.SIGNEDIT_SIGN_COPIED.getString());
+                        SIGNEDIT_SIGN_COPIED.send(player);
+
                     }
                 }));
         //signedit paste
@@ -141,10 +144,10 @@ public class SignEdit implements ICommand {
     private void setLine(CommandSender sender, Sign sign, int line, String text) {
         sign.setLine(line, ChatUtils.toMineHex(text));
         sign.update(true);
-        sender.sendMessage(Lang.SIGNEDIT_SIGN_UPDATED.getString());
+        SIGNEDIT_SIGN_UPDATED.send(sender);
     }
 
-    private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(Lang.NODES_MESSAGE.getString())
+    private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
             .withPreview((PreviewLegacy) info -> ChatUtils.toComponents(ChatUtils.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
@@ -171,7 +174,7 @@ public class SignEdit implements ICommand {
                 || sender.hasPermission(Commands.SIGNEDIT_BYPASS_PERMISSION.asPermission())) {
             return sign;
         } else {
-            p.sendMessage(Lang.SIGNEDIT_SIGN_NOT_FOUND.getString());
+            SIGNEDIT_SIGN_NOT_FOUND.send(sender);
             return null;
         }
     }

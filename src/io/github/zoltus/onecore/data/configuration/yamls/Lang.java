@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.command.CommandSender;
 
 @AllArgsConstructor
 public enum Lang implements IConfig {
@@ -174,6 +175,25 @@ public enum Lang implements IConfig {
 
     public OneYml yml() {
         return Yamls.LANG.getYml();
+    }
+
+    public void send(CommandSender sender, Object... replaces) {
+        sender.sendMessage(replace(replaces));
+    }
+
+    private String replace(Object... replaces) {
+        String ph = null;
+        String message = getString();
+        for (Object objRp : replaces) {
+            String replace = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
+            if (ph == null) {
+                ph = replace;
+            } else {
+                message = message.replaceAll(ph, replace);
+                ph = null;
+            }
+        }
+        return message;
     }
 
 }
