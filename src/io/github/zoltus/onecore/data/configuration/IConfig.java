@@ -77,20 +77,4 @@ public interface IConfig {
     default List<String> getList() {
         return yml().getStringList("Data." + getPath());
     }
-
-    default String rp(Object... replaces) {
-        String ph = null;
-        String message = getString();
-        for (Object objRp : replaces) {
-            String replace = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
-            if (ph == null) {
-                ph = replace;
-            } else {
-                message = message.replaceAll(ph, replace);
-                ph = null;
-            }
-        }
-        return message;
-    }
-
 }

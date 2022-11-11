@@ -16,6 +16,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class KillAll implements ICommand {
 
     @Override
@@ -40,15 +43,15 @@ public class KillAll implements ICommand {
     }
 
     private EntityTypeArgument entityArg() {
-        return new EntityTypeArgument(Lang.NODES_ENTITY_TYPE.getString());
+        return new EntityTypeArgument(NODES_ENTITY_TYPE.getString());
     }
 
     private Argument<?> rangeArgument() {
-        return new CustomArgument<>(new StringArgument(Lang.NODES_RANGE.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_RANGE.getString()), (info) -> {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {
-                throw new CustomArgument.CustomArgumentException(Lang.INVALID_RANGE.getString());
+                throw new CustomArgument.CustomArgumentException(INVALID_RANGE.getString());
             }
         });
     }
@@ -58,6 +61,6 @@ public class KillAll implements ICommand {
         List<Entity> list = entities.stream()
                 .filter(entity -> entity.getType() == type && entity.getType() != EntityType.PLAYER).toList();
         list.forEach(Entity::remove);
-        p.sendMessage(Lang.KILLALL_REMOVED_ENTITYS.rp(IConfig.AMOUNT_PH, list.size(), IConfig.TYPE_PH, type.name(), IConfig.RADIUS_PH, range));
+        KILLALL_REMOVED_ENTITYS.send(p, AMOUNT_PH, list.size(), TYPE_PH, type.name(), RADIUS_PH, range);
     }
 }

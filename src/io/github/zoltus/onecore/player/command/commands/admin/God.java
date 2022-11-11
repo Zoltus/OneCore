@@ -11,6 +11,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class God implements ICommand {
 
 
@@ -25,7 +28,7 @@ public class God implements ICommand {
                         Player onlTarget = target.getPlayer();
                         result = !onlTarget.isInvulnerable();
                         onlTarget.setInvulnerable(result);
-                        onlTarget.sendMessage(Lang.GOD_SET_TO.rp(IConfig.MODE_PH, result));
+                        GOD_SET_TO.send(onlTarget, MODE_PH, result);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(target);
                         result = !nbtPlayer.getInvulnerable();
@@ -33,8 +36,7 @@ public class God implements ICommand {
                         nbtPlayer.save();
                     }
                     if (sender != target.getPlayer()) {
-                        String msg = Lang.GOD_CHANGED_TARGETS_GOD.rp(IConfig.PLAYER_PH, target.getName(), IConfig.MODE_PH, result);
-                        sender.sendMessage(msg);
+                        GOD_CHANGED_TARGETS_GOD.send(sender, PLAYER_PH, target.getName(), MODE_PH, result);
                     }
                 });
         //god
@@ -43,7 +45,7 @@ public class God implements ICommand {
                 .withAliases(Commands.GOD_ALIASES)
                 .executesPlayer((p, args) -> {
                     p.setInvulnerable(!p.isInvulnerable());
-                    p.sendMessage(Lang.GOD_SET_TO.rp(IConfig.MODE_PH, p.isInvulnerable()));
+                    GOD_SET_TO.send(p, MODE_PH, p.isInvulnerable());
                 }).then(arg0).override();
     }
 }

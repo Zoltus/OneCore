@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 
 import java.lang.reflect.Field;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SETMAXPLAYERS_SET;
+
 public class SetMaxPlayers implements ICommand {
 
     @Override
@@ -23,7 +26,7 @@ public class SetMaxPlayers implements ICommand {
                             try {
                                 int maxPlayers = (int) args[0];
                                 setMaxPlayers(maxPlayers);
-                                p.sendMessage(Lang.SETMAXPLAYERS_SET.rp(IConfig.AMOUNT_PH, maxPlayers));
+                                SETMAXPLAYERS_SET.send(p, AMOUNT_PH, maxPlayers);
                             } catch (ReflectiveOperationException e) {
                                 p.sendMessage("Error changing max players!");
                             }

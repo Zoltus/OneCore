@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import java.util.stream.Stream;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Reload implements ICommand {
 
@@ -20,12 +21,12 @@ public class Reload implements ICommand {
                 .then(multiLiteralArgument(RELOAD_LABEL, RELOAD_ALIASES)
                         .withPermission(RELOAD_PERMISSION.asPermission())
                         .executes((sender, args) -> {
-                            sender.sendMessage(Lang.RELOAD_RELOADING.getString());
+                            RELOAD_RELOADING.send(sender);
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                                 //Reloads all ymls
                                 Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
                                 //Sets all data to enums
-                                sender.sendMessage(Lang.RELOAD_RELOADED.getString());
+                                RELOAD_RELOADED.send(sender);
                             });
                         }))
                 .override();

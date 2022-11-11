@@ -9,15 +9,17 @@ import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Location;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class SetSpawn implements ICommand {
 
     @Override
     public void init() {
         //setspawn <location>
-        ArgumentTree arg0 = new LocationArgument(Lang.NODES_LOCATION.getString())
+        ArgumentTree arg0 = new LocationArgument(NODES_LOCATION.getString())
                 .executesPlayer((p, args) -> {
                     Spawn.setSpawn((Location) args[0]);
-                    p.sendMessage(Lang.SETSPAWN_SET.getString());
+                    SETSPAWN_SET.send(p);
                 });
         //setspawn
         new Command(Commands.SETSPAWN_LABEL)
@@ -25,7 +27,7 @@ public class SetSpawn implements ICommand {
                 .withAliases(Commands.SETSPAWN_ALIASES)
                 .executesPlayer((p, args) -> {
                     Spawn.setSpawn(p.getLocation());
-                    p.sendMessage(Lang.SETSPAWN_SET.getString());
+                    SETSPAWN_SET.send(p);
                 }).then(arg0).override();
     }
 }

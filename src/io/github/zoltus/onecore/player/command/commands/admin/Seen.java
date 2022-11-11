@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+
 public class Seen implements ICommand {
 
     @Override
@@ -21,9 +24,9 @@ public class Seen implements ICommand {
                 .then(new PlayerArgument()
                         .executes((sender, args) -> {
                             Player oTarget = (Player) args[0];
-                            SimpleDateFormat dateFormat = new SimpleDateFormat(Lang.SEEN_DATE_FORMAT.getString());
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
                             String dateString = dateFormat.format(new Date(oTarget.getFirstPlayed()));
-                            sender.sendMessage(Lang.SEEN_LAST_SEEN.rp(IConfig.PLAYER_PH, oTarget.getName(), IConfig.TIME_PH, dateString));
+                            SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);
                         })).override();
     }
 }
