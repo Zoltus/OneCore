@@ -150,6 +150,11 @@ public final class OneEconomy extends AbstractEconomy {
     }
 
     @Override
+    public boolean hasBankSupport() {
+        return false;
+    }
+
+    @Override
     public boolean hasAccount(String player, String world) {
         return hasAccount(Bukkit.getOfflinePlayer(player), world);
     }
@@ -157,11 +162,6 @@ public final class OneEconomy extends AbstractEconomy {
     @Override
     public boolean hasAccount(OfflinePlayer player, String world) {
         return hasAccount(player);
-    }
-
-    @Override
-    public boolean hasBankSupport() {
-        return false;
     }
 
     @Override
