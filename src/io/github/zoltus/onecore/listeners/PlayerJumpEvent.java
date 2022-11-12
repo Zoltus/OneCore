@@ -12,19 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*
- * TODO
- * SLABS, half blocks
- * boolean boat = false;
- * boolean shulker = false;
- * boat height 0.5625
- * width 1.375
- * List<Entity> nearby = p.getNearbyEntities(1.5, 0.5626, 1.5);
- * <p>
- * 1.9 15w45a Player's jump height is increased from 1.125 blocks to 1.25 blocks. Jump height increased from 1 3⁄16 blocks to 1 4⁄16 blocks.
- * 1.17 20w49a Player's jump while sneaking ignores sculk sensors
- * <a href="https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas">...</a>
- */
 public class PlayerJumpEvent implements Listener {
     //https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas
     //https://www.mcpk.wiki/wiki/Status_Effects
@@ -48,6 +35,17 @@ public class PlayerJumpEvent implements Listener {
          * Doesnt count as jump if jump stats from climbable block, check if player in on wall,
          * can false positive of exacly perfectly in the wall line
          * Doesnt count slabs
+         * SLABS, half blocks
+         * boolean boat = false;
+         * boolean shulker = false;
+         * boat height 0.5625
+         * width 1.375
+         * List<Entity> nearby = p.getNearbyEntities(1.5, 0.5626, 1.5);
+         * <p>
+         * 1.9 15w45a Player's jump height is increased from 1.125 blocks to 1.25 blocks. Jump height increased from 1 3⁄16 blocks to 1 4⁄16 blocks.
+         * 1.17 20w49a Player's jump while sneaking ignores sculk sensors
+         * <a href="https://www.mcpk.wiki/wiki/Vertical_Movement_Formulas">...</a>
+         *
          */
         if (e.getStatistic() == Statistic.JUMP) {
             double velocity = p.getVelocity().getY();
