@@ -34,27 +34,6 @@ public class SignEdit implements ICommand {
     private final NamespacedKey line3 = new NamespacedKey(plugin, "line3");
     private final NamespacedKey line4 = new NamespacedKey(plugin, "line4");
 
-    private List<String> getLines(Player p) {
-        PersistentDataContainer cont = p.getPersistentDataContainer();
-        List<String> lines = Arrays.asList("", "", "", "");
-        lines.set(0, cont.get(line1, PersistentDataType.STRING));
-        lines.set(1, cont.get(line2, PersistentDataType.STRING));
-        lines.set(2, cont.get(line3, PersistentDataType.STRING));
-        lines.set(3, cont.get(line4, PersistentDataType.STRING));
-        return lines;
-    }
-
-    private void setLine(Player p, int line, String text) {
-        text = text == null ? "" : text;
-        PersistentDataContainer cont = p.getPersistentDataContainer();
-        switch (line) {
-            case 0 -> cont.set(line1, PersistentDataType.STRING, text);
-            case 1 -> cont.set(line2, PersistentDataType.STRING, text);
-            case 2 -> cont.set(line3, PersistentDataType.STRING, text);
-            case 3 -> cont.set(line4, PersistentDataType.STRING, text);
-        }
-    }
-
     //todo cleanup, color perms?
     @Override
     public void init() {
@@ -141,12 +120,6 @@ public class SignEdit implements ICommand {
                 .override();
     }
 
-    private void setLine(CommandSender sender, Sign sign, int line, String text) {
-        sign.setLine(line, ChatUtils.toMineHex(text));
-        sign.update(true);
-        SIGNEDIT_SIGN_UPDATED.send(sender);
-    }
-
     private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
             .withPreview((PreviewLegacy) info -> ChatUtils.toComponents(ChatUtils.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
@@ -165,6 +138,33 @@ public class SignEdit implements ICommand {
                     setLine(player, sign, line, text);
                 }
             });
+
+    private List<String> getLines(Player p) {
+        PersistentDataContainer cont = p.getPersistentDataContainer();
+        List<String> lines = Arrays.asList("", "", "", "");
+        lines.set(0, cont.get(line1, PersistentDataType.STRING));
+        lines.set(1, cont.get(line2, PersistentDataType.STRING));
+        lines.set(2, cont.get(line3, PersistentDataType.STRING));
+        lines.set(3, cont.get(line4, PersistentDataType.STRING));
+        return lines;
+    }
+
+    private void setLine(Player p, int line, String text) {
+        text = text == null ? "" : text;
+        PersistentDataContainer cont = p.getPersistentDataContainer();
+        switch (line) {
+            case 0 -> cont.set(line1, PersistentDataType.STRING, text);
+            case 1 -> cont.set(line2, PersistentDataType.STRING, text);
+            case 2 -> cont.set(line3, PersistentDataType.STRING, text);
+            case 3 -> cont.set(line4, PersistentDataType.STRING, text);
+        }
+    }
+
+    private void setLine(CommandSender sender, Sign sign, int line, String text) {
+        sign.setLine(line, ChatUtils.toMineHex(text));
+        sign.update(true);
+        SIGNEDIT_SIGN_UPDATED.send(sender);
+    }
 
     //checks if player can edit sign, and break it
     private Sign canEdit(CommandSender sender) {
