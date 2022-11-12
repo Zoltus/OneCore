@@ -10,6 +10,7 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
+          - config.send(sender, rp,rprp) finish this
           - IArgument to util class?
           - economy singlewords
           - start using userargument
