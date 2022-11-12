@@ -30,13 +30,10 @@ public class TestListener implements Listener {
         Player p = e.getPlayer();
         String msg = e.getMessage();
 
-
         List<String> argsList = new ArrayList<>(Arrays.asList(msg.split(" ")));
         String cmd = argsList.get(0);
         argsList.remove(0);
         String[] args = argsList.toArray(new String[0]);
-        User user = User.of(p);
-
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {
                 case "/testbots" -> {
@@ -53,7 +50,6 @@ public class TestListener implements Listener {
                        }
                    }
                     p.sendMessage("created " + i +  " users");
-
                 }
                 case "/t22" -> {
                     NamespacedKey line1 = new NamespacedKey(OneCore.getPlugin(), "line1");
@@ -67,19 +63,6 @@ public class TestListener implements Listener {
                     p.sendMessage("line4: " + cont.get(line4, PersistentDataType.STRING));
                     p.sendMessage(cont.toString());
 
-                }
-                case "/testa" -> {
-                    p.sendMessage("&a&lpatea");
-                    p.sendMessage("│§8¸ᐧᑊ            §f│");//l &l &l &l &l &l &l
-                }
-                case "/loc" -> {
-                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                    NBTPlayer nbtP = new NBTPlayer(target);
-                    p.sendMessage("§aInv: " + nbtP.getInventory());
-                    p.sendMessage("§bh: " + nbtP.getHealth());
-                    nbtP.setHealth(5);
-                    p.sendMessage("§ch2: " + nbtP.getHealth());
-                    nbtP.save();
                 }
                 case "/repeatcmd" -> {
                     e.setCancelled(true);
@@ -101,19 +84,6 @@ public class TestListener implements Listener {
                     p.sendMessage("saved all users");
                 }
 
-                case "/smoney" -> {
-                    e.setCancelled(true);
-                    int amount = Integer.parseInt(args[0]);
-                    user.setBalance(amount);
-                    p.sendMessage("set money to " + amount);
-                    p.sendMessage("current amount = " + user.getBalance());
-                }
-
-                case "/smoneya" -> {
-                    e.setCancelled(true);
-                    p.sendMessage("current amount = " + user.getBalance());
-                }
-
                 case "/testloadusers" -> {
                     int amount = Integer.parseInt(args[0]);
                     while (amount != 0) {
@@ -121,15 +91,6 @@ public class TestListener implements Listener {
                         amount--;
                     }
                     p.sendMessage("finished testing users");
-                }
-                //  clickCommands.put("/" + this.hashCode() + key, consumer);
-                case "/test22" -> {
-                    p.sendMessage("asdasd");
-                    p.teleport(user.getHomes().get(user.getHomeArray()[0]).toLocation());
-                }
-                case "/dump" -> {
-                    // user.getSettings().forEach((s, o) -> p.sendMessage("§7s: " + s + " o:" + o));
-                    // user.getHomes().forEach((s, o) -> p.sendMessage("§as: " + s + " o:" + o));
                 }
                 case "/jointest" -> //When used remove OnePlayer.of from hashmap if statement
                         Bukkit.getScheduler().runTaskAsynchronously(OneCore.getPlugin(), () -> {
@@ -162,12 +123,6 @@ public class TestListener implements Listener {
                 case "/shtset" -> {
                     int i = Integer.parseInt(args[0]);
                     scheduler.reSchedule(i);
-                }
-
-                case "/tt1" -> {
-                    String a1 = "";
-                    String a2 = "";
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', a1));
                 }
             }
         }
