@@ -4,7 +4,7 @@ import com.google.common.io.Files;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import lombok.Getter;
-import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +21,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 @Getter
-public final class OneEconomy implements Economy {
+public final class OneEconomy extends AbstractEconomy {
     @Getter
     private static final ConcurrentHashMap<UUID, Double> balances = new ConcurrentHashMap<>();
 
@@ -101,6 +101,27 @@ public final class OneEconomy implements Economy {
         return 3;
     }
 
+
+    @Override
+    public boolean has(String player, double amount) {
+        return has(Bukkit.getOfflinePlayer(player), amount);
+    }
+
+    @Override
+    public boolean has(OfflinePlayer offP, double amount) {
+        return getBalance(offP) >= amount;
+    }
+
+    @Override
+    public boolean has(String player, String world, double amount) {
+        return has(Bukkit.getOfflinePlayer(player), world, amount);
+    }
+
+    @Override
+    public boolean has(OfflinePlayer player, String world, double amount) {
+        return has(player, amount);
+    }
+
     @Override
     public double getBalance(String player) {
         return getBalance(Bukkit.getOfflinePlayer(player));
@@ -126,26 +147,6 @@ public final class OneEconomy implements Economy {
     @Override
     public List<String> getBanks() {
         return new ArrayList<>();
-    }
-
-    @Override
-    public boolean has(String player, double amount) {
-        return has(Bukkit.getOfflinePlayer(player), amount);
-    }
-
-    @Override
-    public boolean has(OfflinePlayer offP, double amount) {
-        return getBalance(offP) >= amount;
-    }
-
-    @Override
-    public boolean has(String player, String world, double amount) {
-        return has(Bukkit.getOfflinePlayer(player), world, amount);
-    }
-
-    @Override
-    public boolean has(OfflinePlayer player, String world, double amount) {
-        return has(player, amount);
     }
 
     @Override
