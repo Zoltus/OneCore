@@ -51,12 +51,12 @@ public class Home implements ICommand {
             if (loc != null) {
                 user.teleportTimer(loc.toLocation());
             } else {
-                sender.sendMessage(Lang.HOME_LIST.rp(IConfig.LIST_PH, target.getHomes().keySet()));
+                Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
                 return;
             }
             boolean isSelf = sender.getName().equals(offP.getName());
             if (!isSelf) {
-                sender.sendMessage(Lang.HOME_TELEPORT_OTHERS.rp(IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home));
+                Lang.HOME_TELEPORT_OTHERS.send(sender, IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home);
             }
         }
     }

@@ -3,6 +3,7 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
+import io.github.zoltus.onecore.player.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
@@ -173,6 +174,9 @@ public enum Lang implements IConfig {
     @Getter
     final String path;
 
+    //todo?? mayby
+    // public void setPlayer(String player) {}
+
     public OneYml yml() {
         return Yamls.LANG.getYml();
     }
@@ -181,7 +185,13 @@ public enum Lang implements IConfig {
         sender.sendMessage(replace(replaces));
     }
 
-    private String replace(Object... replaces) {
+    public void send(User user, Object... replaces) {
+        if (user.isOnline()) {
+            send(user.getPlayer(), replaces);
+        }
+    }
+
+    public String replace(Object... replaces) {
         String ph = null;
         String message = getString();
         for (Object objRp : replaces) {

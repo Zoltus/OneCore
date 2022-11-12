@@ -74,11 +74,11 @@ public class Back implements ICommand, Listener {
     private void executes(CommandSender sender, int backAmount, Player target) {
         User targetUser = User.of(target);
         if (targetUser.getLastLocations().isEmpty()) {
-            sender.sendMessage(BACK_NO_HISTORY.rp(PLAYER_PH, target.getName()));
+            BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
         } else if (backAmount > targetUser.getLastLocations().size()) {
-            sender.sendMessage(BACK_OUT_OF_BOUNDS.rp(SIZE_PH, targetUser.getLastLocations().size()));
+            BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, targetUser.getLastLocations().size());
         } else if (sender != target) {
-            sender.sendMessage(BACK_TARGET_SENT.rp(PLAYER_PH, target.getName()));
+            BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
             target.teleport(targetUser.getLastLocation(backAmount));
         } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
             target.teleport(targetUser.getLastLocation(backAmount));

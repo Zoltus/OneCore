@@ -9,6 +9,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Config.PERMISSIO
 
 public interface IConfig {
 
+
     //Placeholders
     String PLAYER_PH = "<player>";
     String PLAYER2_PH = "<player2>";

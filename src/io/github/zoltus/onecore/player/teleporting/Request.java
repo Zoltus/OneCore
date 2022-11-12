@@ -2,15 +2,16 @@ package io.github.zoltus.onecore.player.teleporting;
 
 
 import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
+import io.github.zoltus.onecore.player.User;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
-import io.github.zoltus.onecore.player.User;
 
 import java.util.List;
+
+import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Request {
 
@@ -53,7 +54,7 @@ public class Request {
     private BukkitTask expirtyTimer() {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             requests.remove(this);
-            sender.sendMessage(Lang.TP_EXPIRED.getString());
+            sender.sendMessage(TP_EXPIRED.getString());
         }, 20L * Config.TELEPORT_EXPIRE.getInt());
     }
 
@@ -64,11 +65,11 @@ public class Request {
 
     public static void send(User sender, User accepter, TeleportType type) {
         if (sender == accepter) { //Cant self teleport
-            sender.sendMessage(Lang.TP_CANT_SELF_TELEPORT.getString());
+            TP_CANT_SELF_TELEPORT.send(sender);
         } else if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
-            sender.sendMessage(Lang.TP_TOGGLE_IS_OFF.rp(IConfig.PLAYER_PH, accepter.getName()));
+            TP_TOGGLE_IS_OFF.send(sender, PLAYER_PH, accepter.getName());
         } else if (hasRequest(sender, accepter)) {
-            sender.sendMessage(Lang.TP_YOU_ALREADY_SENT_REQUEST.rp(IConfig.PLAYER_PH, accepter.getName()));
+            TP_YOU_ALREADY_SENT_REQUEST.send(sender, PLAYER_PH, accepter.getName());
         } else {
             new Request(sender, accepter, type);
         }
@@ -77,19 +78,16 @@ public class Request {
     public void accept() {
         User teleporter = type == TeleportType.TPA ? sender : accepter;
         User target = type == TeleportType.TPA ? accepter : sender;
-        String senderMsg = Lang.TP_ACCEPTED.rp(IConfig.PLAYER_PH, accepter.getName());
-        String accepterMsg = Lang.TP_YOU_ACCEPTED.rp(IConfig.PLAYER_PH, accepter.getName());
-        sender.sendMessage(senderMsg);
-        accepter.sendMessage(accepterMsg);
-
+        TP_ACCEPTED.send(sender, PLAYER_PH, accepter.getName());
+        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, accepter.getName());
         cancel();
         Teleport.start(teleporter, target, null);
     }
 
     public void deny() {
         cancel();
-        sender.sendMessage(Lang.TP_DENIED.rp(IConfig.PLAYER_PH, accepter.getName()));
-        accepter.sendMessage(Lang.TP_YOU_DENIED.rp(IConfig.PLAYER_PH, accepter.getName()));
+        TP_DENIED.send(sender, PLAYER_PH, accepter.getName());
+        TP_YOU_DENIED.send(accepter, PLAYER_PH, accepter.getName());
     }
 
     private void cancel() {
@@ -98,7 +96,7 @@ public class Request {
     }
 
     private void sendChat() {
-        sender.sendMessage(Lang.TP_SENT.rp(IConfig.PLAYER_PH, accepter.getName()));
+        TP_SENT.send(sender, PLAYER_PH, accepter.getName());
                 /*ChatBuilder cb = new ChatBuilder(
                 TP_RECEIVED.rp(PLAYER_PH, sender.getName())
                 , TP_RECEIVED_ACCEPT_LINE.getString()

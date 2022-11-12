@@ -22,9 +22,9 @@ public class Tp implements ICommand {
                     Location destination = getLoc(offlineTarget);
                     sender.teleport(destination);
                     if (offlineTarget.isOnline()) {
-                        sender.sendMessage(Lang.TP_TELEPORTED_TARGET.rp(IConfig.PLAYER_PH, offlineTarget.getName()));
+                        Lang.TP_TELEPORTED_TARGET.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());
                     } else {
-                        sender.sendMessage(Lang.TP_TELEPORTED_OFFLINE_TARGET.rp(IConfig.PLAYER_PH, offlineTarget.getName()));
+                       Lang.TP_TELEPORTED_OFFLINE_TARGET.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());
                     }
                 });
         //tp <player> <player>
@@ -35,9 +35,9 @@ public class Tp implements ICommand {
                     Location destination = getLoc(target);
                     tp(fromOff, destination);
                     if (fromOff.isOnline() && target.isOnline()) {
-                        sender.sendMessage(Lang.TP_TELEPORTED_TARGETS.rp(IConfig.PLAYER_PH, fromOff.getName(), IConfig.PLAYER2_PH, target.getName()));
+                        Lang.TP_TELEPORTED_TARGETS.send(sender, IConfig.PLAYER_PH, fromOff.getName(), IConfig.PLAYER2_PH, target.getName());
                     } else {
-                        sender.sendMessage(Lang.TP_TELEPORTED_OFFLINE_TARGETS.rp(IConfig.PLAYER_PH, fromOff.getName(), IConfig.PLAYER2_PH, target.getName()));
+                        Lang.TP_TELEPORTED_OFFLINE_TARGETS.send(sender, IConfig.PLAYER_PH, fromOff.getName(), IConfig.PLAYER2_PH, target.getName());
                     }
                 });
         //tp
@@ -55,9 +55,9 @@ public class Tp implements ICommand {
                             OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
                             tp(offlineTarget, sender.getLocation());
                             if (offlineTarget.isOnline()) {
-                                sender.sendMessage(Lang.TPHERE_TELEPORTED.rp(IConfig.PLAYER_PH, offlineTarget.getName()));
+                                Lang.TPHERE_TELEPORTED.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());
                             } else {
-                                sender.sendMessage(Lang.TPHERE_OFFLINE_TARGET.rp(IConfig.PLAYER_PH, offlineTarget.getName()));
+                                Lang.TPHERE_OFFLINE_TARGET.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());
                             }
                         })).override();
     }

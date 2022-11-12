@@ -49,13 +49,13 @@ public class SetHome implements ICommand {
             boolean canHaveMoreHomes = isSelf || target.hasFreeHomeSlots();
             if (target.hasHome(home) || canHaveMoreHomes) {
                 target.setHome(home, target.getPlayer().getLocation());
-                target.sendMessage(Lang.SETHOME_SET.rp(IConfig.HOME_PH, home));
+                Lang.SETHOME_SET.send(target, IConfig.HOME_PH, home);
             } else {
-                target.sendMessage(Lang.SETHOME_FULL_HOMES.getString());
+                Lang.SETHOME_FULL_HOMES.send(target);
                 return;
             }
             if (!isSelf) {
-                sender.sendMessage(Lang.SETHOME_OTHER.rp(IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home));
+                Lang.SETHOME_OTHER.send(sender, IConfig.PLAYER_PH, offP.getName(), IConfig.HOME_PH, home);
             }
         }
     }

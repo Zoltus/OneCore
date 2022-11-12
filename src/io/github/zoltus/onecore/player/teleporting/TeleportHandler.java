@@ -51,7 +51,7 @@ public class TeleportHandler implements Listener {
         if (hasTeleport(uuid)) {
             Teleport tele = getTeleport(uuid);
             if (tele.getTarget() != null) {
-                getTeleport(uuid).cancel(TP_TARGET_QUIT.rp(PLAYER_PH, tele.getTarget().getName()));
+                getTeleport(uuid).cancel(TP_TARGET_QUIT.replace(PLAYER_PH, tele.getTarget().getName()));
             }
         }
     }

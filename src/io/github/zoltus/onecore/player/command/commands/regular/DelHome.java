@@ -44,10 +44,9 @@ public class DelHome implements ICommand {
             home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             //todo check if user has home
             target.delHome(home);
-            target.sendMessage(DELHOME_DELETED.rp(HOME_PH, home));
-
+            DELHOME_DELETED.send(target, HOME_PH, home);
             if (!isSelf) {
-                sender.sendMessage(DELHOME_OTHER.rp(PLAYER_PH, target.getName(), HOME_PH, home));
+                DELHOME_OTHER.send(sender, PLAYER_PH, target.getName(), HOME_PH, home);
             }
         }
     }

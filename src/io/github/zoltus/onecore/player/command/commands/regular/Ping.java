@@ -18,14 +18,14 @@ public class Ping implements ICommand {
         ArgumentTree arg0 = new PlayerArgument()
                 .executes((sender, args) -> {
                     Player target = (Player) args[0];
-                    sender.sendMessage(PING_TARGETS_PING.rp(PING_PH, target.getPing(), PLAYER_PH, target.getName()));
+                    PING_TARGETS_PING.send(target, PING_PH, target.getPing(), PLAYER_PH, target.getName());
                 });
         //Ping
         new Command(PING_LABEL)
                 .withPermission(PING_PERMISSION)
                 .withAliases(PING_ALIASES)
                 .executesPlayer((player, args) -> {
-                    player.sendMessage(PING_YOUR_PING.rp(PING_PH, player.getPing()));
+                    PING_YOUR_PING.send(player, PING_PH, player.getPing());
                 }).then(arg0)
                 .override();
     }

@@ -76,7 +76,7 @@ public class Weather implements ICommand {
             w.setStorm(true);
             w.setThundering(false);
         }
-        sender.sendMessage(Lang.WEATHER_CHANGED.rp(IConfig.WEATHER_PH, weatherType, IConfig.WORLD_PH, w.getName()));
+        Lang.WEATHER_CHANGED.send(sender, IConfig.WEATHER_PH, weatherType, IConfig.WORLD_PH, w.getName());
     }
 
     private boolean containsIgnoreCase(Commands langArr, String contains) {
