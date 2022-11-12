@@ -114,6 +114,21 @@ public final class OneEconomy implements Economy {
     }
 
     @Override
+    public double getBalance(String player, String world) {
+        return getBalance(Bukkit.getOfflinePlayer(player), world);
+    }
+
+    @Override
+    public double getBalance(OfflinePlayer player, String world) {
+        return getBalance(player);
+    }
+
+    @Override
+    public List<String> getBanks() {
+        return new ArrayList<>();
+    }
+
+    @Override
     public boolean has(String player, double amount) {
         return has(Bukkit.getOfflinePlayer(player), amount);
     }
@@ -121,6 +136,42 @@ public final class OneEconomy implements Economy {
     @Override
     public boolean has(OfflinePlayer offP, double amount) {
         return getBalance(offP) >= amount;
+    }
+
+    @Override
+    public boolean has(String player, String world, double amount) {
+        return has(Bukkit.getOfflinePlayer(player), world, amount);
+    }
+
+    @Override
+    public boolean has(OfflinePlayer player, String world, double amount) {
+        return has(player, amount);
+    }
+
+    @Override
+    public boolean hasAccount(String player, String world) {
+        return hasAccount(Bukkit.getOfflinePlayer(player), world);
+    }
+
+    @Override
+    public boolean hasAccount(OfflinePlayer player, String world) {
+        return hasAccount(player);
+    }
+
+    @Override
+    public boolean hasBankSupport() {
+        return false;
+    }
+
+    @Override
+    public boolean hasAccount(String player) {
+        return hasAccount(Bukkit.getOfflinePlayer(player));
+    }
+
+    @Override
+    public boolean hasAccount(OfflinePlayer offP) {
+        //todo xxxx
+        return balances.containsKey(offP.getUniqueId());
     }
 
     @Override
@@ -141,6 +192,16 @@ public final class OneEconomy implements Economy {
     }
 
     @Override
+    public EconomyResponse withdrawPlayer(String player, String world, double amount) {
+        return withdrawPlayer(Bukkit.getOfflinePlayer(player), world, amount);
+    }
+
+    @Override
+    public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
+        return withdrawPlayer(player, amount);
+    }
+
+    @Override
     public EconomyResponse depositPlayer(String player, double amount) {
         return depositPlayer(Bukkit.getOfflinePlayer(player), amount);
     }
@@ -158,14 +219,13 @@ public final class OneEconomy implements Economy {
     }
 
     @Override
-    public boolean hasAccount(String player) {
-        return hasAccount(Bukkit.getOfflinePlayer(player));
+    public EconomyResponse depositPlayer(String player, String world, double amount) {
+        return depositPlayer(Bukkit.getOfflinePlayer(player), world, amount);
     }
 
     @Override
-    public boolean hasAccount(OfflinePlayer offP) {
-        //todo xxxx
-        return balances.containsKey(offP.getUniqueId());
+    public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
+        return depositPlayer(player, amount);
     }
 
     @Override
@@ -187,61 +247,6 @@ public final class OneEconomy implements Economy {
     @Override
     public boolean createPlayerAccount(OfflinePlayer player, String world) {
         return createPlayerAccount(player);
-    }
-
-    @Override
-    public boolean hasAccount(String player, String world) {
-        return hasAccount(Bukkit.getOfflinePlayer(player), world);
-    }
-
-    @Override
-    public boolean hasAccount(OfflinePlayer player, String world) {
-        return hasAccount(player);
-    }
-
-    @Override
-    public double getBalance(String player, String world) {
-        return getBalance(Bukkit.getOfflinePlayer(player), world);
-    }
-
-    @Override
-    public double getBalance(OfflinePlayer player, String world) {
-        return getBalance(player);
-    }
-
-    @Override
-    public boolean has(String player, String world, double amount) {
-        return has(Bukkit.getOfflinePlayer(player), world, amount);
-    }
-
-    @Override
-    public boolean has(OfflinePlayer player, String world, double amount) {
-        return has(player, amount);
-    }
-
-    @Override
-    public EconomyResponse withdrawPlayer(String player, String world, double amount) {
-        return withdrawPlayer(Bukkit.getOfflinePlayer(player), world, amount);
-    }
-
-    @Override
-    public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
-        return withdrawPlayer(player, amount);
-    }
-
-    @Override
-    public EconomyResponse depositPlayer(String player, String world, double amount) {
-        return depositPlayer(Bukkit.getOfflinePlayer(player), world, amount);
-    }
-
-    @Override
-    public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
-        return depositPlayer(player, amount);
-    }
-
-    @Override
-    public boolean hasBankSupport() {
-        return false;
     }
 
     @Override
@@ -297,11 +302,6 @@ public final class OneEconomy implements Economy {
     @Override
     public EconomyResponse isBankMember(String bank, OfflinePlayer player) {
         return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
-    }
-
-    @Override
-    public List<String> getBanks() {
-        return new ArrayList<>();
     }
 
     @Override
