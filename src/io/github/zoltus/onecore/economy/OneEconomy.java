@@ -20,13 +20,14 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+@Getter
 public final class OneEconomy implements Economy {
     @Getter
     private static final ConcurrentHashMap<UUID, Double> balances = new ConcurrentHashMap<>();
 
     private final Logger logger;
     private final OneCore plugin;
-    @Getter private final String name = "OneEconomy";
+    private final String name = "OneEconomy";
 
     public boolean isEnabled() {
         return (plugin.getVault() != null);
@@ -301,10 +302,6 @@ public final class OneEconomy implements Economy {
     @Override
     public List<String> getBanks() {
         return new ArrayList<>();
-    }
-
-    public OneCore plugin() {
-        return plugin;
     }
 
     @Override
