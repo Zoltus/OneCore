@@ -46,7 +46,7 @@ public final class Teleport {
     }
 
     private BukkitTask teleportTimer() {
-        teleporter.sendMessage(TP_STARTED.rp(SECONDS_PH, DELAY));
+        TP_STARTED.send(teleporter, SECONDS_PH, DELAY);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Location destination = target == null ? loc : target.getPlayer().getLocation();
             Location safeLoc = LocationUtils.getSafeLocation(teleporter.getPlayer(), destination); //todo async

@@ -61,15 +61,14 @@ public class EconomyCMD implements ICommand {
                             double amount = (double) args[2];
                             Bukkit.getConsoleSender().sendMessage("a33");
                             if (target.deposit(amount)) {
-                                sender.sendMessage(ECONOMY_GIVE_GAVE.rp(
+                                ECONOMY_GIVE_GAVE.send(sender,
                                         PLAYER_PH, target.getName(),
+                                        AMOUNT_PH, amount, BALANCE_PH,
+                                        target.getBalance());
+                                ECONOMY_GIVE_YOUR_BALANCE_WAS_INCREACED.send(target,
+                                        PLAYER_PH, sender.getName(),
                                         AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance()
-                                ));
-                                target.sendMessage(ECONOMY_GIVE_YOUR_BALANCE_WAS_INCREACED.rp(
-                                        PLAYER_PH, sender.getName(), AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance()
-                                ));
+                                        BALANCE_PH, target.getBalance());
                             }
                         }))
                 );
@@ -92,17 +91,18 @@ public class EconomyCMD implements ICommand {
                             User target = (User) args[0];
                             double amount = (double) args[1];
                             if (target.withdraw(amount)) {
-                                sender.sendMessage(ECONOMY_TAKE_TOOK.rp(
+                                ECONOMY_TAKE_TOOK.send(sender,
                                         PLAYER_PH, target.getName(),
                                         AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance()
-                                ));
-                                target.sendMessage(ECONOMY_TAKE_YOUR_BALANCE_REDUCED.rp(
+                                        BALANCE_PH, target.getBalance());
+                                ECONOMY_TAKE_YOUR_BALANCE_REDUCED.send(target,
                                         AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance()
-                                ));
+                                        BALANCE_PH, target.getBalance());
                             } else {
-                                sender.sendMessage(ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.rp(PLAYER_PH, target.getName()));
+                                ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.send(sender,
+                                        PLAYER_PH, target.getName(),
+                                        AMOUNT_PH, amount,
+                                        BALANCE_PH, target.getBalance());
                             }
                         }))
                 );
@@ -115,8 +115,10 @@ public class EconomyCMD implements ICommand {
                             User target = (User) args[0];
                             double amount = (double) args[1];
                             if (target.setBalance(amount)) {
-                                sender.sendMessage(ECONOMY_SET_SET.rp(PLAYER_PH, target.getName(), AMOUNT_PH, amount));
-                                target.sendMessage(ECONOMY_SET_YOUR_BALANCE_WAS_SET.rp(AMOUNT_PH, amount));
+                                ECONOMY_SET_SET.send(sender,
+                                        PLAYER_PH, target.getName(),
+                                        AMOUNT_PH, amount);
+                                ECONOMY_SET_YOUR_BALANCE_WAS_SET.send(target, AMOUNT_PH, amount);
                             }
                         }))
                 );
@@ -144,7 +146,7 @@ public class EconomyCMD implements ICommand {
                                 UUID uuid = entry.getKey();
                                 double value = entry.getValue();
                                 String name = Bukkit.getOfflinePlayer(uuid).getName();
-                                sender.sendMessage(ECONOMY_BALTOP_LINE.rp(PLAYER_PH, name, AMOUNT_PH, value));
+                                ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
                                 topAmount--;
                             }
                         });
@@ -172,25 +174,22 @@ public class EconomyCMD implements ICommand {
         if (from.getBalance() < amount) { // Not enought money
             from.sendMessage(ECONOMY_NOT_ENOUGHT.getString());
             if (admin != null) {
-                admin.sendMessage(ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.rp(PLAYER_PH, from.getName()));
+                ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.send(admin, PLAYER_PH, from.getName());
             }
         } else if (from.withdraw(amount) && to.deposit(amount)) { // Sent
-            from.sendMessage(ECONOMY_PAY_SENT.rp(
+            ECONOMY_PAY_SENT.send(from,
                     AMOUNT_PH, amount,
                     PLAYER_PH, to.getName(),
-                    BALANCE_PH, from.getBalance()
-            ));
-            to.sendMessage(ECONOMY_PAY_RECEIVED.rp(
+                    BALANCE_PH, from.getBalance());
+            ECONOMY_PAY_RECEIVED.send(to,
                     AMOUNT_PH, amount,
                     PLAYER_PH, from.getName(),
-                    BALANCE_PH, from.getBalance()
-            ));
+                    BALANCE_PH, from.getBalance());
             if (admin != null) {
-                admin.sendMessage(ECONOMY_TRANSFER_TRANSFERED.rp(
+                ECONOMY_TRANSFER_TRANSFERED.send(admin,
                         AMOUNT_PH, amount,
                         PLAYER_PH, from.getName(),
-                        PLAYER2_PH, to.getName())
-                );
+                        PLAYER2_PH, to.getName());
             }
         }
     }
@@ -198,11 +197,11 @@ public class EconomyCMD implements ICommand {
     private void handleBalance(CommandSender sender, User target) {
         double balance = target.getBalance();
         if (sender == target.getPlayer()) {
-            sender.sendMessage(ECONOMY_BALANCE_YOUR_BALANCE
-                    .rp(BALANCE_PH, balance));
+            ECONOMY_BALANCE_YOUR_BALANCE.send(sender, BALANCE_PH, balance);
         } else {
-            sender.sendMessage(ECONOMY_BALANCE_TARGETS_BALANCE
-                    .rp(PLAYER_PH, target.getName(), BALANCE_PH, balance));
+            ECONOMY_BALANCE_TARGETS_BALANCE.send(sender,
+                    PLAYER_PH, target.getName(),
+                    BALANCE_PH, balance);
         }
     }
 }

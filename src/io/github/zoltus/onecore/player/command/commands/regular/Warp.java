@@ -31,7 +31,7 @@ public class Warp implements ICommand {
             String input = info.input();
             Location warp = warps.getLocation(input);
             if (warp == null) {
-                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.rp(LIST_PH, warps.getKeys(false)));
+                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.replace(LIST_PH, warps.getKeys(false)));
             } else {
                 return new WarpObj(input, warp);
             }
@@ -66,7 +66,7 @@ public class Warp implements ICommand {
                         nbtPlayer.save();
                     }
                     if (offTarget.getPlayer() != sender) {
-                        sender.sendMessage(WARP_TARGET_SENT.rp(PLAYER_PH, offTarget.getName(), WARP_PH, warpName));
+                        WARP_TARGET_SENT.send(sender, WARP_PH, warpName, PLAYER_PH, offTarget.getName());
                     }
                 });
         //warp, warps
@@ -74,7 +74,7 @@ public class Warp implements ICommand {
                 .withPermission(WARP_PERMISSION)
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
-                    p.sendMessage(WARP_LIST.rp(LIST_PH, warps.getKeys(false).toString()));
+                    WARP_LIST.send(p, LIST_PH, warps.getKeys(false).toString());
                 }).then(arg0.then(arg1))
                 .override();
     }

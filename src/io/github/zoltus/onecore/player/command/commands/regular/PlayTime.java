@@ -1,15 +1,17 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.ArgumentTree;
+import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
-import io.github.zoltus.onecore.player.command.Command;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.TIME_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -23,8 +25,7 @@ public class PlayTime implements ICommand {
                     OfflinePlayer offTarget = (OfflinePlayer) args[0];
                     int playtime = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
                     String timeMessage = secondsToTime(playtime);
-                    String message = PLAYTIME_TARGETS_PLAYTIME.rp(TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());
-                    sender.sendMessage(message);
+                    PLAYTIME_TARGETS_PLAYTIME.send(sender, TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());
                 });
         //playtime
         new Command(PLAYTIME_LABEL)
@@ -32,8 +33,7 @@ public class PlayTime implements ICommand {
                 .withAliases(PLAYTIME_ALIASES)
                 .executesPlayer((player, args) -> {
                     String timeMessage = secondsToTime(player.getStatistic(Statistic.PLAY_ONE_MINUTE));
-                    String message = PLAYTIME_YOUR_PLAYTIME.rp(TIME_PH, timeMessage);
-                    player.sendMessage(message);
+                    PLAYTIME_YOUR_PLAYTIME.send(player, TIME_PH, timeMessage);
                 }).then(arg0)
                 .override();
     }

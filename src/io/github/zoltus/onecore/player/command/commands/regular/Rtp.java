@@ -43,7 +43,7 @@ public class Rtp implements ICommand {
                         handleRtp(p, uuid, cooldownSeconds);
                     } else {
                         long secondsLeft = (rtpTime + cooldownSeconds - System.currentTimeMillis()) / 1000;
-                        p.sendMessage(RTP_ON_COOLDOWN.rp(SECONDS_PH, secondsLeft));
+                        RTP_ON_COOLDOWN.send(p, SECONDS_PH, secondsLeft);
                     }
                 }).override();
     }

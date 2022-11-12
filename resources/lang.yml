@@ -63,7 +63,8 @@ Data:
       # <amount>, <balance>
       your-balance-was-increaced: '{p} Admin gave you <amount>, new balance <balance>'
     not-enought: '{p} You dont have enought money'
-    target-doesnt-have-enought-money: '{p} <player> didnt have enought money'
+    # <player>, <amount>, <balance>
+    target-doesnt-have-enought-money: '{p} <player> didnt have enought money he has <balance> and you tried to take <amount>'
     pay:
       # <player>, <amount>, <balance>
       received: '{p} You received <amount> from <player>, your new balance is <balance>'

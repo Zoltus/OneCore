@@ -32,16 +32,17 @@ public class Msg implements ICommand {
                     return ChatUtils.toComponents(toSendMessage(target, sender, message));
                 })
                 .executesPlayer((sender, args) -> {
-            Player target = (Player) args[0];
-            String senderName = sender.getName();
-            String targetName = target.getName();
-            String message = BaseComponent.toPlainText((BaseComponent[]) args[1]);
-            message = ChatColor.translateAlternateColorCodes('&', message);
-            String receivedMsg = Lang.MSG_RECEIVED_MSG.rp(IConfig.PLAYER_PH,senderName, IConfig.PLAYER2_PH, targetName, IConfig.MESSAGE_PH, message);
-
-            sender.sendMessage(toSendMessage(targetName, senderName, message));
-            target.sendMessage(receivedMsg);
-        });
+                    Player target = (Player) args[0];
+                    String senderName = sender.getName();
+                    String targetName = target.getName();
+                    String message = BaseComponent.toPlainText((BaseComponent[]) args[1]);
+                    message = ChatColor.translateAlternateColorCodes('&', message);
+                    sender.sendMessage(toSendMessage(targetName, senderName, message));
+                    Lang.MSG_RECEIVED_MSG.send(target,
+                            IConfig.PLAYER_PH, senderName,
+                            IConfig.PLAYER2_PH, targetName,
+                            IConfig.MESSAGE_PH, message);
+                });
         //base
         new Command(Commands.MSG_LABEL)
                 .withPermission(Commands.MSG_PERMISSION)
@@ -50,7 +51,10 @@ public class Msg implements ICommand {
                 .override();
     }
 
+    //??
     private String toSendMessage(String sender, String target, String message) {
-        return Lang.MSG_SENT_MSG.rp(IConfig.PLAYER_PH, sender, IConfig.PLAYER2_PH, target, IConfig.MESSAGE_PH, message);
+        return Lang.MSG_SENT_MSG.replace(IConfig.PLAYER_PH, sender,
+                IConfig.PLAYER2_PH, target,
+                IConfig.MESSAGE_PH, message);
     }
 }

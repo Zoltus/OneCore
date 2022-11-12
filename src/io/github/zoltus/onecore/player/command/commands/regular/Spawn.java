@@ -48,7 +48,7 @@ public class Spawn implements ICommand {
                             nbtPlayer.save();
                         }
                         if (offTarget.getPlayer() != sender) {
-                            sender.sendMessage(Lang.SPAWN_TARGET_SENT.rp(IConfig.PLAYER_PH, offTarget.getName()));
+                            Lang.SPAWN_TARGET_SENT.send(sender, IConfig.PLAYER_PH, offTarget.getName());
                         }
                     }
                 });
