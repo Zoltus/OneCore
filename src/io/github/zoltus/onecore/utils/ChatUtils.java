@@ -1,8 +1,6 @@
 package io.github.zoltus.onecore.utils;
 
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,9 +46,5 @@ public class ChatUtils {
             sb.replace(matcher.start(), matcher.end(), String.valueOf(ChatColor.of(color)));
         }
         return ChatColor.translateAlternateColorCodes('&', sb.toString());
-    }
-    //For chatpreview
-    public static BaseComponent[] toComponents(String text) {
-        return TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', text));
     }
 }

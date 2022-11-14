@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class User {
 
-    @Getter //Concurrent becaue of async
+    @Getter //Concurrent becaue of async //todo back to hashmap? all is loaded on startup
     private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
