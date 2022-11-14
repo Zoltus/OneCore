@@ -5,9 +5,7 @@ import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.ChatArgument;
 import dev.jorel.commandapi.arguments.IntegerArgument;
-import dev.jorel.commandapi.wrappers.PreviewLegacy;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.utils.ChatUtils;
@@ -121,7 +119,6 @@ public class SignEdit implements ICommand {
     }
 
     private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
-            .withPreview((PreviewLegacy) info -> ChatUtils.toComponents(ChatUtils.toMineHex(info.input())))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
                 if (sign != null && sign.getLines().length != 0) {

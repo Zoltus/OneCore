@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.command;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -16,10 +15,6 @@ public interface IArgument {
     default String[] playerSuggestions(String input) {
         return filter(input, Bukkit.getOnlinePlayers().stream()
                 .map(Player::getName).toArray(String[]::new));
-    }
-    default String[] worldSuggestions(String input) {
-        return filter(input, Bukkit.getWorlds().stream()
-                .map(World::getName).toArray(String[]::new));
     }
 
     default String[] filter(String input, String... suggestions) {

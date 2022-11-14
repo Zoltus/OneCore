@@ -27,4 +27,9 @@ public class WorldsArgument extends CustomArgument<World, String> implements IAr
         replaceSuggestions(ArgumentSuggestions
                 .strings(info -> worldSuggestions(info.currentArg())));
     }
+
+    private String[] worldSuggestions(String input) {
+        return filter(input, Bukkit.getWorlds().stream()
+                .map(World::getName).toArray(String[]::new));
+    }
 }

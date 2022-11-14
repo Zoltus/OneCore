@@ -10,9 +10,9 @@
     ╚═╝╚═╝
       TODO:
         Todo-----------:
-          - IArgument to util class?
           - economy singlewords
           - start using userargument
+          - split economy class to multiple cmds
           - economy needs to use offlineusers or userarg
           - signedit remake, paste "text from copied" to line
           - sign edit copy <line>
@@ -26,6 +26,9 @@
         Important:
           - Rtp improvements to async & create worker.
         Not important:
+          - IArgument to util class?
+          - remove static imports
+          - better yml usage
           - fakebreak class change. custom event?
           - clean database class
           - look coreprotect sqlite settings
