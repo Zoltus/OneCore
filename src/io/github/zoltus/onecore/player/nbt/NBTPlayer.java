@@ -104,10 +104,6 @@ public class NBTPlayer {
         nbt.setBoolean("Invulnerable", bool);
     }
 
-    public float getHealth() {
-        return data.getHealth();
-    }
-
     public void setHealth(double d) {
         nbt.setDouble("Health", d);
     }

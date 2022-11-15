@@ -5,9 +5,7 @@ import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
@@ -18,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TIME_INVALID_TIME;
 
 public class Time implements ICommand {
 

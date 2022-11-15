@@ -5,9 +5,7 @@ import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.EntityTypeArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import org.bukkit.entity.Entity;
@@ -16,7 +14,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class KillAll implements ICommand {

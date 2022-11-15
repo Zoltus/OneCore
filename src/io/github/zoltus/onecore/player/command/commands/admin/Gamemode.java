@@ -11,8 +11,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.MODE_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
