@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.IntegerArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;

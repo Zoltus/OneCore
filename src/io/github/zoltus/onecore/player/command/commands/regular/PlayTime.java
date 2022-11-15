@@ -10,8 +10,6 @@ import org.bukkit.Statistic;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.TIME_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 

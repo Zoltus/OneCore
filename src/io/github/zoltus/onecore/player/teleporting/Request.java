@@ -10,7 +10,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Request {

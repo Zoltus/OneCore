@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 
 public class Broadcast implements ICommand {
 
+    //todo
     private final String PREFIX = Lang.BROADCAST_PREFIX.getString();
 
     @Override
