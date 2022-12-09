@@ -1,6 +1,9 @@
 package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
+import io.github.zoltus.onecore.utils.SlowingScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -11,9 +14,6 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.teleporting.LocationUtils;
-import io.github.zoltus.onecore.utils.SlowingScheduler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,18 +35,18 @@ public class TestListener implements Listener {
             switch (cmd.toLowerCase()) {
                 case "/testbots" -> {
                     int i = 0;
-                   for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                       p.sendMessage("cehcking " + onlinePlayer.getName());
-                       User of = User.of(onlinePlayer);
-                       if (of == null) {
-                           p.sendMessage("null");
-                           new User(onlinePlayer);
-                           i++;
-                       } else {
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        p.sendMessage("cehcking " + onlinePlayer.getName());
+                        User of = User.of(onlinePlayer);
+                        if (of == null) {
+                            p.sendMessage("null");
+                            new User(onlinePlayer);
+                            i++;
+                        } else {
                             p.sendMessage("not null");
-                       }
-                   }
-                    p.sendMessage("created " + i +  " users");
+                        }
+                    }
+                    p.sendMessage("created " + i + " users");
                 }
                 case "/t22" -> {
                     NamespacedKey line1 = new NamespacedKey(OneCore.getPlugin(), "line1");
@@ -127,3 +127,19 @@ public class TestListener implements Listener {
 
     public static SlowingScheduler scheduler;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
