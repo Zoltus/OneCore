@@ -102,6 +102,7 @@
             <version>${log4j.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.-->
         <dependency>

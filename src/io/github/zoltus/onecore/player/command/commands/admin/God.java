@@ -12,8 +12,6 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class God implements ICommand {
-
-
     @Override
     public void init() {
         //god <pelaaja>
@@ -23,13 +21,11 @@ public class God implements ICommand {
                     boolean result;
                     if (target.getPlayer() != null) {
                         Player onlTarget = target.getPlayer();
-                        result = !onlTarget.isInvulnerable();
-                        onlTarget.setInvulnerable(result);
+                        onlTarget.setInvulnerable(result = !onlTarget.isInvulnerable());
                         GOD_SET_TO.send(onlTarget, MODE_PH, result);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(target);
-                        result = !nbtPlayer.getInvulnerable();
-                        nbtPlayer.setInvulnerable(result);
+                        nbtPlayer.setInvulnerable(result = !nbtPlayer.getInvulnerable());
                         nbtPlayer.save();
                     }
                     if (sender != target.getPlayer()) {

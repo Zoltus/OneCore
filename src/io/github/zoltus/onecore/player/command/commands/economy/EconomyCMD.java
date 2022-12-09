@@ -57,14 +57,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_GIVE_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    for (Object s : args) {
-                        Bukkit.getConsoleSender().sendMessage(s.toString());
-                    }
-                    Bukkit.getConsoleSender().sendMessage("@@@@@@@@@@a11");
                     User target = (User) args[0];
-                    Bukkit.getConsoleSender().sendMessage("a22");
                     double amount = (double) args[1];
-                    Bukkit.getConsoleSender().sendMessage("a33");
                     if (target.deposit(amount)) {
                         ECONOMY_GIVE_GAVE.send(sender,
                                 PLAYER_PH, target.getName(),
