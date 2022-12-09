@@ -36,11 +36,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             User target = User.of(offP);
 
-            if (target != null) {
-                return filter(info.currentArg(), target.getHomeArray());
-            } else {
-                return filter(info.currentArg());
-            }
+            return target != null ? filter(info.currentArg(), target.getHomeArray()) : filter(info.currentArg());
         })));
     }
 

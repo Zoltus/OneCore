@@ -11,8 +11,6 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.Request;
 
 public class Tpaccept implements ICommand {
-
-
     @Override
     public void init() {
         //tpaccept <player>
