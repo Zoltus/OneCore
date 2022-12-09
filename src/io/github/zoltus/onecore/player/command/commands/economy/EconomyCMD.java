@@ -1,4 +1,4 @@
-package io.github.zoltus.onecore.player.command.commands.regular;
+package io.github.zoltus.onecore.player.command.commands.economy;
 
 import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.DoubleArgument;
@@ -7,7 +7,6 @@ import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -19,6 +18,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -33,18 +36,18 @@ public class EconomyCMD implements ICommand {
                     handleBalance(sender.getPlayer(), User.of(sender));
                 });
         // balance <player>
-        ArgumentTree balanceOther = new OfflinePlayerArgument()
+        ArgumentTree balanceOther = new UserArgument()
                 .withPermission(ECONOMY_BALANCE_PERMISSION.asPermission())
                 .executes((sender, args) -> {
-                    handleBalance(sender, User.of((OfflinePlayer) args[0]));
+                    handleBalance(sender, (User) args[1]);
                 });
         // pay <player> <amount>
         ArgumentTree pay = multiLiteralArgument(ECONOMY_PAY_LABEL, ECONOMY_PAY_ALIASES)
                 .withPermission(ECONOMY_PAY_PERMISSION.asPermission())
-                .then(new OfflinePlayerArgument()
+                .then(new UserArgument()
                         .then(new DoubleArgument(NODES_AMOUNT.getString())
                                 .executes((sender, args) -> {
-                                    transfer(User.of((OfflinePlayer) sender), (User) args[0], (double) args[1], null);
+                                    transfer(User.of((OfflinePlayer) sender), (User) args[1], (double) args[2], null);
                                 }))
                 );
         // give <player> <amount>
@@ -52,7 +55,7 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_GIVE_PERMISSION.asPermission())
                 .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
                         .executes((sender, args) -> {
-                            for (Object s  : args) {
+                            for (Object s : args) {
                                 Bukkit.getConsoleSender().sendMessage(s.toString());
                             }
                             Bukkit.getConsoleSender().sendMessage("@@@@@@@@@@a11");
@@ -76,11 +79,13 @@ public class EconomyCMD implements ICommand {
         // transfer <player> <player> <amount>
         ArgumentTree transfer = multiLiteralArgument(ECONOMY_TRANSFER_LABEL, ECONOMY_TRANSFER_PERMISSION)
                 .withPermission(ECONOMY_TRANSFER_PERMISSION.asPermission())
-                .then(new UserArgument("1").then(new UserArgument("2").then(new DoubleArgument(NODES_AMOUNT.getString())
-                        .executes((sender, args) -> {
-                            double amount = (double) args[2];
-                            transfer((User) args[0], (User) args[1], amount, sender);
-                        })))
+                .then(new UserArgument("1")
+                        .then(new UserArgument("2")
+                                .then(new DoubleArgument(NODES_AMOUNT.getString())
+                                        .executes((sender, args) -> {
+                                            double amount = (double) args[3];
+                                            transfer((User) args[1], (User) args[2], amount, sender);
+                                        })))
                 );
 
         // take <player> <amount>
@@ -88,8 +93,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_TAKE_PERMISSION.asPermission())
                 .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
                         .executes((sender, args) -> {
-                            User target = (User) args[0];
-                            double amount = (double) args[1];
+                            User target = (User) args[1];
+                            double amount = (double) args[2];
                             if (target.withdraw(amount)) {
                                 ECONOMY_TAKE_TOOK.send(sender,
                                         PLAYER_PH, target.getName(),
@@ -112,8 +117,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_SET_PERMISSION.asPermission())
                 .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
                         .executes((sender, args) -> {
-                            User target = (User) args[0];
-                            double amount = (double) args[1];
+                            User target = (User) args[1];
+                            double amount = (double) args[2];
                             if (target.setBalance(amount)) {
                                 ECONOMY_SET_SET.send(sender,
                                         PLAYER_PH, target.getName(),
@@ -155,7 +160,6 @@ public class EconomyCMD implements ICommand {
                     }
                 });
 
-
         new Command(ECONOMY_LABEL)
                 .withPermission(ECONOMY_PERMISSION)
                 .withAliases(ECONOMY_ALIASES)
@@ -170,6 +174,7 @@ public class EconomyCMD implements ICommand {
                 .override();
     }
 
+    //todo if admin tries to transfer and target doesnt have enought money he gets notified
     private void transfer(User from, User to, double amount, CommandSender admin) {
         if (from.getBalance() < amount) { // Not enought money
             from.sendMessage(ECONOMY_NOT_ENOUGHT.getString());

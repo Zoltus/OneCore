@@ -2,6 +2,7 @@ package io.github.zoltus.onecore;
 
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.commands.admin.*;
+import io.github.zoltus.onecore.player.command.commands.economy.EconomyCMD;
 import io.github.zoltus.onecore.player.command.commands.regular.*;
 
 import java.util.List;
