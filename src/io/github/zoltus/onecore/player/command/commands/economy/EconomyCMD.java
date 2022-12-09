@@ -1,11 +1,10 @@
 package io.github.zoltus.onecore.player.command.commands.economy;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.DoubleArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import org.bukkit.Bukkit;
@@ -29,108 +28,105 @@ public class EconomyCMD implements ICommand {
 
     @Override
     public void init() {
-        // balance //ECONOMY_BALANCE_LABEL
-        ArgumentTree balance = multiLiteralArgument(ECONOMY_BALANCE_LABEL, ECONOMY_BALANCE_ALIASES)
+        // balance2 //ECONOMY_BALANCE_LABEL
+        CommandAPICommand balance = new CommandAPICommand(ECONOMY_BALANCE_LABEL.getString())
+                .withAliases(ECONOMY_BALANCE_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALANCE_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     handleBalance(sender.getPlayer(), User.of(sender));
                 });
-        // balance <player>
-        ArgumentTree balanceOther = new UserArgument()
+        // balance2 <player>
+        CommandAPICommand balanceOther = new CommandAPICommand(ECONOMY_BALANCE_LABEL.getString())
+                .withAliases(ECONOMY_BALANCE_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALANCE_PERMISSION.asPermission())
+                .withArguments(new UserArgument())
                 .executes((sender, args) -> {
-                    handleBalance(sender, (User) args[1]);
+                    handleBalance(sender, (User) args[0]);
                 });
         // pay <player> <amount>
-        ArgumentTree pay = multiLiteralArgument(ECONOMY_PAY_LABEL, ECONOMY_PAY_ALIASES)
+        CommandAPICommand pay = new CommandAPICommand(ECONOMY_PAY_LABEL.getString())
+                .withAliases(ECONOMY_PAY_ALIASES.getAsArray())
                 .withPermission(ECONOMY_PAY_PERMISSION.asPermission())
-                .then(new UserArgument()
-                        .then(new DoubleArgument(NODES_AMOUNT.getString())
-                                .executes((sender, args) -> {
-                                    transfer(User.of((OfflinePlayer) sender), (User) args[1], (double) args[2], null);
-                                }))
-                );
+                .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
+                .executes((sender, args) -> {
+                    transfer(User.of((OfflinePlayer) sender), (User) args[0], (double) args[1], null);
+                });
         // give <player> <amount>
-        ArgumentTree give = multiLiteralArgument(ECONOMY_GIVE_LABEL, ECONOMY_GIVE_ALIASES)
+        CommandAPICommand give = new CommandAPICommand(ECONOMY_GIVE_LABEL.getString())
+                .withAliases(ECONOMY_GIVE_ALIASES.getAsArray())
                 .withPermission(ECONOMY_GIVE_PERMISSION.asPermission())
-                .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
-                        .executes((sender, args) -> {
-                            for (Object s : args) {
-                                Bukkit.getConsoleSender().sendMessage(s.toString());
-                            }
-                            Bukkit.getConsoleSender().sendMessage("@@@@@@@@@@a11");
-                            User target = (User) args[1];
-                            Bukkit.getConsoleSender().sendMessage("a22");
-                            double amount = (double) args[2];
-                            Bukkit.getConsoleSender().sendMessage("a33");
-                            if (target.deposit(amount)) {
-                                ECONOMY_GIVE_GAVE.send(sender,
-                                        PLAYER_PH, target.getName(),
-                                        AMOUNT_PH, amount, BALANCE_PH,
-                                        target.getBalance());
-                                ECONOMY_GIVE_YOUR_BALANCE_WAS_INCREACED.send(target,
-                                        PLAYER_PH, sender.getName(),
-                                        AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance());
-                            }
-                        }))
-                );
-
+                .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
+                .executes((sender, args) -> {
+                    for (Object s : args) {
+                        Bukkit.getConsoleSender().sendMessage(s.toString());
+                    }
+                    Bukkit.getConsoleSender().sendMessage("@@@@@@@@@@a11");
+                    User target = (User) args[0];
+                    Bukkit.getConsoleSender().sendMessage("a22");
+                    double amount = (double) args[1];
+                    Bukkit.getConsoleSender().sendMessage("a33");
+                    if (target.deposit(amount)) {
+                        ECONOMY_GIVE_GAVE.send(sender,
+                                PLAYER_PH, target.getName(),
+                                AMOUNT_PH, amount, BALANCE_PH,
+                                target.getBalance());
+                        ECONOMY_GIVE_YOUR_BALANCE_WAS_INCREACED.send(target,
+                                PLAYER_PH, sender.getName(),
+                                AMOUNT_PH, amount,
+                                BALANCE_PH, target.getBalance());
+                    }
+                });
         // transfer <player> <player> <amount>
-        ArgumentTree transfer = multiLiteralArgument(ECONOMY_TRANSFER_LABEL, ECONOMY_TRANSFER_PERMISSION)
+        CommandAPICommand transfer = new CommandAPICommand(ECONOMY_TRANSFER_LABEL.getString())
+                .withAliases(ECONOMY_TRANSFER_ALIASES.getAsArray())
                 .withPermission(ECONOMY_TRANSFER_PERMISSION.asPermission())
-                .then(new UserArgument("1")
-                        .then(new UserArgument("2")
-                                .then(new DoubleArgument(NODES_AMOUNT.getString())
-                                        .executes((sender, args) -> {
-                                            double amount = (double) args[3];
-                                            transfer((User) args[1], (User) args[2], amount, sender);
-                                        })))
-                );
-
+                .withArguments(new UserArgument("1"), new UserArgument("2"), new DoubleArgument(NODES_AMOUNT.getString()))
+                .executes((sender, args) -> {
+                    double amount = (double) args[2];
+                    transfer((User) args[0], (User) args[1], amount, sender);
+                });
         // take <player> <amount>
-        ArgumentTree take = multiLiteralArgument(ECONOMY_TAKE_LABEL, ECONOMY_TAKE_ALIASES)
+        CommandAPICommand take = new CommandAPICommand(ECONOMY_TAKE_LABEL.getString())
+                .withAliases(ECONOMY_TAKE_ALIASES.getAsArray())
                 .withPermission(ECONOMY_TAKE_PERMISSION.asPermission())
-                .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
-                        .executes((sender, args) -> {
-                            User target = (User) args[1];
-                            double amount = (double) args[2];
-                            if (target.withdraw(amount)) {
-                                ECONOMY_TAKE_TOOK.send(sender,
-                                        PLAYER_PH, target.getName(),
-                                        AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance());
-                                ECONOMY_TAKE_YOUR_BALANCE_REDUCED.send(target,
-                                        AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance());
-                            } else {
-                                ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.send(sender,
-                                        PLAYER_PH, target.getName(),
-                                        AMOUNT_PH, amount,
-                                        BALANCE_PH, target.getBalance());
-                            }
-                        }))
-                );
-
+                .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
+                .executes((sender, args) -> {
+                    User target = (User) args[1];
+                    double amount = (double) args[2];
+                    if (target.withdraw(amount)) {
+                        ECONOMY_TAKE_TOOK.send(sender,
+                                PLAYER_PH, target.getName(),
+                                AMOUNT_PH, amount,
+                                BALANCE_PH, target.getBalance());
+                        ECONOMY_TAKE_YOUR_BALANCE_REDUCED.send(target,
+                                AMOUNT_PH, amount,
+                                BALANCE_PH, target.getBalance());
+                    } else {
+                        ECONOMY_TARGET_DOESNT_HAVE_ENOUGHT_MONEY.send(sender,
+                                PLAYER_PH, target.getName(),
+                                AMOUNT_PH, amount,
+                                BALANCE_PH, target.getBalance());
+                    }
+                });
         // set <player> <amount>
-        ArgumentTree set = multiLiteralArgument(ECONOMY_SET_LABEL, ECONOMY_SET_ALIASES)
+        CommandAPICommand set = new CommandAPICommand(ECONOMY_SET_LABEL.getString())
+                .withAliases(ECONOMY_SET_ALIASES.getAsArray())
                 .withPermission(ECONOMY_SET_PERMISSION.asPermission())
-                .then(new UserArgument().then(new DoubleArgument(NODES_AMOUNT.getString())
-                        .executes((sender, args) -> {
-                            User target = (User) args[1];
-                            double amount = (double) args[2];
-                            if (target.setBalance(amount)) {
-                                ECONOMY_SET_SET.send(sender,
-                                        PLAYER_PH, target.getName(),
-                                        AMOUNT_PH, amount);
-                                ECONOMY_SET_YOUR_BALANCE_WAS_SET.send(target, AMOUNT_PH, amount);
-                            }
-                        }))
-                );
-
+                .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
+                .executes((sender, args) -> {
+                    User target = (User) args[1];
+                    double amount = (double) args[2];
+                    if (target.setBalance(amount)) {
+                        ECONOMY_SET_SET.send(sender,
+                                PLAYER_PH, target.getName(),
+                                AMOUNT_PH, amount);
+                        ECONOMY_SET_YOUR_BALANCE_WAS_SET.send(target, AMOUNT_PH, amount);
+                    }
+                });
         //todo make toplist only work with oneeconomy
         // baltop, /baltop reload
-        ArgumentTree baltop = multiLiteralArgument(ECONOMY_BALTOP_LABEL, ECONOMY_BALTOP_ALIASES)
+        CommandAPICommand baltop = new CommandAPICommand(ECONOMY_BALTOP_LABEL.getString())
+                .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
@@ -160,17 +156,27 @@ public class EconomyCMD implements ICommand {
                     }
                 });
 
-        new Command(ECONOMY_LABEL)
-                .withPermission(ECONOMY_PERMISSION)
-                .withAliases(ECONOMY_ALIASES)
-                .executes((sender, args) -> sender.sendMessage("not done"))
-                .then(balance.then(balanceOther))
-                .then(pay)
-                .then(give)
-                .then(transfer)
-                .then(take)
-                .then(set)
-                .then(baltop)
+        //Singles
+        balance.register();
+        balanceOther.register();
+        give.override();
+        transfer.override();
+        take.override();
+        pay.override();
+        set.override();
+        baltop.override();
+
+        new CommandAPICommand(ECONOMY_LABEL.getString())
+                .withAliases(ECONOMY_ALIASES.getAsArray())
+                .withPermission(ECONOMY_PERMISSION.asPermission())
+                .withSubcommand(balance)
+                .withSubcommand(balanceOther)
+                .withSubcommand(give)
+                .withSubcommand(pay)
+                .withSubcommand(transfer)
+                .withSubcommand(take)
+                .withSubcommand(set)
+                .withSubcommand(baltop)
                 .override();
     }
 
