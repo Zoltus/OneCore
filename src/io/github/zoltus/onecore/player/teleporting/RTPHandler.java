@@ -30,6 +30,7 @@ public class RTPHandler {
     //todo
     private final ConcurrentHashMap<UUID, Long> lastTeleportTime = new ConcurrentHashMap<>();
 
+    //todo async teles
     private RTPHandler(OneCore plugin) {
         this.plugin = plugin;
         this.slowingScheduler = new SlowingScheduler(plugin, tickSpeed, false, () -> {

@@ -126,7 +126,8 @@ public class EconomyCMD implements ICommand {
                     } else {
                         ConcurrentHashMap<UUID, Double> top = OneEconomy.getBalances();
                         if (!top.isEmpty()) {
-                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> top.entrySet().stream()
+                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> top.entrySet()
+                                    .stream()
                                     .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                                     .limit(10)
                                     .forEachOrdered(x -> {
