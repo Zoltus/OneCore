@@ -115,6 +115,7 @@ public enum Lang implements IConfig {
     SIGNEDIT_SIGN_NOT_FOUND("signedit.sign-not-found"),
     SIGNEDIT_SIGN_UPDATED("signedit.sign-updated"),
     SIGNEDIT_SIGN_COPIED("signedit.sign-copied"),
+    SIGNEDIT_SIGN_COPIED_LINE("signedit.sign-copied-line"),
     SPAWN_IS_NOT_SET("spawn.is-not-set"),
     SPAWN_TARGET_SENT("spawn.target-sent"),
     SPEED_MODE_FLY("speed.mode-fly"),

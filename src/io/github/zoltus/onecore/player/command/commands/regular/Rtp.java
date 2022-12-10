@@ -1,6 +1,8 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
+import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.ICommand;
+import io.github.zoltus.onecore.utils.FakeBreak;
 import org.bukkit.Bukkit;
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
@@ -48,24 +50,19 @@ public class Rtp implements ICommand {
                 }).override();
     }
 
-    //todo add to teleporter list and use premade teleport
     private void handleRtp(Player p, UUID uuid, long cooldownSeconds) {
         timers.put(uuid, System.currentTimeMillis() + cooldownSeconds);
         queue.add(uuid);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             Location loc = getRandomLocation(p);
             Bukkit.getScheduler().runTask(plugin, () -> { //todo asynctele
-                //todo canBreak(p, loc)
-                p.teleport(loc);
+                User user = User.of(p);
+                user.teleportTimer(loc);
                 p.sendMessage(RTP_TELEPORTED.getString());
                 p.sendMessage("22");
                 queue.removeLast();
             });
         });
-    }
-
-    private boolean hasCooldown(long rtpTime) {
-        return System.currentTimeMillis() < rtpTime;
     }
 
     //todo canbreak
@@ -84,6 +81,10 @@ public class Rtp implements ICommand {
             b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
             loc = LocationUtils.getSafeLocation(p, b.getLocation());
         } while (loc == null);
-        return b.getLocation().add(0.5, 1, 0.5);
+        return b.getLocation().add(0.5, 1, 0.5); //todo check if its safe to add these
+    }
+
+    private boolean hasCooldown(long rtpTime) {
+        return System.currentTimeMillis() < rtpTime;
     }
 }

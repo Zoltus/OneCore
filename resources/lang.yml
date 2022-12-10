@@ -196,6 +196,8 @@ Data:
     sign-updated: '{p} Sign updated'
     sign-not-found: '{p} Sign not found'
     sign-copied: '{p} Sign copied'
+    #<line>
+    sign-copied-line: '{p} Copied line <line>'
   speed:
     mode-fly: fly
     mode-invalid-mode: '{p} invalid mode'

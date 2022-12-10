@@ -19,25 +19,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements ICommand {
-
-    private final NamespacedKey line1 = new NamespacedKey(plugin, "line1");
-    private final NamespacedKey line2 = new NamespacedKey(plugin, "line2");
-    private final NamespacedKey line3 = new NamespacedKey(plugin, "line3");
-    private final NamespacedKey line4 = new NamespacedKey(plugin, "line4");
-
+    private final NamespacedKey store = new NamespacedKey(plugin, "all_lines");
     //todo cleanup, color perms?
     @Override
     public void init() {
         //signedit set <line> <text>
         ArgumentTree set = multiLiteralArgument(Commands.SIGNEDIT_SET_LABEL, Commands.SIGNEDIT_SET_ALIASES) //SIGNEDIT_SET_LABEL
-                .then(new IntegerArgument("1-4", 1, 4)
+                .then(new IntegerArgument("0-3", 0, 3)
                         .then(signTextArg));
         //signedit clear
         ArgumentTree clear = multiLiteralArgument(Commands.SIGNEDIT_CLEAR_LABEL, Commands.SIGNEDIT_CLEAR_ALIASES) // SIGNEDIT_CLEAR_LABEL
@@ -46,17 +39,17 @@ public class SignEdit implements ICommand {
                     Sign sign = canEdit(player);
                     if (sign != null) {
                         for (int i = 0; i < 4; i++) {
-                            setLine(player, sign, i, "");
+                            setSignText(player, sign, i, "");
                         }
                     }
                 });
         //signedit clear <line>
-        clear.then(new IntegerArgument("1-4", 1, 4)
+        clear.then(new IntegerArgument("0-3", 0, 3)
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        int line = (int) args[0] - 1;
-                        setLine(player, sign, line, "");
+                        int line = (int) args[1];
+                        setSignText(player, sign, line, "");
                     }
                 }));
         //signedit copy
@@ -65,23 +58,18 @@ public class SignEdit implements ICommand {
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        String[] signLines = sign.getLines();
-                        for (int i = 0, signLinesLength = signLines.length; i < signLinesLength; i++) {
-                            setLine(player, i, signLines[i]);
-                        }
+                        writeLines(player, sign.getLines());
                         SIGNEDIT_SIGN_COPIED.send(player);
                     }
                 });
         //signedit copy <line>
-        copy.then(new IntegerArgument("1-4", 1, 4)
+        copy.then(new IntegerArgument("0-3", 0, 3)
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
+                    int line = (int) args[1];
                     if (sign != null) {
-                        for (int i = 0; i < 4; i++) {
-                            setLine(player, i, sign.getLine(i));
-                        }
-                        SIGNEDIT_SIGN_COPIED.send(player);
-
+                        writeLine(player, line, sign.getLine(line));
+                        SIGNEDIT_SIGN_COPIED_LINE.send(player, LINE_PH, line);
                     }
                 }));
         //signedit paste
@@ -90,24 +78,22 @@ public class SignEdit implements ICommand {
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        List<String> lines = getLines(player);
-                        for (int i = 0; i < lines.size(); i++) {
-                            String line = lines.get(i);
-                            setLine(player, sign, i, line);
+                        String[] allLines = readLines(player);
+                        for (int i = 0; i < allLines.length; i++) {
+                            String line = allLines[i];
+                            setSignText(player, sign, i, line);
                         }
                     }
                 });
-        //signedit paste <line> <text>
-        paste.then(new IntegerArgument("1-44", 1, 4)
-                .then(new IntegerArgument("1-4", 1, 4)
-                        .executesPlayer((player, args) -> {
-                            Sign sign = canEdit(player);
-                            if (sign != null) {
-                                int i = (int) args[1] - 1;
-                                List<String> lines = getLines(player);
-                                setLine(player, sign, i, lines.get(i));
-                            }
-                        })));
+        //signedit paste <line>
+        paste.then(new IntegerArgument("0-3", 0, 3)
+                .executesPlayer((player, args) -> {
+                    Sign sign = canEdit(player);
+                    if (sign != null) {
+                        int i = (int) args[1];
+                        setSignText(player, sign, i, readLine(player, i));
+                    }
+                }));
         new Command(Commands.SIGNEDIT_LABEL)
                 .withAliases(Commands.SIGNEDIT_ALIASES)
                 .withPermission(Commands.SIGNEDIT_PERMISSION)
@@ -130,34 +116,36 @@ public class SignEdit implements ICommand {
             .executesPlayer((player, args) -> {
                 Sign sign = canEdit(player);
                 if (sign != null) {
-                    int line = (int) args[1] - 1;
+                    int line = (int) args[1];
                     String text = BaseComponent.toPlainText((BaseComponent[]) args[2]);
-                    setLine(player, sign, line, text);
+                    setSignText(player, sign, line, text);
                 }
             });
 
-    private List<String> getLines(Player p) {
-        PersistentDataContainer cont = p.getPersistentDataContainer();
-        List<String> lines = Arrays.asList("", "", "", "");
-        lines.set(0, cont.get(line1, PersistentDataType.STRING));
-        lines.set(1, cont.get(line2, PersistentDataType.STRING));
-        lines.set(2, cont.get(line3, PersistentDataType.STRING));
-        lines.set(3, cont.get(line4, PersistentDataType.STRING));
-        return lines;
+    private String readLine(Player p, int line) {
+        String[] strings = readLines(p);
+        return strings[line];
     }
 
-    private void setLine(Player p, int line, String text) {
-        text = text == null ? "" : text;
+    private String[] readLines(Player p) {
         PersistentDataContainer cont = p.getPersistentDataContainer();
-        switch (line) {
-            case 0 -> cont.set(line1, PersistentDataType.STRING, text);
-            case 1 -> cont.set(line2, PersistentDataType.STRING, text);
-            case 2 -> cont.set(line3, PersistentDataType.STRING, text);
-            case 3 -> cont.set(line4, PersistentDataType.STRING, text);
-        }
+        String combined = cont.get(store, PersistentDataType.STRING);
+        return combined == null ? new String[]{"","","",""} : combined.split("\n");
     }
 
-    private void setLine(CommandSender sender, Sign sign, int line, String text) {
+    private void writeLines(Player p, String[] signLines) {
+        String combined = String.join("\n", signLines);
+        PersistentDataContainer cont = p.getPersistentDataContainer();
+        cont.set(store, PersistentDataType.STRING, combined);
+    }
+
+    private void writeLine(Player p, int lineID, String line) {
+        String[] readLines = readLines(p);
+        readLines[lineID] = line;
+        writeLines(p, readLines);
+    }
+
+    private void setSignText(CommandSender sender, Sign sign, int line, String text) {
         sign.setLine(line, ChatUtils.toMineHex(text));
         sign.update(true);
         SIGNEDIT_SIGN_UPDATED.send(sender);
