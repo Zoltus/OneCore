@@ -2,7 +2,7 @@ package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.utils.SlowingScheduler;
+import io.github.zoltus.onecore.utils.SpeedChangeScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
@@ -23,24 +23,25 @@ public class RTPHandler {
     //todo to settings
     private final int tickSpeed = 100;
     private static RTPHandler rtpHandler;
-    private final SlowingScheduler slowingScheduler;
+    private final SpeedChangeScheduler speedChangeScheduler;
     //Queue for teleports
     private final ConcurrentLinkedQueue<UUID> playerQueue = new ConcurrentLinkedQueue<>();
     //Map for cooldowns
     //todo
     private final ConcurrentHashMap<UUID, Long> lastTeleportTime = new ConcurrentHashMap<>();
 
-    //todo async teles
+    //todo calls safeloc multiple times.
     private RTPHandler(OneCore plugin) {
         this.plugin = plugin;
-        this.slowingScheduler = new SlowingScheduler(plugin, tickSpeed, false, () -> {
-            //Bukkit.broadcastMessage("Tick");
+        //loops through the queue and teleports players
+        //slowing scheduler so it can be slowed when wanted
+        this.speedChangeScheduler = new SpeedChangeScheduler(plugin, tickSpeed, false, () -> {
             if (!playerQueue.isEmpty() && playerQueue.peek() != null) {
                 UUID uuid = playerQueue.poll();
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) {
                     unQueue(uuid);
-                    Bukkit.broadcastMessage("Player is null");
+                    Bukkit.broadcastMessage("Player is null and was removed from que");
                 } else {
                     User user = User.of(player);
                     CompletableFuture<Location> loc = getRandomLocAsync(player);
@@ -56,19 +57,26 @@ public class RTPHandler {
     }
 
     public void changeQueueTimer(int timer) {
-        slowingScheduler.reSchedule(timer);
+        speedChangeScheduler.reSchedule(timer);
     }
 
-    //todo scan locations chunkscan per second limit
     private CompletableFuture<Location> getRandomLocAsync(Player p) {
         return CompletableFuture.supplyAsync(() -> {
             Block b;
             Location loc;
             Supplier<Integer> randomInt = () -> ThreadLocalRandom.current().nextInt(-100, 100);
             do {
-                plugin.getLogger().info("ScanLoc");
-                b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
-                loc = LocationUtils.getSafeLocation(p, b.getLocation());
+                try {
+                    plugin.getLogger().info("ScanLoc");
+                    b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
+                    loc = LocationUtils.getSafeLocation(p, b.getLocation());
+                    //Scans 1 loc per second //todo to config
+                    int ticks = 20; //todo to config
+                    wait(50 * ticks);
+                } catch (InterruptedException e) {
+                   e.printStackTrace();
+                   return null;
+                }
             } while (loc == null);
             return b.getLocation().add(0.5, 1, 0.5);
         });
