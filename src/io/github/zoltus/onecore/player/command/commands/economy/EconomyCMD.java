@@ -12,7 +12,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -117,36 +116,28 @@ public class EconomyCMD implements ICommand {
                         ECONOMY_SET_YOUR_BALANCE_WAS_SET.send(target, AMOUNT_PH, amount);
                     }
                 });
-        //todo make toplist only work with oneeconomy
-        // baltop, /baltop reload
+        // baltop, todo /baltop reload
         CommandAPICommand baltop = new CommandAPICommand(ECONOMY_BALTOP_LABEL.getString())
                 .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
                         sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
-                        return;
-                    }
-                    ConcurrentHashMap<UUID, Double> top = OneEconomy.getBalances();
-                    if (!top.isEmpty()) { //todo cleanup
-                        ConcurrentHashMap<UUID, Double> sortedMap = new ConcurrentHashMap<>();
-                        top.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) //todo improve
-                                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-                        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                            sender.sendMessage(ECONOMY_BALTOP_TOP_PLAYERS.getString() + " size: " + top.size());
-                            Iterator<Map.Entry<UUID, Double>> it = sortedMap.entrySet().iterator();
-                            int topAmount = 10;
-                            while (it.hasNext() && topAmount != 0) {
-                                Map.Entry<UUID, Double> entry = it.next();
-                                UUID uuid = entry.getKey();
-                                double value = entry.getValue();
-                                String name = Bukkit.getOfflinePlayer(uuid).getName();
-                                ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
-                                topAmount--;
-                            }
-                        });
                     } else {
-                        sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
+                        ConcurrentHashMap<UUID, Double> top = OneEconomy.getBalances();
+                        if (!top.isEmpty()) {
+                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> top.entrySet().stream()
+                                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                                    .limit(10)
+                                    .forEachOrdered(x -> {
+                                        UUID uuid = x.getKey();
+                                        double value = x.getValue();
+                                        String name = Bukkit.getOfflinePlayer(uuid).getName();
+                                        ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
+                                    }));
+                        } else {
+                            sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
+                        }
                     }
                 });
 
