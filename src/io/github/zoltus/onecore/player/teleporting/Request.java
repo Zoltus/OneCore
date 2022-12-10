@@ -5,6 +5,11 @@ import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
 import lombok.Getter;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -94,6 +99,10 @@ public class Request {
         expiryTask.cancel();
     }
 
+
+
+
+
     private void sendChat() {
         TP_SENT.send(sender, PLAYER_PH, accepter.getName());
                 /*ChatBuilder cb = new ChatBuilder(
@@ -111,6 +120,31 @@ public class Request {
         cb.addComponents(comp, comp2);
         cb.build();
         cb.send(accepter);*/
+    }
+
+    public static BaseComponent[] replacePlaceholder(String line, String placeholder, String replaceWith) {
+        // create the string builder to build the new string
+        ComponentBuilder sb = new ComponentBuilder();
+        //Keeps previous colors
+        ComponentBuilder.FormatRetention retention = ComponentBuilder.FormatRetention.FORMATTING;
+        // split the line into sections based on the placeholder
+        String[] sections = line.split(placeholder);
+        // loop through all sections
+        for (int i = 0; i < sections.length; i++) {
+            sb.append(new TextComponent(sections[i]), retention);
+            // check if there is a placeholder to be replaced
+            if (i != sections.length - 1) {
+                // add the hover event for the placeholder
+                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(replaceWith));
+                // create a new text component with the placeholder
+                TextComponent placeholderText = new TextComponent(placeholder);
+                // set the hover event for the placeholder
+                placeholderText.setHoverEvent(hoverEvent);
+                // append the placeholder component to the stringbuilder
+                sb.append(placeholderText, retention);
+            }
+        }
+        return sb.create();
     }
 
 

@@ -1,10 +1,7 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import org.bukkit.Chunk;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,22 +25,43 @@ public class LocationUtils {
         return CompletableFuture.completedFuture(world.getChunkAt(x, z));
     }
 
+    public static CompletableFuture<Void> teleportAsync(Player p, Location loc) {
+        if (loc.getWorld() == null) {
+            return null;
+        }
+        return getChunkAtAsync(loc.getWorld(), loc.getBlockX(), loc.getBlockZ()).thenAcceptAsync(chunk -> {
+            Entity vehicle = p.getVehicle();
+            if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
+                vehicle.teleport(loc);
+                p.teleport(loc);
+                vehicle.addPassenger(p);
+            } else {
+                p.teleport(loc);
+            }
+        });
+    }
+
     public static CompletableFuture<Void> teleportSafeAsync(Player p, Location loc) {
         return CompletableFuture.completedFuture(getSafeLocation(p, loc))
-                .thenAccept(locc -> {
+                .thenAcceptAsync(safeLoc -> {
                     Entity vehicle = p.getVehicle();
-                    if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
-                        vehicle.teleport(loc);
-                        p.teleport(locc);
-                        vehicle.addPassenger(p);
-                    } else {
-                        p.teleport(locc);
+                    if (loc.getWorld() != null) {
+                        getChunkAtAsync(loc.getWorld(), loc.getBlockX(), loc.getBlockZ()).thenAcceptAsync(chunk -> {
+                            if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
+                                vehicle.teleport(safeLoc);
+                                p.teleport(safeLoc);
+                                vehicle.addPassenger(p);
+                            } else {
+                                p.teleport(safeLoc);
+                            }
+                        });
                     }
                 });
     }
 
     //If player is on creative it will teleport to any loc
     public static Location getSafeLocation(Player p, Location loc) {
+        Bukkit.broadcastMessage("safescan");
         return p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
     }
 

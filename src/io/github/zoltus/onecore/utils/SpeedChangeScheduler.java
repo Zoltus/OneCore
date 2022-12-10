@@ -4,14 +4,14 @@ import io.github.zoltus.onecore.OneCore;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
-public class SlowingScheduler {
+public class SpeedChangeScheduler {
     private BukkitTask task;
     private long ticks;
     private final OneCore plugin;
     private final boolean async;
     private final Runnable runnable;
 
-    public SlowingScheduler(OneCore plugin, long ticks, boolean async, Runnable runnable) {
+    public SpeedChangeScheduler(OneCore plugin, long ticks, boolean async, Runnable runnable) {
         this.async = async;
         this.ticks = ticks;
         this.plugin = plugin;

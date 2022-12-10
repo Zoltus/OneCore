@@ -3,7 +3,9 @@ package io.github.zoltus.onecore.listeners;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
-import io.github.zoltus.onecore.utils.SlowingScheduler;
+import io.github.zoltus.onecore.utils.SpeedChangeScheduler;
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -22,6 +24,32 @@ import java.util.Objects;
 
 public class TestListener implements Listener {
 
+    public static BaseComponent[] replacePlaceholder(String line, String placeholder, String replaceWith) {
+        // create the string builder to build the new string
+        ComponentBuilder sb = new ComponentBuilder();
+        //Keeps previous colors
+        ComponentBuilder.FormatRetention retention = ComponentBuilder.FormatRetention.FORMATTING;
+        // split the line into sections based on the placeholder
+        String[] sections = line.split(placeholder);
+        // loop through all sections
+        for (int i = 0; i < sections.length; i++) {
+            sb.append(new TextComponent(sections[i]), retention);
+            // check if there is a placeholder to be replaced
+            if (i != sections.length - 1) {
+                // add the hover event for the placeholder
+                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(replaceWith));
+                // create a new text component with the placeholder
+                TextComponent placeholderText = new TextComponent(placeholder);
+                // set the hover event for the placeholder
+                placeholderText.setHoverEvent(hoverEvent);
+                // append the placeholder component to the stringbuilder
+                sb.append(placeholderText, retention);
+            }
+        }
+        return sb.create();
+    }
+
+
     @EventHandler
     public void onChatt(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
@@ -33,6 +61,10 @@ public class TestListener implements Listener {
         String[] args = argsList.toArray(new String[0]);
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {
+                case "/ta1" -> {
+                    BaseComponent[] comps = replacePlaceholder("hi imxxxxxma a ixxxxx   xxx", " i", "xx");
+                    p.spigot().sendMessage(comps);
+                }
                 case "/testbots" -> {
                     int i = 0;
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -114,7 +146,7 @@ public class TestListener implements Listener {
                 }
                 case "/sht" -> {
                     int i = Integer.parseInt(args[0]);
-                    scheduler = new SlowingScheduler(OneCore.getPlugin(), i, false, () -> p.sendMessage("Task " + i));
+                    scheduler = new SpeedChangeScheduler(OneCore.getPlugin(), i, false, () -> p.sendMessage("Task " + i));
                 }
 
                 case "/shtset" -> {
@@ -125,7 +157,7 @@ public class TestListener implements Listener {
         }
     }
 
-    public static SlowingScheduler scheduler;
+    public static SpeedChangeScheduler scheduler;
 }
 
 
