@@ -4,16 +4,25 @@ import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.utils.SpeedChangeScheduler;
-import net.md_5.bungee.api.chat.*;
+import io.papermc.lib.PaperLib;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
+import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -21,6 +30,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 public class TestListener implements Listener {
 
@@ -49,7 +61,45 @@ public class TestListener implements Listener {
         return sb.create();
     }
 
+    private CompletableFuture<Location> getRandomLocAsync(Player p) {
+        return CompletableFuture.supplyAsync(() -> {
+            Block b;
+            Location loc;
+            Supplier<Integer> randomInt = () -> ThreadLocalRandom.current().nextInt(-1000, 1000 + 1);
+            do {
+                //Check if scandelayms has passed
+                    b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
+                    loc = LocationUtils.getSafeLocation(p, b.getLocation());
+            } while (loc == null);
+            //If scan timeouts it returns null location, adds 1 because block y
+            loc.add(0.5, 1.1, 0.5);
+            return p.getLocation();
+        });
+    }
 
+    private void getRandomLocAsync2(Player p) {
+            Block b;
+            Location loc;
+            Supplier<Integer> randomInt = () -> ThreadLocalRandom.current().nextInt(-1000, 1000 + 1);
+            do {
+                //Check if scandelayms has passed
+                b = p.getWorld().getHighestBlockAt(randomInt.get(), randomInt.get(), HeightMap.MOTION_BLOCKING);
+                loc = LocationUtils.getSafeLocation(p, b.getLocation());
+            } while (loc == null);
+            //If scan timeouts it returns null location, adds 1 because block y
+            loc.add(0.5, 1.1, 0.5);
+    }
+
+
+    @EventHandler
+    public void aaa(InventoryClickEvent e) {
+        System.out.println(e.getClick().name());
+
+    }
+
+
+    private static long ms = 0;
+    private static int size = 0;
     @EventHandler
     public void onChatt(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
@@ -59,11 +109,37 @@ public class TestListener implements Listener {
         String cmd = argsList.get(0);
         argsList.remove(0);
         String[] args = argsList.toArray(new String[0]);
+        long start = System.currentTimeMillis();
         if (cmd.startsWith("/")) {
             switch (cmd.toLowerCase()) {
                 case "/ta1" -> {
                     BaseComponent[] comps = replacePlaceholder("hi imxxxxxma a ixxxxx   xxx", " i", "xx");
                     p.spigot().sendMessage(comps);
+                }
+                case "/ta2" -> {
+                    int amount = Integer.parseInt(args[0]);
+                    size = amount;
+                    ms = start;
+                    p.sendMessage("start");
+                    while (amount > 0) {
+                        getRandomLocAsync(p).thenAccept(location -> {
+                            if (size == 1) {
+                                Bukkit.broadcastMessage("end " + (System.currentTimeMillis() - ms));
+                            }
+                            size--;
+                        });
+                        amount--;
+                    }
+                }
+                case "/ta3" -> {
+                    int amount = Integer.parseInt(args[0]);
+                    p.sendMessage("start");
+                    while (amount > 0) {
+                        getRandomLocAsync2(p);
+                        p.teleport(p.getLocation());
+                        amount--;
+                    }
+                    p.sendMessage("done took: " + (System.currentTimeMillis() - start));
                 }
                 case "/testbots" -> {
                     int i = 0;
@@ -99,7 +175,6 @@ public class TestListener implements Listener {
                     argsList.remove(0);
                     String cmdCombinedString = String.join(" ", argsList);
                     p.sendMessage("§bAmount : " + amount + ": " + "cmd: " + cmdCombinedString);
-                    long start = System.currentTimeMillis();
                     while (amount != 0) {
                         p.performCommand(cmdCombinedString);
                         amount--;
@@ -134,12 +209,25 @@ public class TestListener implements Listener {
                             p.sendMessage("joins took " + (System.currentTimeMillis() - time));
                         });
 
-                case "/tas1" -> {
-                    Location loc = p.getLocation();
-                    LocationUtils.teleportSafeAsync(p, new Location(loc.getWorld(), 0, 70, 0));
-                    p.sendMessage("asd");
+                case "/tes" -> {
+                    p.sendMessage("test");
+                    testMS = System.currentTimeMillis();
+                    PaperLib.teleportAsync(p, p.getLocation().add(3, 2, 0));
                 }
-                case "/rtp2" -> OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
+                case "/ta33" -> {
+                    p.sendMessage("test");
+                    int i = Integer.parseInt(args[0]);
+                    while (i != 0) {
+                        OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
+                        i--;
+                    }//1063, 10959 10504
+                    p.sendMessage("qued");
+                }
+                case "/rtp2" -> {
+                    p.sendMessage("test");
+                    testMS = System.currentTimeMillis();
+                    OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
+                }
                 case "/rtptimer" -> {
                     int i = Integer.parseInt(args[0]);
                     OneCore.getPlugin().getRtpHandler().changeQueueTimer(i);
@@ -156,6 +244,8 @@ public class TestListener implements Listener {
             }
         }
     }
+
+    public static long testMS = 0;
 
     public static SpeedChangeScheduler scheduler;
 }
