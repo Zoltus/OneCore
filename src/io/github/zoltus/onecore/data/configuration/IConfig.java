@@ -68,6 +68,10 @@ public interface IConfig {
         return yml().getInt("Data." + getPath());
     }
 
+    default long getLong() {
+        return yml().getLong("Data." + getPath());
+    }
+
     default double getDouble() {
         return yml().getDouble("Data." + getPath());
     }

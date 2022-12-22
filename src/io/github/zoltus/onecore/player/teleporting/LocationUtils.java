@@ -1,13 +1,19 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import org.bukkit.*;
+import io.github.zoltus.onecore.listeners.TestListener;
+import io.papermc.lib.PaperLib;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_LOCATIONS;
 
 public class LocationUtils {
 
@@ -21,42 +27,25 @@ public class LocationUtils {
         };
     }
 
-    public static CompletableFuture<Chunk> getChunkAtAsync(World world, int x, int z) {
-        return CompletableFuture.completedFuture(world.getChunkAt(x, z));
-    }
-
-    public static CompletableFuture<Void> teleportAsync(Player p, Location loc) {
-        if (loc.getWorld() == null) {
-            return null;
-        }
-        return getChunkAtAsync(loc.getWorld(), loc.getBlockX(), loc.getBlockZ()).thenAcceptAsync(chunk -> {
-            Entity vehicle = p.getVehicle();
-            if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
-                vehicle.teleport(loc);
-                p.teleport(loc);
-                vehicle.addPassenger(p);
-            } else {
-                p.teleport(loc);
+    public static void teleportSafeAsync(Player p, Location loc) {
+        Location safeLoc = getSafeLocation(p, loc);
+        if (safeLoc == null) {
+            p.sendMessage(TP_NO_SAFE_LOCATIONS.getString());
+        } else {
+            if (loc.getWorld() != null) {
+                Entity vehicle = p.getVehicle();
+                if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
+                    PaperLib.teleportAsync(vehicle, safeLoc);
+                    PaperLib.teleportAsync(p, safeLoc);
+                    vehicle.addPassenger(p);
+                } else {
+                    PaperLib.teleportAsync(p, safeLoc).thenAccept((result) -> {
+                        long timeTaken = TestListener.testMS - System.currentTimeMillis();
+                        p.sendMessage("took" + timeTaken);
+                    });
+                }
             }
-        });
-    }
-
-    public static CompletableFuture<Void> teleportSafeAsync(Player p, Location loc) {
-        return CompletableFuture.completedFuture(getSafeLocation(p, loc))
-                .thenAcceptAsync(safeLoc -> {
-                    Entity vehicle = p.getVehicle();
-                    if (loc.getWorld() != null) {
-                        getChunkAtAsync(loc.getWorld(), loc.getBlockX(), loc.getBlockZ()).thenAcceptAsync(chunk -> {
-                            if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
-                                vehicle.teleport(safeLoc);
-                                p.teleport(safeLoc);
-                                vehicle.addPassenger(p);
-                            } else {
-                                p.teleport(safeLoc);
-                            }
-                        });
-                    }
-                });
+        }
     }
 
     //If player is on creative it will teleport to any loc
@@ -85,7 +74,6 @@ public class LocationUtils {
         int startX = start.getBlockX();
         int startY = start.getBlockY();
         int startZ = start.getBlockZ();
-
         Map.Entry<Integer, Location> entry = null;
         for (int x = startX - radius; x < startX + radius; x++) {
             for (int y = startY - radius + 1; y < startY + radius - 1; y++) {

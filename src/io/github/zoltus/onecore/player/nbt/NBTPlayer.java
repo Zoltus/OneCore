@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader;
 import de.tr7zw.nbtapi.*;
 import de.tr7zw.nbtapi.data.NBTData;
 import de.tr7zw.nbtapi.data.PlayerData;
+import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -56,7 +57,7 @@ public class NBTPlayer {
     @SuppressWarnings("SameParameterValue")
     private Double getAttribute(String abilityName) {
         NBTCompoundList list = nbt.getCompoundList("Attributes");
-        for (NBTListCompound nbt : list) {
+        for (ReadWriteNBT nbt : list) {
             if (nbt.getString("Name").equals(abilityName)) {
                 return nbt.getDouble("Base"); //todo
             }
@@ -170,7 +171,7 @@ public class NBTPlayer {
         Map<Integer, ItemStack> items = new HashMap<>();
         nbt.getCompoundList(inventory).forEach(slotNBT -> {
             int slot = slotNBT.getInteger("Slot");
-            ItemStack stack = NBTItem.convertNBTtoItem(slotNBT);
+            ItemStack stack = NBTItem.convertNBTtoItem((NBTCompound) slotNBT);
             items.put(slot, stack);
         });
         return items;

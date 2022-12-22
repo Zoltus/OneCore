@@ -1,19 +1,20 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 
+import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.player.User;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
-import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.player.User;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Config.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.SECONDS_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.TELEPORT_DELAY;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_STARTED;
 
 public final class Teleport {
 
@@ -49,13 +50,9 @@ public final class Teleport {
         TP_STARTED.send(teleporter, SECONDS_PH, DELAY);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Location destination = target == null ? loc : target.getPlayer().getLocation();
-            Location safeLoc = LocationUtils.getSafeLocation(teleporter.getPlayer(), destination); //todo async
-            cancel("");
-            if (safeLoc != null) {
-                LocationUtils.teleportSafeAsync(teleporter.getPlayer(), safeLoc);
-            } else {
-                teleporter.sendMessage(TP_NO_SAFE_LOCATIONS.getString());
-            }
+            teleTask.cancel();
+            teleports.remove(teleporter.getUniqueId());
+            LocationUtils.teleportSafeAsync(teleporter.getPlayer(), destination);
         }, 20L * DELAY);
     }
 

@@ -1,10 +1,12 @@
 package io.github.zoltus.onecore.utils;
 
 import io.github.zoltus.onecore.OneCore;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
 public class SpeedChangeScheduler {
+    @Getter
     private BukkitTask task;
     private long ticks;
     private final OneCore plugin;
