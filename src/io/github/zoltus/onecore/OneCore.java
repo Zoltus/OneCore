@@ -40,7 +40,7 @@ import java.util.stream.Stream;
         @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
         @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
-        @Library("dev.jorel:commandapi-shade:8.5.1")
+        @Library("dev.jorel:commandapi-shade:8.7.1")
 })
 @Getter
 public final class OneCore extends JavaPlugin implements Listener {
@@ -79,6 +79,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+        testConfig();
     }
 
     @Override
