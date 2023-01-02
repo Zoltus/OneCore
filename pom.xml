@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!-- <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir> -->
-        <outputDir>F:\MineServer\plugins</outputDir>
+        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
+        <!--<outputDir>F:\MineServer\plugins</outputDir> -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <!-- Removes warnings -->
@@ -26,7 +26,7 @@
         <nbtapi.version>2.11.1</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
-        <paperlib.version>1.0.8-SNAPSHOT</paperlib.version>
+        <paperlib.version>1.0.8</paperlib.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
