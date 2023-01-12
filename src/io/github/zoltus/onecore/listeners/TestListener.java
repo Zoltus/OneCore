@@ -59,6 +59,9 @@ public class TestListener implements Listener {
         return sb.create();
     }
 
+    public static long testMS = 0;
+    public static SpeedChangeScheduler scheduler;
+
     private CompletableFuture<Location> getRandomLocAsync(Player p) {
         return CompletableFuture.supplyAsync(() -> {
             Block b;
@@ -88,13 +91,11 @@ public class TestListener implements Listener {
             loc.add(0.5, 1.1, 0.5);
     }
 
-
     @EventHandler
     public void aaa(InventoryClickEvent e) {
         System.out.println(e.getClick().name());
 
     }
-
 
     private static long ms = 0;
     private static int size = 0;
@@ -219,10 +220,6 @@ public class TestListener implements Listener {
             }
         }
     }
-
-    public static long testMS = 0;
-
-    public static SpeedChangeScheduler scheduler;
 }
 
 
