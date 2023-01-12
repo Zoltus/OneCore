@@ -9,7 +9,6 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.data.database.Database;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.ConsoleFilter;
-import io.github.zoltus.onecore.player.teleporting.RTPHandler;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -49,7 +48,6 @@ public final class OneCore extends JavaPlugin implements Listener {
 
     private Economy vault;
     private Database database;
-    private RTPHandler rtpHandler;
     private BackupHandler backupHandler;
     private CommandHandler commandHandler;
     private ListenerHandler listenerHandler;
@@ -69,13 +67,12 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
         this.listenerHandler = ListenerHandler.register(this); //Registers listeners if enabled
         this.commandHandler = CommandHandler.register(this); //Registers Commands if enabled
-        this.rtpHandler = RTPHandler.init(this);// Register task for handling rtp's
         new Metrics(this, 12829); // Inits metrics to bstats
         ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
         testConfig(); // Tests config for missing values
-        database.cacheUsers();
+        this.database.cacheUsers();
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
-        backupHandler.start(); //todo to singleton
+        this.backupHandler.start(); //todo to singleton
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
