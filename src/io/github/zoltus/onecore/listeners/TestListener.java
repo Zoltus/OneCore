@@ -165,7 +165,6 @@ public class TestListener implements Listener {
                     p.sendMessage("line3: " + cont.get(line3, PersistentDataType.STRING));
                     p.sendMessage("line4: " + cont.get(line4, PersistentDataType.STRING));
                     p.sendMessage(cont.toString());
-
                 }
                 case "/repeatcmd" -> {
                     e.setCancelled(true);
@@ -179,13 +178,11 @@ public class TestListener implements Listener {
                     }
                     p.sendMessage("Took " + (System.currentTimeMillis() - start));
                 }
-
                 case "/splayers" -> {
                     e.setCancelled(true);
                     OneCore.getPlugin().getDatabase().saveUsersAsync();
                     p.sendMessage("saved all users");
                 }
-
                 case "/testloadusers" -> {
                     int amount = Integer.parseInt(args[0]);
                     while (amount != 0) {
@@ -206,35 +203,15 @@ public class TestListener implements Listener {
                             }//1063, 10959 10504
                             p.sendMessage("joins took " + (System.currentTimeMillis() - time));
                         });
-
                 case "/tes" -> {
                     p.sendMessage("test");
                     testMS = System.currentTimeMillis();
                     PaperLib.teleportAsync(p, p.getLocation().add(3, 2, 0));
                 }
-                case "/ta33" -> {
-                    p.sendMessage("test");
-                    int i = Integer.parseInt(args[0]);
-                    while (i != 0) {
-                        OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
-                        i--;
-                    }//1063, 10959 10504
-                    p.sendMessage("qued");
-                }
-                case "/rtp2" -> {
-                    p.sendMessage("test");
-                    testMS = System.currentTimeMillis();
-                    OneCore.getPlugin().getRtpHandler().queue(p.getUniqueId());
-                }
-                case "/rtptimer" -> {
-                    int i = Integer.parseInt(args[0]);
-                    OneCore.getPlugin().getRtpHandler().changeQueueTimer(i);
-                }
                 case "/sht" -> {
                     int i = Integer.parseInt(args[0]);
                     scheduler = new SpeedChangeScheduler(OneCore.getPlugin(), i, false, () -> p.sendMessage("Task " + i));
                 }
-
                 case "/shtset" -> {
                     int i = Integer.parseInt(args[0]);
                     scheduler.reSchedule(i);
