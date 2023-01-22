@@ -218,12 +218,6 @@ Data:
     permission: repair
     aliases: [ ]
     #  - examplealias1
-  rtp:
-    enabled: true
-    label: Rtp
-    permission: rtp
-    aliases: [ ]
-    #  - examplealias1
   seen:
     enabled: true
     label: seen
