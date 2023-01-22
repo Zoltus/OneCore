@@ -31,7 +31,6 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
 
         replaceSuggestions(ArgumentSuggestions.stringsAsync(info -> CompletableFuture.supplyAsync(() -> {
             String prevArg = (String) info.previousArgs()[0];
-
             //If arg lenght 0 it will try to asyncload first argument as oneuser from db
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             User target = User.of(offP);
@@ -39,7 +38,6 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
             return target != null ? filter(info.currentArg(), target.getHomeArray()) : filter(info.currentArg());
         })));
     }
-
     /*
         //Stays in memory, Could be abused by players with perm, Stays in memory to prevent spam scans
         private static final List<String> tasks = new ArrayList<>();

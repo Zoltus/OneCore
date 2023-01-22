@@ -5,10 +5,7 @@ import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
 import lombok.Getter;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
@@ -105,11 +102,23 @@ public class Request {
 
     private void sendChat() {
         TP_SENT.send(sender, PLAYER_PH, accepter.getName());
-                /*ChatBuilder cb = new ChatBuilder(
-                TP_RECEIVED.rp(PLAYER_PH, sender.getName())
-                , TP_RECEIVED_ACCEPT_LINE.getString()
-        );
 
+        TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName());
+        TP_RECEIVED_ACCEPT_LINE.send(accepter);
+
+
+
+        HoverEvent acceptHover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_ACCEPT_BUTTON_HOVER.getString()));
+        ClickEvent acceptClick = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/TPACCEPT_LABEL.getString()"+ sender.getName());
+        HoverEvent denyHover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_DENY_BUTTON_HOVER.getString()));
+        ClickEvent denyClick = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/TPDENY_LABEL.getString() " + sender.getName());
+
+
+        String accept = TP_ACCEPT_BUTTON.replace(PLAYER_PH, sender.getName());
+       // replacePlaceholder(accept, ACCEPT_PH, TP_ACCEPT_BUTTON.getString());
+
+
+        /*
         ChatBuilder.Component comp = new ChatBuilder.Component(ACCEPT_PH, TP_ACCEPT_BUTTON.getString());
         comp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + TPACCEPT_LABEL.getString() + " " + sender.getName()));
         comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_ACCEPT_BUTTON_HOVER.getString())));
@@ -119,10 +128,14 @@ public class Request {
         comp2.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_DENY_BUTTON_HOVER.getString())));
         cb.addComponents(comp, comp2);
         cb.build();
+
+
+
+
         cb.send(accepter);*/
     }
 
-    public static BaseComponent[] replacePlaceholder(String line, String placeholder, String replaceWith) {
+    public static BaseComponent[] replacePlaceholder(String line, String placeholder, HoverEvent hoverEvent, ClickEvent clickEvent) {
         // create the string builder to build the new string
         ComponentBuilder sb = new ComponentBuilder();
         //Keeps previous colors
@@ -135,16 +148,25 @@ public class Request {
             // check if there is a placeholder to be replaced
             if (i != sections.length - 1) {
                 // add the hover event for the placeholder
-                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(replaceWith));
                 // create a new text component with the placeholder
                 TextComponent placeholderText = new TextComponent(placeholder);
                 // set the hover event for the placeholder
                 placeholderText.setHoverEvent(hoverEvent);
+                placeholderText.setClickEvent(clickEvent);
                 // append the placeholder component to the stringbuilder
                 sb.append(placeholderText, retention);
             }
         }
         return sb.create();
+    }
+
+    //Same as above but instead of taking String you take Basecomponents
+    public static BaseComponent[] replacePlaceholder(BaseComponent[] components, String placeholder, HoverEvent hoverEvent, ClickEvent clickEvent) {
+
+
+
+
+        return null;
     }
 
 
