@@ -409,9 +409,3 @@ Data:
       - storm
       - rain
       - clear
-  worldmanager:
-    enabled: true
-    label: worldmanager
-    permission: world
-    aliases:
-      - wm
