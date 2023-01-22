@@ -168,11 +168,6 @@
     <build>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>resources</directory>
-            </resource>
-        </resources>
         <plugins>
             <!-- Jar loc -->
             <plugin>

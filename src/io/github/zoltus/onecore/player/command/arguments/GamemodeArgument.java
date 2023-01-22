@@ -32,24 +32,17 @@ public class GamemodeArgument extends CustomArgument<GameMode, String> implement
      * @return Gamemode based on aliases in config
      */
     private static GameMode getGamemode(String input) {
-        Bukkit.getConsoleSender().sendMessage("aaaaa");
         Predicate<Commands> hasGm = (gamemodes) -> Arrays
                 .stream(gamemodes.getAsArray()).anyMatch(input::equalsIgnoreCase);
-        Bukkit.getConsoleSender().sendMessage("bbbbbb");
         if (hasGm.test(Commands.GAMEMODE_ALIASES_SURVIVAL)) {
-            Bukkit.getConsoleSender().sendMessage("ccccc");
             return GameMode.SURVIVAL;
         } else if (hasGm.test(Commands.GAMEMODE_ALIASES_CREATIVE)) {
-            Bukkit.getConsoleSender().sendMessage("ddddd");
             return GameMode.CREATIVE;
         } else if (hasGm.test(Commands.GAMEMODE_ALIASES_ADVENTURE)) {
-            Bukkit.getConsoleSender().sendMessage("eeee");
             return GameMode.ADVENTURE;
         } else if (hasGm.test(Commands.GAMEMODE_ALIASES_SPECTATOR)) {
-            Bukkit.getConsoleSender().sendMessage("ffff");
             return GameMode.SPECTATOR;
         } else {
-            Bukkit.getConsoleSender().sendMessage("gggg");
             return null;
         }
     }

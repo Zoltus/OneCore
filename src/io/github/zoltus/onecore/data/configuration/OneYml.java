@@ -91,7 +91,6 @@ public class OneYml extends YamlConfiguration {
         } catch (IOException | InvalidConfigurationException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
         }
-
     }
 
     //* Gets resource from classpath
