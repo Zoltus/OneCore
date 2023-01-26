@@ -10,9 +10,6 @@ import org.bukkit.Bukkit;
 
 public class Broadcast implements ICommand {
 
-    //todo
-    private final String PREFIX = Lang.BROADCAST_PREFIX.getString();
-
     @Override
     public void init() {
         new Command(Commands.BROADCAST_LABEL)
@@ -20,6 +17,7 @@ public class Broadcast implements ICommand {
                 .withAliases(Commands.BROADCAST_ALIASES)
                 .then(new ChatArgument(Lang.NODES_MESSAGE.getString())
                         .executes((sender, args) -> {
+                            //todo String PREFIX = Lang.BROADCAST_PREFIX.getString()
                             Bukkit.spigot().broadcast((BaseComponent[]) args[0]);
                         })
                 ).override();

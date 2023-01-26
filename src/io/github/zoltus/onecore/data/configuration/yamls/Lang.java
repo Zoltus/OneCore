@@ -147,7 +147,6 @@ public enum Lang implements IConfig {
     TP_DENY_BUTTON_HOVER("tp.deny-button-hover"),
     TP_EXPIRED("tp.expired"),
     TP_NO_REQUESTS("tp.no-requests"),
-    TP_NO_REQUESTS_FOUND("tp.no-requests-found"),
     TP_NO_SAFE_LOCATIONS("tp.no-safe-locations"),
     TP_TELEPORTED_OFFLINE_TARGET("tp.teleported-offline-target"),
     TP_TELEPORTED_OFFLINE_TARGETS("tp.teleported-offline-targets"),

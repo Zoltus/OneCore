@@ -2,7 +2,7 @@
 
 Data:
   spawn: []
-  prefix: '&9&lOnecore &8&l»&7'
+  prefix: '&f&lMoti&a&lMaa &8&l»&7'
   back-history-size: 10
   chat-color-permission: chat.colors
   chat-colors-enabled: true
