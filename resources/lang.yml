@@ -147,7 +147,7 @@ Data:
     # <player>, <ping>
     targets-ping: '{p} <player> ping is <ping>'
     # <ping>
-    your-ping: '{p} Your pinga is <ping>'
+    your-ping: '{p} Your ping is <ping>'
   playtime:
     # <time>
     targets-playtime: '{p} <player> playtime is <time>'
