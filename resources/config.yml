@@ -4,7 +4,6 @@ Data:
   spawn: []
   prefix: '&9&lOnecore &8&l»&7'
   back-history-size: 10
-  baltop-update-interval: 60
   chat-color-permission: chat.colors
   chat-colors-enabled: true
   # How player & server data is saved. Baltop also updates after database is updated.
