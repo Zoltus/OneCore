@@ -245,14 +245,12 @@ Data:
     deny-button: '&cDeny'
     deny-button-hover: '&cClick to deny!'
     expired: '{p} expired'
-    no-requests: '{p} no reqs'
-    no-requests-found: '{p} no request found'
-    no-safe-locations: '{p} no safe loc found'
-    # <player>
-    teleported-offline-target: '{p} You teleported to offline target <player>'
+    no-requests: '{p} Ei pyyntöjä.'
+    no-safe-locations: '{p} Turvallista paikkaa ei löytynyt.'
+    # <player> //Copilot. translate messages!
+    teleported-offline-target: '{p} Teleporttasit offline pelaajaan: <player>'
     # <player>, <player2>
-    teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both
-      were offline)'
+    teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both were offline)'
     # <player>
     teleported-target: '{p} You teleported to offline target <player>'
     # <player>, <player2>
@@ -279,17 +277,17 @@ Data:
     you-denied: '{p} You denied players <player> request'
   tphere:
     # <player>
-    teleported: '{p} Teleported <player> to you!'
+    teleported: '{p} <player> teleportattu sinuun!'
     # <player>
     offline-target: '{p} <player> was offline and was teleported to you!'
   warp:
     # <list>
-    list: 'Warps: <list>'
+    list: 'Warpit: <list>'
     # <list>
-    not-found: '{p} Warp not found, available warps: <list>'
+    not-found: '{p} Warppia ei löytynyt. Warpit: <list>'
     # <player>, <warp>
     target-sent: '{p} Sent target <player> to warp <warp>'
   weather:
     # <weather>, <world>
     changed: '{p} Weather changed to <weather> in world <world>'
-    invalid-weather: '{p} Invalid weather'
+    invalid-weather: '{p} Kelvoton sää!'

@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore.data.configuration;
 
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.List;
