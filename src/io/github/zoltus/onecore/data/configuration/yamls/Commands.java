@@ -124,10 +124,6 @@ public enum Commands implements IConfig {
     REPAIR_ENABLED("repair.enabled"),
     REPAIR_LABEL("repair.label"),
     REPAIR_PERMISSION("repair.permission"),
-    RTP_ALIASES("rtp.aliases"),
-    RTP_ENABLED("rtp.enabled"),
-    RTP_LABEL("rtp.label"),
-    RTP_PERMISSION("rtp.permission"),
     SEEN_ALIASES("seen.aliases"),
     SEEN_ENABLED("seen.enabled"),
     SEEN_LABEL("seen.label"),
@@ -237,11 +233,7 @@ public enum Commands implements IConfig {
     WEATHER_RAIN_ALIASES("weather.rain-aliases"),
     WEATHER_SINGLE_WORD_CMDS("weather.single-word-cmds"),
     WEATHER_STORM_ALIASES("weather.storm-aliases"),
-    WEATHER_SUGGESTIONS("weather.suggestions"),
-    WORLDMANAGER_ALIASES("worldmanager.aliases"),
-    WORLDMANAGER_ENABLED("worldmanager.enabled"),
-    WORLDMANAGER_LABEL("worldmanager.label"),
-    WORLDMANAGER_PERMISSION("worldmanager.permission");
+    WEATHER_SUGGESTIONS("weather.suggestions");
 
     @Getter
     final String path;

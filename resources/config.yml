@@ -4,7 +4,6 @@ Data:
   spawn: []
   prefix: '&9&lOnecore &8&l»&7'
   back-history-size: 10
-  baltop-update-interval: 60
   chat-color-permission: chat.colors
   chat-colors-enabled: true
   # How player & server data is saved. Baltop also updates after database is updated.
@@ -21,19 +20,6 @@ Data:
   teleport-with-vehicle: true
   user-console-filter: true
   mentions-enabled: true
-  rtp:
-    #todo rtp-cooldown-seconds: 60
-    radius: 10000
-    # How often player can be queued to rtp
-    # Example if its 20 ticks and 100 players do rtp same time it will take
-    # 20 ticks * 100 players = 2000 ticks = 100 seconds
-    # so the time taken for some player to rtp + queuetick = when next player starts process
-    # use 1 or above
-    queue-tick: 20
-    # How often new random location can be scanned per player (milliseconds)
-    delay-between-location-scan: 100
-    # How many times it tries to find new location
-    scans-till-time-out: 5
   economy:
     currency-plural: €
     currency-singular: €

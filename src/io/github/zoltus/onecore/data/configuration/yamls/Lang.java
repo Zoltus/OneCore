@@ -103,8 +103,6 @@ public enum Lang implements IConfig {
     REPAIR_SLOT_OFFHAND("repair.slot-offhand"),
     REPAIR_YOUR_ITEMS_GOT_REPAIRED("repair.your-items-got-repaired"),
     REPAIR_YOU_REPAIRED_TARGET("repair.you-repaired-target"),
-    RTP_ON_COOLDOWN("rtp.on-cooldown"),
-    RTP_TELEPORTED("rtp.teleported"),
     SEEN_DATE_FORMAT("seen.date-format"),
     SEEN_LAST_SEEN("seen.last-seen"),
     SETHOME_FULL_HOMES("homes.set.full-homes"),
