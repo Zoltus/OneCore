@@ -172,10 +172,6 @@ Data:
     you-repaired-target: '{p} you repaired players: <player> items from slot <slot>'
     # <slot>
     your-items-got-repaired: '{p} Your items from slot <slot> was repaired'
-  rtp:
-    # <seconds>
-    on-cooldown: '{p} You can rtp again after <seconds>'
-    teleported: '{p} Teleported to randomloc'
   seen:
     date-format: dd.MM.yyyy | HH:mm
     # <player>, <time>
