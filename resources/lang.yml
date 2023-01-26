@@ -7,105 +7,109 @@ Data:
     joined: '&a&l+ &7<player>'
     # <player>
     quit: '&c&l- &7<player>'
-    kicked-for-spamming-reason: '{p} §cKicked for spamming!'
+    kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
     mention-color: '&x&0&0&f&f&0&0&l'
     mention-permission: mention
     mention-tag: '@'
     player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-only-command: '{p} Tämä komento on vain pelaajille!'
-    world-not-found: '{p} maailmaa ei löytynyt'
+    world-not-found: '{p} Maailmaa ei löytynyt'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>
     nodes:
-      amount: amount
+      amount: määrä
       entity-type: entity-type
-      gamemode: gamemode
-      home-home/player-name: home/player
-      home-name: home
+      gamemode: pelimuoto
+      home-home/player-name: koti/pelaaja
+      home-name: koti
       location: location
-      message: message
-      player: player
-      range: range
+      message: viesti
+      player: pelaaja
+      range: etäisyys
       slot: slot
-      speed: speed
-      time: time
+      speed: nopeus
+      time: aika
       true-false: true/false
-      warp-name: warpname
-      weather: weather
-      world-name: world
+      warp-name: warpin-nimi
+      weather: sää
+      world-name: maailma
   back:
-    invalid-number: '{p} Invalid back amount, try 1-10'
+    invalid-number: '{p} Kelvoton numero, koita 1-10 väliltä!'
     # <player>
-    no-history: '{p} No history found for <player>'
+    no-history: '{p} Pelaajalle <player> ei löytynyt historiaa'
     # <size>
-    out-of-bounds: '{p} Target has back size of <size>'
+    out-of-bounds: '{p} Pelaajalla on <size>/10 historiaa!'
     # <player>
-    target-sent: '{p} Sent <player> to location'
+    target-sent: '{p} Pelaaja <player> teleportattu sijaintiin!'
   broadcast:
     prefix: '&8&l[&c&lIlmoitus&8&l] &7'
   clear:
-    player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&lcleared'
+    player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&ltyhjennetty!'
   economy:
     balance:
       # <player>, <balance>
-      targets-balance: '{p} <player> balance is <balance>'
+      targets-balance: '{p} Pelaajan <player> rahamäärä on: <balance>!'
       # <balance>
-      your-balance: '{p} Your balance is <balance>'
+      your-balance: '{p} Rahasi: <balance>'
     baltop:
-      empty: '&7Baltop is empty.'
+      empty: '&7Top lista on tyhjä.'
       # <player>, <amount>
       line: '&7<player> : <amount>'
-      top-players: '{p} Top 10 players:'
+      top-players: '{p} Top 10 pelaajat:'
     give:
       # <player>, <amount>, <balance>
-      gave: '{p} You gave <amount> to <player> your new balance <balance>'
+      gave: '{p} Annoit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
       # <amount>, <balance>
-      your-balance-was-increaced: '{p} Admin gave you <amount>, new balance <balance>'
-    not-enought: '{p} You dont have enought money'
+      your-balance-was-increaced: '{p} Ylläpitäjä antoi sinulle <amount>, Uusi rahamääräsi
+        on <balance>!'
+    not-enought: '{p} Sinulla ei ole tarpeeksi varaa!'
     # <player>, <amount>, <balance>
-    target-doesnt-have-enought-money: '{p} <player> didnt have enought money he has <balance> and you tried to take <amount>'
+    target-doesnt-have-enought-money: '{p} Pelaajalla <player> ei ollut tarpeeksi
+      varaa. Hänellä on <balance> ja yritit ottaa <amount>!'
     pay:
       # <player>, <amount>, <balance>
-      received: '{p} You received <amount> from <player>, your new balance is <balance>'
+      received: '{p} Sait <amount> pelaajalta <player>. Uusi rahamääräsi on <balance>!'
       # <player>, <amount>, <balance>
-      sent: '{p} You sent <amount> to <player>, your new balance is <balance>'
+      sent: '{p} Lähetit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
     set:
       # <player>, <amount>
-      set: '{p} You set players <player> balance to <amount>'
+      set: '{p} Asetit pelaajan <player> raha määräksi <amount>!'
       # <amount>
-      your-balance-was-set: '{p} Your balance was updated to <amount> by admin'
+      your-balance-was-set: '{p} Raha määräksesi on asetettu <amount>, ylläpidon toimesta!'
     take:
       #  <player>, <amount>, <balance>
-      took: '{p} You removed <amount> from <player>, new balance <balance>'
+      took: '{p} Poistit <amount> pelaajalta <player>, Uusi rahamääräsi on <balance>!'
       # <amount>, <balance>
-      your-balance-reduced: '{p} Your balance was reduced by <amount> by admin, new balance <balance>'
+      your-balance-reduced: '{p} Sinulta poistettiin <amount> Ylläpidon toimesta!
+        Uusi rahamääräsi on <balance>!'
     # <player>
     transfer:
       # <player>, <player2>, <amount>
-      transfered: '{p} Successfully transfered <amount> from <player> to <player2>'
+      transfered: '{p} Siirsit onnestuneesti <amount> pelaajalta <player> pelaajalle
+        <player2>!'
   feed:
     # <player>
-    you-fed-target: '{p} You Fed player: <player>'
-    you-have-been-healed: '{p} You have been Fed'
+    you-fed-target: '{p} Ruokit pelaajan: <player>!'
+    you-have-been-healed: '{p} Sinut on ruokittu!'
   fly:
     # <player> <toggle>
-    you-switched-target: '{p} You switched players <player> fly to : <toggle>'
+    you-switched-target: '{p} Asetit pelaajan <player> lennon "<toggle>"'
     # <toggle>
-    your-flight-is-now: '{p} Your flight was changed to <toggle>!'
+    your-flight-is-now: '{p} Lentosi vaihdettiin: <toggle>!'
   gamemode:
     # <mode> will be replaced with the gamemode name
-    survival: 'survival'
-    creative: 'creative'
-    adventure: 'adventure'
-    spectator: 'spectator'
+    survival: selviytyminen
+    creative: luova
+    adventure: seikkailia
+    spectator: katsoja
     # <mode>
-    changed: '{p} Your gamemode was switched to <mode>'
-    invalid-gamemode: '{p} Invalid gamemode'
+    changed: '{p} Asetit pelimuodoksi: <mode>'
+    invalid-gamemode: '{p} Kelvoton pelimuoto'
     # <player> <mode>
-    target-already-in-gamemode: '{p} <player> is already in <mode>'
+    target-already-in-gamemode: '{p} <player> on jo pelimuodossa <mode>!'
     # <player> <mode>
-    targets-gamemode-changed: '{p} You changed players <player> gamemode to <mode>'
+    targets-gamemode-changed: '{p} Vaihdoit pelaajan <player> pelimuodoksi: <mode>!'
   god:
     # <player> <mode>
     changed-targets-god: '{p} You made <player> god to: <mode>'
@@ -147,7 +151,7 @@ Data:
     # <player>, <ping>
     targets-ping: '{p} <player> ping is <ping>'
     # <ping>
-    your-ping: '{p} Your ping is <ping>'
+    your-ping: '{p} Your pinga is <ping>'
   playtime:
     # <time>
     targets-playtime: '{p} <player> playtime is <time>'
@@ -192,7 +196,7 @@ Data:
     sign-updated: '{p} Sign updated'
     sign-not-found: '{p} Sign not found'
     sign-copied: '{p} Sign copied'
-    #<line>
+    # <line>
     sign-copied-line: '{p} Copied line <line>'
   speed:
     mode-fly: fly
@@ -247,7 +251,8 @@ Data:
     # <player>
     teleported-offline-target: '{p} You teleported to offline target <player>'
     # <player>, <player2>
-    teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both were offline)'
+    teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both
+      were offline)'
     # <player>
     teleported-target: '{p} You teleported to offline target <player>'
     # <player>, <player2>

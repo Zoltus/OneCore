@@ -27,6 +27,7 @@ Data:
     use-oneeconomy: true
     start-money: 500
   backups:
-    stats-enabled: true
+    #broken atm
+    stats-enabled: false
     playerdata-enabled: true
     database-enabled: true
