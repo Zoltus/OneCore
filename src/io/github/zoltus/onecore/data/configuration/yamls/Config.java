@@ -19,6 +19,7 @@ public enum Config implements IConfig {
     CURRENCY_SINGULAR("economy.currency-singular"),
     DATA_SAVE_INTERVAL("data-save-interval-minutes"),
     ECONOMY("economy.enabled"),
+    ECONOMY_BALTOP_INTERVAL("economy.baltop-update-interval"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass"),
     MENTIONS_ENABLED("mentions-enabled"),
