@@ -12,9 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
@@ -210,15 +208,29 @@ public class EconomyCMD implements ICommand {
             sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
         } else {
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                int index = 0;
                 int startIndex = page * 10;
                 int endIndex = startIndex + 10;
-                for (Map.Entry<UUID, Double> entry : balances.entrySet()) {
-                    if (startIndex <= index && index < endIndex) {
-                        UUID uuid = entry.getKey();
-                        double value = entry.getValue();
-                        String name = Bukkit.getOfflinePlayer(uuid).getName();
-                        ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
+                if (startIndex > balances.size()) {
+                    //Get the last 10 players from the map balances:
+                    List<Map.Entry<UUID, Double>> lastEntries = new ArrayList<>(balances.entrySet());
+                    lastEntries.subList(Math.max(lastEntries.size() - 10, 0), lastEntries.size())
+                            .forEach(entry -> {
+                                UUID uuid = entry.getKey();
+                                double balance = entry.getValue();
+                                String name = Bukkit.getOfflinePlayer(uuid).getName();
+                                ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, balance);
+                            });
+                } else {
+                    sender.sendMessage(ECONOMY_BALTOP_TOP_PLAYERS.getString());
+                    int index = 0;
+                    for (Map.Entry<UUID, Double> entry : balances.entrySet()) {
+                        if (startIndex <= index && index < endIndex) {
+                            UUID uuid = entry.getKey();
+                            double value = entry.getValue();
+                            String name = Bukkit.getOfflinePlayer(uuid).getName();
+                            ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
+                        }
+                        index++;
                     }
                 }
             });
