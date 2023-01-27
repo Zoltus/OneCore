@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -22,8 +22,9 @@ import java.util.logging.Logger;
 
 @Getter
 public final class OneEconomy extends AbstractEconomy {
-    @Getter
-    private static final ConcurrentHashMap<UUID, Double> balances = new ConcurrentHashMap<>();
+
+    @Getter @Setter
+    private static LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
 
     private final Logger logger;
     private final OneCore plugin;
@@ -45,6 +46,17 @@ public final class OneEconomy extends AbstractEconomy {
     public OneEconomy(OneCore plugin) {
         this.plugin = plugin;
         this.logger = createLogger();
+        sortScheduler();
+    }
+
+    private void sortScheduler() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            LinkedHashMap<UUID, Double> sorted = new LinkedHashMap<>();
+            balances.entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
+            balances = sorted;
+        }, 0, 20L * 60 * Config.ECONOMY_BALTOP_INTERVAL.getInt());
     }
 
     private Logger createLogger() {

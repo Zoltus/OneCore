@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.player.command.commands.economy;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.DoubleArgument;
+import dev.jorel.commandapi.arguments.IntegerArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
@@ -11,11 +12,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -112,7 +116,7 @@ public class EconomyCMD implements ICommand {
                         ECONOMY_SET_YOUR_BALANCE_WAS_SET.send(target, AMOUNT_PH, amount);
                     }
                 });
-        // baltop, todo /baltop reload
+        // baltop, todo /baltop reload, automatic works
         CommandAPICommand baltop = new CommandAPICommand(ECONOMY_BALTOP_LABEL.getString())
                 .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
@@ -120,21 +124,21 @@ public class EconomyCMD implements ICommand {
                     if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
                         sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
                     } else {
-                        ConcurrentHashMap<UUID, Double> top = OneEconomy.getBalances();
-                        if (!top.isEmpty()) {
-                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> top.entrySet()
-                                    .stream()
-                                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                                    .limit(10)
-                                    .forEachOrdered(x -> {
-                                        UUID uuid = x.getKey();
-                                        double value = x.getValue();
-                                        String name = Bukkit.getOfflinePlayer(uuid).getName();
-                                        ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
-                                    }));
-                        } else {
-                            sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
-                        }
+                        printBalances(sender, 0);
+                    }
+                });
+
+        //Baltop <page>
+        CommandAPICommand baltopPage = new CommandAPICommand(ECONOMY_BALTOP_LABEL.getString())
+                .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
+                .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
+                .withArguments(new IntegerArgument("sivu"))//todo to variable
+                .executesPlayer((sender, args) -> {
+                    if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+                        sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
+                    } else {
+                        int page = (int) args[0];
+                        printBalances(sender, page);
                     }
                 });
 
@@ -147,6 +151,7 @@ public class EconomyCMD implements ICommand {
         pay.override();
         set.override();
         baltop.override();
+        baltopPage.register();
 
         new CommandAPICommand(ECONOMY_LABEL.getString())
                 .withAliases(ECONOMY_ALIASES.getAsArray())
@@ -159,6 +164,7 @@ public class EconomyCMD implements ICommand {
                 .withSubcommand(take)
                 .withSubcommand(set)
                 .withSubcommand(baltop)
+                .withSubcommand(baltopPage)
                 .override();
     }
 
@@ -195,6 +201,27 @@ public class EconomyCMD implements ICommand {
             ECONOMY_BALANCE_TARGETS_BALANCE.send(sender,
                     PLAYER_PH, target.getName(),
                     BALANCE_PH, balance);
+        }
+    }
+
+    public void printBalances(CommandSender sender, int page) {
+        LinkedHashMap<UUID, Double> balances = OneEconomy.getBalances();
+        if (balances.isEmpty()) {
+            sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
+        } else {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                int index = 0;
+                int startIndex = page * 10;
+                int endIndex = startIndex + 10;
+                for (Map.Entry<UUID, Double> entry : balances.entrySet()) {
+                    if (startIndex <= index && index < endIndex) {
+                        UUID uuid = entry.getKey();
+                        double value = entry.getValue();
+                        String name = Bukkit.getOfflinePlayer(uuid).getName();
+                        ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, value);
+                    }
+                }
+            });
         }
     }
 }
