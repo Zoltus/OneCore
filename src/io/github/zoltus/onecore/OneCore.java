@@ -23,6 +23,7 @@ import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -76,6 +77,8 @@ public final class OneCore extends JavaPlugin implements Listener {
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+
+        testConfig();
     }
 
     @Override
@@ -102,12 +105,15 @@ public final class OneCore extends JavaPlugin implements Listener {
     }
 
     private void testConfig() {
-        Stream.of(Config.values()).filter(Objects::isNull).filter(obj2 -> false)
-                .forEach(config -> plugin.getLogger().info("§c" + config.name() + " is null!"));
-        Stream.of(Commands.values()).filter(Objects::isNull).filter(obj1 -> false)
-                .forEach(cmd -> plugin.getLogger().info("§c" + cmd.name() + " is null!"));
-        Stream.of(Lang.values()).filter(Objects::isNull).filter(obj -> false)
-                .forEach(lang -> plugin.getLogger().info("§c" + lang.name() + " is null!"));
+        Arrays.stream(Config.values())
+                .filter(val -> val.get() == null)
+                .forEach(val -> System.out.println(val.name() + ":null"));
+        Arrays.stream(Commands.values())
+                .filter(val -> val.get() == null)
+                .forEach(val -> System.out.println(val.name() + ":null"));
+        Arrays.stream(Lang.values())
+                .filter(val -> val.get() == null)
+                .forEach(val -> System.out.println(val.name() + ":null"));
         plugin.getLogger().info("§aTested config");
     }
 }
