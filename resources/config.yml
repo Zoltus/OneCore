@@ -21,6 +21,8 @@ Data:
   user-console-filter: true
   mentions-enabled: true
   economy:
+    # Minutes
+    baltop-update-interval: 5
     currency-plural: €
     currency-singular: €
     enabled: true
