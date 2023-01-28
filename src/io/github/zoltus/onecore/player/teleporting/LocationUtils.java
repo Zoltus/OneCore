@@ -1,9 +1,7 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.listeners.TestListener;
 import io.papermc.lib.PaperLib;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -34,15 +32,13 @@ public class LocationUtils {
         } else {
             if (loc.getWorld() != null) {
                 Entity vehicle = p.getVehicle();
+                //todo move player tele here and test.
                 if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
                     PaperLib.teleportAsync(vehicle, safeLoc);
                     PaperLib.teleportAsync(p, safeLoc);
                     vehicle.addPassenger(p);
                 } else {
-                    PaperLib.teleportAsync(p, safeLoc).thenAccept((result) -> {
-                        long timeTaken = TestListener.testMS - System.currentTimeMillis();
-                        p.sendMessage("took" + timeTaken);
-                    });
+                    PaperLib.teleportAsync(p, safeLoc);
                 }
             }
         }
