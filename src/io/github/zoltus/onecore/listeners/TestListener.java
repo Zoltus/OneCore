@@ -1,38 +1,9 @@
 package io.github.zoltus.onecore.listeners;
 
-import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.teleporting.LocationUtils;
-import io.github.zoltus.onecore.utils.SpeedChangeScheduler;
-import io.papermc.lib.PaperLib;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
-import org.bukkit.Bukkit;
-import org.bukkit.HeightMap;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Supplier;
 
 public class TestListener implements Listener {
+    /*
 
     public static BaseComponent[] replacePlaceholder(String line, String placeholder, String replaceWith) {
         // create the string builder to build the new string
@@ -89,12 +60,6 @@ public class TestListener implements Listener {
             } while (loc == null);
             //If scan timeouts it returns null location, adds 1 because block y
             loc.add(0.5, 1.1, 0.5);
-    }
-
-    @EventHandler
-    public void aaa(InventoryClickEvent e) {
-        System.out.println(e.getClick().name());
-
     }
 
     private static long ms = 0;
@@ -219,7 +184,7 @@ public class TestListener implements Listener {
                 }
             }
         }
-    }
+    }*/
 }
 
 
