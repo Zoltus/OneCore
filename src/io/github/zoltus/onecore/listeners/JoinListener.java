@@ -35,6 +35,5 @@ public record JoinListener(OneCore plugin) implements Listener {
     public void onLeave(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
-
     }
 }
