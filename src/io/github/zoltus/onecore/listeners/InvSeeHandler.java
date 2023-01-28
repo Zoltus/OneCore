@@ -41,11 +41,7 @@ public class InvSeeHandler implements Listener {
             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
             inv = Bukkit.createInventory(null, 36);
             //Chooses if it uses enderchesitems or normal inv items
-            System.out.println("isEnderChest: " + isEnderChest);
-
             Map<Integer, ItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventory();
-            System.out.println("items: " + items.size());
-            System.out.println("items2: " + inv.getSize());
             items.forEach((key, item) -> {
                 int slot = key;
                 //Check it to make sure inv is same size, and will only set storage contents
@@ -118,7 +114,7 @@ public class InvSeeHandler implements Listener {
         BiMap<UUID, Inventory> invMap = isEnderChest ? eInventorys : inventorys;
 
         //If player has only viewperm to invs
-        String permission = isEnderChest ? Commands.EnderChest_EDIT_PERMISSION.asPermission() : Commands.INVSEE_EDIT_PERMISSION.asPermission();
+        String permission = isEnderChest ? Commands.ENDERCHEST_EDIT_PERMISSION.asPermission() : Commands.INVSEE_EDIT_PERMISSION.asPermission();
 
         if (invMap.inverse().containsKey(inv) && !p.hasPermission(permission)) {
             //If player owns the inv he can freely edit it
