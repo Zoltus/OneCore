@@ -50,7 +50,6 @@ public class LocationUtils {
 
     //If player is on creative it will teleport to any loc
     public static Location getSafeLocation(Player p, Location loc) {
-        Bukkit.broadcastMessage("safescan");
         return p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
     }
 
