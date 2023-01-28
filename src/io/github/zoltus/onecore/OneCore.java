@@ -8,7 +8,10 @@ import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.data.database.Database;
 import io.github.zoltus.onecore.economy.EconomyHandler;
-import io.github.zoltus.onecore.listeners.ConsoleFilter;
+import io.github.zoltus.onecore.listeners.*;
+import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
+import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
+import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -23,10 +26,9 @@ import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @Plugin(name = "OneCore", version = "1.0-Beta")
 @Description("A test plugin")
@@ -51,7 +53,6 @@ public final class OneCore extends JavaPlugin implements Listener {
     private Database database;
     private BackupHandler backupHandler;
     private CommandHandler commandHandler;
-    private ListenerHandler listenerHandler;
 
     @Override
     public void onLoad() {
@@ -62,15 +63,23 @@ public final class OneCore extends JavaPlugin implements Listener {
     //todo backup interval to config
     @Override
     public void onEnable() {
-        CommandAPI.onEnable(this); //Loads commandapi
+        //Loads commandapi
+        CommandAPI.onEnable(this);
         long time = System.currentTimeMillis();
-        this.database = Database.init(this); // Loads db & baltop todo only obj
-        this.vault = EconomyHandler.hook(this);// Hooks economy if its enabled on config.
-        this.listenerHandler = ListenerHandler.register(this); //Registers listeners if enabled
-        this.commandHandler = CommandHandler.register(this); //Registers Commands if enabled
-        new Metrics(this, 12829); // Inits metrics to bstats
-        ConsoleFilter.init(); // Sets default config for all commands and settings if they are not set
-        testConfig(); // Tests config for missing values
+        // Loads db & baltop todo only obj
+        this.database = Database.init(this);
+        // Hooks economy if its enabled on config.
+        this.vault = EconomyHandler.hook(this);
+        //Registers Listeners
+        registerListeners();
+        //Registers Commands if enabled
+        this.commandHandler = CommandHandler.register(this);
+        // Inits metrics to bstats
+        new Metrics(this, 12829);
+        // Sets default config for all commands and settings if they are not set
+        ConsoleFilter.init();
+        // Tests config for missing values
+        testConfig();
         this.database.cacheUsers();
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
         this.backupHandler.start(); //todo to singleton
@@ -102,6 +111,29 @@ public final class OneCore extends JavaPlugin implements Listener {
                 "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
                 ""
         ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 1);
+    }
+
+    public void registerListeners() {
+        plugin.getLogger().info("Registering listeners...");
+        //Adds listeners to list if enabled and then registers them.
+        List<Listener> listeners = new ArrayList<>() {{
+            if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
+                add(new InvSeeHandler());
+            if (Config.MENTIONS_ENABLED.getBoolean())
+                add(new Mentions());
+            if (Config.CHAT_COLORS_ENABLED.getBoolean())
+                add(new ChatColors());
+            if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
+                add(new TeleportVelocity());
+            new SignListener(plugin);
+            new JoinListener(plugin);
+            new KickedForSpamming();
+            new KickedForSpamming();
+            new QuitListener();
+            new TeleportHandler();
+            new TestListener();
+        }};
+        listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 
     private void testConfig() {
