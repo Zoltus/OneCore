@@ -19,9 +19,9 @@ public class EnderChest implements ICommand {
                     InvSeeHandler.handle(sender, offTarget, true);
                 });
         //enderchest
-        new Command(EnderChest_LABEL)
-                .withPermission(EnderChest_OTHER_PERMISSION)
-                .withAliases(EnderChest_ALIASES)
+        new Command(ENDER_CHEST_LABEL)
+                .withPermission(ENDER_CHEST_OTHER_PERMISSION)
+                .withAliases(ENDERCHEST_ALIASES)
                 .executesPlayer((sender, args) -> {
                     sender.openInventory(sender.getEnderChest());
                 }).then(arg0)
