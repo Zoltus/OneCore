@@ -7,6 +7,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class Tp implements ICommand {
     @Override
     public void init() {
         //tp <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        ArgumentTree arg0 = new OfflinePlayerArgument("1")
                 .executesPlayer((sender, args) -> {
                     OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
                     Location destination = getLoc(offlineTarget);
