@@ -27,6 +27,7 @@
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
+        <placeholderapi.version>2.11.2</placeholderapi.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -69,6 +70,11 @@
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+        <!-- PlaceholderAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
     <!-- Dependencies -->
     <dependencies>
@@ -103,7 +109,6 @@
             <version>${log4j.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- Spigot Server,
         Github cant build with this and prevents version support anyways.-->
         <dependency>
@@ -146,28 +151,43 @@
             <version>${apache-compress}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- bstats has to be compiled-->
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>${bstats.version}</version>
-        </dependency>
         <!-- NbtApi -->
         <dependency>
             <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api-plugin</artifactId>
+            <artifactId>item-nbt-api</artifactId>
             <version>${nbtapi.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- PaperLib -->
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>${paperlib.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- PlaceholderAPI -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>${placeholderapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- bstats has to be compiled-->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>${bstats.version}</version>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- Jar loc -->
             <plugin>
@@ -228,13 +248,12 @@
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
-                                <exclude>META-INF/*.MF</exclude>
+                                <exclude>META-INF/**</exclude>
                             </excludes>
                         </filter>
                         <filter>
                             <artifact>de.tr7zw</artifact>
                             <excludes>
-                                <exclude>plugin.yml</exclude>
                                 <exclude>LICENSE</exclude>
                             </excludes>
                         </filter>
@@ -249,11 +268,7 @@
                         <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.zoltus.lib.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>de.tr7zw</pattern>
-                            <shadedPattern>io.github.zoltus.lib.de.tr7zw</shadedPattern>
+                            <shadedPattern>lib.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
