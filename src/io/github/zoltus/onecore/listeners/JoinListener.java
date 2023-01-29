@@ -20,9 +20,20 @@ public record JoinListener(OneCore plugin) implements Listener {
         AsyncPlayerPreLoginEvent.Result result = e.getLoginResult();
         if (result == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(e.getUniqueId());
-            if (User.of(offP) == null) {  //If user isnt in map or in the database it creates new one
-                new User(offP);
-            }
+            join(offP);
+        }
+    }
+
+    //Loads onlineplayers if they didnt exists on database
+    public static void loadOnlinePlayers() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            join(p);
+        }
+    }
+
+    private static void join(OfflinePlayer offP) {
+        if (User.of(offP) == null) {  //If user isnt in map or in the database it creates new one
+            new User(offP);
         }
     }
 
