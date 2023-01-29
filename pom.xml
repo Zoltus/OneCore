@@ -169,7 +169,6 @@
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>${paperlib.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!-- bstats has to be compiled-->
         <dependency>
