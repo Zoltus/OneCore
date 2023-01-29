@@ -149,7 +149,7 @@ public enum Commands implements IConfig {
     SIGNEDIT_ENABLED("signedit.enabled"),
     SIGNEDIT_LABEL("signedit.label"),
     SIGNEDIT_PERMISSION("signedit.permission"),
-    SIGNEDIT_BYPASS_PERMISSION("signedit.permission.bypass"),
+    SIGNEDIT_BYPASS_PERMISSION("signedit.bypass-permission"),
     SIGNEDIT_SET_ALIASES("signedit.set.aliases"),
     SIGNEDIT_SET_LABEL("signedit.set.label"),
     SIGNEDIT_SET_PERMISSION("signedit.set.permission"),

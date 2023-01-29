@@ -4,8 +4,12 @@ Data:
   spawn: []
   prefix: '&f&lMoti&a&lMaa &8&l»&7'
   back-history-size: 10
+  baltop-update-interval: 5
   chat-color-permission: chat.colors
   chat-colors-enabled: true
+  chat-formatter-enabled: true
+  # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
+  chat-format: '%vault_prefix%{0}&f: {1}'
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
   kicked-for-spamming-bypass: kick.bypass
@@ -16,7 +20,7 @@ Data:
   teleport-delay: 3
   teleport-expire: 10
   # If true it resets velocity on command & plugin teleports
-  telepor-velocity-reset: true
+  teleport-velocity-reset: true
   teleport-with-vehicle: true
   user-console-filter: true
   mentions-enabled: true
