@@ -34,7 +34,7 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_BALANCE_PERMISSION.asPermission())
                 .withArguments(new UserArgument())
                 .executes((sender, args) -> {
-                    handleBalance(sender, (User) args[0]);
+                    handleBalance(sender, (User) args.get(0));
                 });
         // pay <player> <amount>
         CommandAPICommand pay = new CommandAPICommand(ECONOMY_PAY_LABEL.getString())
@@ -42,7 +42,7 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_PAY_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    transfer(User.of((OfflinePlayer) sender), (User) args[0], (double) args[1], null);
+                    transfer(User.of((OfflinePlayer) sender), (User) args.get(0), (double) args.get(1), null);
                 });
         // give <player> <amount>
         CommandAPICommand give = new CommandAPICommand(ECONOMY_GIVE_LABEL.getString())
@@ -50,8 +50,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_GIVE_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    User target = (User) args[0];
-                    double amount = (double) args[1];
+                    User target = (User) args.get(0);
+                    double amount = (double) args.get(1);
                     if (target.deposit(amount)) {
                         ECONOMY_GIVE_GAVE.send(sender,
                                 PLAYER_PH, target.getName(),
@@ -69,8 +69,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_TRANSFER_PERMISSION.asPermission())
                 .withArguments(new UserArgument("1"), new UserArgument("2"), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    double amount = (double) args[2];
-                    transfer((User) args[0], (User) args[1], amount, sender);
+                    double amount = (double) args.get(2);
+                    transfer((User) args.get(0), (User) args.get(1), amount, sender);
                 });
         // take <player> <amount>
         CommandAPICommand take = new CommandAPICommand(ECONOMY_TAKE_LABEL.getString())
@@ -78,8 +78,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_TAKE_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    User target = (User) args[1];
-                    double amount = (double) args[2];
+                    User target = (User) args.get(1);
+                    double amount = (double) args.get(2);
                     if (target.withdraw(amount)) {
                         ECONOMY_TAKE_TOOK.send(sender,
                                 PLAYER_PH, target.getName(),
@@ -101,8 +101,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_SET_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    User target = (User) args[1];
-                    double amount = (double) args[2];
+                    User target = (User) args.get(1);
+                    double amount = (double) args.get(2);
                     if (target.setBalance(amount)) {
                         ECONOMY_SET_SET.send(sender,
                                 PLAYER_PH, target.getName(),
@@ -131,7 +131,7 @@ public class EconomyCMD implements ICommand {
                     if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
                         sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
                     } else {
-                        int page = (int) args[0];
+                        int page = (int) args.get(0);
                         printBalances(sender, page);
                     }
                 });

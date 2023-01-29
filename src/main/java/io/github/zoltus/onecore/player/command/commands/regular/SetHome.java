@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
@@ -19,15 +19,15 @@ public class SetHome implements ICommand {
     @Override
     public void init() {
         //sethome <home>
-        ArgumentTree arg0 = new StringArgument(Lang.NODES_HOME_NAME.getString())
+        Argument<?> arg0 = new StringArgument(Lang.NODES_HOME_NAME.getString())
                 .executesPlayer((p, args) -> {
-                    setHome(p, p, (String) args[0]);
+                    setHome(p, p, (String) args.get(0));
                 });
         //sethome <home> <player> //todo messages
-        ArgumentTree arg1 = new OfflinePlayerArgument()
+        Argument<?> arg1 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
-                    setHome(sender, offP, (String) args[1]);
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
+                    setHome(sender, offP, (String) args.get(1));
                 });
         //sethome
         new Command(Commands.SETHOME_LABEL)

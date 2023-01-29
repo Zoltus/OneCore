@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
@@ -20,9 +20,9 @@ public class Heal implements ICommand {
     @Override
     public void init() {
         //heal <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    User target = (User) args[0];
+                    User target = (User) args.get(0);
                     Player onlineTarget = target.getPlayer();
                     heal(onlineTarget);
                     if (sender != target.getPlayer()) {

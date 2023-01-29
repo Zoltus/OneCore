@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -38,14 +37,14 @@ public class Time implements ICommand {
     public void init() {
         registerSingleWordTime();
         //TIME <TIME>
-        ArgumentTree arg0 = timeArg()
+        Argument<?> arg0 = timeArg()
                 .executesPlayer((p, args) -> {
-                    changeTime(p, (long) args[0], p.getWorld());
+                    changeTime(p, (long) args.get(0), p.getWorld());
                 });
         //TIME <TIME> <world>
-        ArgumentTree arg1 = new WorldsArgument()
+        Argument<?> arg1 = new WorldsArgument()
                 .executes((sender, args) -> {
-                    changeTime(sender, (long) args[0], (World) args[1]);
+                    changeTime(sender, (long) args.get(0), (World) args.get(1));
                 });
         new Command(Commands.TIME_LABEL)
                 .withPermission(Commands.TIME_PERMISSION)

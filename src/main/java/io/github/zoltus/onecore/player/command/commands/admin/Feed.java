@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
@@ -17,9 +17,9 @@ public class Feed implements ICommand {
     @Override
     public void init() {
         //feed <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    OfflinePlayer target = (OfflinePlayer) args[0];
+                    OfflinePlayer target = (OfflinePlayer) args.get(0);
                     feed(target);
                     if (target.getPlayer() != sender) {
                         FEED_YOU_FED_TARGET.send(sender, PLAYER_PH, target.getName());
@@ -40,13 +40,13 @@ public class Feed implements ICommand {
             Player p = offP.getPlayer();
             p.setFoodLevel(20);
             p.setSaturation(20.0F);
-            p.setExhaustion(0.0f);
+          //  p.setExhaustion(0.0f);
             FEED_YOU_HAVE_BEEN_HEALED.send(p);
         } else {
             NBTPlayer nbtPlayer = new NBTPlayer(offP);
-            nbtPlayer.setfoodLevel(20);
-            nbtPlayer.setfoodSaturationLevel(20.0F);
-            nbtPlayer.setFoodExhaustionLevel(0.0F);
+            nbtPlayer.setFoodLevel(20);
+            nbtPlayer.setSaturationLevel(20.0F);
+            // nbtPlayer.setExhaustionLevel(0.0F);
             nbtPlayer.save();
         }
     }

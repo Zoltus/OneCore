@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ChatArgument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
@@ -17,13 +17,13 @@ public class Msg implements ICommand {
     @Override
     public void init() {
         //msg <player> <message>
-        ArgumentTree arg0 = new PlayerArgument();
-        ArgumentTree arg1 = new ChatArgument(Lang.NODES_MESSAGE.getString())
+        Argument<?> arg0 = new PlayerArgument();
+        Argument<?> arg1 = new ChatArgument(Lang.NODES_MESSAGE.getString())
                 .executesPlayer((sender, args) -> {
-                    Player target = (Player) args[0];
+                    Player target = (Player) args.get(0);
                     String senderName = sender.getName();
                     String targetName = target.getName();
-                    String message = BaseComponent.toPlainText((BaseComponent[]) args[1]);
+                    String message = BaseComponent.toPlainText((BaseComponent[]) args.get(1));
                     message = ChatColor.translateAlternateColorCodes('&', message);
                     sender.sendMessage(toSendMessage(targetName, senderName, message));
                     Lang.MSG_RECEIVED_MSG.send(target,

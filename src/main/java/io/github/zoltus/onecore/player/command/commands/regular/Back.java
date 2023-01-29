@@ -1,9 +1,10 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.Location;
@@ -13,8 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.Command;
 
 import java.util.List;
 
@@ -41,14 +40,14 @@ public class Back implements ICommand, Listener {
     @Override
     public void init() {
         // back <amount>
-        ArgumentTree arg0 = backArg()
+        Argument<?> arg0 = backArg()
                 .executesPlayer((sender, args) -> {
-                    executes(sender, (int) args[0], sender);
+                    executes(sender, (int) args.get(0), sender);
                 });
         // back <amount> <player>
-        ArgumentTree arg1 = new PlayerArgument()
+        Argument<Player> arg1 = new PlayerArgument()
                 .executes((sender, args) -> {
-                    executes(sender, (int) args[0], (Player) args[1]);
+                    executes(sender, (int) args.get(0), (Player) args.get(1));
                 });
         // back
         new Command(BACK_LABEL)
@@ -101,14 +100,14 @@ public class Back implements ICommand, Listener {
                 .withAliases(BACK_ALIASES)
                 .withArguments(backArg())
                 .executesPlayer((sender, args) -> {
-                    executes(sender, (int) args[0], sender);
+                    executes(sender, (int) args.get(0), sender);
                 }).register();
         // back <amount> <player>
         command(BACK_LABEL)
                 .withPermission(BACK_PERMISSION)
                 .withAliases(BACK_ALIASES)
                 .withArguments(backArg(), new PlayerArgument())
-                .executes((sender, args) -> executes(sender, (int) args[0], (Player) args[1]))
+                .executes((sender, args) -> executes(sender, (int) args.get(0), (Player) args.get(1)))
                 .register();
 
      */

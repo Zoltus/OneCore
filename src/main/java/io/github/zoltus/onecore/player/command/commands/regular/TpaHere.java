@@ -19,7 +19,7 @@ public class TpaHere implements ICommand {
                 .then(new UserArgument()
                 .executesPlayer((player, args) -> {
                     User user = User.of(player);
-                    User target = User.of((Player) args[0]);
+                    User target = User.of((Player) args.get(0));
                     Request.send(user, target, Request.TeleportType.TPHERE);
                 })).override();
     }

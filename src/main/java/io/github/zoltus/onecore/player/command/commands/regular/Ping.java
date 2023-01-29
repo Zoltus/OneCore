@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.entity.Player;
@@ -15,9 +15,9 @@ public class Ping implements ICommand {
     @Override
     public void init() {
         //Ping <player>
-        ArgumentTree arg0 = new PlayerArgument()
+        Argument<?> arg0 = new PlayerArgument()
                 .executes((sender, args) -> {
-                    Player target = (Player) args[0];
+                    Player target = (Player) args.get(0);
                     PING_TARGETS_PING.send(target, PING_PH, target.getPing(), PLAYER_PH, target.getName());
                 });
         //Ping

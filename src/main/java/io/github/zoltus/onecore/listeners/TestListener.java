@@ -81,7 +81,7 @@ public class TestListener implements Listener {
                     p.spigot().sendMessage(comps);
                 }
                 case "/ta2" -> {
-                    int amount = Integer.parseInt(args[0]);
+                    int amount = Integer.parseInt(args.get(0));
                     size = amount;
                     ms = start;
                     p.sendMessage("start");
@@ -96,7 +96,7 @@ public class TestListener implements Listener {
                     }
                 }
                 case "/ta3" -> {
-                    int amount = Integer.parseInt(args[0]);
+                    int amount = Integer.parseInt(args.get(0));
                     p.sendMessage("start");
                     while (amount > 0) {
                         getRandomLocAsync2(p);
@@ -134,7 +134,7 @@ public class TestListener implements Listener {
                 }
                 case "/repeatcmd" -> {
                     e.setCancelled(true);
-                    int amount = Integer.parseInt(args[0]);
+                    int amount = Integer.parseInt(args.get(0));
                     argsList.remove(0);
                     String cmdCombinedString = String.join(" ", argsList);
                     p.sendMessage("§bAmount : " + amount + ": " + "cmd: " + cmdCombinedString);
@@ -150,7 +150,7 @@ public class TestListener implements Listener {
                     p.sendMessage("saved all users");
                 }
                 case "/testloadusers" -> {
-                    int amount = Integer.parseInt(args[0]);
+                    int amount = Integer.parseInt(args.get(0));
                     while (amount != 0) {
                         //  OneUser.testLoad(p);
                         amount--;
@@ -160,7 +160,7 @@ public class TestListener implements Listener {
                 case "/jointest" -> //When used remove OnePlayer.of from hashmap if statement
                         Bukkit.getScheduler().runTaskAsynchronously(OneCore.getPlugin(), () -> {
                             long time = System.currentTimeMillis();
-                            int i = Integer.parseInt(args[0]);
+                            int i = Integer.parseInt(args.get(0));
                             AsyncPlayerPreLoginEvent asyncPrejoin = new AsyncPlayerPreLoginEvent("Zoltus", Objects.requireNonNull(p.getAddress()).getAddress(), p.getUniqueId());
                             Bukkit.broadcastMessage("§8started");
                             while (i != 0) {
@@ -175,11 +175,11 @@ public class TestListener implements Listener {
                     PaperLib.teleportAsync(p, p.getLocation().add(3, 2, 0));
                 }
                 case "/sht" -> {
-                    int i = Integer.parseInt(args[0]);
+                    int i = Integer.parseInt(args.get(0));
                     scheduler = new SpeedChangeScheduler(OneCore.getPlugin(), i, false, () -> p.sendMessage("Task " + i));
                 }
                 case "/shtset" -> {
-                    int i = Integer.parseInt(args[0]);
+                    int i = Integer.parseInt(args.get(0));
                     scheduler.reSchedule(i);
                 }
             }

@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -16,10 +16,10 @@ public class TpDeny implements ICommand {
     @Override
     public void init() {
         //tpdeny <player>
-        ArgumentTree arg0 = new RequestArgument()
+        Argument<?> arg0 = new RequestArgument()
                 .executesPlayer((player, args) -> {
                     User user = User.of(player);
-                    handle(Request.get((User) args[0], user), user);
+                    handle(Request.get((User) args.get(0), user), user);
                 });
         //tpdeny
         new Command(Commands.TPDENY_LABEL)

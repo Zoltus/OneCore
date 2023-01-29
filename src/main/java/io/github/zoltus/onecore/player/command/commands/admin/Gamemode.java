@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.GamemodeArgument;
@@ -19,17 +19,17 @@ public class Gamemode implements ICommand {
     @Override
     public void init() {
         //gamemode creative
-        ArgumentTree arg0 = new GamemodeArgument()
+        Argument<?> arg0 = new GamemodeArgument()
                 .executesPlayer((player, args) -> {
-                    GameMode gm = (GameMode) args[0];
+                    GameMode gm = (GameMode) args.get(0);
                     String gmName = getGmName(gm);
                     player.setGameMode(gm);
                     GAMEMODE_CHANGED.send(player, MODE_PH, gmName);
                 });
         //gamemode creative <player>
-        ArgumentTree arg1 = new OfflinePlayerArgument()
+        Argument<?> arg1 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    handleTarget(sender, (OfflinePlayer) args[1], (GameMode) args[0]);
+                    handleTarget(sender, (OfflinePlayer) args.get(1), (GameMode) args.get(0));
                 });
         //gamemode
         new Command(GAMEMODE_LABEL)

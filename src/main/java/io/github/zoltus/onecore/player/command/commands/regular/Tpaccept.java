@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -14,9 +14,9 @@ public class Tpaccept implements ICommand {
     @Override
     public void init() {
         //tpaccept <player>
-        ArgumentTree arg0 = new RequestArgument()
+        Argument<?> arg0 = new RequestArgument()
                 .executesPlayer((player, args) -> {
-                    handle((Player) args[0], player);
+                    handle((Player) args.get(0), player);
                 });
         //tpaccept
         new Command(Commands.TPACCEPT_LABEL)

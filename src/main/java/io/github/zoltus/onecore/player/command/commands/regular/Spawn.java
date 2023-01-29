@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
@@ -32,13 +32,13 @@ public class Spawn implements ICommand {
     @Override
     public void init() {
         //spawn <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     Location spawn = getSpawn();
                     if (spawn == null) {
                         sender.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
                     } else {
-                        OfflinePlayer offTarget = (OfflinePlayer) args[0];
+                        OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                         Player p = offTarget.getPlayer();
                         if (p != null) {
                             p.teleport(spawn);

@@ -20,7 +20,7 @@ public class Tpa implements ICommand {
                 .then(new PlayerArgument()
                         .executesPlayer((player, args) -> {
                             User user = User.of(player);
-                            User target = User.of((Player) args[0]);
+                            User target = User.of((Player) args.get(0));
                             Request.send(user, target, Request.TeleportType.TPA);
                         })).override();
     }

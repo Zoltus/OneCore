@@ -18,7 +18,7 @@ public class Broadcast implements ICommand {
                 .then(new ChatArgument(Lang.NODES_MESSAGE.getString())
                         .executes((sender, args) -> {
                             //todo String PREFIX = Lang.BROADCAST_PREFIX.getString()
-                            Bukkit.spigot().broadcast((BaseComponent[]) args[0]);
+                            Bukkit.spigot().broadcast((BaseComponent[]) args.get(0));
                         })
                 ).override();
     }

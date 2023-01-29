@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -45,14 +44,14 @@ public class Repair implements ICommand {
     @Override
     public void init() {
         //repair <hand/all>
-        ArgumentTree args1 = slotArg()
+        Argument<?> args1 = slotArg()
                 .executesPlayer((p, args) -> {
-                    handleRepair(p, p, (String) args[0]);
+                    handleRepair(p, p, (String) args.get(0));
                 });
         //repair <hand/all> <player>
-        ArgumentTree args2 = new PlayerArgument()
+        Argument<?> args2 = new PlayerArgument()
                 .executes((sender, args) -> {
-                    handleRepair(sender, (Player) args[1], (String) args[0]);
+                    handleRepair(sender, (Player) args.get(1), (String) args.get(0));
                 });
         //repair (hand) default
         new Command(Commands.REPAIR_LABEL)

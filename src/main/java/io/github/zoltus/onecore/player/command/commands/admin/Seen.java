@@ -20,7 +20,7 @@ public class Seen implements ICommand {
                 .withAliases(Commands.SEEN_ALIASES)
                 .then(new PlayerArgument()
                         .executes((sender, args) -> {
-                            Player oTarget = (Player) args[0];
+                            Player oTarget = (Player) args.get(0);
                             SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
                             String dateString = dateFormat.format(new Date(oTarget.getFirstPlayed()));
                             SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);

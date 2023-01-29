@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.LocationArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
@@ -15,9 +15,9 @@ public class SetSpawn implements ICommand {
     @Override
     public void init() {
         //setspawn <location>
-        ArgumentTree arg0 = new LocationArgument(NODES_LOCATION.getString())
+        Argument<?> arg0 = new LocationArgument(NODES_LOCATION.getString())
                 .executesPlayer((p, args) -> {
-                    Spawn.setSpawn((Location) args[0]);
+                    Spawn.setSpawn((Location) args.get(0));
                     SETSPAWN_SET.send(p);
                 });
         //setspawn

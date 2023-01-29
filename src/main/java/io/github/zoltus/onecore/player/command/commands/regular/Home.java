@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
@@ -20,15 +20,15 @@ public class Home implements ICommand {
     @Override
     public void init() {
         //home <home>
-        ArgumentTree homeArg0 = new HomeArg0() //String
+        Argument<?> homeArg0 = new HomeArg0() //String
                 .executesPlayer((p, args) -> {
-                    teleportHome(p, p, (String) args[0]);
+                    teleportHome(p, p, (String) args.get(0));
                 });
         //home <player> <home>
-        ArgumentTree homeArg1 = new HomeArg1() //
+        Argument<?> homeArg1 = new HomeArg1() //
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
-                    teleportHome(sender, offP, (String) args[1]);
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
+                    teleportHome(sender, offP, (String) args.get(1));
                 });
         //home
         new Command(Commands.HOME_LABEL)

@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
@@ -15,9 +15,9 @@ public class God implements ICommand {
     @Override
     public void init() {
         //god <pelaaja>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    OfflinePlayer target = (OfflinePlayer) args[0];
+                    OfflinePlayer target = (OfflinePlayer) args.get(0);
                     boolean result;
                     if (target.getPlayer() != null) {
                         Player onlTarget = target.getPlayer();

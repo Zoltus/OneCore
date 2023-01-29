@@ -1,8 +1,7 @@
 package io.github.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIConfig;
-import dev.jorel.commandapi.RegisteredCommand;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
@@ -66,6 +65,7 @@ public final class OneCore extends JavaPlugin implements Listener {
     public OneCore() {
         super();
     }
+
     //Unit testing
     protected OneCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
@@ -74,14 +74,15 @@ public final class OneCore extends JavaPlugin implements Listener {
     @Override
     public void onLoad() {
         plugin = this;
-        CommandAPI.onLoad(new CommandAPIConfig().verboseOutput(false));  //Loads commandapi
+        //Loads commandapi
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).verboseOutput(false));
     }
 
     //todo backup interval to config
     @Override
     public void onEnable() {
         //Loads commandapi
-        CommandAPI.onEnable(this);
+        CommandAPI.onEnable();
         long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
         this.database = Database.init(this);
@@ -92,15 +93,15 @@ public final class OneCore extends JavaPlugin implements Listener {
         //Registers Listeners
         registerListeners();
         // Inits metrics to bstats
-        new Metrics(this, 12829);
+        new Metrics(this, 12829); //todo fix for test
         // Sets default config for all commands and settings if they are not set
         ConsoleFilter.init();
         this.database.cacheUsers();
         //todo load all online players aswell to support loading mid-game
         JoinListener.loadOnlinePlayers();
         //todo cleanup
-        this.backupHandler = new BackupHandler(this); // Initializes backup handler
-        this.backupHandler.start(); //todo to singleton
+        this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
+        this.backupHandler.start();
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
@@ -137,23 +138,22 @@ public final class OneCore extends JavaPlugin implements Listener {
     private void registerListeners() {
         plugin.getLogger().info("Registering listeners...");
         //Adds listeners to list if enabled and then registers them.
-        List<Listener> listeners = new ArrayList<>() {{
-            if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
-                add(new InvSeeHandler());
-            if (Config.MENTIONS_ENABLED.getBoolean())
-                add(new Mentions());
-            if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
-                add(new TeleportVelocity());
-            add(new ChatFormatter()); //Checks done inside the class.
-            add(new SignListener(plugin));
-            add(new JoinListener(plugin));
-            add(new KickedForSpamming());
-            add(new KickedForSpamming());
-            add(new QuitListener());
-            add(new TeleportHandler());
-            add(new TestListener());
-        }};
-        listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
+        List<Listener> list = new ArrayList<>();
+        if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
+            list.add(new InvSeeHandler());
+        if (Config.MENTIONS_ENABLED.getBoolean())
+            list.add(new Mentions());
+        if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
+            list.add(new TeleportVelocity());
+        list.addAll(List.of(
+                new ChatFormatter(),
+                new SignListener(plugin),
+                new JoinListener(plugin),
+                new KickedForSpamming(),
+                new QuitListener(),
+                new TeleportHandler(),
+                new TestListener()));
+        list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 
     private void testConfig() {
