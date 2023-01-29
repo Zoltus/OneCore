@@ -105,8 +105,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
-        // Tests config for missing values
-        //testConfig();
+        //testConfig(); Tests config for missing values
     }
 
     @Override
