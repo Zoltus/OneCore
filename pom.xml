@@ -151,25 +151,24 @@
             <version>${apache-compress}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- NbtApi, runtime -->
-        <dependency>
-            <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api</artifactId>
-            <version>${nbtapi.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- PaperLib, runtime -->
-        <dependency>
-            <groupId>io.papermc</groupId>
-            <artifactId>paperlib</artifactId>
-            <version>${paperlib.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- PlaceholderAPI, soft -->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>${placeholderapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- NbtApi, compile (Not in maven central)-->
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api</artifactId>
+            <version>${nbtapi.version}</version>
+        </dependency>
+        <!-- PaperLib, compile (Not in maven central)-->
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>${paperlib.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- bstats has to be compiled-->
@@ -259,16 +258,18 @@
                         </filter>
                     </filters>
                     <relocations>
-                        <!--
-                        <relocation>
-                            <pattern>dev.jorel</pattern>
-                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
-                        </relocation>
-                        -->
                         <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>lib.bstats</shadedPattern>
+                            <shadedPattern>lib.org.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>io.papermc</pattern>
+                            <shadedPattern>lib.io.papermc</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>de.tr7zw</pattern>
+                            <shadedPattern>lib.de.tr7zw</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

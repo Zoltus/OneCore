@@ -46,10 +46,7 @@ import java.util.stream.Stream;
         @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
         @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
-        @Library("dev.jorel:commandapi-shade:8.7.1"),
-        @Library("de.tr7zw:Item-NBT-API:2.11.1"),
-        @Library("io.papermc:paper-api:1.0.8")
-
+        @Library("dev.jorel:commandapi-shade:8.7.1")
 })
 @Getter
 public final class OneCore extends JavaPlugin implements Listener {
@@ -85,8 +82,6 @@ public final class OneCore extends JavaPlugin implements Listener {
         new Metrics(this, 12829);
         // Sets default config for all commands and settings if they are not set
         ConsoleFilter.init();
-        // Tests config for missing values
-        testConfig();
         this.database.cacheUsers();
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
@@ -94,7 +89,8 @@ public final class OneCore extends JavaPlugin implements Listener {
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
-        testConfig();
+        // Tests config for missing values
+        //testConfig();
     }
 
     @Override
@@ -121,7 +117,7 @@ public final class OneCore extends JavaPlugin implements Listener {
     }
 
     private void registerListeners() {
-        plugin.getLogger().info("§aRegistering listeners...");
+        plugin.getLogger().info("Registering listeners...");
         //Adds listeners to list if enabled and then registers them.
         List<Listener> listeners = new ArrayList<>() {{
             if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
