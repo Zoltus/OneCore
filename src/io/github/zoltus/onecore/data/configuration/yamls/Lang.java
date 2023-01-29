@@ -25,7 +25,6 @@ public enum Lang implements IConfig {
     ECONOMY_BALTOP_EMPTY("economy.baltop.empty"),
     ECONOMY_BALTOP_LINE("economy.baltop.line"),
     ECONOMY_BALTOP_TOP_PLAYERS("economy.baltop.top-players"),
-    ECONOMY_BALTOP_RELOADED("economy.baltop.reloaded"),
     ECONOMY_GIVE_GAVE("economy.give.gave"),
     ECONOMY_GIVE_YOUR_BALANCE_WAS_INCREACED("economy.give.your-balance-was-increaced"),
     ECONOMY_NOT_ENOUGHT("economy.not-enought"),
