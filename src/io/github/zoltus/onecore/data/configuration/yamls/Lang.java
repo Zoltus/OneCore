@@ -91,7 +91,6 @@ public enum Lang implements IConfig {
     PLAYTIME_YOUR_PLAYTIME("playtime.your-playtime"),
     QUIT("other.quit"),
     RELOAD_RELOADED("reload.reloaded"),
-    RELOAD_RELOADING("reload.reloading"),
     REPAIR_NOTHING_TO_FIX("repair.nothing-to-fix"),
     REPAIR_SELF_REPAIRED("repair.self-repaired"),
     REPAIR_SLOT_ALL("repair.slot-all"),
