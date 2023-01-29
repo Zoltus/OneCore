@@ -159,8 +159,7 @@ Data:
     # <player>, <time>
     your-playtime: '{p} Your playtime is <time>'
   reload:
-    reloaded: §aDatabase & files reloaded!
-    reloading: Started reloading!
+    reloaded: §aFiles reloaded!
   repair:
     # <slot>
     nothing-to-fix: '{p} Nothing to fix in slot <slot>'
