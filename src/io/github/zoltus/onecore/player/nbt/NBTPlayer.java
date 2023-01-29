@@ -2,10 +2,8 @@ package io.github.zoltus.onecore.player.nbt;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import de.tr7zw.nbtapi.*;
-import de.tr7zw.nbtapi.data.NBTData;
-import de.tr7zw.nbtapi.data.PlayerData;
-import de.tr7zw.nbtapi.iface.ReadWriteNBT;
+import de.tr7zw.changeme.nbtapi.*;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -17,32 +15,50 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class NBTPlayer {
-
-    private final PlayerData data;
     private final NBTFile nbt;
-    @Getter private final NBTStats stats;
+    @Getter
+    private final NBTStats stats;
 
     private final NBTCompound abilities;
     public NBTPlayer(UUID uuid) {
-        this.data = NBTData.getOfflinePlayerData(uuid);
-        this.nbt = data.getFile();
-        this.abilities = nbt.getCompound("abilities");
-        //Loads stats from world json file
-        //todo convert to Bukkit.getworldocntainer
-        File statsFile = new File(getWorld().getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
-        try {
-            Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader(statsFile));
-            this.stats = gson.fromJson(reader, NBTStats.class);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        this.nbt = getNBTFile(uuid);
+        if (nbt == null) {
+            throw new RuntimeException("§cPlayers NBTFile not found!");
+        } else {
+            this.abilities = nbt.getCompound("abilities");
+            //Loads stats from world json file
+            //todo convert to Bukkit.getworldocntainer
+            File statsFile = new File(getWorld().getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
+            try {
+                Gson gson = new Gson();
+                JsonReader reader = new JsonReader(new FileReader(statsFile));
+                this.stats = gson.fromJson(reader, NBTStats.class);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+    private NBTFile getNBTFile(UUID uuid) {
+        for (World world : Bukkit.getWorlds()) {
+            File dataFolder = new File(world.getWorldFolder(), "playerdata");
+            File playerFile = new File(dataFolder, uuid.toString() + ".dat");
+            if (playerFile.exists()) {
+                try {
+                    return  new NBTFile(playerFile);
+                } catch (IOException e) {
+                    throw new NbtApiException("Error loading player data!", e);
+                }
+            }
+        }
+        return null;
     }
 
     public NBTPlayer(OfflinePlayer player) {
@@ -51,7 +67,11 @@ public class NBTPlayer {
 
     @SneakyThrows
     public void save() {
-        data.saveChanges();
+        try {
+            nbt.save();
+        } catch (IOException e) {
+            throw new NbtApiException("Error when saving level data!", e);
+        }
     }
 
     @SuppressWarnings("SameParameterValue")
