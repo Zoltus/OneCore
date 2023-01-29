@@ -72,8 +72,6 @@ public final class OneCore extends JavaPlugin implements Listener {
         long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
         this.database = Database.init(this);
-        //todo load all online players aswell to support loading mid-game
-        JoinListener.loadOnlinePlayers();
         // Hooks economy if its enabled on config.
         this.vault = EconomyHandler.hook(this);
         //Registers Commands if enabled. Needs to be before listeners.
@@ -85,6 +83,8 @@ public final class OneCore extends JavaPlugin implements Listener {
         // Sets default config for all commands and settings if they are not set
         ConsoleFilter.init();
         this.database.cacheUsers();
+        //todo load all online players aswell to support loading mid-game
+        JoinListener.loadOnlinePlayers();
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
         this.backupHandler.start(); //todo to singleton
