@@ -102,7 +102,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Spigots log4j 2.17 has vunerability -->
+        <!-- Spigots log4j 2.17 has vunerability, runtime -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -151,21 +151,21 @@
             <version>${apache-compress}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- NbtApi -->
+        <!-- NbtApi, runtime -->
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
             <version>${nbtapi.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- PaperLib -->
+        <!-- PaperLib, runtime -->
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>${paperlib.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- PlaceholderAPI -->
+        <!-- PlaceholderAPI, soft -->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
