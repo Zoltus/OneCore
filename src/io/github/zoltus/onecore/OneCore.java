@@ -29,6 +29,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Plugin(name = "OneCore", version = "1.0-Beta")
 @Description("A test plugin")
@@ -36,13 +37,19 @@ import java.util.List;
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
 @LogPrefix("OneCore")
 @ApiVersion(ApiVersion.Target.v1_19)
-@SoftDependsOn({@SoftDependency("Vault")})
 @LoadOrder(PluginLoadOrder.POSTWORLD)
+@SoftDependsOn({
+        @SoftDependency("Vault"),
+        @SoftDependency("PlaceholderAPI")
+})
 @Libraries({
         @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
         @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
-        @Library("dev.jorel:commandapi-shade:8.7.1")
+        @Library("dev.jorel:commandapi-shade:8.7.1"),
+        @Library("de.tr7zw:Item-NBT-API:2.11.1"),
+        @Library("io.papermc:paper-api:1.0.8")
+
 })
 @Getter
 public final class OneCore extends JavaPlugin implements Listener {
@@ -70,10 +77,10 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.database = Database.init(this);
         // Hooks economy if its enabled on config.
         this.vault = EconomyHandler.hook(this);
+        //Registers Commands if enabled. Needs to be before listeners.
+        this.commandHandler = CommandHandler.register(this);
         //Registers Listeners
         registerListeners();
-        //Registers Commands if enabled
-        this.commandHandler = CommandHandler.register(this);
         // Inits metrics to bstats
         new Metrics(this, 12829);
         // Sets default config for all commands and settings if they are not set
@@ -81,12 +88,12 @@ public final class OneCore extends JavaPlugin implements Listener {
         // Tests config for missing values
         testConfig();
         this.database.cacheUsers();
+        //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler
         this.backupHandler.start(); //todo to singleton
         //Starts caching users
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
-
         testConfig();
     }
 
@@ -113,39 +120,34 @@ public final class OneCore extends JavaPlugin implements Listener {
         ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 1);
     }
 
-    public void registerListeners() {
-        plugin.getLogger().info("Registering listeners...");
+    private void registerListeners() {
+        plugin.getLogger().info("§aRegistering listeners...");
         //Adds listeners to list if enabled and then registers them.
         List<Listener> listeners = new ArrayList<>() {{
             if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
                 add(new InvSeeHandler());
             if (Config.MENTIONS_ENABLED.getBoolean())
                 add(new Mentions());
-            if (Config.CHAT_COLORS_ENABLED.getBoolean())
-                add(new ChatColors());
             if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
                 add(new TeleportVelocity());
-            new SignListener(plugin);
-            new JoinListener(plugin);
-            new KickedForSpamming();
-            new KickedForSpamming();
-            new QuitListener();
-            new TeleportHandler();
-            new TestListener();
+            add(new ChatFormatter()); //Checks done inside the class.
+            add(new SignListener(plugin));
+            add(new JoinListener(plugin));
+            add(new KickedForSpamming());
+            add(new KickedForSpamming());
+            add(new QuitListener());
+            add(new TeleportHandler());
+            add(new TestListener());
         }};
         listeners.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 
     private void testConfig() {
-        Arrays.stream(Config.values())
+        Stream.of(Config.values(), Commands.values(), Lang.values())
+                .flatMap(Arrays::stream)
                 .filter(val -> val.get() == null)
-                .forEach(val -> System.out.println(val.name() + ":null"));
-        Arrays.stream(Commands.values())
-                .filter(val -> val.get() == null)
-                .forEach(val -> System.out.println(val.name() + ":null"));
-        Arrays.stream(Lang.values())
-                .filter(val -> val.get() == null)
-                .forEach(val -> System.out.println(val.name() + ":null"));
+                .forEach(val -> plugin.getLogger().warning("§cNull value: " + val.name() + ": " + val.getPath()
+                        + " Please report this to the developer!"));
         plugin.getLogger().info("§aTested config");
     }
 }
