@@ -22,7 +22,7 @@
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>8.7.4</commandapi.version>
+        <commandapi.version>9.0.0-SNAPSHOT</commandapi.version>
         <nbtapi.version>2.11.1</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
@@ -76,10 +76,15 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <!-- Need Brigadier for testing -->
+        <repository>
+            <id>minecraft-libraries</id>
+            <url>https://libraries.minecraft.net</url>
+        </repository>
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <!-- Unit testing -->
+        <!-- Unit testing
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -91,31 +96,43 @@
             <artifactId>MockBukkit-v1.19</artifactId>
             <version>${mockbukkit.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>  -->
         <!-- todo
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+                <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+         Testing END -->
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-test-tests</artifactId>
-            <version>9.0.0-SNAPSHOT</version>
+            <version>${commandapi.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-shade</artifactId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
             <version>${commandapi.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-test-impl</artifactId>
-            <version>9.0.0-SNAPSHOT</version>
+            <version>${commandapi.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-test-impl-1.19.2</artifactId>
-            <version>9.0.0-SNAPSHOT</version>
+            <version>${commandapi.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -124,19 +141,6 @@
             <version>1.0.17</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-         Testing END -->
         <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -150,30 +154,12 @@
             <artifactId>spigot</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- Spigots log4j 2.17 has vunerability, runtime -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Spigot Server,
-        Github cant build with this and prevents version support anyways.-->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>minecraft-server</artifactId>
-            <version>${spigot.server.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -194,13 +180,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- CommandApi runtime -->
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-shade</artifactId>
-            <version>${commandapi.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- tar.gz for backup system, runtime -->
@@ -303,7 +282,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <minimizeJar>true</minimizeJar>
+                    <minimizeJar>false</minimizeJar>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <filters>
                         <filter>
@@ -323,7 +302,7 @@
                         <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>lib.org.bstats</shadedPattern>
+                            <shadedPattern>io.github.zoltus.onecore</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>io.papermc</pattern>

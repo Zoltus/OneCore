@@ -28,7 +28,7 @@ public class BackupHandler {
     //output directory
     private final File dataFolder;
     private final File outputDirectory;
-    private final File worldFolder = Bukkit.getWorlds().get(0).getWorldFolder();
+    private final File worldFolder;
 
     public BackupHandler(OneCore plugin) {
         this.plugin = plugin;
@@ -36,6 +36,7 @@ public class BackupHandler {
         this.outputDirectory = new File(dataFolder, "backups");
         //noinspection ResultOfMethodCallIgnored
         this.outputDirectory.mkdirs();
+        this.worldFolder = Bukkit.getWorlds().get(0).getWorldFolder();
     }
 
     //Backups based time from startup

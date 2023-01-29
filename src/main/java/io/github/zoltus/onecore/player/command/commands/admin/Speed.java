@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -54,19 +53,19 @@ public class Speed implements ICommand {
     @Override
     public void init() {
         //speed <amount>
-        ArgumentTree arg0 = speedIntArg()
+        Argument<?> arg0 = speedIntArg()
                 .executesPlayer((sender, args) -> {
-                    handle(sender, sender, (float) args[0], null);
+                    handle(sender, sender, (float) args.get(0), null);
                 });
         //speed <amount> <player>
-        ArgumentTree arg1 = new OfflinePlayerArgument()
+        Argument<?> arg1 = new OfflinePlayerArgument()
                 .executes((player, args) -> {
-                    handle(player, (OfflinePlayer) args[1], (float) args[0], null);
+                    handle(player, (OfflinePlayer) args.get(1), (float) args.get(0), null);
                 });
         //speed <amount> <player> <fly/walk>
-        ArgumentTree arg2 = speedModeArg()
+        Argument<?> arg2 = speedModeArg()
                 .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[1], (float) args[0], (String) args[2]);
+                    handle(sender, (OfflinePlayer) args.get(1), (float) args.get(0), (String) args.get(2));
                 });
         new Command(Commands.SPEED_LABEL)
                 .withPermission(Commands.SPEED_PERMISSION_OTHER)

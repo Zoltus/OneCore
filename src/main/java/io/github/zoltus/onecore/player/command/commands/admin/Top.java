@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
@@ -16,9 +16,9 @@ public class Top implements ICommand {
     @Override
     public void init() {
         //top <player>
-        ArgumentTree arg0 = new PlayerArgument()
+        Argument<?> arg0 = new PlayerArgument()
                 .executes((sender, args) -> {
-                    executes(sender, (Player) args[0]);
+                    executes(sender, (Player) args.get(0));
                 });
         //top
         new Command(Commands.TOP_LABEL)

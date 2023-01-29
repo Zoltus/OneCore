@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.ChatArgument;
@@ -29,11 +28,11 @@ public class SignEdit implements ICommand {
     @Override
     public void init() {
         //signedit set <line> <text>
-        ArgumentTree set = multiLiteralArgument(Commands.SIGNEDIT_SET_LABEL, Commands.SIGNEDIT_SET_ALIASES) //SIGNEDIT_SET_LABEL
+        Argument<?> set = multiLiteralArgument(Commands.SIGNEDIT_SET_LABEL, Commands.SIGNEDIT_SET_ALIASES) //SIGNEDIT_SET_LABEL
                 .then(new IntegerArgument("0-3", 0, 3)
                         .then(signTextArg));
         //signedit clear
-        ArgumentTree clear = multiLiteralArgument(Commands.SIGNEDIT_CLEAR_LABEL, Commands.SIGNEDIT_CLEAR_ALIASES) // SIGNEDIT_CLEAR_LABEL
+        Argument<?> clear = multiLiteralArgument(Commands.SIGNEDIT_CLEAR_LABEL, Commands.SIGNEDIT_CLEAR_ALIASES) // SIGNEDIT_CLEAR_LABEL
                 .withPermission(Commands.SIGNEDIT_CLEAR_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
@@ -48,12 +47,12 @@ public class SignEdit implements ICommand {
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        int line = (int) args[1];
+                        int line = (int) args.get(1);
                         setSignText(player, sign, line, "");
                     }
                 }));
         //signedit copy
-        ArgumentTree copy = multiLiteralArgument(Commands.SIGNEDIT_COPY_LABEL, Commands.SIGNEDIT_COPY_ALIASES) // SIGNEDIT_COPY_ALIASES
+        Argument<?> copy = multiLiteralArgument(Commands.SIGNEDIT_COPY_LABEL, Commands.SIGNEDIT_COPY_ALIASES) // SIGNEDIT_COPY_ALIASES
                 .withPermission(Commands.SIGNEDIT_COPY_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
@@ -66,14 +65,14 @@ public class SignEdit implements ICommand {
         copy.then(new IntegerArgument("0-3", 0, 3)
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
-                    int line = (int) args[1];
+                    int line = (int) args.get(1);
                     if (sign != null) {
                         writeLine(player, line, sign.getLine(line));
                         SIGNEDIT_SIGN_COPIED_LINE.send(player, LINE_PH, line);
                     }
                 }));
         //signedit paste
-        ArgumentTree paste = multiLiteralArgument(Commands.SIGNEDIT_PASTE_LABEL, Commands.SIGNEDIT_PASTE_ALIASES) // SIGNEDIT_PASTE_LABEL
+        Argument<?> paste = multiLiteralArgument(Commands.SIGNEDIT_PASTE_LABEL, Commands.SIGNEDIT_PASTE_ALIASES) // SIGNEDIT_PASTE_LABEL
                 .withPermission(Commands.SIGNEDIT_PASTE_PERMISSION.asPermission())
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
@@ -90,7 +89,7 @@ public class SignEdit implements ICommand {
                 .executesPlayer((player, args) -> {
                     Sign sign = canEdit(player);
                     if (sign != null) {
-                        int i = (int) args[1];
+                        int i = (int) args.get(1);
                         setSignText(player, sign, i, readLine(player, i));
                     }
                 }));
@@ -116,8 +115,8 @@ public class SignEdit implements ICommand {
             .executesPlayer((player, args) -> {
                 Sign sign = canEdit(player);
                 if (sign != null) {
-                    int line = (int) args[1];
-                    String text = BaseComponent.toPlainText((BaseComponent[]) args[2]);
+                    int line = (int) args.get(1);
+                    String text = BaseComponent.toPlainText((BaseComponent[]) args.get(2));
                     setSignText(player, sign, line, text);
                 }
             });

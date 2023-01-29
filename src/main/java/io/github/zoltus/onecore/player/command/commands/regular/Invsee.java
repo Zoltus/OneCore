@@ -18,7 +18,7 @@ public class Invsee implements ICommand {
                 .withAliases(INVSEE_ALIASES)
                 .then(new OfflinePlayerArgument()
                         .executesPlayer((sender, args) -> {
-                            OfflinePlayer offTarget = (OfflinePlayer) args[0];
+                            OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                             InvSeeHandler.handle(sender, offTarget, false);
                         })).override();
     }

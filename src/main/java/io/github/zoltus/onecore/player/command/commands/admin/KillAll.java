@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.EntityTypeArgument;
@@ -21,16 +20,16 @@ public class KillAll implements ICommand {
     @Override
     public void init() {
         //killall <type>
-        ArgumentTree arg0 = entityArg()
+        Argument<?> arg0 = entityArg()
                 .executesPlayer((p, args) -> {
-                    EntityType type = (EntityType) args[0];
+                    EntityType type = (EntityType) args.get(0);
                     removeEntities(p, type, "*", p.getWorld().getEntities());
                 });
         //killall <type> <range>
-        ArgumentTree arg1 = rangeArgument()
+        Argument<?> arg1 = rangeArgument()
                 .executesPlayer((p, args) -> {
-                    double range = (double) args[1];
-                    EntityType type = (EntityType) args[0];
+                    double range = (double) args.get(1);
+                    EntityType type = (EntityType) args.get(0);
                     removeEntities(p, type, String.valueOf(range), p.getNearbyEntities(range, range, range));
                 });
         new Command(Commands.KILLALL_LABEL)

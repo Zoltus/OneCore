@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
@@ -18,9 +18,9 @@ public class PlayTime implements ICommand {
     @Override
     public void init() {
         //playtime <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    OfflinePlayer offTarget = (OfflinePlayer) args[0];
+                    OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                     int playtime = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
                     String timeMessage = secondsToTime(playtime);
                     PLAYTIME_TARGETS_PLAYTIME.send(sender, TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());

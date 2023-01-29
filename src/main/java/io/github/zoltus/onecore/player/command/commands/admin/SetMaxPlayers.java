@@ -23,7 +23,7 @@ public class SetMaxPlayers implements ICommand {
                 .then(new IntegerArgument(Lang.NODES_AMOUNT.getString())
                         .executesPlayer((p, args) -> {
                             try {
-                                int maxPlayers = (int) args[0];
+                                int maxPlayers = (int) args.get(0);
                                 setMaxPlayers(maxPlayers);
                                 SETMAXPLAYERS_SET.send(p, AMOUNT_PH, maxPlayers);
                             } catch (ReflectiveOperationException e) {

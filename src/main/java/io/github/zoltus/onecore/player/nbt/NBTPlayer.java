@@ -125,14 +125,6 @@ public class NBTPlayer {
         nbt.setBoolean("Invulnerable", bool);
     }
 
-    public void setHealth(double d) {
-        nbt.setDouble("Health", d);
-    }
-
-    public void setFoodExhaustionLevel(float f) {
-        nbt.setFloat("foodExhaustionLevel", f);
-    }
-
     public Map<Integer, ItemStack> getInventory() {
         return getItems("Inventory");
     }
@@ -219,11 +211,32 @@ public class NBTPlayer {
         nbt.setInteger("previousPlayerGameType", i);
     }
 
-    public void setfoodSaturationLevel(float f) {
+    public void setSaturationLevel(float f) {
         nbt.setFloat("foodSaturationLevel", f);
     }
 
-    public void setfoodLevel(int i) {
+    public float getSaturationLevel() {
+        return nbt.getFloat("foodSaturationLevel");
+    }
+
+    public void setFoodLevel(int i) {
         nbt.setInteger("foodLevel", i);
     }
+
+    public float getFoodLevel() {
+        return nbt.getFloat("foodLevel");
+    }
+
+    public void setHealth(double d) {
+        nbt.setDouble("Health", d);
+    }
+
+    public void setExhaustionLevel(float f) {
+        nbt.setFloat("foodExhaustionLevel", f);
+    }
+
+    public float getExhaustionLevel() {
+        return nbt.getFloat("foodExhaustionLevel");
+    }
+
 }

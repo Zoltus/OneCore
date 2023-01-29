@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
@@ -16,9 +16,9 @@ public class Tp implements ICommand {
     @Override
     public void init() {
         //tp <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument("1")
+        Argument<?> arg0 = new OfflinePlayerArgument("1")
                 .executesPlayer((sender, args) -> {
-                    OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
+                    OfflinePlayer offlineTarget = (OfflinePlayer) args.get(0);
                     Location destination = getLoc(offlineTarget);
                     sender.teleport(destination);
                     if (offlineTarget.isOnline()) {
@@ -28,10 +28,10 @@ public class Tp implements ICommand {
                     }
                 });
         //tp <player> <player>
-        ArgumentTree arg1 = new OfflinePlayerArgument("2")
+        Argument<?> arg1 = new OfflinePlayerArgument("2")
                 .executes((sender, args) -> {
-                    OfflinePlayer fromOff = (OfflinePlayer) args[0];
-                    OfflinePlayer target = (OfflinePlayer) args[1];
+                    OfflinePlayer fromOff = (OfflinePlayer) args.get(0);
+                    OfflinePlayer target = (OfflinePlayer) args.get(1);
                     Location destination = getLoc(target);
                     tp(fromOff, destination);
                     if (fromOff.isOnline() && target.isOnline()) {
@@ -52,7 +52,7 @@ public class Tp implements ICommand {
                 .withAliases(Commands.TPHERE_ALIASES)
                 .then(new OfflinePlayerArgument()
                         .executesPlayer((sender, args) -> {
-                            OfflinePlayer offlineTarget = (OfflinePlayer) args[0];
+                            OfflinePlayer offlineTarget = (OfflinePlayer) args.get(0);
                             tp(offlineTarget, sender.getLocation());
                             if (offlineTarget.isOnline()) {
                                 Lang.TPHERE_TELEPORTED.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());

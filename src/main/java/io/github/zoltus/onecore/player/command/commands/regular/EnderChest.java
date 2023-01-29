@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.listeners.InvSeeHandler;
@@ -13,9 +13,9 @@ public class EnderChest implements ICommand {
     @Override
     public void init() {
         //enderchest <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executesPlayer((sender, args) -> {
-                    OfflinePlayer offTarget = (OfflinePlayer) args[0];
+                    OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                     InvSeeHandler.handle(sender, offTarget, true);
                 });
         //enderchest

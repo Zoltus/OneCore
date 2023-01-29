@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -34,14 +33,14 @@ public class Weather implements ICommand {
     public void init() {
         registerSingleWords(); //todo sameway than economy cmds
         //weather <weather>
-        ArgumentTree arg0 = weatherArgument()
+        Argument<?> arg0 = weatherArgument()
                 .executesPlayer((p, args) -> {
-                    changeWeather(p, args[0], p.getWorld());
+                    changeWeather(p, args.get(0), p.getWorld());
                 });
         //weather <weather> <world>
-        ArgumentTree arg1 = new WorldsArgument()
+        Argument<?> arg1 = new WorldsArgument()
                 .executes((sender, args) -> {
-                    changeWeather(sender, args[0], args[1]);
+                    changeWeather(sender, args.get(0), args.get(1));
                 });
         new Command(Commands.WEATHER_LABEL)
                 .withPermission(Commands.WEATHER_PERMISSION)

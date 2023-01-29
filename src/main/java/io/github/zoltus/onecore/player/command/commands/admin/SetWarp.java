@@ -21,7 +21,7 @@ public class SetWarp implements ICommand {
                 .withAliases(Commands.SETWARP_ALIASES)
                 .then(new StringArgument(NODES_WARP_NAME.getString())
                 .executesPlayer((p, args) -> {
-                    String warp = (String) args[0];
+                    String warp = (String) args.get(0);
                     warps.set(warp, p.getLocation());
                     warps.save();
                     warps.reload();

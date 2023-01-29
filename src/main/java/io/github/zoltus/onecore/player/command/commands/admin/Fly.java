@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.BooleanArgument;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
@@ -23,14 +23,14 @@ public class Fly implements ICommand {
     @Override
     public void init() {
         //fly <player>
-        ArgumentTree arg0 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[0], null);
+                    handle(sender, (OfflinePlayer) args.get(0), null);
                 });
         //fly <player> true/false
-        ArgumentTree arg1 = new BooleanArgument(Lang.NODES_TRUE_FALSE.getString())
+        Argument<?> arg1 = new BooleanArgument(Lang.NODES_TRUE_FALSE.getString())
                 .executes((sender, args) -> {
-                    handle(sender, (OfflinePlayer) args[0], (Boolean) args[1]);
+                    handle(sender, (OfflinePlayer) args.get(0), (Boolean) args.get(1));
                 });
         new Command(Commands.FLY_LABEL)
                 .withPermission(Commands.FLY_PERMISSION)

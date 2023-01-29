@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
@@ -44,18 +43,18 @@ public class Warp implements ICommand {
     @Override
     public void init() {
         //warp <warp>
-        ArgumentTree arg0 = warpArg()
+        Argument<?> arg0 = warpArg()
                 .executesPlayer((p, args) -> {
-                    WarpObj warp = (WarpObj) args[0];
+                    WarpObj warp = (WarpObj) args.get(0);
                     User user = User.of(p);
                     user.teleportTimer(warp.location());
                 });
         //warp <warp> <player>
-        ArgumentTree arg1 = new OfflinePlayerArgument()
+        Argument<?> arg1 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
-                    WarpObj warp = (WarpObj) args[0];
+                    WarpObj warp = (WarpObj) args.get(0);
                     String warpName = warp.name();
-                    OfflinePlayer offTarget = (OfflinePlayer) args[1];
+                    OfflinePlayer offTarget = (OfflinePlayer) args.get(1);
                     Player p = offTarget.getPlayer();
                     Location loc = warp.location();
                     if (p != null) {

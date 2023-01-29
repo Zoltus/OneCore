@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import dev.jorel.commandapi.ArgumentTree;
+import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
@@ -17,15 +17,15 @@ public class DelHome implements ICommand {
     @Override
     public void init() {
         //delhome <home>
-        ArgumentTree arg0 = new HomeArg0()
+        Argument<?> arg0 = new HomeArg0()
                 .executesPlayer((p, args) -> {
-                    deleteHome(p, p, (String) args[0]);
+                    deleteHome(p, p, (String) args.get(0));
                 });
         //delhome <player> <home>
-        ArgumentTree arg1 = new HomeArg1()
+        Argument<?> arg1 = new HomeArg1()
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args[0]);
-                    deleteHome(sender, offP, (String) args[1]);
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
+                    deleteHome(sender, offP, (String) args.get(1));
                 });
         new Command(DELHOME_LABEL)
                 .withPermission(DELHOME_PERMISSION)
