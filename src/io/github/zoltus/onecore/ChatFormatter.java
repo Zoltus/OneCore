@@ -31,7 +31,7 @@ public class ChatFormatter implements Listener {
                 format = PlaceholderAPI.setPlaceholders(player, format);
             }
             try {
-                e.setFormat(format);
+                e.setFormat(ChatColor.translateAlternateColorCodes('&', format));
             } catch (IllegalFormatException ex) {
                 Bukkit.getLogger().warning("Chat format is invalid! " +
                         "You might be using broken placeholders which contain %!"
