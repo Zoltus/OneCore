@@ -34,6 +34,8 @@ public class BackupHandler {
         this.plugin = plugin;
         this.dataFolder = plugin.getDataFolder();
         this.outputDirectory = new File(dataFolder, "backups");
+        //noinspection ResultOfMethodCallIgnored
+        this.outputDirectory.mkdirs();
     }
 
     //Backups based time from startup
