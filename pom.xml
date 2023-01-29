@@ -16,8 +16,8 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.19.3-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.19.3-R0.1-SNAPSHOT</spigot.server.version>
+        <spigotAPI.version>1.19.2-R0.1-SNAPSHOT</spigotAPI.version>
+        <spigot.server.version>1.19.2-R0.1-SNAPSHOT</spigot.server.version>
         <spigot.annotations.version>1.2.3-SNAPSHOT</spigot.annotations.version>
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
@@ -28,6 +28,7 @@
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.2</placeholderapi.version>
+        <mockbukkit.version>2.144.5</mockbukkit.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -65,7 +66,7 @@
             <id>oss.sonatype.org-snapshot</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
-        <!-- PaperLib -->
+        <!-- PaperLib, MockBukkit -->
         <repository>
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
@@ -78,6 +79,64 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
+        <!-- Unit testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.seeseemelk</groupId>
+            <artifactId>MockBukkit-v1.19</artifactId>
+            <version>${mockbukkit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- todo
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-test-tests</artifactId>
+            <version>9.0.0-SNAPSHOT</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-shade</artifactId>
+            <version>${commandapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-test-impl</artifactId>
+            <version>9.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-test-impl-1.19.2</artifactId>
+            <version>9.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>brigadier</artifactId>
+            <version>1.0.17</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+         Testing END -->
         <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -178,8 +237,12 @@
         </dependency>
     </dependencies>
     <build>
+        <!-- The name of the final jar -->
         <finalName>${project.name}</finalName>
-        <sourceDirectory>src</sourceDirectory>
+        <!-- /src/main/java/ contains all sources (production code) -->
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <!-- /src/test/java/ contains all unit tests (testing code) -->
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -271,6 +334,15 @@
                             <shadedPattern>lib.de.tr7zw</shadedPattern>
                         </relocation>
                     </relocations>
+                </configuration>
+            </plugin>
+            <!-- Use Maven Surefire plugin for testing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <trimStackTrace>false</trimStackTrace>
                 </configuration>
             </plugin>
             <!--<plugin>

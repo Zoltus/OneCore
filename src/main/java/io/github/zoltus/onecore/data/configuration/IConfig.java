@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public interface IConfig {
-
-
     //Placeholders
     String PLAYER_PH = "<player>";
     String PLAYER2_PH = "<player2>";
