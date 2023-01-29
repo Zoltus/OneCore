@@ -22,13 +22,12 @@
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>9.0.0-SNAPSHOT</commandapi.version>
         <nbtapi.version>2.11.1</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.2</placeholderapi.version>
-        <mockbukkit.version>2.144.5</mockbukkit.version>
+        <commandapi.version>9.0.0-SNAPSHOT</commandapi.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -84,62 +83,11 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <!-- Unit testing
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.19</artifactId>
-            <version>${mockbukkit.version}</version>
-            <scope>test</scope>
-        </dependency>  -->
-        <!-- todo
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-                <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-         Testing END -->
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-bukkit-test-tests</artifactId>
-            <version>${commandapi.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
+        <!-- Compile till in maven central -->
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
             <version>${commandapi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-bukkit-test-impl</artifactId>
-            <version>${commandapi.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-bukkit-test-impl-1.19.2</artifactId>
-            <version>${commandapi.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>brigadier</artifactId>
-            <version>1.0.17</version>
-            <scope>provided</scope>
         </dependency>
         <!-- Spigot -->
         <dependency>
@@ -220,8 +168,8 @@
         <finalName>${project.name}</finalName>
         <!-- /src/main/java/ contains all sources (production code) -->
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-        <!-- /src/test/java/ contains all unit tests (testing code) -->
-        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+        <!-- /src/test/java/ contains all unit tests (testing code)
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -282,7 +230,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <minimizeJar>false</minimizeJar>
+                    <minimizeJar>true</minimizeJar>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <filters>
                         <filter>
@@ -315,48 +263,6 @@
                     </relocations>
                 </configuration>
             </plugin>
-            <!-- Use Maven Surefire plugin for testing -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
-                <configuration>
-                    <trimStackTrace>false</trimStackTrace>
-                </configuration>
-            </plugin>
-            <!--<plugin>
-             <groupId>com.github.wvengen</groupId>
-             <artifactId>proguard-maven-plugin</artifactId>
-             <version>2.5.3</version>
-             <executions>
-                 <execution>
-                     <phase>package</phase>
-                     <goals>
-                         <goal>proguard</goal>
-                     </goals>
-                 </execution>
-             </executions>
-             <configuration>
-                 <obfuscate>true</obfuscate>
-                 <injar>${project.build.finalName}.jar</injar>
-                 <outjar>${project.build.finalName}-proguard.jar</outjar>
-                 <outputDirectory>${project.build.directory}</outputDirectory>
-                 <proguardInclude>${basedir}/proguard.conf</proguardInclude>
-                 <libs>
-                     <lib>${java.home}/jmods/java.base.jmod</lib>
-                </libs>
-                 <options>
-                     <option>-dontnote</option>
-                     <option>-dontwarn</option>
-                     <option>-dontshrink</option>
-                     <option>-dontoptimize</option>
-                     <option>-repackageclasses 'sh.zoltus.onecore'</option>
-                     <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
-                     <option>-keep public class io.github.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
-                     <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
-                 </options>
-             </configuration>
-            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -40,13 +40,13 @@ public class Feed implements ICommand {
             Player p = offP.getPlayer();
             p.setFoodLevel(20);
             p.setSaturation(20.0F);
-          //  p.setExhaustion(0.0f);
+            p.setExhaustion(0.0f);
             FEED_YOU_HAVE_BEEN_HEALED.send(p);
         } else {
             NBTPlayer nbtPlayer = new NBTPlayer(offP);
             nbtPlayer.setFoodLevel(20);
             nbtPlayer.setSaturationLevel(20.0F);
-            // nbtPlayer.setExhaustionLevel(0.0F);
+            nbtPlayer.setExhaustionLevel(0.0F);
             nbtPlayer.save();
         }
     }
