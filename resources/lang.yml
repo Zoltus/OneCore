@@ -252,7 +252,7 @@ Data:
     # <player>, <player2>
     teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both were offline)'
     # <player>
-    teleported-target: '{p} You teleported to offline target <player>'
+    teleported-target: '{p} You teleported to <player>'
     # <player>, <player2>
     teleported-targets: '{p} Teleported <player> to <player2>'
     # <player>

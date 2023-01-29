@@ -150,7 +150,7 @@ public enum Lang implements IConfig {
     TP_TELEPORTED_OFFLINE_TARGET("tp.teleported-offline-target"),
     TP_TELEPORTED_OFFLINE_TARGETS("tp.teleported-offline-targets"),
     TP_TELEPORTED_TARGETS("tp.teleported-targets"),
-    TP_TELEPORTED_TARGET("tp.teleported-targets"),
+    TP_TELEPORTED_TARGET("tp.teleported-target"),
     TP_RECEIVED("tp.received"),
     TP_RECEIVED_ACCEPT_LINE("tp.received-accept-line"),
     TP_SENT("tp.sent"),
