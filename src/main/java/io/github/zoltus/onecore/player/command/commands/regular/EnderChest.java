@@ -3,8 +3,8 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 import dev.jorel.commandapi.ArgumentTree;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-import org.bukkit.OfflinePlayer;
 import io.github.zoltus.onecore.listeners.InvSeeHandler;
+import org.bukkit.OfflinePlayer;
 import io.github.zoltus.onecore.player.command.Command;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;

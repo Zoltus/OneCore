@@ -2,10 +2,10 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
+import io.github.zoltus.onecore.player.teleporting.Request;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.teleporting.Request;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 

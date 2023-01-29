@@ -3,13 +3,13 @@ package io.github.zoltus.onecore.data.database;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
-import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.teleporting.PreLocation;
 
 import java.sql.*;
 import java.util.HashMap;

@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data;
 
 
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
@@ -10,7 +11,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.bukkit.Bukkit;
-import io.github.zoltus.onecore.data.configuration.yamls.Config;
 
 import java.io.*;
 import java.nio.file.Files;

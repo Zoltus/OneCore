@@ -6,9 +6,9 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.RequestArgument;
+import io.github.zoltus.onecore.player.teleporting.Request;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.teleporting.Request;
 
 public class Tpaccept implements ICommand {
     @Override

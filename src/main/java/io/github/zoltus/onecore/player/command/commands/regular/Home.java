@@ -8,12 +8,12 @@ import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
+import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.teleporting.PreLocation;
 
 public class Home implements ICommand {
 
