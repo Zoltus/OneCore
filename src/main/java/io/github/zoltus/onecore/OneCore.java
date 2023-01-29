@@ -2,6 +2,7 @@ package io.github.zoltus.onecore;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIConfig;
+import dev.jorel.commandapi.RegisteredCommand;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
@@ -112,7 +113,10 @@ public final class OneCore extends JavaPlugin implements Listener {
         // Saves all users & settings on disable
         database.saveUsers();
         plugin.getLogger().info("Saved users & settings to database...");
-        CommandAPI.onDisable(); //Disables commandapi, unhooks chatpreviews
+        //Unregisters all cmds on unload. Trying to support reloading plugin.
+        CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
+        //Disables commandapi, unhooks chatpreviews //todo old? is it needed check docs
+        CommandAPI.onDisable();
     }
 
     /**
