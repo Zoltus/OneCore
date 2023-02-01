@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data.configuration;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import io.github.zoltus.onecore.OneCore;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,8 +17,8 @@ import java.util.logging.Level;
 
 public class OneYml extends YamlConfiguration {
 
-    //* Yml file
     private final File file;
+    private YamlConfiguration defaults;
 
     /**
      * @param name of the file
@@ -33,32 +34,31 @@ public class OneYml extends YamlConfiguration {
     }
 
     /**
-     * Gets value from config, if its null it returns default vlaue
+     * Gets default value from jars yml file.
      *
      * @param path for value
-     * @param def default value
+     * @return value
+     */
+    public <T> T getOrDefault(String path) {
+        T value = (T) get(path);
+        T defaultVal = (T) defaults.get(path);
+        if (value == null && defaultVal == null) {
+            OneCore.getPlugin().getLogger().warning("§cMissing config: " + path);
+        } else if (value == null) {
+            OneCore.getPlugin().getLogger().warning("§cMissing config: " + path + " Using default: " + defaultVal);
+        }
+        return value == null ? defaultVal : value;
+    }
+
+    /**
+     * Gets from user set value.
+     *
+     * @param path for value
      * @return value
      */
     public <T> T getOrDefault(String path, T def) {
         T value = (T) get(path);
         return value == null ? def : value;
-    }
-
-    /**
-     * Gets value from config, if its null it returns default value,
-     * if value is null it also sets default value
-     *
-     * @param path for value
-     * @param def default value
-     * @return value
-     */
-    public <T> T getOrSetDefault(String path, T def) {
-        T value = getOrDefault(path, def);
-        boolean contains = contains(path);
-        if (!contains) {
-            set(path, def);
-        }
-        return value;
     }
 
     //* Reloads config from file
@@ -81,11 +81,11 @@ public class OneYml extends YamlConfiguration {
             InputStream defaultStream = getResource(file.getName());
             if (defaultStream != null) {
                 //todo switch to use Files.bufferedreader
-                YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, Charsets.UTF_8));
+                defaults = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, Charsets.UTF_8));
                 //Copies header
-                options().setHeader(defaultConfig.options().getHeader());
+                options().setHeader(defaults.options().getHeader());
                 //Copies default values which havent been added yet & comments
-                setDefaults(defaultConfig);
+                setDefaults(defaults);
 
             }
         } catch (IOException | InvalidConfigurationException ex) {

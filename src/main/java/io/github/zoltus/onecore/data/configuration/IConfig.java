@@ -42,14 +42,14 @@ public interface IConfig {
     String getPath();
 
     default String getString() {
-        String prefix = Yamls.CONFIG.getYml().getOrDefault("Data.prefix", "null");
-        String configValue = yml().getOrDefault("Data." + getPath(), "null");
+        String prefix = Yamls.CONFIG.getYml().getOrDefault("Data.prefix");
+        String configValue = yml().getOrDefault("Data." + getPath());
         String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     default String asPermission() {
-        String configValue = yml().getOrDefault("Data." + getPath(), "null");
+        String configValue = yml().getOrDefault("Data." + getPath());
         return Config.PERMISSION_PREFIX.get() + configValue;
     }
 
