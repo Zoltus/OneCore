@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>sh.zoltus</groupId>
-    <artifactId>OneCore</artifactId>
+    <artifactId>onecore</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <!--<outputDir>F:\MineServer\plugins</outputDir> -->
@@ -175,8 +175,6 @@
         </dependency>
     </dependencies>
     <build>
-        <!-- The name of the final jar -->
-        <finalName>${project.name}</finalName>
         <!-- /src/main/java/ contains all sources (production code) -->
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <!-- /src/test/java/ contains all unit tests (testing code)
