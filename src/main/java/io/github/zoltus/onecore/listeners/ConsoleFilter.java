@@ -39,7 +39,7 @@ public class ConsoleFilter implements Filter {
     private ConsoleFilter() {
         Logger logger = (Logger) LogManager.getRootLogger();
         logger.addFilter(this);
-        filters.getOrSetDefault("Data", new ArrayList<>());
+        filters.getOrDefault("Data", new ArrayList<>());
     }
 
     /**

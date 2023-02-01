@@ -36,7 +36,7 @@ public interface ICommand extends IArgument {
      * @return boolean
      */
     static boolean isEnabled(Class<? extends ICommand> clazz) {
-        return cmds.getOrSetDefault("Data." + clazz.getSimpleName().toLowerCase() + ".enabled", true);
+        return cmds.getOrDefault("Data." + clazz.getSimpleName().toLowerCase() + ".enabled");
     }
 
     default Argument<String> multiLiteralArgument(IConfig label, IConfig aliases) {

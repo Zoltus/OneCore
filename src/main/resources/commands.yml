@@ -149,29 +149,28 @@ Data:
     permission-other: heal.other
     aliases: []
   #  - examplealias1
-  homes:
-    home:
-      # Default homename if player types only /sethome
-      default-name: koti
-      enabled: true
-      label: home
-      permission: home
-      permission-amount: home
-      permission-other: home.other
-      aliases:
-      - koti
-    delete:
-      enabled: true
-      label: delhome
-      permission: delhome
-      aliases: []
-    #  - examplealias1
-    set:
-      enabled: true
-      label: sethome
-      permission: sethome
-      other-permission: sethome.other
-      aliases: []
+  home:
+    # Default homename if player types only /sethome
+    default-name: koti
+    enabled: true
+    label: home
+    permission: home
+    permission-amount: home
+    permission-other: home.other
+    aliases:
+    - koti
+  delhome:
+    enabled: true
+    label: delhome
+    permission: delhome
+    aliases: []
+  #  - examplealias1
+  sethome:
+    enabled: true
+    label: sethome
+    permission: sethome
+    other-permission: sethome.other
+    aliases: []
   #  - examplealias1
   invsee:
     edit-permission: invsee.edit
@@ -287,7 +286,7 @@ Data:
     walk-aliases: kävely
     aliases: []
   #  - examplealias1
-  system:
+  systeminfo:
     enabled: true
     label: system
     permission: system

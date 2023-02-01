@@ -3,11 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>sh.zoltus</groupId>
     <artifactId>OneCore</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
         <!--<outputDir>F:\MineServer\plugins</outputDir> -->
@@ -34,7 +32,6 @@
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
     </properties>
-
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>
         <pluginRepository>
@@ -42,7 +39,6 @@
             <url>https://repository.apache.org/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
-
     <!-- Reposities -->
     <repositories>
         <!-- SpigotAPI -->

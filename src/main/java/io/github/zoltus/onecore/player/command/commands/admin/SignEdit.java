@@ -103,7 +103,7 @@ public class SignEdit implements ICommand {
                 .override();
     }
 
-    private final Argument<BaseComponent[]> signTextArg = (Argument<BaseComponent[]>) new ChatArgument(NODES_MESSAGE.getString())
+    private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.getString())
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
                 if (sign != null && sign.getLines().length != 0) {
