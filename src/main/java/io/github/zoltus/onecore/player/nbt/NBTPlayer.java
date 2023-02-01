@@ -25,17 +25,19 @@ public class NBTPlayer {
     private final NBTFile nbt;
     @Getter
     private final NBTStats stats;
+    private final World world;
 
     private final NBTCompound abilities;
     public NBTPlayer(UUID uuid) {
         this.nbt = getNBTFile(uuid);
+        this.world = Bukkit.getWorlds().get(0);
         if (nbt == null) {
             throw new RuntimeException("§cPlayers NBTFile not found!");
         } else {
             this.abilities = nbt.getCompound("abilities");
             //Loads stats from world json file
             //todo convert to Bukkit.getworldocntainer
-            File statsFile = new File(getWorld().getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
+            File statsFile = new File(world.getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
             try {
                 Gson gson = new Gson();
                 JsonReader reader = new JsonReader(new FileReader(statsFile));
@@ -156,7 +158,7 @@ public class NBTPlayer {
         NBTDoubleList doubleList = (NBTDoubleList) nbt.getDoubleList("Pos");
         float yaw = getYaw();
         float pitch = getPitch();
-        String worldName = getWorld().getName();
+        String worldName = world.getName();
         World world = Bukkit.getWorld(worldName);
         double x = doubleList.get(0);
         double y = doubleList.get(1);
@@ -172,13 +174,6 @@ public class NBTPlayer {
         return nbt.getFloatList("Rotation").get(1);
     }
 
-    public World getWorld() {
-        String world = nbt.getString("Dimension").split(":")[1];
-        //todo fix for custom worlds
-        //return Bukkit.getWorld(world);
-         return world.equals("overworld") ? Bukkit.getWorlds().get(0) : Bukkit.getWorld(world);
-    }
-
     private Map<Integer, ItemStack> getItems(String inventory) {
         Map<Integer, ItemStack> items = new HashMap<>();
         nbt.getCompoundList(inventory).forEach(slotNBT -> {
@@ -191,7 +186,7 @@ public class NBTPlayer {
 
     //todo clean setdimension/world
     public void setLocation(Location loc) {
-        loc.setWorld(getWorld());
+        loc.setWorld(world);
         NBTDoubleList pos = (NBTDoubleList) nbt.getDoubleList("Pos");
         NBTFloatList rotation = (NBTFloatList) nbt.getFloatList("Rotation");
         NBTDoubleList motion = (NBTDoubleList) nbt.getDoubleList("Motion");
