@@ -7,7 +7,6 @@
     <artifactId>OneCore</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
         <!--<outputDir>F:\MineServer\plugins</outputDir> -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -173,7 +172,7 @@
             </resource>
         </resources>
         <plugins>
-            <!-- Jar loc -->
+            <!-- Jar loc disabled for jenkins, todo copy it
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -181,7 +180,7 @@
                 <configuration>
                     <outputDirectory>${outputDir}</outputDirectory>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <!-- Compile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -257,6 +256,37 @@
                             <shadedPattern>lib.de.tr7zw</shadedPattern>
                         </relocation>
                     </relocations>
+                </configuration>
+            </plugin>
+            <!-- Maven source plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Maven javadoc plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failOnError>false</failOnError>
                 </configuration>
             </plugin>
         </plugins>
