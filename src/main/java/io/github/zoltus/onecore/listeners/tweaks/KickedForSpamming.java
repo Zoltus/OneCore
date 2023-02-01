@@ -12,7 +12,7 @@ public class KickedForSpamming implements Listener {
      * Disabled Kicked for spamming kick event.
      *
      * @param e Event
-     * @Permission "bypass.spam"
+     * permission "bypass.spam"
      */
     @EventHandler
     public void onKick(PlayerKickEvent e) {
