@@ -90,7 +90,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         registerListeners();
         // Inits metrics to bstats
         new Metrics(this, 12829); //todo fix for test
-        // Sets default config for all commands and settings if they are not set
+        // Starts caching users
         ConsoleFilter.init();
         this.database.cacheUsers();
         //todo load all online players aswell to support loading mid-game
@@ -98,8 +98,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
         this.backupHandler.start();
-        //Starts caching users
-        sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+        sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         //testConfig(); Tests config for missing values
     }
