@@ -99,8 +99,8 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
         this.backupHandler.start();
         //Starts caching users
-        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         sendArt(); // Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
+        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
         //testConfig(); Tests config for missing values
     }
 
@@ -119,7 +119,7 @@ public final class OneCore extends JavaPlugin implements Listener {
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskLater(this, () -> List.of(
+        List.of(
                 "",
                 "§f                    o O O",
                 "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
@@ -127,7 +127,7 @@ public final class OneCore extends JavaPlugin implements Listener {
                 "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{==§71.0§8==|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
                 "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
                 ""
-        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 1);
+        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
     }
 
     private void registerListeners() {
