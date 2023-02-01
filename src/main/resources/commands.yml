@@ -1,0 +1,404 @@
+# Here are all the commands
+# enabled: <true/false>    = If you want the command to be loaded/enabled
+# label: <label>           = Command label
+# permission: <permission> = permission to use the command
+# aliases: <aliasesList>   = command aliases
+
+Data:
+  back:
+    enabled: true
+    label: back
+    permission: back
+    # Remove '[]' and # from the lines below to aliases
+    aliases: []
+  #  - examplealias1
+  #  - examplealias2
+  broadcast:
+    enabled: true
+    label: broadcast
+    permission: broadcast
+    aliases:
+      - bc
+  clearchat:
+    enabled: true
+    label: clearchat
+    permission: clearchat
+    aliases:
+      - cc
+  economy:
+    enabled: true
+    label: economy
+    permission: economy
+    aliases:
+      - eco
+    balance:
+      label: balance
+      permission: balance
+      aliases:
+        - bal
+    baltop:
+      label: baltop
+      permission: baltop
+      aliases: []
+    #  - examplealias1
+    give:
+      label: give
+      permission: give
+      aliases: []
+    #  - examplealias1
+    pay:
+      label: pay
+      permission: pay
+      aliases: []
+    #  - examplealias1
+    set:
+      label: set
+      permission: set
+      aliases: []
+    #  - examplealias1
+    take:
+      label: take
+      permission: set
+      aliases: []
+    #  - examplealias1
+    transfer:
+      label: transfer
+      permission: transfer
+      aliases: []
+  #  - examplealias1
+  enderchest:
+    edit-permission: enderchest.edit
+    enabled: true
+    label: enderchest
+    other-permission: enderchest
+    permission: enderchest
+    aliases:
+      - ec
+  feed:
+    enabled: true
+    label: feed
+    permission: feed
+    permission-other: feed.other
+    aliases: []
+  #  - examplealias1
+  fly:
+    enabled: true
+    label: fly
+    permission: Fly
+    permission-other: Fly.other
+    aliases: []
+  #  - examplealias1
+  gamemode:
+    enabled: true
+    label: gamemode
+    other-permission: gamemode.other
+    # Used as gamemode.creative, etc.
+    mode-permission: gamemode.
+    permission: gamemode
+    aliases:
+      - gm
+    suggestions:
+      - survival
+      - creative
+      - spectator
+    aliases-adventure:
+      - 2
+      - a
+      - adv
+      - adventure
+      - seik
+      - seikkailu
+      - se
+      - sei
+    aliases-creative:
+      - 1
+      - c
+      - creative
+      - crea
+      - luo
+      - luova
+      - lu
+      - l
+    aliases-spectator:
+      - 3
+      - sp
+      - spec
+      - spe
+      - spectator
+      - k
+      - kat
+      - katselu
+    aliases-survival:
+      - 0
+      - s
+      - survival
+      - surv
+      - selviytyminen
+      - selviytyjä
+  god:
+    enabled: true
+    label: god
+    permission: god
+    permission-other: god.other
+    aliases: []
+  #  - examplealias1
+  heal:
+    enabled: true
+    label: heal
+    permission: heal
+    permission-other: heal.other
+    aliases: []
+  #  - examplealias1
+  home:
+    # Default homename if player types only /sethome
+    default-name: koti
+    enabled: true
+    label: home
+    permission: home
+    permission-amount: home
+    permission-other: home.other
+    aliases:
+    - koti
+  delhome:
+    enabled: true
+    label: delhome
+    permission: delhome
+    aliases: []
+  #  - examplealias1
+  sethome:
+    enabled: true
+    label: sethome
+    permission: sethome
+    other-permission: sethome.other
+    aliases: []
+  #  - examplealias1
+  invsee:
+    edit-permission: invsee.edit
+    enabled: true
+    label: invsee
+    permission: invsee.view
+    aliases: []
+  #  - examplealias1
+  killall:
+    enabled: true
+    label: killall
+    permission: killall
+    aliases: []
+  #  - examplealias1
+  msg:
+    enabled: true
+    label: msg
+    permission: msg
+    aliases: []
+  #  - examplealias1
+  ping:
+    enabled: true
+    label: ping
+    other-permission: Ping.other
+    permission: ping
+    aliases: []
+  #  - examplealias1
+  playtime:
+    enabled: true
+    label: playtime
+    other-permission: playtime.other
+    permission: playtime
+    aliases: []
+  #  - examplealias1
+  reload:
+    enabled: true
+    label: reload
+    permission: onecore.reload
+    aliases: []
+  #  - examplealias1
+  repair:
+    enabled: true
+    label: repair
+    permission: repair
+    aliases: []
+  #  - examplealias1
+  seen:
+    enabled: true
+    label: seen
+    permission: seen
+    aliases: []
+  #  - examplealias1
+  setmaxplayers:
+    enabled: true
+    label: setmaxplayers
+    permission: setmaxplayers
+    aliases: []
+  #  - examplealias1
+  setspawn:
+    enabled: true
+    label: setspawn
+    permission: setspawn
+    aliases: []
+  #  - examplealias1
+  setwarp:
+    enabled: true
+    label: setwarp
+    permission: setwarp
+    aliases: []
+  #  - examplealias1
+  spawn:
+    enabled: true
+    label: spawn
+    permission: spawn
+    permission-other: spawn.other
+    aliases: []
+  #  - examplealias1
+  signedit:
+    enabled: true
+    label: signedit
+    # Player can edit the sign if he has this permission and can break the sign.
+    permission: signedit
+    # If player cant break block he can still edit sign with this permission
+    bypass-permission: signedit.bypass
+    aliases:
+      - se
+    set:
+      label: set
+      permission: signedit.set
+      aliases: []
+    #  - examplealias1
+    copy:
+      label: copy
+      permission: signedit.copy
+      aliases: []
+    #  - examplealias1
+    clear:
+      label: clear
+      permission: signedit.clear
+      aliases: []
+    #  - examplealias1
+    paste:
+      label: paste
+      permission: signedit.paste
+      aliases: []
+  #  - examplealias1
+  speed:
+    enabled: true
+    label: speed
+    permission: speed
+    permission-other: speed.other
+    fly-aliases: lento
+    walk-aliases: kävely
+    aliases: []
+  #  - examplealias1
+  systeminfo:
+    enabled: true
+    label: system
+    permission: system
+    aliases: []
+  #  - examplealias1
+  time:
+    enabled: true
+    label: time
+    permission: time
+    # Aliases for time
+    aliases: []
+    #  - examplealias1
+    single-word-aliases:
+      # Sets time to
+      day:
+        - day
+      # Sets time to
+      night:
+        - night
+      # Sets time to
+      morning:
+        - morning
+      # Sets time to
+      afternoon:
+        - afternoon
+  top:
+    enabled: true
+    label: top
+    other-permission: top.other
+    permission: top
+    aliases: []
+  #  - examplealias1
+  tp:
+    enabled: true
+    label: tp
+    permission: tp
+    permission-other: tp.other
+    aliases:
+      - tpo
+      - tpother
+  tpa:
+    enabled: true
+    label: tpa
+    permission: tpa
+    aliases: []
+  #  - examplealias1
+  tpaccept:
+    enabled: true
+    label: tpaccept
+    permission: tpaccept
+    aliases:
+      - ypyes
+      - tpy
+  tpahere:
+    enabled: true
+    label: tpahere
+    permission: tpahere
+    aliases:
+      - tpah
+  tpdeny:
+    enabled: true
+    label: tpdeny
+    permission: tpdeny
+    aliases:
+      - tpno
+  tphere:
+    enabled: true
+    label: tphere
+    permission: tphere
+    aliases:
+      - tpohere
+  tptoggle:
+    enabled: true
+    label: tptoggle
+    permission: tptoggle
+    aliases: []
+  #  - examplealias1
+  warp:
+    enabled: true
+    label: warp
+    permission: warp
+    permission-other: warp.other
+    aliases: []
+  #  - examplealias1
+  weather:
+    clear-aliases:
+      - c
+      - clear
+      - s
+      - sun
+    enabled: true
+    label: weather
+    permission: weather
+    rain-aliases:
+      - rain
+      - r
+      - sade
+    single-word-cmds:
+      - sun
+      - storm
+      - rain
+    storm-aliases:
+      - storm
+      - lightning
+      - salama
+    suggestions:
+      - sun
+      - storm
+      - rain
+      - clear
+    aliases:
+      - sun
+      - storm
+      - rain
+      - clear

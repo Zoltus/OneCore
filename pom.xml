@@ -3,11 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>sh.zoltus</groupId>
     <artifactId>OneCore</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>
         <!--<outputDir>F:\MineServer\plugins</outputDir> -->
@@ -16,24 +14,24 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.19.3-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.19.3-R0.1-SNAPSHOT</spigot.server.version>
+        <spigotAPI.version>1.19.2-R0.1-SNAPSHOT</spigotAPI.version>
+        <spigot.server.version>1.19.2-R0.1-SNAPSHOT</spigot.server.version>
         <spigot.annotations.version>1.2.3-SNAPSHOT</spigot.annotations.version>
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
         <vault.version>1.7.1</vault.version>
-        <commandapi.version>8.7.3</commandapi.version>
         <nbtapi.version>2.11.1</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
+        <placeholderapi.version>2.11.2</placeholderapi.version>
+        <commandapi.version>9.0.0-SNAPSHOT</commandapi.version>
         <!-- Maven -->
         <maven.compiler.versions>17</maven.compiler.versions>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
     </properties>
-
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>
         <pluginRepository>
@@ -41,7 +39,6 @@
             <url>https://repository.apache.org/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
-
     <!-- Reposities -->
     <repositories>
         <!-- SpigotAPI -->
@@ -64,14 +61,30 @@
             <id>oss.sonatype.org-snapshot</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
-        <!-- PaperLib -->
+        <!-- PaperLib, MockBukkit -->
         <repository>
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+        <!-- PlaceholderAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <!-- Need Brigadier for testing -->
+        <repository>
+            <id>minecraft-libraries</id>
+            <url>https://libraries.minecraft.net</url>
+        </repository>
     </repositories>
     <!-- Dependencies -->
     <dependencies>
+        <!-- Compile till in maven central -->
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
+            <version>${commandapi.version}</version>
+        </dependency>
         <!-- Spigot -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -85,31 +98,12 @@
             <artifactId>spigot</artifactId>
             <version>${spigotAPI.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!-- Spigots log4j 2.17 has vunerability -->
+        <!-- Spigots log4j 2.17 has vunerability, runtime -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Spigot Server,
-        Github cant build with this and prevents version support anyways.-->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>minecraft-server</artifactId>
-            <version>${spigot.server.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -132,13 +126,6 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- CommandApi runtime -->
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-shade</artifactId>
-            <version>${commandapi.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- tar.gz for backup system, runtime -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -146,28 +133,45 @@
             <version>${apache-compress}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- PlaceholderAPI, soft -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>${placeholderapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- NbtApi, compile (Not in maven central)-->
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api</artifactId>
+            <version>${nbtapi.version}</version>
+        </dependency>
+        <!-- PaperLib, compile (Not in maven central)-->
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>${paperlib.version}</version>
+        </dependency>
         <!-- bstats has to be compiled-->
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>${bstats.version}</version>
         </dependency>
-        <!-- NbtApi -->
-        <dependency>
-            <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api-plugin</artifactId>
-            <version>${nbtapi.version}</version>
-        </dependency>
-        <!-- PaperLib -->
-        <dependency>
-            <groupId>io.papermc</groupId>
-            <artifactId>paperlib</artifactId>
-            <version>${paperlib.version}</version>
-        </dependency>
     </dependencies>
     <build>
+        <!-- The name of the final jar -->
         <finalName>${project.name}</finalName>
-        <sourceDirectory>src</sourceDirectory>
+        <!-- /src/main/java/ contains all sources (production code) -->
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <!-- /src/test/java/ contains all unit tests (testing code)
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- Jar loc -->
             <plugin>
@@ -228,69 +232,33 @@
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
-                                <exclude>META-INF/*.MF</exclude>
+                                <exclude>META-INF/**</exclude>
                             </excludes>
                         </filter>
                         <filter>
                             <artifact>de.tr7zw</artifact>
                             <excludes>
-                                <exclude>plugin.yml</exclude>
                                 <exclude>LICENSE</exclude>
                             </excludes>
                         </filter>
                     </filters>
                     <relocations>
-                        <!--
-                        <relocation>
-                            <pattern>dev.jorel</pattern>
-                            <shadedPattern>sh.zoltus.apis.dev.jorel</shadedPattern>
-                        </relocation>
-                        -->
                         <!-- Relocation needed for it to work -->
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.zoltus.lib.bstats</shadedPattern>
+                            <shadedPattern>io.github.zoltus.onecore</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>io.papermc</pattern>
+                            <shadedPattern>lib.io.papermc</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.tr7zw</pattern>
-                            <shadedPattern>io.github.zoltus.lib.de.tr7zw</shadedPattern>
+                            <shadedPattern>lib.de.tr7zw</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
             </plugin>
-            <!--<plugin>
-             <groupId>com.github.wvengen</groupId>
-             <artifactId>proguard-maven-plugin</artifactId>
-             <version>2.5.3</version>
-             <executions>
-                 <execution>
-                     <phase>package</phase>
-                     <goals>
-                         <goal>proguard</goal>
-                     </goals>
-                 </execution>
-             </executions>
-             <configuration>
-                 <obfuscate>true</obfuscate>
-                 <injar>${project.build.finalName}.jar</injar>
-                 <outjar>${project.build.finalName}-proguard.jar</outjar>
-                 <outputDirectory>${project.build.directory}</outputDirectory>
-                 <proguardInclude>${basedir}/proguard.conf</proguardInclude>
-                 <libs>
-                     <lib>${java.home}/jmods/java.base.jmod</lib>
-                </libs>
-                 <options>
-                     <option>-dontnote</option>
-                     <option>-dontwarn</option>
-                     <option>-dontshrink</option>
-                     <option>-dontoptimize</option>
-                     <option>-repackageclasses 'sh.zoltus.onecore'</option>
-                     <option>-keep,includedescriptorclasses class sh.zoltus.apis.** { *; }</option>
-                     <option>-keep public class io.github.zoltus.onecore.OneCore extends org.bukkit.plugin.java.JavaPlugin { *; }</option>
-                     <option>-keepattributes **,*Annotation*,EventHandler,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod,Override</option>
-                 </options>
-             </configuration>
-            </plugin>-->
         </plugins>
     </build>
 </project>

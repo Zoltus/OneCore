@@ -1,0 +1,292 @@
+Data:
+  other:
+    cooldown-bypass-permission: cooldowns.bypass
+    invalid-amount: '{p} Kelvoton määrä'
+    invalid-range: '{p} Kelvoton säde'
+    # <player>
+    joined: '&a&l+ &7<player>'
+    # <player>
+    quit: '&c&l- &7<player>'
+    kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
+    mention-color: '&x&0&0&f&f&0&0&l'
+    mention-permission: mention
+    mention-tag: '@'
+    player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
+    player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
+    player-only-command: '{p} Tämä komento on vain pelaajille!'
+    world-not-found: '{p} Maailmaa ei löytynyt'
+    # Command nodes, Tells what to type for command arguments
+    # for example /home <home-name-node>
+    nodes:
+      amount: määrä
+      entity-type: entity-type
+      gamemode: pelimuoto
+      home-home/player-name: koti/pelaaja
+      home-name: koti
+      location: location
+      message: viesti
+      player: pelaaja
+      range: etäisyys
+      slot: slot
+      speed: nopeus
+      time: aika
+      true-false: true/false
+      warp-name: warpin-nimi
+      weather: sää
+      world-name: maailma
+  back:
+    invalid-number: '{p} Kelvoton numero, koita 1-10 väliltä!'
+    # <player>
+    no-history: '{p} Pelaajalle <player> ei löytynyt historiaa'
+    # <size>
+    out-of-bounds: '{p} Pelaajalla on <size>/10 historiaa!'
+    # <player>
+    target-sent: '{p} Pelaaja <player> teleportattu sijaintiin!'
+  broadcast:
+    prefix: '&8&l[&c&lIlmoitus&8&l] &7'
+  clear:
+    player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&ltyhjennetty!'
+  economy:
+    balance:
+      # <player>, <balance>
+      targets-balance: '{p} Pelaajan <player> rahamäärä on: <balance>!'
+      # <balance>
+      your-balance: '{p} Rahasi: <balance>'
+    baltop:
+      empty: '&7Top lista on tyhjä.'
+      # <player>, <amount>
+      line: '&7<player> : <amount>'
+      top-players: '{p} Top 10 pelaajat:'
+    give:
+      # <player>, <amount>, <balance>
+      gave: '{p} Annoit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
+      # <amount>, <balance>
+      your-balance-was-increaced: '{p} Ylläpitäjä antoi sinulle <amount>, Uusi rahamääräsi
+        on <balance>!'
+    not-enought: '{p} Sinulla ei ole tarpeeksi varaa!'
+    # <player>, <amount>, <balance>
+    target-doesnt-have-enought-money: '{p} Pelaajalla <player> ei ollut tarpeeksi
+      varaa. Hänellä on <balance> ja yritit ottaa <amount>!'
+    pay:
+      # <player>, <amount>, <balance>
+      received: '{p} Sait <amount> pelaajalta <player>. Uusi rahamääräsi on <balance>!'
+      # <player>, <amount>, <balance>
+      sent: '{p} Lähetit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
+    set:
+      # <player>, <amount>
+      set: '{p} Asetit pelaajan <player> raha määräksi <amount>!'
+      # <amount>
+      your-balance-was-set: '{p} Raha määräksesi on asetettu <amount>, ylläpidon toimesta!'
+    take:
+      #  <player>, <amount>, <balance>
+      took: '{p} Poistit <amount> pelaajalta <player>, Uusi rahamääräsi on <balance>!'
+      # <amount>, <balance>
+      your-balance-reduced: '{p} Sinulta poistettiin <amount> Ylläpidon toimesta!
+        Uusi rahamääräsi on <balance>!'
+    # <player>
+    transfer:
+      # <player>, <player2>, <amount>
+      transfered: '{p} Siirsit onnestuneesti <amount> pelaajalta <player> pelaajalle
+        <player2>!'
+  feed:
+    # <player>
+    you-fed-target: '{p} Ruokit pelaajan: <player>!'
+    you-have-been-healed: '{p} Sinut on ruokittu!'
+  fly:
+    # <player> <toggle>
+    you-switched-target: '{p} Asetit pelaajan <player> lennon "<toggle>"'
+    # <toggle>
+    your-flight-is-now: '{p} Lentosi vaihdettiin: <toggle>!'
+  gamemode:
+    # <mode> will be replaced with the gamemode name
+    survival: selviytyminen
+    creative: luova
+    adventure: seikkailia
+    spectator: katsoja
+    # <mode>
+    changed: '{p} Asetit pelimuodoksi: <mode>'
+    invalid-gamemode: '{p} Kelvoton pelimuoto'
+    # <player> <mode>
+    target-already-in-gamemode: '{p} <player> on jo pelimuodossa <mode>!'
+    # <player> <mode>
+    targets-gamemode-changed: '{p} Vaihdoit pelaajan <player> pelimuodoksi: <mode>!'
+  god:
+    # <player> <mode>
+    changed-targets-god: '{p} You made <player> god to: <mode>'
+    # <mode>
+    set-to: '{p} godmode set to <mode>'
+  heal:
+    you-got-healed: '{p} You have been healed'
+    # <player>
+    you-healed-target: '{p} You healed player: <player>'
+  homes:
+    home:
+      # <list>
+      list: '{p} Kotia ei löytynyt. Homet <list>'
+      no-homes: '{p} Ei homeja'
+      # <player>, <home>
+      # Used when teleporting to other players home.
+      teleport-other: '{p} Teleported players: <player> home: <home>.'
+    set:
+      # <home>
+      full-homes: '{p} Sinulla on jo täysi määrä koteja, poista /delhome <home>'
+      # <home>
+      set: '{p} Asetit kodin: <home>'
+      # <home>, <player>
+      other: '{p} Koti <home> asetettu pelaajalle <player>'
+    delete:
+      # <home>
+      deleted: '{p} Koti poistettu <home>'
+      # <home>, <player>
+      other: '{p} Koti <home> poistettu pelaajalta <player>'
+  killall:
+    # <amount>, <type>, <radius>
+    removed-entitys: '{p} Killed <amount> with type <type> from radius <radius>'
+  msg:
+    # <player>, <player2>, <message>
+    received-msg: '{p} [<player> > <player2>] : <message>'
+    # <player>, <player2>, <message>
+    sent-msg: '{p} [<player> > <player2>] : <message>'
+  ping:
+    # <player>, <ping>
+    targets-ping: '{p} <player> ping is <ping>'
+    # <ping>
+    your-ping: '{p} Your pinga is <ping>'
+  playtime:
+    # <time>
+    targets-playtime: '{p} <player> playtime is <time>'
+    time-format: HH:mm:ss
+    # <player>, <time>
+    your-playtime: '{p} Your playtime is <time>'
+  reload:
+    reloaded: §aFiles reloaded!
+  repair:
+    # <slot>
+    nothing-to-fix: '{p} Nothing to fix in slot <slot>'
+    # <slot>
+    self-repaired: '{p} Items repaired from slot <slot>'
+    slot-all: all
+    slot-armor: armor
+    slot-hand: hand
+    slot-invalid-slot: invalid slot
+    slot-inventory: inventory
+    slot-offhand: offhand
+    # <player>, <slot>
+    you-repaired-target: '{p} you repaired players: <player> items from slot <slot>'
+    # <slot>
+    your-items-got-repaired: '{p} Your items from slot <slot> was repaired'
+  seen:
+    date-format: dd.MM.yyyy | HH:mm
+    # <player>, <time>
+    last-seen: '{p} <player> was last seen <time>'
+  setmaxplayers:
+    # <amount>
+    set: '{p} Max players set to <amount>'
+  setspawn:
+    set: '{p} Spawn set'
+  setwarp:
+    # <warp>
+    set: '{p} warp: <warp> set'
+  spawn:
+    is-not-set: '{p} spawn is not set, set it with /setspawn'
+    # <player>
+    target-sent: '{p} Sent target <player> to spawn'
+  signedit:
+    sign-updated: '{p} Sign updated'
+    sign-not-found: '{p} Sign not found'
+    sign-copied: '{p} Sign copied'
+    # <line>
+    sign-copied-line: '{p} Copied line <line>'
+  speed:
+    mode-fly: fly
+    mode-invalid-mode: '{p} invalid mode'
+    mode-invalid-speed: '{p} invalid speed, use 0-10'
+    mode-walk: walk
+    # <player>, <mode>, <amount>
+    you-set-speed: '{p} players <player> Speed set to <amount> for mode <mode>'
+    # <mode>, <amount>
+    your-speed-set: '{p} Speed set to <amount> for mode <mode>'
+  system:
+    # <used>, <total>
+    disk-usage: 'System Disk usage: <used>GB/<total>GB'
+    # <version>
+    java-version: 'System Java Versio: <version>'
+    # <system-os>
+    os: 'System OS: <system-os>'
+    # <processors>
+    processors: 'System Processors Available: <processors>'
+    # <used>, <total>
+    ram-usage: 'System Ram: <used>MB/<total>MB'
+    # <version>
+    server-version: 'System Server Version: <version>'
+    # <username>
+    username: 'System Username: <username>'
+    # <version>
+    version: 'System Version: <version>'
+  time:
+    # <time>, <world>
+    changed: '{p} Time changed to <time> in world: <world>'
+    invalid-time: '{p} Invalid time'
+  top:
+    # <player>
+    teleported-target: '{p} Teled <player> To top'
+    telported: '{p} TeledToTop'
+  tp:
+    accept-button: '&aAccept'
+    accept-button-hover: '&aClick to accept!'
+    # <player>
+    accepted: '{p} <player> accepted ur requestd'
+    cancelled-by-damage: '{p} got cancelled because of dmg'
+    cancelled-by-movement: '{p} got cancelled because of movement'
+    cant-self-teleport: '{p} Cant send request to self'
+    # <player>
+    denied: '{p} Your request to <player> was denied'
+    deny-button: '&cDeny'
+    deny-button-hover: '&cClick to deny!'
+    expired: '{p} expired'
+    no-requests: '{p} Ei pyyntöjä.'
+    no-safe-locations: '{p} Turvallista paikkaa ei löytynyt.'
+    # <player> //Copilot. translate messages!
+    teleported-offline-target: '{p} Teleporttasit offline pelaajaan: <player>'
+    # <player>, <player2>
+    teleported-offline-targets: '{p} Teleported <player> to <player2> (One or both were offline)'
+    # <player>
+    teleported-target: '{p} You teleported to <player>'
+    # <player>, <player2>
+    teleported-targets: '{p} Teleported <player> to <player2>'
+    # <player>
+    received: '{p} request received from <player>'
+    # <accept>, <deny>
+    received-accept-line: <accept> | <deny>
+    # <player>
+    sent: '{p} sent to <player>'
+    # <seconds>
+    started: '{p} Teleport started dont move, teleporting in <seconds> seconds'
+    # <player>
+    target-quit: '{p} Tele cancelled because <player> left the server'
+    # <player>
+    toggle-is-off: '{p} <player> has tp disabled'
+    # <toggle>
+    toggle-switched: '{p} tp switched to: <toggle>'
+    # <player>
+    you-accepted: '{p} you accepted players <player> request'
+    # <player>
+    you-already-sent-request: '{p} You already have request for <player>'
+    # <player>
+    you-denied: '{p} You denied players <player> request'
+  tphere:
+    # <player>
+    teleported: '{p} <player> teleportattu sinuun!'
+    # <player>
+    offline-target: '{p} <player> was offline and was teleported to you!'
+  warp:
+    # <list>
+    list: 'Warpit: <list>'
+    # <list>
+    not-found: '{p} Warppia ei löytynyt. Warpit: <list>'
+    # <player>, <warp>
+    target-sent: '{p} Sent target <player> to warp <warp>'
+  weather:
+    # <weather>, <world>
+    changed: '{p} Weather changed to <weather> in world <world>'
+    invalid-weather: '{p} Kelvoton sää!'
