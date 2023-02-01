@@ -67,9 +67,9 @@ public class Gamemode implements ICommand {
                 nbtPlayer.save();
             }
             if (gmChanged) {
-                GAMEMODE_TARGETS_GAMEMODE_CHANGED.send(sender, MODE_PH, gmName, PLAYER_PH, sender.getName());
+                GAMEMODE_TARGETS_GAMEMODE_CHANGED.send(sender, MODE_PH, gmName, PLAYER_PH, offTarget.getName());
             } else {
-                GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.send(sender, MODE_PH, gmName, PLAYER_PH, sender.getName());
+                GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.send(sender, MODE_PH, gmName, PLAYER_PH, offTarget.getName());
             }
         }
     }
