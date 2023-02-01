@@ -206,7 +206,7 @@ public class User {
      * @param amount of the money
      */
     public boolean setBalance(double amount) {
-        if (economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
+        if (economy != null && economy.withdrawPlayer(offP, getBalance()).transactionSuccess()) {
             return economy.depositPlayer(offP, amount).transactionSuccess();
         }
         return false;
@@ -219,6 +219,9 @@ public class User {
      * @return e
      */
     public boolean deposit(double amount) {
+        if (economy == null) {
+            return false;
+        }
         return economy.depositPlayer(offP, amount).transactionSuccess();
     }
 
@@ -229,6 +232,9 @@ public class User {
      * @return result
      */
     public boolean withdraw(double amount) {
+        if (economy == null) {
+            return false;
+        }
         return economy.withdrawPlayer(offP, amount).transactionSuccess();
     }
 }
