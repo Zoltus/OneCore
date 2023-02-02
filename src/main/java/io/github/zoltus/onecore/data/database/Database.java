@@ -111,15 +111,8 @@ public class Database {
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance FROM player")
              ; ResultSet rs = pStm.executeQuery()) {
-            double size = con.createStatement() //Counts players for percentage calculation
-                    .executeQuery("SELECT COUNT(*) FROM player")
-                    .getInt(1);
             int index = 0;
             while (rs.next()) {
-                double percent = (100 * index) / size;
-                    /*if (percent % 10 == 0) {//todo debug toggle
-                        plugin.getLogger().info("Caching users: " + percent + "%");
-                    }*/
                 String uuid = rs.getString("uuid");
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 if (User.of(offP) == null) { //If user havent been loaded yet by login it loads it
