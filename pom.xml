@@ -30,6 +30,9 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
+        <!-- Sonar scan -->
+        <sonar.organization>motimaa-net</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>

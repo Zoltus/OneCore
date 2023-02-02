@@ -23,7 +23,7 @@ public class BackupHandler {
 
     private final OneCore plugin;
     private int UPTIMEHOURS = 0;
-    private final List<Integer> hours = List.of(4, 12, 24); //todo hours to config and uptime interval possibly,to singleton
+    private final List<Integer> hours = List.of(4, 12, 24); //todo hours to config and uptime interval possibly
     private final List<File> backupFiles = new ArrayList<>();
     //output directory
     private final File dataFolder;
