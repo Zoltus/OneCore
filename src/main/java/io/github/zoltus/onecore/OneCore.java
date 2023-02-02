@@ -77,7 +77,7 @@ public final class OneCore extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        //Loads commandapi
+        //Loads CommandAPI
         CommandAPI.onEnable();
         long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
