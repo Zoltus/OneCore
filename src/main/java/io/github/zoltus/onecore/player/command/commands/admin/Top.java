@@ -16,7 +16,7 @@ public class Top implements ICommand {
     @Override
     public void init() {
         //top <player>
-        Argument<?> arg0 = new PlayerArgument()
+        Argument<Player> arg0 = new PlayerArgument()
                 .executes((sender, args) -> {
                     executes(sender, (Player) args.get(0));
                 });
