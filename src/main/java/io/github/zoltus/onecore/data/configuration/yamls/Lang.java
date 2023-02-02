@@ -69,7 +69,7 @@ public enum Lang implements IConfig {
     NODES_ENTITY_TYPE("other.nodes.entity-type"),
     NODES_GAMEMODE("other.nodes.gamemode"),
     NODES_HOME_NAME("other.nodes.home-name"),
-    NODES_HOME_NAME_OR_Player("other.nodes.home-home/player-name"),
+    NODES_HOME_NAME_OR_PLAYER("other.nodes.home-home/player-name"),
     NODES_LOCATION("other.nodes.location"),
     NODES_MESSAGE("other.nodes.message"),
     NODES_PLAYER("other.nodes.player"),
