@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ConsoleFilter implements Filter {
 
-    private static final OneYml filters = Yamls.Console_Filter.getYml();
+    private static final OneYml filters = Yamls.CONSOLE_FILTER.getYml();
 
     @Getter
     private static ConsoleFilter consoleFilter;
