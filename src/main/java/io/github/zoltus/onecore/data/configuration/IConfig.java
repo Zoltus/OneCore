@@ -54,23 +54,11 @@ public interface IConfig {
     }
 
     default boolean getBoolean() {
-        return yml().getBoolean("Data." + getPath());
+        return get();
     }
 
     default <T> T get() {
         return (T) yml().get("Data." + getPath());
-    }
-
-    default int getInt() {
-        return yml().getInt("Data." + getPath());
-    }
-
-    default long getLong() {
-        return yml().getLong("Data." + getPath());
-    }
-
-    default double getDouble() {
-        return yml().getDouble("Data." + getPath());
     }
 
     default String[] getAsArray() {

@@ -49,7 +49,7 @@ public class User {
         //Sets balance to 0 if it doesnt exist, for toplist
         if (plugin.getVault() != null) {
             if (!OneEconomy.getBalances().containsKey(uniqueId)) {
-                OneEconomy.getBalances().put(uniqueId, Config.START_MONEY.getDouble());
+                OneEconomy.getBalances().put(uniqueId, Config.START_MONEY.get());
             }
         }
     }

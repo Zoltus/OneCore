@@ -30,7 +30,7 @@ public class Back implements ICommand, Listener {
         // If player does /Back it wont read the location to the backs where he goes
         if (!lastLocations.contains(e.getTo())) {
             // If player has max backs it removes the oldest saved loc
-            if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
+            if (lastLocations.size() == (int) BACK_HISTORY_SIZE.get()) {
                 lastLocations.remove(0);
             }
             lastLocations.add(e.getFrom());
@@ -61,7 +61,7 @@ public class Back implements ICommand, Listener {
     }
 
     private Argument<?> backArg() {
-        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.getInt()), (info) -> {
+        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.get()), (info) -> {
             try {
                 return Integer.parseInt(info.input());
             } catch (Exception e) {
