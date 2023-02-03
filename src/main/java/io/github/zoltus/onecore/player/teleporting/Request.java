@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
@@ -65,9 +66,9 @@ public class Request {
     }
 
     public static void send(User sender, User accepter, TeleportType type) {
-        if (sender == accepter) { //Cant self teleport
+        /*if (sender == accepter) { //Cant self teleport
             TP_CANT_SELF_TELEPORT.send(sender);
-        } else if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
+        } else todo reenable*/ if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
             TP_TOGGLE_IS_OFF.send(sender, PLAYER_PH, accepter.getName());
         } else if (hasRequest(sender, accepter)) {
             TP_YOU_ALREADY_SENT_REQUEST.send(sender, PLAYER_PH, accepter.getName());
@@ -96,10 +97,6 @@ public class Request {
         expiryTask.cancel();
     }
 
-
-
-
-
     private void sendChat() {
         TP_SENT.send(sender, PLAYER_PH, accepter.getName());
 
@@ -114,9 +111,21 @@ public class Request {
         ClickEvent denyClick = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/TPDENY_LABEL.getString() " + sender.getName());
 
 
-        String accept = TP_ACCEPT_BUTTON.replace(PLAYER_PH, sender.getName());
-       // replacePlaceholder(accept, ACCEPT_PH, TP_ACCEPT_BUTTON.getString());
+        BaseComponent[] acceptButton = TextComponent.fromLegacyText(TP_ACCEPT_BUTTON.getString());
+        BaseComponent[] denyButton = TextComponent.fromLegacyText(TP_DENY_BUTTON.getString());
 
+        BaseComponent[] accept = replacePlaceholder(acceptButton, ACCEPT_PH, new ComponentBuilder(TP_ACCEPT_BUTTON.getString())
+                .event(acceptClick)
+                .event(acceptHover)
+                .create());
+
+        BaseComponent[] deny = replacePlaceholder(denyButton, DENY_PH, new ComponentBuilder(TP_DENY_BUTTON.getString())
+                .event(denyHover)
+                .event(denyClick)
+                .create());
+
+        accepter.getPlayer().spigot().sendMessage(accept);
+        accepter.getPlayer().spigot().sendMessage(deny);
 
         /*
         ChatBuilder.Component comp = new ChatBuilder.Component(ACCEPT_PH, TP_ACCEPT_BUTTON.getString());
@@ -160,13 +169,31 @@ public class Request {
         return sb.create();
     }
 
-    //Same as above but instead of taking String you take Basecomponents
-    public static BaseComponent[] replacePlaceholder(BaseComponent[] components, String placeholder, HoverEvent hoverEvent, ClickEvent clickEvent) {
-
-
-
-
-        return null;
+    public static BaseComponent[] replacePlaceholder(BaseComponent[] components, String placeholder, BaseComponent[] replaceWith) {
+        // create the string builder to build the new string
+        ComponentBuilder sb = new ComponentBuilder();
+        //Keeps previous colors
+        ComponentBuilder.FormatRetention retention = ComponentBuilder.FormatRetention.FORMATTING;
+        // split the line into sections based on the placeholder
+        String[] sections = Arrays.stream(components)
+                .map(baseComponent -> baseComponent.toLegacyText())
+                .toArray(String[]::new);
+        // loop through all sections
+        for (int i = 0; i < sections.length; i++) {
+            sb.append(new TextComponent(sections[i]), retention);
+            // check if there is a placeholder to be replaced
+            if (i != sections.length - 1) {
+                // add the hover event for the placeholder
+                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, replaceWith);
+                // create a new text component with the placeholder
+                TextComponent placeholderText = new TextComponent(placeholder);
+                // set the hover event for the placeholder
+                placeholderText.setHoverEvent(hoverEvent);
+                // append the placeholder component to the stringbuilder
+                sb.append(placeholderText, retention);
+            }
+        }
+        return sb.create();
     }
 
 
