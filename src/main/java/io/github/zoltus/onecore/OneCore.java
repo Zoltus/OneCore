@@ -6,7 +6,6 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.data.database.Database;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
@@ -29,9 +28,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Plugin(name = "MotiCore", version = "1.0-Beta")
 @Description("Core plugin for motimaa.")
@@ -48,10 +45,11 @@ import java.util.stream.Stream;
         @Library("org.bstats:bstats-bukkit:3.0.0"),
         @Library("org.apache.commons:commons-compress:1.21"),
         @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
-       // @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
+        // @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
 })
 @Getter
-public final class OneCore extends JavaPlugin implements Listener {
+public final class OneCore extends JavaPlugin {
+    //todo remove listener
     @Getter
     private static OneCore plugin;
     private Economy vault;
@@ -100,7 +98,7 @@ public final class OneCore extends JavaPlugin implements Listener {
         this.backupHandler.start();
         sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
-        //testConfig(); Tests config for missing values
+        //TestSuite.run();
     }
 
     @Override
@@ -148,15 +146,6 @@ public final class OneCore extends JavaPlugin implements Listener {
                 new TeleportHandler(),
                 new TestListener()));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
-    }
-
-    private void testConfig() {
-        Stream.of(Config.values(), Commands.values(), Lang.values())
-                .flatMap(Arrays::stream)
-                .filter(val -> val.get() == null)
-                .forEach(val -> plugin.getLogger().warning("§cNull value: " + val.name() + ": " + val.getPath()
-                        + " Please report this to the developer!"));
-        plugin.getLogger().info("§aTested config");
     }
 }
 

@@ -20,7 +20,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
     public HomeArg1() {
         super(new StringArgument(NODES_HOME_NAME.getString()), (info) -> {
             String input = info.input();
-            String prevArg = (String) info.previousArgs()[0];
+            String prevArg = (String) info.previousArgs().get(0);
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             if (!offP.hasPlayedBefore()) {
                 throw new CustomArgument.CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
@@ -28,9 +28,8 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
                 return input;
             }
         });
-
         replaceSuggestions(ArgumentSuggestions.stringsAsync(info -> CompletableFuture.supplyAsync(() -> {
-            String prevArg = (String) info.previousArgs()[0];
+            String prevArg = (String) info.previousArgs().get(0);
             //If arg lenght 0 it will try to asyncload first argument as oneuser from db
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             User target = User.of(offP);
