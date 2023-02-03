@@ -4,6 +4,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,13 +14,35 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.MENTION_COLOR;
+
 
 public class Mentions implements Listener {
+
     private final String MENTION_COLORS = MENTION_COLOR.getString();
-    private final String MENTION_TAG = Lang.MENTION_TAG.getString();
 
     @EventHandler(priority = EventPriority.MONITOR)
+    public void chatMention2(AsyncPlayerChatEvent e) {
+        String msgg = e.getMessage();
+        Matcher matcher = Pattern.compile("@([A-Za-z0-9_]+)")
+                .matcher(e.getMessage());
+        while (matcher.find()) {
+            Player player = Bukkit.getPlayer(matcher.group(1));
+            int start = matcher.start();
+            if (player != null /*&& !player.equals(sender)*/) {
+                e.setCancelled(true);
+
+                String beforeColor = ChatColor.getLastColors(msgg.substring(0, start));
+                String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
+                e.setMessage(e.getMessage().replace(matcher.group(),
+                        MENTION_COLORS + player.getDisplayName() + continueColor));
+                player.playSound(player.getLocation(), Sound.valueOf(Lang.MENTION_SOUND.get()), 1, 1);
+            }
+        }
+    }
+}
+
+    /*@EventHandler(priority = EventPriority.MONITOR)
     public void chatMention(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msgg = e.getMessage();
@@ -39,5 +62,4 @@ public class Mentions implements Listener {
             }
             e.setMessage(sb.toString());
         }
-    }
-}
+    }*/
