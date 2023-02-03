@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.utils;
 
 import lombok.Getter;
 import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.hover.content.Content;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,9 +26,6 @@ public class ChatBuilder implements Listener {
     Text
     ItemSerializer
     TextSerializer
-
-
-
     */
 
     public static BaseComponent[] replacePlaceholder(String line, String placeholder, String replaceWith) {
@@ -57,35 +53,6 @@ public class ChatBuilder implements Listener {
         return sb.create();
     }
 
-    public static BaseComponent[] replacePlaceholder(BaseComponent[] components, String placeholder, BaseComponent replaceWith) {
-        // create the string builder to build the new string
-        ComponentBuilder sb = new ComponentBuilder();
-        //Keeps previous colors
-        ComponentBuilder.FormatRetention retention = ComponentBuilder.FormatRetention.FORMATTING;
-        // split the line into sections based on the placeholder
-        String[] sections = Arrays.stream(components)
-                .map(baseComponent -> baseComponent.toLegacyText())
-                .toArray(String[]::new);
-        // loop through all sections
-        for (int i = 0; i < sections.length; i++) {
-            sb.append(new TextComponent(sections[i]), retention);
-            // check if there is a placeholder to be replaced
-            if (i != sections.length - 1) {
-                // add the hover event for the placeholder
-                HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, (List<Content>) replaceWith);
-                // create a new text component with the placeholder
-                TextComponent placeholderText = new TextComponent(placeholder);
-                // set the hover event for the placeholder
-                placeholderText.setHoverEvent(hoverEvent);
-                // append the placeholder component to the stringbuilder
-                sb.append(placeholderText, retention);
-            }
-        }
-        return sb.create();
-    }
-
-
-    //TODO Possible memory leak if u spam chatbuilders, will keep clickcommands in memory
     //<Command,Consumer> for each component with custom click event, "/hash<key>"
     private static final Map<String, Consumer<Player>> clickCommands = new HashMap<>();
 
@@ -119,7 +86,9 @@ public class ChatBuilder implements Listener {
         if (placeholders.containsKey(word)) {
             chatComponent.addExtra(copyFormatting(placeholders.get(word).toBaseComponent(), wordComp));
         } else {
-            Map.Entry<String, Component> entry = placeholders.entrySet().stream().filter(entry1 -> word.contains(entry1.getKey())).findFirst().orElse(null);
+            Map.Entry<String, Component> entry = placeholders.entrySet().stream()
+                    .filter(entry1 -> word.contains(entry1.getKey()))
+                    .findFirst().orElse(null);
             //If placeholders are not found it adds space, else replaces stuff
             if (entry == null) {
                 chatComponent.addExtra(copyFormatting(new TextComponent(word), wordComp));
