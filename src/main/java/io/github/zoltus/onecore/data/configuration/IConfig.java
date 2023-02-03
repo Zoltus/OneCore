@@ -56,10 +56,6 @@ public interface IConfig {
     default boolean getBoolean() {
         return get();
     }
-    //double
-    default double getDouble() {
-        return yml().getDouble("Data." + getPath());
-    }
 
     default <T> T get() {
         return (T) yml().get("Data." + getPath());
