@@ -133,9 +133,9 @@ public final class OneCore extends JavaPlugin {
         List<Listener> list = new ArrayList<>();
         if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
             list.add(new InvSeeHandler());
-        if (Config.MENTIONS_ENABLED.getBoolean())
+        if (Config.MENTIONS_ENABLED.get())
             list.add(new Mentions());
-        if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
+        if (Config.TELEPORT_VELOCITY_RESET.get())
             list.add(new TeleportVelocity());
         list.addAll(List.of(
                 new ChatFormatter(),

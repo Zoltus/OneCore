@@ -20,7 +20,7 @@ public class Database {
     private Connection connection;
     private final OneCore plugin;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
-    private final int saveInterval = Config.DATA_SAVE_INTERVAL.getInt();
+    private final int saveInterval = Config.DATA_SAVE_INTERVAL.get();
     private final SQLiteConfig config = new SQLiteConfig();
 
     private Database(OneCore plugin) {

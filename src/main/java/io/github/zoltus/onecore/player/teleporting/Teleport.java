@@ -22,7 +22,7 @@ public final class Teleport {
 
     @Getter
     private static final Map<UUID, Teleport> teleports = new HashMap<>();
-    private static final int DELAY = TELEPORT_DELAY.getInt();
+    private static final int DELAY = TELEPORT_DELAY.get();
 
     @Getter
     private final User teleporter, target;
