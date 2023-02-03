@@ -11,8 +11,8 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.19.2-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.19.2-R0.1-SNAPSHOT</spigot.server.version>
+        <spigotAPI.version>1.19.3-R0.1-SNAPSHOT</spigotAPI.version>
+        <spigot.server.version>1.19.3-R0.1-SNAPSHOT</spigot.server.version>
         <spigot.annotations.version>1.2.3-SNAPSHOT</spigot.annotations.version>
         <lombok.version>1.18.24</lombok.version>
         <bstats.version>3.0.0</bstats.version>
@@ -102,13 +102,13 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.3</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -142,7 +142,6 @@
             <version>1.0.18</version>
             <scope>provided</scope>
         </dependency>
-        <!-- tar.gz for backup system, runtime -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
@@ -176,10 +175,8 @@
         </dependency>
     </dependencies>
     <build>
-        <!-- /src/main/java/ contains all sources (production code) -->
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-        <!-- /src/test/java/ contains all unit tests (testing code)
-        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
+        <!--<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -187,16 +184,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- Jar loc disabled for jenkins, todo copy it
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <configuration>
-                    <outputDirectory>${outputDir}</outputDirectory>
-                </configuration>
-            </plugin> -->
-            <!-- Compile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -267,6 +254,10 @@
                         <relocation>
                             <pattern>de.tr7zw</pattern>
                             <shadedPattern>lib.de.tr7zw</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.jorel</pattern>
+                            <shadedPattern>lib.dev.jorel</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
