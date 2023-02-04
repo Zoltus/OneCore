@@ -22,8 +22,8 @@ import java.util.List;
 public class BackupHandler {
 
     private final OneCore plugin;
-    private int UPTIMEHOURS = 0;
-    private final List<Integer> hours = List.of(4, 12, 24); //todo hours to config and uptime interval possibly,to singleton
+    private int upTimeHours = 0;
+    private final List<Integer> hours = List.of(4, 12, 24);
     private final List<File> backupFiles = new ArrayList<>();
     //output directory
     private final File dataFolder;
@@ -60,10 +60,10 @@ public class BackupHandler {
             for (File file : backupFiles) {
                 String fileName = file.getName();
                 //todo fix db name ending
-                String name = UPTIMEHOURS == 0 ? fileName + "-startup" : fileName + "-" + UPTIMEHOURS + "h";
+                String name = upTimeHours == 0 ? fileName + "-startup" : fileName + "-" + upTimeHours + "h";
                 // final Path target = Paths.get(plugin.getDataFolder() + "/backups/" + "f" + "(" + "t" + ").db");
                 hours.stream() //backup every hour which is marked on list
-                        .filter(integer -> UPTIMEHOURS % integer == 0)
+                        .filter(integer -> upTimeHours % integer == 0)
                         .forEach(integer -> {
                             try {
                                 if (file.isFile()) {
@@ -72,11 +72,11 @@ public class BackupHandler {
                                     createTarGz(file, outputDirectory, name);
                                 }
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
+                                e.printStackTrace();
                             }
                         });
             }
-            UPTIMEHOURS++;
+            upTimeHours++;
         }, 0, 72000); //Every hour
     }
 
@@ -104,7 +104,7 @@ public class BackupHandler {
                 tarArchiveOutputStream.closeArchiveEntry();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

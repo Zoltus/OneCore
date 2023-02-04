@@ -44,9 +44,15 @@ public class CommandHandler {
                     ICommand iCommand = cmd.getDeclaredConstructor().newInstance();
                     iCommand.register();
                 } catch (Exception e) {
-                    throw new RuntimeException("cmd: " + cmd.getName() + e.getMessage());
+                    throw new CommandException("cmd: " + cmd.getName() + e.getMessage());
                 }
             }
+        }
+    }
+
+    private static class CommandException extends RuntimeException {
+        public CommandException(String message) {
+            super(message);
         }
     }
 }

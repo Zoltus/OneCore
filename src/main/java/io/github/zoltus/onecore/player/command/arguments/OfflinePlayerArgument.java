@@ -14,6 +14,6 @@ public class OfflinePlayerArgument extends dev.jorel.commandapi.arguments.Offlin
     public OfflinePlayerArgument(String add) {
         super(NODES_PLAYER.getString() + add);
         replaceSuggestions(ArgumentSuggestions
-                .strings((info) -> playerSuggestions(info.currentArg())));
+                .strings(info -> playerSuggestions(info.currentArg())));
     }
 }

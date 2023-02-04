@@ -26,10 +26,6 @@ public interface ICommand extends IArgument {
         init();
     }
 
-    default String[] toSuggestion(String input, String[] list) {
-        return filter(input, list);
-    }
-
     /**
      * Checks if command is enabled in commands.yml
      *

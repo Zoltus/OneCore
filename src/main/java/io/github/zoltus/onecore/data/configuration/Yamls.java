@@ -15,7 +15,7 @@ public enum Yamls {
 
     COMMANDS("commands.yml"),
     CONFIG("config.yml"),
-    Console_Filter("console_filter.yml"),
+    CONSOLE_FILTER("console_filter.yml"),
     LANG("lang.yml"),
     WARPS("warps.yml");
 

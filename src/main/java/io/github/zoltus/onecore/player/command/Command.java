@@ -26,6 +26,7 @@ public class Command extends CommandTree {
         return this;
     }
 
+    @Override
     public Command executesPlayer(PlayerCommandExecutor executor) {
         super.executesPlayer(executor);
         return this;

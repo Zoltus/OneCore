@@ -45,9 +45,10 @@ public class Database {
     private Connection connection() {
         try {
             String url = "jdbc:sqlite:" + plugin.getDataFolder() + "/database.db";
-            return connection = connection == null || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
+            return connection = connection == null
+                    || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
         } catch (Exception e) {
-            throw new RuntimeException("§4Database connection failed!\n §c" + e.getMessage());
+            throw new DataBaseException("§4Database connection failed!\n §c" + e.getMessage());
         }
     }
 
@@ -65,7 +66,7 @@ public class Database {
                         PRIMARY KEY (uuid)
                         );""");
         } catch (SQLException e) {
-            throw new RuntimeException("§4Database table creation failed!\n §c" + e.getMessage());
+            throw new DataBaseException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
@@ -92,7 +93,7 @@ public class Database {
             }
             pStm.executeBatch();
         } catch (SQLException e) {
-            throw new RuntimeException("§4Error saving players!\n §c" + e.getMessage());
+            throw new DataBaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
@@ -111,15 +112,8 @@ public class Database {
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance FROM player")
              ; ResultSet rs = pStm.executeQuery()) {
-            double size = con.createStatement() //Counts players for percentage calculation
-                    .executeQuery("SELECT COUNT(*) FROM player")
-                    .getInt(1);
             int index = 0;
             while (rs.next()) {
-                double percent = (100 * index) / size;
-                    /*if (percent % 10 == 0) {//todo debug toggle
-                        plugin.getLogger().info("Caching users: " + percent + "%");
-                    }*/
                 String uuid = rs.getString("uuid");
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 if (User.of(offP) == null) { //If user havent been loaded yet by login it loads it
@@ -129,7 +123,7 @@ public class Database {
             }
             plugin.getLogger().info("Finished caching " + index + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
-            throw new RuntimeException("§4Error caching users: \n §c" + e.getMessage());
+            throw new DataBaseException("§4Error caching users: \n §c" + e.getMessage());
         }
     }
 
@@ -147,35 +141,10 @@ public class Database {
         }
         return newUser;
     }
-
-    /*
-    public CompletableFuture<User> loadUserAsync(OfflinePlayer offP) {
-        return CompletableFuture.supplyAsync(() -> loadUser(offP));
-    }
-
-    public User loadUser(OfflinePlayer offP) {
-        String uuid = offP.getUniqueId().toString();
-        User user = User.getUsers().get(offP.getUniqueId());
-        if (user != null) { //Prevents loading user twice
-            return user;
-        } else if (!offP.hasPlayedBefore()) {
-            return null;
-        } else {
-            try (Connection con = connection()
-                 ; PreparedStatement pStm = con.prepareStatement("""
-                    SELECT tpenabled, homes, balance
-                    FROM player WHERE player.uuid = ?""")) {
-                pStm.setString(1, uuid);
-                try (ResultSet rs = pStm.executeQuery()) {
-                    if (!rs.next()) {
-                        return null;
-                    } else {
-                        return userFromResult(offP, rs); //dataToGson(offP, rs.getString("data"));
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException("§4Error loading user: " + offP.getName() + "\n §c" + e.getMessage());
-            }
+    //Copilot create custom dataBaseException!
+    public static class DataBaseException extends RuntimeException {
+        public DataBaseException(String message) {
+            super(message);
         }
-    }*/
+    }
 }

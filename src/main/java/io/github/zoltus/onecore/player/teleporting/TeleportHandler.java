@@ -28,10 +28,9 @@ public class TeleportHandler implements Listener {
         UUID uuid = e.getPlayer().getUniqueId();
         Location fromLoc = e.getFrom();
         Location toLoc = e.getTo();
-        if (toLoc != null && hasTeleport(uuid)) {
-            if (!fromLoc.getBlock().equals(toLoc.getBlock())) {
-                getTeleport(uuid).cancel(TP_CANCELLED_BY_MOVEMENT.getString());
-            }
+        if (toLoc != null && hasTeleport(uuid)
+                && !fromLoc.getBlock().equals(toLoc.getBlock())) {
+            getTeleport(uuid).cancel(TP_CANCELLED_BY_MOVEMENT.getString());
         }
     }
 
