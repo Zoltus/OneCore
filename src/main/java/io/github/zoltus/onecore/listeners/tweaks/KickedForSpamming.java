@@ -16,9 +16,12 @@ public class KickedForSpamming implements Listener {
      */
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-        if (e.getReason().equals("Kicked for spamming")
-                && !e.getPlayer().hasPermission(Config.KICKED_FOR_SPAMMING_BYPASS.asPermission())) {
-            e.setReason(KICKED_FOR_SPAMMING.getString());
+        if (e.getReason().equals("Kicked for spamming")) {
+            if (e.getPlayer().hasPermission(Config.KICKED_FOR_SPAMMING_BYPASS.asPermission())) {
+                e.setCancelled(true);
+            } else {
+                e.setReason(KICKED_FOR_SPAMMING.getString());
+            }
         }
     }
 }
