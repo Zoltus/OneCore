@@ -9,7 +9,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.KICKED_FOR_
 
 public class KickedForSpamming implements Listener {
     /**
-     * Disabled Kicked for spamming kick event.
+     * Disabled Kicked for spamming kick event. testcommit
      *
      * @param e Event
      *          permission "bypass.spam"
