@@ -59,7 +59,7 @@ public class Request {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             requests.remove(this);
             sender.sendMessage(TP_EXPIRED.getString());
-        }, 20L * (int) Config.TELEPORT_EXPIRE.get());
+        }, 20L * Config.TELEPORT_EXPIRE.getInt());
     }
 
     public static boolean hasRequest(User sender, User accepter) {
