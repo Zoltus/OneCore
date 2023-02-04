@@ -161,7 +161,9 @@ public class ChatBuilder implements Listener {
 
     public static final class Component {
         @Getter
-        private String key, text;
+        private String key;
+        @Getter
+        private String text;
         private BaseComponent baseComponent;
 
         private HoverEvent hoverEvent;

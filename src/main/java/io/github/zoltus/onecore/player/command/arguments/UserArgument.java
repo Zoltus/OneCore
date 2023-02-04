@@ -17,7 +17,7 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
     }
 
     public UserArgument(String add) {
-        super(new StringArgument(NODES_PLAYER.getString() + add), (info) -> {
+        super(new StringArgument(NODES_PLAYER.getString() + add), info -> {
             String input = info.input();
             User user = User.of(Bukkit.getOfflinePlayer(input));
             if (user == null) {
@@ -27,6 +27,6 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
             }
         });
         replaceSuggestions(ArgumentSuggestions
-                .strings((info) -> playerSuggestions(info.currentArg())));
+                .strings(info -> playerSuggestions(info.currentArg())));
     }
 }

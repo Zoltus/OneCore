@@ -28,22 +28,23 @@ public class NBTPlayer {
     private final World world;
 
     private final NBTCompound abilities;
+
     public NBTPlayer(UUID uuid) {
         this.nbt = getNBTFile(uuid);
         this.world = Bukkit.getWorlds().get(0);
         if (nbt == null) {
-            throw new RuntimeException("§cPlayers NBTFile not found!");
+            throw new NbtApiException("§cPlayers NBTFile not found!", null);
         } else {
             this.abilities = nbt.getCompound("abilities");
             //Loads stats from world json file
             //todo convert to Bukkit.getworldocntainer
-            File statsFile = new File(world.getWorldFolder().getAbsolutePath() + "/stats",uuid.toString() + ".json");
+            File statsFile = new File(world.getWorldFolder().getAbsolutePath() + "/stats", uuid.toString() + ".json");
             try {
                 Gson gson = new Gson();
                 JsonReader reader = new JsonReader(new FileReader(statsFile));
                 this.stats = gson.fromJson(reader, NBTStats.class);
             } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new NbtApiException("Error loading nbtfile!", e);
             }
         }
     }
@@ -54,7 +55,7 @@ public class NBTPlayer {
             File playerFile = new File(dataFolder, uuid.toString() + ".dat");
             if (playerFile.exists()) {
                 try {
-                    return  new NBTFile(playerFile);
+                    return new NBTFile(playerFile);
                 } catch (IOException e) {
                     throw new NbtApiException("Error loading player data!", e);
                 }
@@ -195,7 +196,7 @@ public class NBTPlayer {
         rotation.clear();
         rotation.addAll(List.of(loc.getYaw(), loc.getPitch()));
         motion.clear();
-        pos.addAll(List.of(0d,0d,0d));
+        pos.addAll(List.of(0d, 0d, 0d));
     }
 
     public void setplayerGameType(int i) {
@@ -234,4 +235,10 @@ public class NBTPlayer {
         return nbt.getFloat("foodExhaustionLevel");
     }
 
+    //Copilot create NBTPlayerException
+    public static class NbtApiException extends RuntimeException {
+        public NbtApiException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }
