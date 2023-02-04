@@ -5,26 +5,5 @@
 
 Core plugin for any type of server
 
-### Repository
-```xml
-<repositories>
-    <repository>
-        <id>MotiMaa</id>
-        <url>https://nexus.motimaa.net/repository/motimaa/</url>
-    </repository>
-</repositories>
-```
-
-### Dependency
-```xml
-<dependencies>
-    <dependency>
-        <groupId>io.github.zoltus</groupId>
-        <artifactId>onecore</artifactId>
-        <version>1.0.0</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-```
 </div>
 
