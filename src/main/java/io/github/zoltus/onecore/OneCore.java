@@ -30,11 +30,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@Plugin(name = "MotiCore", version = "1.0-Beta")
-@Description("Core plugin for motimaa.")
+@Plugin(name = "OneCore", version = "1.0-Beta")
+@Description("Core plugin for any type of server.")
 @Author("Zoltus")
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
-@LogPrefix("MotiCore")
+@LogPrefix("OneCore")
 @ApiVersion(ApiVersion.Target.v1_19)
 @LoadOrder(PluginLoadOrder.POSTWORLD)
 @SoftDependsOn({
