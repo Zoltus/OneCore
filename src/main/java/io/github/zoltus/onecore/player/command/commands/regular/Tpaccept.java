@@ -16,24 +16,30 @@ public class Tpaccept implements ICommand {
         //tpaccept <player>
         Argument<?> arg0 = new RequestArgument()
                 .executesPlayer((player, args) -> {
-                    handle((Player) args.get(0), player);
+                    handle(player, (Player) args.get(0));
                 });
         //tpaccept
         new Command(Commands.TPACCEPT_LABEL)
                 .withPermission(Commands.TPACCEPT_PERMISSION)
                 .withAliases(Commands.TPACCEPT_ALIASES)
                 .executesPlayer((player, args) -> {
-                    handle(player, player);
+                    handle(player, null);
                 }).then(arg0)
                 .override();
     }
 
-    private void handle(Player target, Player player) {
-        Request latest = Request.getLatest(User.of(target));
-        if (latest == null) {
-            player.sendMessage(Lang.TP_NO_REQUESTS.getString());
+    private void handle(Player accepter, Player target) {
+        Request request;
+        if (target == null) {
+            request = Request.getLatest(User.of(accepter));
         } else {
-            latest.accept();
+            request = Request.get(User.of(target), User.of(accepter));
+        }
+
+        if (request == null) {
+            accepter.sendMessage(Lang.TP_NO_REQUESTS.getString());
+        } else {
+            request.accept();
         }
     }
 }
