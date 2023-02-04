@@ -43,7 +43,7 @@ public class KillAll implements ICommand {
     }
 
     private Argument<?> rangeArgument() {
-        return new CustomArgument<>(new StringArgument(NODES_RANGE.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_RANGE.getString()), info -> {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {

@@ -1,11 +1,13 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import io.github.zoltus.onecore.player.command.ICommand;
+import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 
@@ -16,7 +18,7 @@ public class TpaHere implements ICommand {
         new Command(TPAHERE_LABEL)
                 .withPermission(TPAHERE_PERMISSION)
                 .withAliases(TPAHERE_ALIASES)
-                .then(new UserArgument()
+                .then(new PlayerArgument()
                 .executesPlayer((player, args) -> {
                     User user = User.of(player);
                     User target = User.of((Player) args.get(0));

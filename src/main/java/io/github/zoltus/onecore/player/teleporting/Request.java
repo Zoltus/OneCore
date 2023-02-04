@@ -49,17 +49,17 @@ public class Request {
         this.type = type;
         this.sender = sender;
         this.accepter = accepter;
-        this.expiryTask = expirtyTimer();
+        this.expiryTask = expireTimer();
         this.requests = accepter.getRequests();
         requests.add(this);
         sendChat();
     }
 
-    private BukkitTask expirtyTimer() {
+    private BukkitTask expireTimer() {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             requests.remove(this);
             sender.sendMessage(TP_EXPIRED.getString());
-        }, 20L * (int) Config.TELEPORT_EXPIRE.get());
+        }, 20L * Config.TELEPORT_EXPIRE.getInt());
     }
 
     public static boolean hasRequest(User sender, User accepter) {
@@ -68,10 +68,9 @@ public class Request {
     }
 
     public static void send(User sender, User accepter, TeleportType type) {
-        /*if (sender == accepter) { //Cant self teleport
+        if (sender == accepter) { //Cant self teleport
             TP_CANT_SELF_TELEPORT.send(sender);
-        } else todo reenable*/
-        if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
+        } else if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
             TP_TOGGLE_IS_OFF.send(sender, PLAYER_PH, accepter.getName());
         } else if (hasRequest(sender, accepter)) {
             TP_YOU_ALREADY_SENT_REQUEST.send(sender, PLAYER_PH, accepter.getName());
@@ -84,7 +83,7 @@ public class Request {
         User teleporter = type == TeleportType.TPA ? sender : accepter;
         User target = type == TeleportType.TPA ? accepter : sender;
         TP_ACCEPTED.send(sender, PLAYER_PH, accepter.getName());
-        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, accepter.getName());
+        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, sender.getName());
         cancel();
         Teleport.start(teleporter, target, null);
     }

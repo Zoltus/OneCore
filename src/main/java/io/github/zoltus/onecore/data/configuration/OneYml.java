@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.data.configuration;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import io.github.zoltus.onecore.OneCore;
 import org.bukkit.Bukkit;
@@ -13,12 +12,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
 public class OneYml extends YamlConfiguration {
 
     private final File file;
-    private YamlConfiguration defaults;
+    private YamlConfiguration defaultVals;
 
     /**
      * @param name of the file
@@ -28,7 +28,6 @@ public class OneYml extends YamlConfiguration {
         this.file = new File(path, name);
         options().parseComments(true);
         options().copyDefaults(true);
-        options().copyHeader(true);
         reload();
         save();
     }
@@ -41,7 +40,7 @@ public class OneYml extends YamlConfiguration {
      */
     public <T> T getOrDefault(String path) {
         T value = (T) get(path);
-        T defaultVal = (T) defaults.get(path);
+        T defaultVal = (T) defaultVals.get(path);
         if (value == null && defaultVal == null) {
             OneCore.getPlugin().getLogger().warning("§cMissing config: " + path);
         } else if (value == null) {
@@ -81,11 +80,11 @@ public class OneYml extends YamlConfiguration {
             InputStream defaultStream = getResource(file.getName());
             if (defaultStream != null) {
                 //todo switch to use Files.bufferedreader
-                defaults = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, Charsets.UTF_8));
+                defaultVals = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, StandardCharsets.UTF_8));
                 //Copies header
-                options().setHeader(defaults.options().getHeader());
+                options().setHeader(defaultVals.options().getHeader());
                 //Copies default values which havent been added yet & comments
-                setDefaults(defaults);
+                setDefaults(defaultVals);
 
             }
         } catch (IOException | InvalidConfigurationException ex) {
