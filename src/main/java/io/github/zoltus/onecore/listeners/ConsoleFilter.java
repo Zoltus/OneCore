@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ConsoleFilter implements Filter {
 
-    private static final OneYml filters = Yamls.Console_Filter.getYml();
+    private static final OneYml filters = Yamls.CONSOLE_FILTER.getYml();
 
     @Getter
     private static ConsoleFilter consoleFilter;
@@ -26,11 +26,8 @@ public class ConsoleFilter implements Filter {
     /**
      * Inits custom consoleFilter
      */
-    //todo clean up
     public static ConsoleFilter init() {
-        if (consoleFilter != null) {
-            return consoleFilter;
-        } if (Config.USER_CONSOLE_FILTER.getBoolean()) {
+        if (consoleFilter == null && Config.USER_CONSOLE_FILTER.getBoolean()) {
             consoleFilter = new ConsoleFilter();
         }
         return consoleFilter;

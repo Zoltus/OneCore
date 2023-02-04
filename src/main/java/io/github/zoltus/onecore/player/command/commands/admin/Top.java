@@ -16,7 +16,7 @@ public class Top implements ICommand {
     @Override
     public void init() {
         //top <player>
-        Argument<?> arg0 = new PlayerArgument()
+        Argument<Player> arg0 = new PlayerArgument()
                 .executes((sender, args) -> {
                     executes(sender, (Player) args.get(0));
                 });
@@ -34,7 +34,7 @@ public class Top implements ICommand {
         World w = target.getWorld();
         Location loc = target.getLocation();
         //Gets highest block and adds +1 to y
-        loc.setY(w.getHighestBlockYAt(loc) + 1);
+        loc.setY((double) w.getHighestBlockYAt(loc) + 1);
         //Sets fall distance to 0 so player wont take any fall damage
         target.setFallDistance(0);
         //Resets player velocity so player is falling and teleports to water floating, it wont just fall throught because of the velocity

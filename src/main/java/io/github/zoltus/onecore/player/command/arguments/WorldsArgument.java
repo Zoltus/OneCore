@@ -16,7 +16,7 @@ public class WorldsArgument extends CustomArgument<World, String> implements IAr
     }
 
     public WorldsArgument(String add) {
-        super(new StringArgument(add), (info) -> {
+        super(new StringArgument(add), info -> {
             World world = Bukkit.getWorld(info.input());
             if (world == null) {
                 throw new CustomArgument.CustomArgumentException(WORLD_NOT_FOUND.getString());

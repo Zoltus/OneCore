@@ -32,7 +32,7 @@ public class SetMaxPlayers implements ICommand {
                         })).override();
     }
 
-    public static void setMaxPlayers(int amount) throws ReflectiveOperationException {
+    private void setMaxPlayers(int amount) throws ReflectiveOperationException {
         String bukkitversion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
         Object playerlist = Class.forName("org.bukkit.craftbukkit." + bukkitversion + ".CraftServer").getDeclaredMethod("getHandle").invoke(Bukkit.getServer());
         Field maxplayers = playerlist.getClass().getSuperclass().getDeclaredField("f");

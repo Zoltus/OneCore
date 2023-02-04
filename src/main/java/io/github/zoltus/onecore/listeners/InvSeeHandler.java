@@ -141,17 +141,15 @@ public class InvSeeHandler implements Listener {
     private void handleInventoryClose(InventoryCloseEvent e, boolean isEnderChest) {
         BiMap<UUID, Inventory> invMap = isEnderChest ? eInventorys : inventorys;
         Inventory inv = e.getInventory();
-        if (invMap.containsValue(inv)) {
-            if (inv.getViewers().isEmpty()) {
-                //inverse maps and gets by inventory
-                OfflinePlayer offP = Bukkit.getOfflinePlayer(invMap.inverse().get(inv));
-                invMap.remove(offP.getUniqueId());
-                //If player has logged in after opening inv it sets to his onlineinv
-                Optional.ofNullable(offP.getPlayer())
-                        .ifPresentOrElse(p -> p.getInventory().setStorageContents(inv.getStorageContents()), () -> {
-                            setOfflineInventory(offP, inv, isEnderChest);   //Sets to players offline inv if player is offline
-                        });
-            }
+        if (invMap.containsValue(inv) && inv.getViewers().isEmpty()) {
+            //inverse maps and gets by inventory
+            OfflinePlayer offP = Bukkit.getOfflinePlayer(invMap.inverse().get(inv));
+            invMap.remove(offP.getUniqueId());
+            //If player has logged in after opening inv it sets to his onlineinv
+            Optional.ofNullable(offP.getPlayer())
+                    .ifPresentOrElse(p -> p.getInventory().setStorageContents(inv.getStorageContents()), () -> {
+                        setOfflineInventory(offP, inv, isEnderChest);   //Sets to players offline inv if player is offline
+                    });
         }
     }
 

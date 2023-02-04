@@ -25,6 +25,7 @@ public record JoinListener(OneCore plugin) implements Listener {
     }
 
     //Loads onlineplayers if they didnt exists on database
+    //Adds better support for reloading
     public static void loadOnlinePlayers() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             join(p);

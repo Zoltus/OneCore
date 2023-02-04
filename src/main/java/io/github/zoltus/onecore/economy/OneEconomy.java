@@ -23,7 +23,8 @@ import java.util.logging.Logger;
 @Getter
 public final class OneEconomy extends AbstractEconomy {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
 
     private final Logger logger;
@@ -43,6 +44,9 @@ public final class OneEconomy extends AbstractEconomy {
         return Config.CURRENCY_SINGULAR.getString();
     }
 
+    private final EconomyResponse notAdded = new EconomyResponse(0.0D, 0.0D,
+            EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+
     public OneEconomy(OneCore plugin) {
         this.plugin = plugin;
         this.logger = createLogger();
@@ -55,7 +59,7 @@ public final class OneEconomy extends AbstractEconomy {
             balances.entrySet().stream()
                     .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                     .forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
-            balances = sorted;
+            setBalances(sorted);
         }, 0, 20L * 60 * Config.ECONOMY_BALTOP_INTERVAL.getInt());
     }
 
@@ -264,57 +268,57 @@ public final class OneEconomy extends AbstractEconomy {
 
     @Override
     public EconomyResponse createBank(String bank, String player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse createBank(String bank, OfflinePlayer player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse deleteBank(String bank) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse bankBalance(String bank) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse bankHas(String bank, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse bankWithdraw(String bank, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse bankDeposit(String bank, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse isBankOwner(String bank, String player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse isBankOwner(String bank, OfflinePlayer player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse isBankMember(String bank, String player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override
     public EconomyResponse isBankMember(String bank, OfflinePlayer player) {
-        return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
+        return notAdded;
     }
 
     @Override

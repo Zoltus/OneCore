@@ -61,7 +61,7 @@ public class Back implements ICommand, Listener {
     }
 
     private Argument<?> backArg() {
-        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.getInt()), (info) -> {
+        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.getInt()), info -> {
             try {
                 return Integer.parseInt(info.input());
             } catch (Exception e) {
@@ -85,30 +85,4 @@ public class Back implements ICommand, Listener {
             targetUser.teleportTimer(targetUser.getLastLocation(backAmount));
         }
     }
-
-    /*
-            // back
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .executesPlayer((sender, args) -> {
-                    executes(sender, 1, sender);
-                }).override();
-        // back <amount>
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .withArguments(backArg())
-                .executesPlayer((sender, args) -> {
-                    executes(sender, (int) args.get(0), sender);
-                }).register();
-        // back <amount> <player>
-        command(BACK_LABEL)
-                .withPermission(BACK_PERMISSION)
-                .withAliases(BACK_ALIASES)
-                .withArguments(backArg(), new PlayerArgument())
-                .executes((sender, args) -> executes(sender, (int) args.get(0), (Player) args.get(1)))
-                .register();
-
-     */
 }

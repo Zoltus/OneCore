@@ -62,14 +62,14 @@ public enum Lang implements IConfig {
     KILLALL_REMOVED_ENTITYS("killall.removed-entitys"),
     MENTION_COLOR("other.mention-color"),
     MENTION_PERMISSION("other.mention-permission"),
-    MENTION_TAG("other.mention-tag"),
+    MENTION_SOUND("other.mention-sound"),
     MSG_RECEIVED_MSG("msg.received-msg"),
     MSG_SENT_MSG("msg.sent-msg"),
     NODES_AMOUNT("other.nodes.amount"),
     NODES_ENTITY_TYPE("other.nodes.entity-type"),
     NODES_GAMEMODE("other.nodes.gamemode"),
     NODES_HOME_NAME("other.nodes.home-name"),
-    NODES_HOME_NAME_OR_Player("other.nodes.home-home/player-name"),
+    NODES_HOME_NAME_OR_PLAYER("other.nodes.home-home/player-name"),
     NODES_LOCATION("other.nodes.location"),
     NODES_MESSAGE("other.nodes.message"),
     NODES_PLAYER("other.nodes.player"),
@@ -169,9 +169,6 @@ public enum Lang implements IConfig {
 
     @Getter
     final String path;
-
-    //todo?? mayby
-    // public void setPlayer(String player) {}
 
     public OneYml yml() {
         return Yamls.LANG.getYml();
