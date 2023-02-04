@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.papermc.lib.PaperLib;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,6 +15,10 @@ import java.util.Map;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_LOCATIONS;
 
 public class LocationUtils {
+
+    private LocationUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     private static boolean isDamageBlock(Block b) {
         return switch (b.getType()) {
@@ -38,6 +43,7 @@ public class LocationUtils {
                     PaperLib.teleportAsync(p, safeLoc);
                     vehicle.addPassenger(p);
                 } else {
+                    Bukkit.broadcastMessage("test");
                     PaperLib.teleportAsync(p, safeLoc);
                 }
             }

@@ -23,43 +23,21 @@ public class Mentions implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void chatMention2(AsyncPlayerChatEvent e) {
-        String msgg = e.getMessage();
+        String orgMsg = e.getMessage();
         Matcher matcher = Pattern.compile("@([A-Za-z0-9_]+)")
                 .matcher(e.getMessage());
         while (matcher.find()) {
-            Player player = Bukkit.getPlayer(matcher.group(1));
+            Player target = Bukkit.getPlayer(matcher.group(1));
             int start = matcher.start();
-            if (player != null /*&& !player.equals(sender)*/) {
+            if (target != null /*&& !player.equals(sender)*/) {
                 e.setCancelled(true);
-
-                String beforeColor = ChatColor.getLastColors(msgg.substring(0, start));
+                String beforeColor = ChatColor.getLastColors(orgMsg.substring(0, start));
                 String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                e.setMessage(e.getMessage().replace(matcher.group(),
-                        MENTION_COLORS + player.getDisplayName() + continueColor));
-                player.playSound(player.getLocation(), Sound.valueOf(Lang.MENTION_SOUND.get()), 1, 1);
+                String message = e.getMessage().replace(matcher.group(),
+                        MENTION_COLORS + target.getDisplayName() + continueColor);
+                e.setMessage(message);
+                target.playSound(target.getLocation(), Sound.valueOf(Lang.MENTION_SOUND.get()), 1, 1);
             }
         }
     }
 }
-
-    /*@EventHandler(priority = EventPriority.MONITOR)
-    public void chatMention(AsyncPlayerChatEvent e) {
-        Player p = e.getPlayer();
-        String msgg = e.getMessage();
-        if (p.hasPermission(MENTION_PERMISSION.asPermission()) && msgg.contains(MENTION_TAG)) {
-            StringBuilder sb = new StringBuilder();
-            for (Player target : Bukkit.getOnlinePlayers()) {//todo use this method on chatbuilder
-                String name = target.getName();
-                String pattern = "(?i)" + MENTION_TAG + name;
-                Matcher match = Pattern.compile(pattern).matcher(msgg);
-                while (match.find()) {
-                    int start = match.start();
-                    String beforeColor = ChatColor.getLastColors(msgg.substring(0, start));
-                    String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                    match.appendReplacement(sb, MENTION_COLORS + name + continueColor);
-                }
-                match.appendTail(sb);
-            }
-            e.setMessage(sb.toString());
-        }
-    }*/
