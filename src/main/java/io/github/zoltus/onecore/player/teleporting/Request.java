@@ -49,13 +49,13 @@ public class Request {
         this.type = type;
         this.sender = sender;
         this.accepter = accepter;
-        this.expiryTask = expirtyTimer();
+        this.expiryTask = expireTimer();
         this.requests = accepter.getRequests();
         requests.add(this);
         sendChat();
     }
 
-    private BukkitTask expirtyTimer() {
+    private BukkitTask expireTimer() {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             requests.remove(this);
             sender.sendMessage(TP_EXPIRED.getString());
