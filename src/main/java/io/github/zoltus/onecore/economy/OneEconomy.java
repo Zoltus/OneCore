@@ -60,7 +60,7 @@ public final class OneEconomy extends AbstractEconomy {
                     .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                     .forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
             setBalances(sorted);
-        }, 0, 20L * 60 * (int) Config.ECONOMY_BALTOP_INTERVAL.get());
+        }, 0, 20L * 60 * Config.ECONOMY_BALTOP_INTERVAL.getInt());
     }
 
     private Logger createLogger() {
