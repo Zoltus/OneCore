@@ -3,7 +3,6 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 
@@ -19,7 +18,7 @@ public class TpaHere implements ICommand {
                 .then(new UserArgument()
                 .executesPlayer((player, args) -> {
                     User user = User.of(player);
-                    User target = User.of((Player) args.get(0));
+                    User target = (User) args.get(0);
                     Request.send(user, target, Request.TeleportType.TPHERE);
                 })).override();
     }
