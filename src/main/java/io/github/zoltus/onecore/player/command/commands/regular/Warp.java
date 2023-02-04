@@ -26,7 +26,7 @@ public class Warp implements ICommand {
     }
 
     private Argument<?> warpArg() {
-        return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), info -> {
             String input = info.input();
             Location warp = warps.getLocation(input);
             if (warp == null) {

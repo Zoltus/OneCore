@@ -31,7 +31,6 @@ public class User {
     private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
-    // private static Economy economy = economy;
     private final OfflinePlayer offP;
     private final List<Location> lastLocations = new ArrayList<>();
     private final List<Request> requests = new ArrayList<>();//todo tomap?
@@ -47,10 +46,9 @@ public class User {
         users.put(uniqueId, this);
         //Bukkit.broadcastMessage("§cNew");
         //Sets balance to 0 if it doesnt exist, for toplist
-        if (plugin.getVault() != null) {
-            if (!OneEconomy.getBalances().containsKey(uniqueId)) {
-                OneEconomy.getBalances().put(uniqueId, Config.START_MONEY.getDouble());
-            }
+        if (plugin.getVault() != null
+                && !OneEconomy.getBalances().containsKey(uniqueId)) {
+            OneEconomy.getBalances().put(uniqueId, Config.START_MONEY.getDouble());
         }
     }
 

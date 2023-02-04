@@ -16,10 +16,6 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_
 
 public class LocationUtils {
 
-    private LocationUtils() {
-        throw new IllegalStateException("Utility class");
-    }
-
     private static boolean isDamageBlock(Block b) {
         return switch (b.getType()) {
             case LAVA, LAVA_CAULDRON, END_PORTAL,

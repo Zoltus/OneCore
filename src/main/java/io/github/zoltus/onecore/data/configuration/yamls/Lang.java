@@ -170,9 +170,6 @@ public enum Lang implements IConfig {
     @Getter
     final String path;
 
-    //todo?? mayby
-    // public void setPlayer(String player) {}
-
     public OneYml yml() {
         return Yamls.LANG.getYml();
     }

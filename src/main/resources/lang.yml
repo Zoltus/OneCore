@@ -13,7 +13,7 @@ Data:
     mention-sound: ITEM_GOAT_HORN_SOUND_0
     player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
-    player-only-command: '{p} Tämä komento on vain pelaajille!'
+    player-only-command: '{p} Tämä komento on vain PELAAJILLE!'
     world-not-found: '{p} Maailmaa ei löytynyt'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>

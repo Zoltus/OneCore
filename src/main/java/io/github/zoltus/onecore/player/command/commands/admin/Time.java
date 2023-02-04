@@ -20,16 +20,14 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 public class Time implements ICommand {
 
     private Argument<?> timeArg() {
+        ArrayList<String> suggestions = new ArrayList<>();
+        suggestions.addAll(Commands.TIME_DAY_ALIASES.getList());
+        suggestions.addAll(Commands.TIME_NIGHT_ALIASES.getList());
+        suggestions.addAll(Commands.TIME_MORNING_ALIASES.getList());
+        suggestions.addAll(Commands.TIME_AFTERNOON_ALIASES.getList());
         return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> toTime(info.input()))
-                .replaceSuggestions(ArgumentSuggestions.strings(info -> {
-                            ArrayList<String> suggestions = new ArrayList<>() {{
-                                addAll(Commands.TIME_DAY_ALIASES.getList());
-                                addAll(Commands.TIME_NIGHT_ALIASES.getList());
-                                addAll(Commands.TIME_MORNING_ALIASES.getList());
-                                addAll(Commands.TIME_AFTERNOON_ALIASES.getList());
-                            }};
-                            return toSuggestion(info.currentArg(), suggestions.toArray(new String[0]));
-                        }
+                .replaceSuggestions(ArgumentSuggestions.strings(info ->
+                        toSuggestion(info.currentArg(), suggestions.toArray(new String[0]))
                 ));
     }
 

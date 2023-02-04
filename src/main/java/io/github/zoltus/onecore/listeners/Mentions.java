@@ -24,7 +24,7 @@ public class Mentions implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void chatMention2(AsyncPlayerChatEvent e) {
         String orgMsg = e.getMessage();
-        Matcher matcher = Pattern.compile("@([A-Za-z0-9_]+)")
+        Matcher matcher = Pattern.compile("@(\\w+)")
                 .matcher(e.getMessage());
         while (matcher.find()) {
             Player target = Bukkit.getPlayer(matcher.group(1));
