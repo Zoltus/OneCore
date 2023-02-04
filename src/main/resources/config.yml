@@ -29,8 +29,8 @@ Data:
     baltop-update-interval: 5
     currency-plural: €
     currency-singular: €
-    enabled: true
-    use-oneeconomy: true
+    enabled: false
+    use-oneeconomy: false
     start-money: 500
   backups:
     #broken atm
