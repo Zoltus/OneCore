@@ -62,7 +62,6 @@ public enum Lang implements IConfig {
     KILLALL_REMOVED_ENTITYS("killall.removed-entitys"),
     MENTION_COLOR("other.mention-color"),
     MENTION_PERMISSION("other.mention-permission"),
-    MENTION_TAG("other.mention-tag"),
     MSG_RECEIVED_MSG("msg.received-msg"),
     MSG_SENT_MSG("msg.sent-msg"),
     NODES_AMOUNT("other.nodes.amount"),

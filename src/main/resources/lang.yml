@@ -10,7 +10,6 @@ Data:
     kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
     mention-color: '&x&0&0&f&f&0&0&l'
     mention-permission: mention
-    mention-tag: '@'
     player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
     player-only-command: '{p} Tämä komento on vain pelaajille!'
