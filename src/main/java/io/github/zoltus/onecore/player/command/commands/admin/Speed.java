@@ -23,7 +23,7 @@ public class Speed implements ICommand {
     private final List<String> speedArgs = Arrays.asList(SPEED_MODE_FLY.getString(), SPEED_MODE_WALK.getString());
 
     private Argument<?> speedIntArg() {
-        return new CustomArgument<>(new StringArgument(NODES_SPEED.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_SPEED.getString()), info -> {
             try {
                 float speed = Float.parseFloat(info.input());
                 if (speed > 10.0f) {
@@ -40,7 +40,8 @@ public class Speed implements ICommand {
     }
 
     private Argument<?> speedModeArg() {
-        return new CustomArgument<>(new StringArgument(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString()), (info) -> {
+        return new CustomArgument<>(
+                new StringArgument(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString()), info -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {
                 throw new CustomArgument.CustomArgumentException(SPEED_MODE_INVALID_SPEED.getString());

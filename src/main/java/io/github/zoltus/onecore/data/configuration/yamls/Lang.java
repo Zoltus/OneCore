@@ -61,8 +61,8 @@ public enum Lang implements IConfig {
     KICKED_FOR_SPAMMING("other.kicked-for-spamming-reason"),
     KILLALL_REMOVED_ENTITYS("killall.removed-entitys"),
     MENTION_COLOR("other.mention-color"),
-    MENTION_SOUND("other.mention-sound"),
     MENTION_PERMISSION("other.mention-permission"),
+    MENTION_SOUND("other.mention-sound"),
     MSG_RECEIVED_MSG("msg.received-msg"),
     MSG_SENT_MSG("msg.sent-msg"),
     NODES_AMOUNT("other.nodes.amount"),
@@ -169,9 +169,6 @@ public enum Lang implements IConfig {
 
     @Getter
     final String path;
-
-    //todo?? mayby
-    // public void setPlayer(String player) {}
 
     public OneYml yml() {
         return Yamls.LANG.getYml();
