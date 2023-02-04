@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.data.configuration;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import io.github.zoltus.onecore.OneCore;
 import org.bukkit.Bukkit;
