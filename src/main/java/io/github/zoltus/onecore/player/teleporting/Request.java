@@ -84,7 +84,7 @@ public class Request {
         User teleporter = type == TeleportType.TPA ? sender : accepter;
         User target = type == TeleportType.TPA ? accepter : sender;
         TP_ACCEPTED.send(sender, PLAYER_PH, accepter.getName());
-        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, accepter.getName());
+        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, sender.getName());
         cancel();
         Teleport.start(teleporter, target, null);
     }
