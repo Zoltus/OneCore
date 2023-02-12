@@ -12,6 +12,7 @@ public enum Commands implements IConfig {
     BACK_ENABLED("back.enabled"),
     BACK_LABEL("back.label"),
     BACK_PERMISSION("back.permission"),
+    BACK_OTHER_PERMISSION("back.permission-other"),
     BROADCAST_ALIASES("broadcast.aliases"),
     BROADCAST_ENABLED("broadcast.enabled"),
     BROADCAST_LABEL("broadcast.label"),
