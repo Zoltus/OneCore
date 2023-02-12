@@ -5,13 +5,13 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
+import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import io.github.zoltus.onecore.player.User;
 
 public class SetHome implements ICommand {
 
@@ -46,7 +46,8 @@ public class SetHome implements ICommand {
         } else {
             home = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             boolean isSelf = sender.getName().equals(offP.getName());
-            boolean canHaveMoreHomes = isSelf || target.hasFreeHomeSlots();
+            boolean canHaveMoreHomes = isSelf
+                    || target.getHomeSlots(target.getPlayer()) > target.getHomes().size();
             if (target.hasHome(home) || canHaveMoreHomes) {
                 target.setHome(home, target.getPlayer().getLocation());
                 Lang.SETHOME_SET.send(target, IConfig.HOME_PH, home);

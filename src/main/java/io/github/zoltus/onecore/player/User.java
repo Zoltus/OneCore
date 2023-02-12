@@ -11,11 +11,9 @@ import io.github.zoltus.onecore.player.teleporting.Teleport;
 import lombok.Data;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,25 +164,15 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    public boolean hasFreeHomeSlots() {
-        Player p = getPlayer();
-        String permPrefix = Commands.HOME_AMOUNT_PERMISSION.asPermission();
-        if (p.hasPermission(permPrefix + ".*")) {
-            return true;
-        }
-        //sethome.4, homes 3
-        for (PermissionAttachmentInfo attachmentInfo : p.getEffectivePermissions()) {
-            if (attachmentInfo.getPermission().startsWith(permPrefix)) {
-                String perm = attachmentInfo.getPermission();
-                String end = perm.substring(perm.lastIndexOf('.')).replace(".", "");
-                if (StringUtils.isNumeric(end) && Integer.parseInt(end) > homes.size()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    //todo remove parameter
+    public int getHomeSlots(Player player) {
+        String perm = Commands.HOME_AMOUNT_PERMISSION.asPermission() + ".";
+        return player.getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
+                .max(Integer::compareTo)
+                .orElse(0);
     }
-
     /*
      * Economy
      */
