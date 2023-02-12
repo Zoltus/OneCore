@@ -19,10 +19,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.dependency.Libraries;
 import org.bukkit.plugin.java.annotation.dependency.Library;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
-import org.bukkit.plugin.java.annotation.dependency.SoftDependsOn;
 import org.bukkit.plugin.java.annotation.plugin.*;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 
@@ -30,23 +28,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@Plugin(name = "OneCore", version = "1.0-Beta")
+@Plugin(name = "MotiCore", version = "1.0-Beta")
 @Description("Core plugin for any type of server.")
 @Author("Zoltus")
 @Website("https://www.spigotmc.org/members/zoltus.306747/")
-@LogPrefix("OneCore")
+@LogPrefix("MotiCore")
 @ApiVersion(ApiVersion.Target.v1_19)
 @LoadOrder(PluginLoadOrder.POSTWORLD)
-@SoftDependsOn({
-        @SoftDependency("Vault"),
-        @SoftDependency("PlaceholderAPI")
-})
-@Libraries({
-        @Library("org.bstats:bstats-bukkit:3.0.0"),
-        @Library("org.apache.commons:commons-compress:1.21"),
-        @Library("org.apache.logging.log4j:log4j-core:2.18.0"),
-        // @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
-})
+@SoftDependency("Vault")
+@SoftDependency("PlaceholderAPI")
+@Library("org.bstats:bstats-bukkit:3.0.0")
+@Library("org.apache.commons:commons-compress:1.21")
+@Library("org.apache.logging.log4j:log4j-core:2.18.0")
+// @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
 @Getter
 public final class OneCore extends JavaPlugin {
     //todo remove listener
