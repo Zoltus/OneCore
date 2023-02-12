@@ -9,6 +9,7 @@ Data:
     enabled: true
     label: back
     permission: back
+    permission-other: back.other
     # Remove '[]' and # from the lines below to aliases
     aliases: []
   #  - examplealias1

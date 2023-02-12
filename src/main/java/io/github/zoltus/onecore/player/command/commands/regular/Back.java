@@ -46,6 +46,7 @@ public class Back implements ICommand, Listener {
                 });
         // back <amount> <player>
         Argument<Player> arg1 = new PlayerArgument()
+                .withPermission(BACK_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     executes(sender, (int) args.get(0), (Player) args.get(1));
                 });
@@ -72,7 +73,10 @@ public class Back implements ICommand, Listener {
 
     private void executes(CommandSender sender, int backAmount, Player target) {
         User targetUser = User.of(target);
-        if (targetUser.getLastLocations().isEmpty()) {
+        //permission check
+        if (maxBack(target) < backAmount) {
+            //todo send max back amount
+        } else if (targetUser.getLastLocations().isEmpty()) {
             BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
         } else if (backAmount > targetUser.getLastLocations().size()) {
             BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, targetUser.getLastLocations().size());
@@ -84,5 +88,15 @@ public class Back implements ICommand, Listener {
         } else {
             targetUser.teleportTimer(targetUser.getLastLocation(backAmount));
         }
+    }
+
+    public int maxBack(Player player) {
+        String perm = BACK_OTHER_PERMISSION.asPermission() + ".";
+        return player.getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
+                .max(Integer::compareTo)
+                .orElse(3);
+        //Default history size todo
     }
 }
