@@ -17,6 +17,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.List;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.SIZE_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
@@ -25,15 +27,19 @@ public class Back implements ICommand, Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onTeleport(PlayerTeleportEvent e) {
-        User user = User.of(e.getPlayer());
-        List<Location> lastLocations = user.getLastLocations();
-        // If player does /Back it wont read the location to the backs where he goes
-        if (!lastLocations.contains(e.getTo())) {
-            // If player has max backs it removes the oldest saved loc
-            if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
-                lastLocations.remove(0);
+        Player p = e.getPlayer();
+        User user = User.of(p);
+        //"NPC" fixes citizens stuff
+        if (user != null && !p.hasMetadata("NPC")) {
+            List<Location> lastLocations = user.getLastLocations();
+            // If player does /Back it wont read the location to the backs where he goes
+            if (!lastLocations.contains(e.getTo())) {
+                // If player has max backs it removes the oldest saved loc
+                if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
+                    lastLocations.remove(0);
+                }
+                lastLocations.add(e.getFrom());
             }
-            lastLocations.add(e.getFrom());
         }
     }
 
@@ -74,8 +80,10 @@ public class Back implements ICommand, Listener {
     private void executes(CommandSender sender, int backAmount, Player target) {
         User targetUser = User.of(target);
         //permission check
-        if (maxBack(target) < backAmount) {
-            //todo send max back amount
+        int maxBack = maxBack(target);
+        if (maxBack < backAmount) {
+           // todo BACK_
+            target.sendMessage("§cYou don't have permission to go back that far (ADD TO YML)");
         } else if (targetUser.getLastLocations().isEmpty()) {
             BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
         } else if (backAmount > targetUser.getLastLocations().size()) {
