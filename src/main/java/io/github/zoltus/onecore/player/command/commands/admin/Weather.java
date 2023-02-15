@@ -10,6 +10,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
+import org.bukkit.WeatherType;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
@@ -67,6 +68,7 @@ public class Weather implements ICommand {
         World w = (World) worldObject;
         if (containsIgnoreCase(Commands.WEATHER_CLEAR_ALIASES, weatherType)) {
             w.setStorm(false);
+            w.setWeatherDuration(0);
             w.setThundering(false);
         } else if (containsIgnoreCase(Commands.WEATHER_STORM_ALIASES, weatherType)) {
             w.setStorm(true);
