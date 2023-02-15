@@ -21,7 +21,10 @@ public class TeleportHandler implements Listener {
         if (toLoc != null
                 && user.getTeleport() != null
                 && !fromLoc.getBlock().equals(toLoc.getBlock())) {
-            user.getTeleport().cancel(TP_CANCELLED_BY_MOVEMENT.getString());
+            Teleport teleport = user.getTeleport();
+            if (teleport != null) {
+                user.getTeleport().cancel(TP_CANCELLED_BY_MOVEMENT.getString());
+            }
         }
     }
 
@@ -30,7 +33,10 @@ public class TeleportHandler implements Listener {
     public static void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player p) {
             User user = User.of(p);
-            user.getTeleport().cancel(TP_CANCELLED_BY_DAMAGE.getString());
+            Teleport teleport = user.getTeleport();
+            if (teleport != null) {
+                user.getTeleport().cancel(TP_CANCELLED_BY_DAMAGE.getString());
+            }
         }
     }
 }
