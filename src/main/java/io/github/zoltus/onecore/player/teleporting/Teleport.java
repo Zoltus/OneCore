@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.teleporting;
 
-
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.player.User;
 import lombok.Getter;
@@ -8,57 +7,57 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import static io.github.zoltus.onecore.data.configuration.yamls.Config.SECONDS_PH;
+import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.IConfig.SECONDS_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.TELEPORT_DELAY;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_STARTED;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_TARGET_QUIT;
 
-public final class Teleport {
+public class Teleport {
 
     private static final OneCore plugin = OneCore.getPlugin();
-
-    @Getter
-    private static final Map<UUID, Teleport> teleports = new HashMap<>();
     private static final int DELAY = TELEPORT_DELAY.getInt();
 
+    private Location loc;
+    private User user;
     @Getter
-    private final User teleporter, target;
-    private final BukkitTask teleTask;
-    private final Location loc;
+    private User target;
+    private BukkitTask teleTask;
 
-    private Teleport(User teleporter, User target, Location loc) {
+    public Teleport(User user, Location loc) {
         this.loc = loc;
+        this.user = user;
+        this.teleTask = start();
+    }
+
+    public Teleport(User user, User target) {
         this.target = target;
-        this.teleporter = teleporter;
-        this.teleTask = teleportTimer();
-        teleports.put(teleporter.getUniqueId(), this);
+        this.user = user;
+        this.teleTask = start();
     }
 
-    public static void start(User teleporter, User target, Location loc) {
-        UUID uuid = teleporter.getUniqueId();
-        if (TeleportHandler.hasTeleport(uuid)) {
-            TeleportHandler.getTeleport(uuid).cancel("");
-        } else {
-            new Teleport(teleporter, target, loc);
-        }
-    }
-
-    private BukkitTask teleportTimer() {
-        TP_STARTED.send(teleporter, SECONDS_PH, DELAY);
+    private BukkitTask start() {
+        TP_STARTED.send(user, SECONDS_PH, DELAY);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            Location destination = target == null ? loc : target.getPlayer().getLocation();
-            teleTask.cancel();
-            teleports.remove(teleporter.getUniqueId());
-            LocationUtils.teleportSafeAsync(teleporter.getPlayer(), destination);
+            if (target != null && !target.isOnline()) {
+                TP_TARGET_QUIT.replace(PLAYER_PH, target.getName());
+            } else {
+                Location destination = target == null ? loc : target.getPlayer().getLocation();
+                LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
+            }
         }, 20L * DELAY);
     }
 
-    void cancel(String reason) {
+    public void cancel() {
+        cancel(null);
+    }
+
+    public void cancel(String reason) {
         teleTask.cancel();
-        teleports.remove(teleporter.getUniqueId());
-        teleporter.sendMessage(reason);
+        if (reason != null) {
+            user.sendMessage(reason);
+            //Sets teleport to null so that the user can teleport again
+            user.setTeleport(null);
+        }
     }
 }

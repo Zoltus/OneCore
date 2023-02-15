@@ -15,6 +15,8 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
+import javax.annotation.Nonnull;
+
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -47,7 +49,7 @@ public class Warp implements ICommand {
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args.get(0);
                     User user = User.of(p);
-                    user.teleportTimer(warp.location());
+                    user.teleport(warp.location());
                 });
         //warp <warp> <player>
         Argument<?> arg1 = new OfflinePlayerArgument()

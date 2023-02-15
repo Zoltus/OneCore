@@ -94,7 +94,7 @@ public class Back implements ICommand, Listener {
         } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
             target.teleport(targetUser.getLastLocation(backAmount));
         } else {
-            targetUser.teleportTimer(targetUser.getLastLocation(backAmount));
+            targetUser.teleport(targetUser.getLastLocation(backAmount));
         }
     }
 

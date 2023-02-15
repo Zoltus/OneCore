@@ -49,7 +49,7 @@ public class Home implements ICommand {
             PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
-                user.teleportTimer(loc.toLocation());
+                user.teleport(loc.toLocation());
             } else {
                 Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
                 return;
