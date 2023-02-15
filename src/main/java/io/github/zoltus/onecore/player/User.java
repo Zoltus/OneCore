@@ -36,6 +36,9 @@ public class User {
     private final UUID uniqueId;
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
+    private Teleport teleport;
+
+    //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
     public User(OfflinePlayer offP) {
         this.offP = offP;
@@ -78,13 +81,27 @@ public class User {
         return this.offP.getName();
     }
 
-    public void teleportTimer(Location loc) {
-        if (isOnline()) {
-            Player p = getPlayer();
-            if (p.hasPermission("bypass")) {
-                LocationUtils.teleportSafeAsync(p, loc);
-            } else {
-                Teleport.start(this, null, loc);
+    public void teleport(Object obj) {
+        if (!isOnline()) {
+            return;
+        }
+        Player p = getPlayer();
+        if (teleport != null) {
+            teleport.cancel("§ctele cancelled new started"); //todo to config
+        }
+        if (p.hasPermission("bypass")) {
+            Location loc = null;
+            if (obj instanceof User target) {
+                loc = target.getPlayer().getLocation(); //todo offline sup?
+            } else if (obj instanceof Location location) {
+                loc = location;
+            }
+            LocationUtils.teleportSafeAsync(p, loc);
+        } else {
+            if (obj instanceof User target) {
+                teleport = new Teleport(this, target);
+            } else if (obj instanceof Location loc) {
+                teleport = new Teleport(this, loc);
             }
         }
     }

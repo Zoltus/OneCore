@@ -41,7 +41,9 @@ public class Request {
 
     private final TeleportType type;
     @Getter
-    private final User sender, accepter; //, teleporter, target
+    private final User sender; //teleporter, target
+    @Getter
+    private final User accepter;
     private final List<Request> requests;
     private final BukkitTask expiryTask;
 
@@ -84,17 +86,17 @@ public class Request {
         User target = type == TeleportType.TPA ? accepter : sender;
         TP_ACCEPTED.send(sender, PLAYER_PH, accepter.getName());
         TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, sender.getName());
-        cancel();
-        Teleport.start(teleporter, target, null);
+        removeRequest();
+        teleporter.teleport(target);
     }
 
     public void deny() {
-        cancel();
+        removeRequest();
         TP_DENIED.send(sender, PLAYER_PH, accepter.getName());
         TP_YOU_DENIED.send(accepter, PLAYER_PH, accepter.getName());
     }
 
-    private void cancel() {
+    private void removeRequest() {
         requests.remove(this);
         expiryTask.cancel();
     }
