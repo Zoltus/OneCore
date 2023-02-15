@@ -7,6 +7,7 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_PLAYER;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
@@ -20,12 +21,17 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
     public UserArgument(String add) {
         super(new StringArgument(NODES_PLAYER.getString() + add), info -> {
             String input = info.input();
-            OfflinePlayer offP = Bukkit.getOfflinePlayer(input);
-            User user = User.of(offP);
-            if (!offP.hasPlayedBefore() || user == null) {
-                throw new CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
+            Player p = Bukkit.getPlayer(input);
+            if (p != null) {
+                return User.of(p);
             } else {
-                return user;
+                OfflinePlayer offP = Bukkit.getOfflinePlayer(input);
+                User user = User.of(offP);
+                if (!offP.hasPlayedBefore() || user == null) {
+                    throw new CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
+                } else {
+                    return user;
+                }
             }
         });
         replaceSuggestions(ArgumentSuggestions
