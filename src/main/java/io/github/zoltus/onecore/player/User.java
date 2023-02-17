@@ -184,14 +184,6 @@ public class User {
     //Todo clean, uses Player check if this needs nullcheck
     public boolean hasFreeHomeSlot() {
         String perm = Commands.SETHOME_AMOUNT_PERMISSION.asPermission() + ".";
-        getPlayer().getEffectivePermissions().stream()
-                .filter(permission -> permission.getPermission().startsWith(perm))
-                .forEach(permission -> getPlayer().sendMessage(permission.getPermission()));
-        getPlayer().sendMessage(perm);
-        getPlayer().getEffectivePermissions().stream()
-                .filter(permission -> permission.getPermission().startsWith(perm))
-                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
-                .forEach(integer -> getPlayer().sendMessage(integer.toString()));
         return getPlayer().getEffectivePermissions().stream()
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
