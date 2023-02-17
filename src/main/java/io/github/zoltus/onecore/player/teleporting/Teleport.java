@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.player.User;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
@@ -19,10 +18,9 @@ public class Teleport {
     private static final int DELAY = TELEPORT_DELAY.getInt();
 
     private Location loc;
-    private User user;
-    @Getter
+    private final User user;
     private User target;
-    private BukkitTask teleTask;
+    private final BukkitTask teleTask;
 
     public Teleport(User user, Location loc) {
         this.loc = loc;
@@ -46,10 +44,6 @@ public class Teleport {
                 LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
             }
         }, 20L * DELAY);
-    }
-
-    public void cancel() {
-        cancel(null);
     }
 
     public void cancel(String reason) {
