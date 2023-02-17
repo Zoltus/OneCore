@@ -16,7 +16,7 @@ public class OfflinePlayerArgument extends CustomArgument<OfflinePlayer, String>
     public OfflinePlayerArgument() {
         this("");
     }
-    //todo tping to offline player wont auto jo to johvu.
+
     public OfflinePlayerArgument(String add) {
         super(new StringArgument(NODES_PLAYER.getString() + add), info -> {
             String input = info.input();

@@ -47,7 +47,7 @@ public class SetHome implements ICommand {
             home = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             boolean isSelf = sender.getName().equals(offP.getName());
             boolean canHaveMoreHomes = isSelf
-                    || target.getHomeSlots(target.getPlayer()) > target.getHomes().size();
+                    || target.getHomeSlots() > target.getHomes().size();
             if (target.hasHome(home) || canHaveMoreHomes) {
                 target.setHome(home, target.getPlayer().getLocation());
                 Lang.SETHOME_SET.send(target, IConfig.HOME_PH, home);
