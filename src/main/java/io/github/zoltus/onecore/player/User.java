@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 @Data
@@ -182,17 +181,24 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    //Todo clean this method
-    public int getHomeSlots() {
-        if (isOnline())
-            return 0;
-        String perm = Commands.HOME_AMOUNT_PERMISSION.asPermission() + ".";
+    //Todo clean, uses Player check if this needs nullcheck
+    public boolean hasFreeHomeSlot() {
+        String perm = Commands.SETHOME_AMOUNT_PERMISSION.asPermission() + ".";
+        getPlayer().getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .forEach(permission -> getPlayer().sendMessage(permission.getPermission()));
+        getPlayer().sendMessage(perm);
+        getPlayer().getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
+                .forEach(integer -> getPlayer().sendMessage(integer.toString()));
         return getPlayer().getEffectivePermissions().stream()
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
                 .max(Integer::compareTo)
-                .orElse(0);
+                .orElse(0) > homes.size();
     }
+
     /*
      * Economy
      */

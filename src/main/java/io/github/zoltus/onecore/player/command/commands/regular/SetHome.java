@@ -23,7 +23,7 @@ public class SetHome implements ICommand {
                 .executesPlayer((p, args) -> {
                     setHome(p, p, (String) args.get(0));
                 });
-        //sethome <home> <player> //todo messages
+        //sethome <home> <player>
         Argument<?> arg1 = new OfflinePlayerArgument()
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
@@ -46,9 +46,8 @@ public class SetHome implements ICommand {
         } else {
             home = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             boolean isSelf = sender.getName().equals(offP.getName());
-            boolean canHaveMoreHomes = isSelf
-                    || target.getHomeSlots() > target.getHomes().size();
-            if (target.hasHome(home) || canHaveMoreHomes) {
+            boolean canHaveMoreHomes = target.hasFreeHomeSlot();
+            if ((target.hasHome(home) || canHaveMoreHomes) || !isSelf) {
                 target.setHome(home, target.getPlayer().getLocation());
                 Lang.SETHOME_SET.send(target, IConfig.HOME_PH, home);
             } else {
