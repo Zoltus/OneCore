@@ -139,6 +139,7 @@ public enum Lang implements IConfig {
     TP_ACCEPT_BUTTON("tp.accept-button"),
     TP_ACCEPT_BUTTON_HOVER("tp.accept-button-hover"),
     TP_CANCELLED_BY_DAMAGE("tp.cancelled-by-damage"),
+    TP_CANCELLED_BY_NEW_TELE("tp.cancelled-by-new-teleport"),
     TP_CANCELLED_BY_MOVEMENT("tp.cancelled-by-movement"),
     TP_CANT_SELF_TELEPORT("tp.cant-self-teleport"),
     TP_DENIED("tp.denied"),

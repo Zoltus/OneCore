@@ -3,6 +3,7 @@ package io.github.zoltus.onecore.player;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
@@ -87,9 +88,9 @@ public class User {
         }
         Player p = getPlayer();
         if (teleport != null) {
-            teleport.cancel("§ctele cancelled new started"); //todo to config
+            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString()); //todo to config
         }
-        if (p.hasPermission("bypass")) {
+        if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())) {
             Location loc = null;
             if (obj instanceof User target) {
                 loc = target.getPlayer().getLocation(); //todo offline sup?
