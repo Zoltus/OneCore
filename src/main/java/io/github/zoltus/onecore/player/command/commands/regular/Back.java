@@ -30,7 +30,8 @@ public class Back implements ICommand, Listener {
         Player p = e.getPlayer();
         User user = User.of(p);
         //"NPC" fixes citizens stuff
-        if (user != null && !p.hasMetadata("NPC")) {
+        if (p.hasMetadata("NPC")) return;
+        if (user != null) {
             List<Location> lastLocations = user.getLastLocations();
             // If player does /Back it wont read the location to the backs where he goes
             if (!lastLocations.contains(e.getTo())) {
