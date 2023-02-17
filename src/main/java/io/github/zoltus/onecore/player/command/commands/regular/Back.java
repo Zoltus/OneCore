@@ -17,8 +17,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.List;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.SIZE_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
