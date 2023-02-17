@@ -44,19 +44,22 @@ public class SetHome implements ICommand {
         if (target == null) {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            home = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
-            boolean isSelf = sender.getName().equals(offP.getName());
-            boolean canHaveMoreHomes = target.hasFreeHomeSlot();
-            if ((target.hasHome(home) || canHaveMoreHomes) || !isSelf) {
-                target.setHome(home, target.getPlayer().getLocation());
-                Lang.SETHOME_SET.send(target, IConfig.HOME_PH, home);
-            } else {
-                Lang.SETHOME_FULL_HOMES.send(target);
-                return;
-            }
-            if (!isSelf) {
-                Lang.SETHOME_OTHER.send(sender, IConfig.PLAYER_PH, offP.getName(), IConfig.HOME_PH, home);
-            }
+            //Async because it scans permissions and if user has lot it could slow down the server.
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                String finalHome = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
+                boolean isSelf = sender.getName().equals(offP.getName());
+                boolean canHaveMoreHomes = target.hasFreeHomeSlot();
+                if ((target.hasHome(finalHome) || canHaveMoreHomes) || !isSelf) {
+                    target.setHome(finalHome, target.getPlayer().getLocation());
+                    Lang.SETHOME_SET.send(target, IConfig.HOME_PH, finalHome);
+                } else {
+                    Lang.SETHOME_FULL_HOMES.send(target);
+                    return;
+                }
+                if (!isSelf) {
+                    Lang.SETHOME_OTHER.send(sender, IConfig.PLAYER_PH, offP.getName(), IConfig.HOME_PH, finalHome);
+                }
+            });
         }
     }
 }
