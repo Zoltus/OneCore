@@ -15,9 +15,11 @@ public class TeleportHandler implements Listener {
     // Cancels Teleport on Move
     @EventHandler
     public static void onMove(PlayerMoveEvent e) {
+        Player p = e.getPlayer();
+        if (p.hasMetadata("NPC")) return;
         Location fromLoc = e.getFrom();
         Location toLoc = e.getTo();
-        User user = User.of(e.getPlayer());
+        User user = User.of(p);
         if (toLoc != null
                 && user.getTeleport() != null
                 && !fromLoc.getBlock().equals(toLoc.getBlock())) {
@@ -32,6 +34,7 @@ public class TeleportHandler implements Listener {
     @EventHandler
     public static void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player p) {
+            if (p.hasMetadata("NPC")) return;
             User user = User.of(p);
             Teleport teleport = user.getTeleport();
             if (teleport != null) {
