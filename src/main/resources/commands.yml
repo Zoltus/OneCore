@@ -156,7 +156,6 @@ Data:
     enabled: true
     label: home
     permission: home
-    permission-amount: home
     permission-other: home.other
     aliases:
     - koti
@@ -170,6 +169,8 @@ Data:
     enabled: true
     label: sethome
     permission: sethome
+    #Usage example onecore.sethome.3
+    permission-amount: home
     other-permission: sethome.other
     aliases: []
   #  - examplealias1

@@ -43,6 +43,7 @@ public class Teleport {
                 Location destination = target == null ? loc : target.getPlayer().getLocation();
                 LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
             }
+            user.setTeleport(null);
         }, 20L * DELAY);
     }
 
