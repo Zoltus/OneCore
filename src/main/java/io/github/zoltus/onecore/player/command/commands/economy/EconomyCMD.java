@@ -126,7 +126,7 @@ public class EconomyCMD implements ICommand {
         CommandAPICommand baltopPage = new CommandAPICommand(ECONOMY_BALTOP_LABEL.getString())
                 .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
-                .withArguments(new IntegerArgument("sivu"))//todo to variable
+                .withArguments(new IntegerArgument("page"))//todo to variable
                 .executesPlayer((sender, args) -> {
                     if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
                         sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");

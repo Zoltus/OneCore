@@ -26,13 +26,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class User {
 
-    @Getter //Concurrent becaue of async //todo back to hashmap? all is loaded on startup
-    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
+    @Getter
+    private static final HashMap<UUID, User> users = new HashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
     private final List<Location> lastLocations = new ArrayList<>();
-    private final List<Request> requests = new ArrayList<>();//todo tomap?
+    private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
@@ -88,7 +88,7 @@ public class User {
         }
         Player p = getPlayer();
         if (teleport != null) {
-            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString()); //todo to config
+            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString());
         }
         if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())) {
             Location loc = null;
@@ -182,10 +182,12 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    //todo remove parameter
-    public int getHomeSlots(Player player) {
+    //Todo clean this method
+    public int getHomeSlots() {
+        if (isOnline())
+            return 0;
         String perm = Commands.HOME_AMOUNT_PERMISSION.asPermission() + ".";
-        return player.getEffectivePermissions().stream()
+        return getPlayer().getEffectivePermissions().stream()
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
                 .max(Integer::compareTo)

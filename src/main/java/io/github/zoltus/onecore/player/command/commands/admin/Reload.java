@@ -14,7 +14,7 @@ public class Reload implements ICommand {
 
     @Override
     public void init() {
-        //onecore reload todo onecore reload all/config
+        //onecore reload
         new Command("onecore")
                 .withAliases("oc")
                 .then(multiLiteralArgument(RELOAD_LABEL, RELOAD_ALIASES)

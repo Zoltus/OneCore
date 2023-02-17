@@ -30,7 +30,6 @@ public class LocationUtils {
         } else {
             if (loc.getWorld() != null) {
                 Entity vehicle = p.getVehicle();
-                //todo move player tele here and test.
                 if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
                     PaperLib.teleportAsync(vehicle, safeLoc);
                     PaperLib.teleportAsync(p, safeLoc);
