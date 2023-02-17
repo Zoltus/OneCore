@@ -69,7 +69,7 @@ public class Time implements ICommand {
         );
     }
 
-    @SafeVarargs
+    @SafeVarargs //todo rename and cleanup
     private void doo(List<String>... list) {
         for (List<String> strings : list) {
             for (String suggestion : strings) {
