@@ -9,16 +9,19 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.KICKED_FOR_
 
 public class KickedForSpamming implements Listener {
     /**
-     * Disabled Kicked for spamming kick event.
+     * Disabled Kicked for spamming kick event. testcommit
      *
      * @param e Event
      *          permission "bypass.spam"
      */
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-        if (e.getReason().equals("Kicked for spamming")
-                && !e.getPlayer().hasPermission(Config.KICKED_FOR_SPAMMING_BYPASS.asPermission())) {
-            e.setReason(KICKED_FOR_SPAMMING.getString());
+        if (e.getReason().equals("Kicked for spamming")) {
+            if (e.getPlayer().hasPermission(Config.KICKED_FOR_SPAMMING_BYPASS.asPermission())) {
+                e.setCancelled(true);
+            } else {
+                e.setReason(KICKED_FOR_SPAMMING.getString());
+            }
         }
     }
 }

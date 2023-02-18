@@ -7,6 +7,7 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,8 +22,12 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
         super(new StringArgument(NODES_HOME_NAME.getString()), info -> {
             String input = info.input();
             String prevArg = (String) info.previousArgs().get(0);
+            //Player, autocompletes search.
+            Player p = Bukkit.getPlayer(prevArg);
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
-            if (!offP.hasPlayedBefore()) {
+            if (p != null) {
+                return input;
+            } else if (!offP.hasPlayedBefore()) {
                 throw new CustomArgument.CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
             } else {
                 return input;

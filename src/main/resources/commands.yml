@@ -9,6 +9,7 @@ Data:
     enabled: true
     label: back
     permission: back
+    permission-other: back.other
     # Remove '[]' and # from the lines below to aliases
     aliases: []
   #  - examplealias1
@@ -155,7 +156,6 @@ Data:
     enabled: true
     label: home
     permission: home
-    permission-amount: home
     permission-other: home.other
     aliases:
     - koti
@@ -169,6 +169,8 @@ Data:
     enabled: true
     label: sethome
     permission: sethome
+    #Usage example onecore.sethome.3
+    permission-amount: home
     other-permission: sethome.other
     aliases: []
   #  - examplealias1

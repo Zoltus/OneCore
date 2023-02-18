@@ -47,7 +47,7 @@ public class Warp implements ICommand {
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args.get(0);
                     User user = User.of(p);
-                    user.teleportTimer(warp.location());
+                    user.teleport(warp.location());
                 });
         //warp <warp> <player>
         Argument<?> arg1 = new OfflinePlayerArgument()

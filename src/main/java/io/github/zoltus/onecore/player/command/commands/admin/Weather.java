@@ -67,6 +67,7 @@ public class Weather implements ICommand {
         World w = (World) worldObject;
         if (containsIgnoreCase(Commands.WEATHER_CLEAR_ALIASES, weatherType)) {
             w.setStorm(false);
+            w.setWeatherDuration(0);
             w.setThundering(false);
         } else if (containsIgnoreCase(Commands.WEATHER_STORM_ALIASES, weatherType)) {
             w.setStorm(true);

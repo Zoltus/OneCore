@@ -25,15 +25,20 @@ public class Back implements ICommand, Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public static void onTeleport(PlayerTeleportEvent e) {
-        User user = User.of(e.getPlayer());
-        List<Location> lastLocations = user.getLastLocations();
-        // If player does /Back it wont read the location to the backs where he goes
-        if (!lastLocations.contains(e.getTo())) {
-            // If player has max backs it removes the oldest saved loc
-            if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
-                lastLocations.remove(0);
+        Player p = e.getPlayer();
+        User user = User.of(p);
+        //"NPC" fixes citizens stuff
+        if (p.hasMetadata("NPC")) return;
+        if (user != null) {
+            List<Location> lastLocations = user.getLastLocations();
+            // If player does /Back it wont read the location to the backs where he goes
+            if (!lastLocations.contains(e.getTo())) {
+                // If player has max backs it removes the oldest saved loc
+                if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
+                    lastLocations.remove(0);
+                }
+                lastLocations.add(e.getFrom());
             }
-            lastLocations.add(e.getFrom());
         }
     }
 
@@ -46,6 +51,7 @@ public class Back implements ICommand, Listener {
                 });
         // back <amount> <player>
         Argument<Player> arg1 = new PlayerArgument()
+                .withPermission(BACK_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     executes(sender, (int) args.get(0), (Player) args.get(1));
                 });
@@ -72,7 +78,12 @@ public class Back implements ICommand, Listener {
 
     private void executes(CommandSender sender, int backAmount, Player target) {
         User targetUser = User.of(target);
-        if (targetUser.getLastLocations().isEmpty()) {
+        //permission check
+        int maxBack = maxBack(target);
+        if (maxBack < backAmount) {
+           // todo BACK_
+            target.sendMessage("§cYou don't have permission to go back that far (ADD TO YML)");
+        } else if (targetUser.getLastLocations().isEmpty()) {
             BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
         } else if (backAmount > targetUser.getLastLocations().size()) {
             BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, targetUser.getLastLocations().size());
@@ -82,7 +93,17 @@ public class Back implements ICommand, Listener {
         } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
             target.teleport(targetUser.getLastLocation(backAmount));
         } else {
-            targetUser.teleportTimer(targetUser.getLastLocation(backAmount));
+            targetUser.teleport(targetUser.getLastLocation(backAmount));
         }
+    }
+
+    public int maxBack(Player player) {
+        String perm = BACK_OTHER_PERMISSION.asPermission() + ".";
+        return player.getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
+                .max(Integer::compareTo)
+                .orElse(3);
+        //Default history size todo
     }
 }

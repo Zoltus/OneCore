@@ -26,6 +26,7 @@ public class Home implements ICommand {
                 });
         //home <player> <home>
         Argument<?> homeArg1 = new HomeArg1() //
+                .withPermission(Commands.HOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
                     teleportHome(sender, offP, (String) args.get(1));
@@ -49,7 +50,7 @@ public class Home implements ICommand {
             PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
-                user.teleportTimer(loc.toLocation());
+                user.teleport(loc.toLocation());
             } else {
                 Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
                 return;

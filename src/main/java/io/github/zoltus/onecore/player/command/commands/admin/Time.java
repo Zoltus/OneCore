@@ -5,6 +5,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
@@ -25,10 +26,16 @@ public class Time implements ICommand {
         suggestions.addAll(Commands.TIME_NIGHT_ALIASES.getList());
         suggestions.addAll(Commands.TIME_MORNING_ALIASES.getList());
         suggestions.addAll(Commands.TIME_AFTERNOON_ALIASES.getList());
-        return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> toTime(info.input()))
-                .replaceSuggestions(ArgumentSuggestions.strings(info ->
-                        toSuggestion(info.currentArg(), suggestions.toArray(new String[0]))
-                ));
+        return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> {
+            Long time = toTime(info.input());
+            if (time == null) {
+                throw new CustomArgument.CustomArgumentException(Lang.TIME_INVALID_TIME.getString());
+            } else {
+                return time;
+            }
+        }).replaceSuggestions(ArgumentSuggestions.strings(info ->
+                toSuggestion(info.currentArg(), suggestions.toArray(new String[0]))
+        ));
     }
 
     @Override
@@ -49,7 +56,6 @@ public class Time implements ICommand {
                 .withAliases(Commands.TIME_ALIASES)
                 .then(arg0.then(arg1))
                 .override();
-
     }
 
     /**
@@ -63,7 +69,7 @@ public class Time implements ICommand {
         );
     }
 
-    @SafeVarargs
+    @SafeVarargs //todo rename and cleanup
     private void doo(List<String>... list) {
         for (List<String> strings : list) {
             for (String suggestion : strings) {
@@ -92,13 +98,9 @@ public class Time implements ICommand {
         }
     }
 
-    private void changeTime(CommandSender sender, Long time, World w) {
-        if (time == null) {
-            TIME_INVALID_TIME.send(sender);
-        } else {
-            w.setTime(time);
-            TIME_CHANGED.send(sender, TIME_PH, w.getTime(), WORLD_PH, w.getName());
-        }
+    private void changeTime(CommandSender sender, long time, World w) {
+        w.setTime(time);
+        TIME_CHANGED.send(sender, TIME_PH, w.getTime(), WORLD_PH, w.getName());
     }
 
     private boolean containsIgnoreCase(Commands langArr, String contains) {
