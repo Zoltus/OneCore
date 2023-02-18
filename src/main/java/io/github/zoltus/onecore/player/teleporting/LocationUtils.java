@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.papermc.lib.PaperLib;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,7 +30,6 @@ public class LocationUtils {
         } else {
             if (loc.getWorld() != null) {
                 Entity vehicle = p.getVehicle();
-                //todo move player tele here and test.
                 if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
                     PaperLib.teleportAsync(vehicle, safeLoc);
                     PaperLib.teleportAsync(p, safeLoc);

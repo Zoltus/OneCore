@@ -52,7 +52,6 @@ public class KillAll implements ICommand {
         });
     }
 
-    //todo if i add killall all, makesure it only deletes livingentities
     private void removeEntities(Player p, EntityType type, String range, List<Entity> entities) {
         List<Entity> list = entities.stream()
                 .filter(entity -> entity.getType() == type && entity.getType() != EntityType.PLAYER).toList();

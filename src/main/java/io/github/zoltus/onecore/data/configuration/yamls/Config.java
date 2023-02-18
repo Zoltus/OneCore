@@ -33,6 +33,7 @@ public enum Config implements IConfig {
     START_MONEY("economy.start-money"),
     TELEPORT_DELAY("teleport-delay"),
     TELEPORT_EXPIRE("teleport-expire"),
+    TELEPORT_CD_BYPASS("teleport-cooldown-bypass-permission"),
     TELEPORT_VELOCITY_RESET("teleport-velocity-reset"),
     TELEPORT_WITH_VEHICLE("teleport-with-vehicle"),
     USER_CONSOLE_FILTER("user-console-filter");

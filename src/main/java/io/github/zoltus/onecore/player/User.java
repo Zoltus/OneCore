@@ -3,6 +3,7 @@ package io.github.zoltus.onecore.player;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
@@ -11,33 +12,33 @@ import io.github.zoltus.onecore.player.teleporting.Teleport;
 import lombok.Data;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 @Data
 public class User {
 
-    @Getter //Concurrent becaue of async //todo back to hashmap? all is loaded on startup
-    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
+    @Getter
+    private static final HashMap<UUID, User> users = new HashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
     private final List<Location> lastLocations = new ArrayList<>();
-    private final List<Request> requests = new ArrayList<>();//todo tomap?
+    private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
+    private Teleport teleport;
+
+    //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
     public User(OfflinePlayer offP) {
         this.offP = offP;
@@ -80,13 +81,27 @@ public class User {
         return this.offP.getName();
     }
 
-    public void teleportTimer(Location loc) {
-        if (isOnline()) {
-            Player p = getPlayer();
-            if (p.hasPermission("bypass")) {
-                LocationUtils.teleportSafeAsync(p, loc);
-            } else {
-                Teleport.start(this, null, loc);
+    public void teleport(Object obj) {
+        if (!isOnline()) {
+            return;
+        }
+        Player p = getPlayer();
+        if (teleport != null) {
+            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString());
+        }
+        if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())) {
+            Location loc = null;
+            if (obj instanceof User target) {
+                loc = target.getPlayer().getLocation(); //todo offline sup?
+            } else if (obj instanceof Location location) {
+                loc = location;
+            }
+            LocationUtils.teleportSafeAsync(p, loc);
+        } else {
+            if (obj instanceof User target) {
+                teleport = new Teleport(this, target);
+            } else if (obj instanceof Location loc) {
+                teleport = new Teleport(this, loc);
             }
         }
     }
@@ -166,23 +181,14 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    public boolean hasFreeHomeSlots() {
-        Player p = getPlayer();
-        String permPrefix = Commands.HOME_AMOUNT_PERMISSION.asPermission();
-        if (p.hasPermission(permPrefix + ".*")) {
-            return true;
-        }
-        //sethome.4, homes 3
-        for (PermissionAttachmentInfo attachmentInfo : p.getEffectivePermissions()) {
-            if (attachmentInfo.getPermission().startsWith(permPrefix)) {
-                String perm = attachmentInfo.getPermission();
-                String end = perm.substring(perm.lastIndexOf('.')).replace(".", "");
-                if (StringUtils.isNumeric(end) && Integer.parseInt(end) > homes.size()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    //Todo clean, uses Player check if this needs nullcheck
+    public boolean hasFreeHomeSlot() {
+        String perm = Commands.SETHOME_AMOUNT_PERMISSION.asPermission() + ".";
+        return getPlayer().getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith(perm))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
+                .max(Integer::compareTo)
+                .orElse(0) > homes.size();
     }
 
     /*

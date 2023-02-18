@@ -236,9 +236,10 @@ Data:
     accept-button-hover: '&aClick to accept!'
     # <player>
     accepted: '{p} <player> accepted ur requestd'
-    cancelled-by-damage: '{p} got cancelled because of dmg'
-    cancelled-by-movement: '{p} got cancelled because of movement'
-    cant-self-teleport: '{p} Cant send request to self'
+    cancelled-by-damage: '{p} Teleport cancelled because of damage.'
+    cancelled-by-new-teleport: '{p} Teleport cancelled because of new teleport.'
+    cancelled-by-movement: '{p} Teleport cancelled because of movement.'
+    cant-self-teleport: '{p} Cant send request to self.'
     # <player>
     denied: '{p} Your request to <player> was denied'
     deny-button: '&cDeny'

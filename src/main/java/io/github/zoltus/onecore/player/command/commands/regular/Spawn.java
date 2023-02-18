@@ -62,7 +62,7 @@ public class Spawn implements ICommand {
                     if (spawn == null) {
                         user.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
                     } else {
-                        user.teleportTimer(spawn);
+                        user.teleport(spawn);
                     }
                 }).then(arg0)
                 .override();

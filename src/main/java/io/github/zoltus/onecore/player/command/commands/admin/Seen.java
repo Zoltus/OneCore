@@ -3,8 +3,8 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
-import org.bukkit.entity.Player;
+import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import org.bukkit.OfflinePlayer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,11 +18,11 @@ public class Seen implements ICommand {
         new Command(Commands.SEEN_LABEL)
                 .withPermission(Commands.SEEN_PERMISSION)
                 .withAliases(Commands.SEEN_ALIASES)
-                .then(new PlayerArgument()
+                .then(new OfflinePlayerArgument()
                         .executes((sender, args) -> {
-                            Player oTarget = (Player) args.get(0);
+                            OfflinePlayer oTarget = (OfflinePlayer) args.get(0);
                             SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
-                            String dateString = dateFormat.format(new Date(oTarget.getFirstPlayed()));
+                            String dateString = dateFormat.format(new Date(oTarget.getLastPlayed()));
                             SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);
                         })).override();
     }
