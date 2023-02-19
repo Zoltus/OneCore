@@ -141,7 +141,7 @@ public class Database {
         }
         return newUser;
     }
-    //Copilot create custom dataBaseException!
+
     public static class DataBaseException extends RuntimeException {
         public DataBaseException(String message) {
             super(message);
