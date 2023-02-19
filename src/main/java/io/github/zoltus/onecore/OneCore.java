@@ -85,7 +85,7 @@ public final class OneCore extends JavaPlugin {
         // Starts caching users
         ConsoleFilter.init();
         this.database.cacheUsers();
-        //todo load all online players aswell to support loading mid-game
+        //todo mayby remove, creates user for new users
         JoinListener.loadOnlinePlayers();
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
