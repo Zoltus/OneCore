@@ -5,14 +5,6 @@ import io.github.zoltus.onecore.OneCore;
 import lombok.Getter;
 
 public enum Yamls {
- /*   BUKKIT(""),
-    HELP(""),
-    PAPER(""),
-    PERMISSIONS(""),
-    PUPUR(""),
-    SPIGOT(""),
-    TUINITY(""),*/
-
     COMMANDS("commands.yml"),
     CONFIG("config.yml"),
     CONSOLE_FILTER("console_filter.yml"),

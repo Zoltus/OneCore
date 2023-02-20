@@ -36,7 +36,6 @@ public class ConsoleFilter implements Filter {
     private ConsoleFilter() {
         Logger logger = (Logger) LogManager.getRootLogger();
         logger.addFilter(this);
-        filters.getOrDefault("Data", new ArrayList<>());
     }
 
     /**
@@ -52,7 +51,7 @@ public class ConsoleFilter implements Filter {
 
     //todo benchmark, improve
     private boolean hideListContains(String message) {
-        List<String> hideKeys = (List<String>) filters.getList("Hide");
+        List<String> hideKeys = filters.getOrDefault("Hide", new ArrayList<>());
         if (hideKeys != null && !hideKeys.isEmpty()) {
             for (String hideKey : hideKeys) {
                 if (message.contains(hideKey)) {
