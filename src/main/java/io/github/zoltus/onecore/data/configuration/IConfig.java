@@ -61,6 +61,11 @@ public interface IConfig {
         return (T) yml().get("Data." + getPath());
     }
 
+    /* todo?
+    default void set(Object val) {
+        yml().set("Data." + getPath(), val);
+    }*/
+
     default int getInt() {
         return yml().getInt("Data." + getPath());
     }
