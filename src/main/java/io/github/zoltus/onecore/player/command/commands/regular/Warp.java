@@ -11,32 +11,36 @@ import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
+
+import java.util.Set;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Warp implements ICommand {
 
-    private final OneYml warps = Yamls.WARPS.getYml();
-
     record WarpObj(String name, Location location) {
+    }
+
+    //Tape fix just incase
+    private Set<String> getKeys() {
+        return Yamls.WARPS.getYml().getKeys(false);
     }
 
     private Argument<?> warpArg() {
         return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), info -> {
             String input = info.input();
-            Location warp = warps.getLocation(input);
+            Location warp =  Yamls.WARPS.getYml().getLocation(input);
             if (warp == null) {
-                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.replace(LIST_PH, warps.getKeys(false)));
+                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.replace(LIST_PH,getKeys()));
             } else {
                 return new WarpObj(input, warp);
             }
         }).replaceSuggestions(ArgumentSuggestions
-                .strings(info -> toSuggestion(info.currentArg(), warps.getKeys(false)
+                .strings(info -> toSuggestion(info.currentArg(), getKeys()
                         .toArray(new String[0]))));
     }
 
@@ -74,7 +78,7 @@ public class Warp implements ICommand {
                 .withPermission(WARP_PERMISSION)
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
-                    WARP_LIST.send(p, LIST_PH, warps.getKeys(false).toString());
+                    WARP_LIST.send(p, LIST_PH, getKeys().toString());
                 }).then(arg0.then(arg1))
                 .override();
     }
