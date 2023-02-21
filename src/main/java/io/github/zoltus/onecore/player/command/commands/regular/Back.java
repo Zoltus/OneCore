@@ -31,14 +31,11 @@ public class Back implements ICommand, Listener {
         if (p.hasMetadata("NPC")) return;
         if (user != null) {
             List<Location> lastLocations = user.getLastLocations();
-            // If player does /Back it wont read the location to the backs where he goes
-            if (!lastLocations.contains(e.getTo())) {
-                // If player has max backs it removes the oldest saved loc
-                if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
-                    lastLocations.remove(0);
-                }
-                lastLocations.add(e.getFrom());
+            // If player has max backs it removes the oldest saved loc
+            if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
+                lastLocations.remove(0);
             }
+            lastLocations.add(e.getFrom());
         }
     }
 
