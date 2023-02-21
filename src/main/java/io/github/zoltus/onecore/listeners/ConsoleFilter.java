@@ -18,8 +18,6 @@ import java.util.List;
 
 public class ConsoleFilter implements Filter {
 
-    private static final OneYml filters = Yamls.CONSOLE_FILTER.getYml();
-
     @Getter
     private static ConsoleFilter consoleFilter;
 
@@ -51,6 +49,7 @@ public class ConsoleFilter implements Filter {
 
     //todo benchmark, improve
     private boolean hideListContains(String message) {
+        OneYml filters = Yamls.CONSOLE_FILTER.getYml();
         List<String> hideKeys = filters.getOrDefault("Hide", new ArrayList<>());
         if (hideKeys != null && !hideKeys.isEmpty()) {
             for (String hideKey : hideKeys) {

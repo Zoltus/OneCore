@@ -11,8 +11,6 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SetWarp implements ICommand {
 
-    private final OneYml warps = Yamls.WARPS.getYml();
-
     @Override
     public void init() {
         //setwarp <warp>
@@ -22,6 +20,7 @@ public class SetWarp implements ICommand {
                 .then(new StringArgument(NODES_WARP_NAME.getString())
                 .executesPlayer((p, args) -> {
                     String warp = (String) args.get(0);
+                    OneYml warps = Yamls.WARPS.getYml();
                     warps.set(warp, p.getLocation());
                     warps.save();
                     warps.reload();
