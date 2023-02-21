@@ -7,6 +7,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -58,7 +59,7 @@ public class Warp implements ICommand {
                     Player p = offTarget.getPlayer();
                     Location loc = warp.location();
                     if (p != null) {
-                        p.teleport(loc);
+                        LocationUtils.teleportSafeAsync(p, loc);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
                         nbtPlayer.setLocation(loc);

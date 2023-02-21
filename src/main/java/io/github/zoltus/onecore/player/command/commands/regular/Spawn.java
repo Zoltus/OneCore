@@ -9,6 +9,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -41,7 +42,7 @@ public class Spawn implements ICommand {
                         OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                         Player p = offTarget.getPlayer();
                         if (p != null) {
-                            p.teleport(spawn);
+                            LocationUtils.teleportSafeAsync(p, spawn);
                         } else {
                             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
                             nbtPlayer.setLocation(spawn);

@@ -29,6 +29,8 @@ public class LocationUtils {
             p.sendMessage(TP_NO_SAFE_LOCATIONS.getString());
         } else {
             if (loc.getWorld() != null) {
+                //Removes falldamage. Incase paper doesnt.
+                p.setFallDistance(0);
                 Entity vehicle = p.getVehicle();
                 if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
                     PaperLib.teleportAsync(vehicle, safeLoc);
