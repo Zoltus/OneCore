@@ -7,6 +7,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -75,7 +76,7 @@ public class Tp implements ICommand {
     private void tp(OfflinePlayer offTarget, Location loc) {
         Player target = offTarget.getPlayer();
         if (target != null) {
-            target.teleport(loc);
+            LocationUtils.teleportSafeAsync(target, loc);
         } else {
             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
             nbtPlayer.setLocation(loc);
