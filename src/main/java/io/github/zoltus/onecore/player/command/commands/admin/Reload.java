@@ -20,12 +20,10 @@ public class Reload implements ICommand {
                 .then(multiLiteralArgument(RELOAD_LABEL, RELOAD_ALIASES)
                         .withPermission(RELOAD_PERMISSION.asPermission())
                         .executes((sender, args) -> {
-                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                                //Reloads all ymls
-                                Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
-                                //Sets all data to enums
-                                RELOAD_RELOADED.send(sender);
-                            });
+                            //Reloads all ymls
+                            Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
+                            //Sets all data to enums
+                            RELOAD_RELOADED.send(sender);
                         }))
                 .override();
     }
