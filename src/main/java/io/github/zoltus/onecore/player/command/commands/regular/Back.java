@@ -83,17 +83,20 @@ public class Back implements ICommand, Listener {
         if (maxBack < backAmount) {
            // todo BACK_
             target.sendMessage("§cYou don't have permission to go back that far (ADD TO YML)");
-        } else if (targetUser.getLastLocations().isEmpty()) {
-            BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
-        } else if (backAmount > targetUser.getLastLocations().size()) {
-            BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, targetUser.getLastLocations().size());
-        } else if (sender != target) {
-            BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
-            target.teleport(targetUser.getLastLocation(backAmount));
-        } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
-            target.teleport(targetUser.getLastLocation(backAmount));
         } else {
-            targetUser.teleport(targetUser.getLastLocation(backAmount));
+            List<Location> lastLocs = targetUser.getLastLocations();
+            if (lastLocs == null || lastLocs.isEmpty()) {
+                BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
+            } else if (backAmount > lastLocs.size()) {
+                BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, lastLocs.size());
+            } else if (sender != target) {
+                BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
+                target.teleport(targetUser.getLastLocation(backAmount));
+            } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
+                target.teleport(targetUser.getLastLocation(backAmount));
+            } else {
+                targetUser.teleport(targetUser.getLastLocation(backAmount));
+            }
         }
     }
 
