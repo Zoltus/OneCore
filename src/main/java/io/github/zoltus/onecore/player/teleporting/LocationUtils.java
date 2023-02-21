@@ -1,13 +1,18 @@
 package io.github.zoltus.onecore.player.teleporting;
 
+import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.papermc.lib.PaperLib;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_LOCATIONS;
 
@@ -32,16 +37,27 @@ public class LocationUtils {
                 //Removes falldamage. Incase paper doesnt.
                 p.setFallDistance(0);
                 Entity vehicle = p.getVehicle();
-                if (Config.TELEPORT_WITH_VEHICLE.getBoolean() && vehicle != null) {
-                    PaperLib.teleportAsync(vehicle, safeLoc);
-                    PaperLib.teleportAsync(p, safeLoc);
-                    vehicle.addPassenger(p);
+                if (vehicle != null
+                        && p.hasPermission(Config.TELEPORT_WITH_VEHICLE.asPermission())) {
+                    PaperLib.teleportAsync(p, safeLoc).thenRun(() -> {
+                        //Tape fix to be able to teleport with horse while riding it.
+                        //So it only works if there is more than 1 world.
+                        for (World world : Bukkit.getWorlds()) {
+                            if (!world.equals(p.getWorld())) {
+                                vehicle.teleport(new Location(world, 0, 0, 0));
+                            }
+                        }
+                        vehicle.teleport(loc);
+                        vehicle.setFallDistance(-Float.MAX_VALUE);
+                        vehicle.addPassenger(p);
+                    });
                 } else {
                     PaperLib.teleportAsync(p, safeLoc);
                 }
             }
         }
     }
+
 
     //If player is on creative it will teleport to any loc
     public static Location getSafeLocation(Player p, Location loc) {
