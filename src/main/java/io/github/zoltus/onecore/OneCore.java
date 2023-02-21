@@ -92,7 +92,6 @@ public final class OneCore extends JavaPlugin {
         this.backupHandler.start();
         sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
-        //TestSuite.run();
     }
 
     @Override
@@ -102,7 +101,7 @@ public final class OneCore extends JavaPlugin {
         plugin.getLogger().info("Saved users & settings to database...");
         //Unregisters all cmds on unload. Trying to support reloading plugin.
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
-        //Disables commandapi, unhooks chatpreviews //todo old? is it needed check docs
+        //Disables commandapi
         CommandAPI.onDisable();
     }
 
