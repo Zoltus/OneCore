@@ -23,7 +23,7 @@ public enum Config implements IConfig {
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass"),
     MENTIONS_ENABLED("mentions.enabled"),
-    MENTION_COLOR("mentions.mention-color"),
+    MENTION_COLOR("mentions.color"),
     MENTION_PERMISSION("mentions.permission"),
     MENTION_SOUND("mentions.sound"),
     PERMISSION_PREFIX("permission-prefix"),
