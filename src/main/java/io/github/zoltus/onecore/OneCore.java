@@ -43,7 +43,7 @@ import java.util.List;
 // @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
 @Getter
 public final class OneCore extends JavaPlugin {
-    //todo remove listener
+
     @Getter
     private static OneCore plugin;
     private Economy vault;
