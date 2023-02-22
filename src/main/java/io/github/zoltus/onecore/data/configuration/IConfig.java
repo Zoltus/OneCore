@@ -42,7 +42,7 @@ public interface IConfig {
     String getPath();
 
     default String getString() {
-        String prefix = Yamls.CONFIG.getYml().getOrDefault("Data.prefix");
+        String prefix = Config.PREFIX.get();
         String configValue = yml().getOrDefault("Data." + getPath());
         String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
         return ChatColor.translateAlternateColorCodes('&', message);
@@ -60,6 +60,11 @@ public interface IConfig {
     default <T> T get() {
         return (T) yml().get("Data." + getPath());
     }
+
+    /* todo?
+    default void set(Object val) {
+        yml().set("Data." + getPath(), val);
+    }*/
 
     default int getInt() {
         return yml().getInt("Data." + getPath());

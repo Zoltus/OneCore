@@ -3,7 +3,6 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import org.bukkit.Bukkit;
 
 import java.util.stream.Stream;
 
@@ -20,12 +19,10 @@ public class Reload implements ICommand {
                 .then(multiLiteralArgument(RELOAD_LABEL, RELOAD_ALIASES)
                         .withPermission(RELOAD_PERMISSION.asPermission())
                         .executes((sender, args) -> {
-                            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                                //Reloads all ymls
-                                Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
-                                //Sets all data to enums
-                                RELOAD_RELOADED.send(sender);
-                            });
+                            //Reloads all ymls
+                            Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
+                            //Sets all data to enums
+                            RELOAD_RELOADED.send(sender);
                         }))
                 .override();
     }

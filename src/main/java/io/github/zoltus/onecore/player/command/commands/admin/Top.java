@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -17,6 +18,7 @@ public class Top implements ICommand {
     public void init() {
         //top <player>
         Argument<Player> arg0 = new PlayerArgument()
+                .withPermission(Commands.TOP_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     executes(sender, (Player) args.get(0));
                 });
@@ -35,10 +37,8 @@ public class Top implements ICommand {
         Location loc = target.getLocation();
         //Gets highest block and adds +1 to y
         loc.setY((double) w.getHighestBlockYAt(loc) + 1);
-        //Sets fall distance to 0 so player wont take any fall damage
-        target.setFallDistance(0);
         //Resets player velocity so player is falling and teleports to water floating, it wont just fall throught because of the velocity
-        target.teleport(loc);
+        LocationUtils.teleportSafeAsync(target, loc);
         if (target == sender) {
             TOP_TELPORTED.send(target);
         } else {

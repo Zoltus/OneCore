@@ -24,11 +24,13 @@ public class Fly implements ICommand {
     public void init() {
         //fly <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.FLY_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     handle(sender, (OfflinePlayer) args.get(0), null);
                 });
         //fly <player> true/false
         Argument<?> arg1 = new BooleanArgument(Lang.NODES_TRUE_FALSE.getString())
+                .withPermission(Commands.FLY_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     handle(sender, (OfflinePlayer) args.get(0), (Boolean) args.get(1));
                 });
@@ -42,7 +44,7 @@ public class Fly implements ICommand {
     private void handle(CommandSender sender, OfflinePlayer offP, Boolean fly) {
         boolean result = offP.getPlayer() != null ? setOnlineFly(offP.getPlayer(), fly) : setOfflineFly(offP, fly);
         if (sender != offP.getPlayer()) {
-            FLY_YOU_SWITCHED_TARGET.send(sender, PLAYER_PH, offP.getName(), TOGGLE_PH, result);
+            FLY_YOU_SWITCHED_TARGET.send(sender, PLAYER_PH, offP.getName(), TOGGLE_PH, !result);
         }
     }
 
@@ -50,7 +52,7 @@ public class Fly implements ICommand {
         boolean flyResult = fly == null ? onlTarget.getAllowFlight() : fly;
         onlTarget.setAllowFlight(!flyResult);
         onlTarget.setFlying(!flyResult);
-        FLY_YOUR_FLIGHT_IS_NOW.send(onlTarget, TOGGLE_PH, flyResult);
+        FLY_YOUR_FLIGHT_IS_NOW.send(onlTarget, TOGGLE_PH, !flyResult);
         return flyResult;
     }
 

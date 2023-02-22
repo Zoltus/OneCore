@@ -21,6 +21,7 @@ public class Heal implements ICommand {
     public void init() {
         //heal <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.HEAL_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     User target = (User) args.get(0);
                     Player onlineTarget = target.getPlayer();

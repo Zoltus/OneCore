@@ -8,9 +8,10 @@ import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import io.github.zoltus.onecore.player.teleporting.Teleport;
+import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -30,13 +31,14 @@ public class User {
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
-    private final List<Location> lastLocations = new ArrayList<>();
+    @Getter @Setter
+    private Location lastLocation;
     private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
-    private Teleport teleport;
+    private DelayedTeleport teleport;
 
     //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
@@ -99,25 +101,11 @@ public class User {
             LocationUtils.teleportSafeAsync(p, loc);
         } else {
             if (obj instanceof User target) {
-                teleport = new Teleport(this, target);
+                teleport = new DelayedTeleport(this, target);
             } else if (obj instanceof Location loc) {
-                teleport = new Teleport(this, loc);
+                teleport = new DelayedTeleport(this, loc);
             }
         }
-    }
-
-    /*
-     * Random
-     */
-
-    /**
-     * Gets players last location.
-     *
-     * @param skip locations
-     * @return last location
-     */
-    public Location getLastLocation(int skip) {
-        return (lastLocations.isEmpty() || skip > lastLocations.size()) ? null : lastLocations.get(lastLocations.size() - skip);
     }
 
     /*

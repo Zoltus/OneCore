@@ -1,0 +1,19 @@
+main: io.github.zoltus.onecore.OneCore
+name: MotiCore
+prefix: MotiCore
+version: ${project.version}
+description: Core plugin for any type of server.
+load: POSTWORLD
+author: Zoltus
+website: https://www.spigotmc.org/members/zoltus.306747/
+libraries:
+  - org.bstats:bstats-bukkit:3.0.0
+  - org.apache.commons:commons-compress:1.21
+  - org.apache.logging.log4j:log4j-core:2.18.0
+  #-dev.jorel:commandapi-shade:9.0.0-SNAPSHOT #Coming when snapshot is released to maven lib
+softdepend:
+  - Vault
+  - PlaceholderAPI
+commands: {}
+permissions: {}
+api-version: '1.19'

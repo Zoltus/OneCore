@@ -16,6 +16,7 @@ public class God implements ICommand {
     public void init() {
         //god <pelaaja>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.GOD_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer target = (OfflinePlayer) args.get(0);
                     boolean result;
