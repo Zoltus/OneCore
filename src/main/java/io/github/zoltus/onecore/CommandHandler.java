@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore;
 
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.commands.admin.*;
 import io.github.zoltus.onecore.player.command.commands.economy.EconomyCMD;
@@ -17,8 +18,10 @@ public class CommandHandler {
 
     private CommandHandler(OneCore plugin) {
         plugin.getLogger().info("Registering commands...");
-        //Registers economy commands only if vault has been loaded successfully
-        if (plugin.getVault() != null) {
+        //Register eco commands only if 1. Vault isnt null 2. Economy hook is enabled, 3. EconomyCMD is enabled
+        if (plugin.getVault() != null
+                && Config.ECONOMY_HOOK.getBoolean()
+                && ICommand.isEnabled(EconomyCMD.class)) {
             new EconomyCMD().register();
         }
         //Creates instanceof the class if its enabled and then registers it.
