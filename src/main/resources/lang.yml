@@ -1,12 +1,12 @@
 Data:
   other:
-    invalid-range: '{p} §cKelvoton säde!'
+    invalid-range: '{p} §cKelvoton säde.'
     # <player>
     joined: '&a&l+ &7<player>'
     # <player>
     quit: '&c&l- &7<player>'
     kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
-    player-never-visited-server: '{p} Pelaajaa ei löytynyt!'
+    player-never-visited-server: '{p} Pelaajaa ei löytynyt.'
     world-not-found: '{p} Maailmaa ei löytynyt!'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>
@@ -29,9 +29,9 @@ Data:
       world-name: maailma
   back:
     # <player>
-    no-history: '{p} Pelaajalle <player> ei löytynyt historiaa'
+    no-history: '{p} Pelaajalle <player> ei löytynyt historiaa.'
     # <player>
-    target-sent: '{p} Pelaaja <player> teleportattu sijaintiin!'
+    target-sent: '{p} Pelaaja <player> teleportattu sijaintiin.'
   broadcast:
     prefix: '&8&l[&c&lIlmoitus&8&l] &7'
   clear:
@@ -39,9 +39,9 @@ Data:
   economy:
     balance:
       # <player>, <balance>
-      targets-balance: '{p} Pelaajan <player> rahamäärä on: <balance>!'
+      targets-balance: '{p} Pelaajan <player> rahamäärä on: <balance>.'
       # <balance>
-      your-balance: '{p} Rahasi: <balance>'
+      your-balance: '{p} Rahasi: <balance>.'
     baltop:
       empty: '&7Top lista on tyhjä.'
       # <player>, <amount>
@@ -102,18 +102,17 @@ Data:
     targets-gamemode-changed: '{p} Vaihdoit pelaajan <player> pelimuodoksi: <mode>!'
   god:
     # <player> <mode>
-    changed-targets-god: '{p} You made <player> god to: <mode>'
+    changed-targets-god: '{p} Vaihdoit pelaajan <player> god modeksi: <mode>.'
     # <mode>
-    set-to: '{p} godmode set to <mode>'
+    set-to: '{p} Godmode asetettu: <mode>.'
   heal:
-    you-got-healed: '{p} You have been healed'
+    you-got-healed: '{p} Sinut on parannettu!'
     # <player>
-    you-healed-target: '{p} You healed player: <player>'
+    you-healed-target: '{p} Paransit pelaajan: <player>'
   homes:
     home:
       # <list>
-      list: '{p} Kotia ei löytynyt. Homet <list>'
-      no-homes: '{p} Ei homeja'
+      list: '{p} Kotia ei löytynyt. Kodit: <list>'
       # <player>, <home>
       # Used when teleporting to other players home.
       teleport-other: '{p} Teleported players: <player> home: <home>.'
