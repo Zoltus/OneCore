@@ -10,9 +10,7 @@ import org.bukkit.command.CommandSender;
 
 @AllArgsConstructor
 public enum Lang implements IConfig {
-    BACK_INVALID_NUMBER("back.invalid-number"),
     BACK_NO_HISTORY("back.no-history"),
-    BACK_OUT_OF_BOUNDS("back.out-of-bounds"),
     BACK_TARGET_SENT("back.target-sent"),
     BROADCAST_PREFIX("broadcast.prefix"),
     CLEAR_PLAYER_CLEARED_CHAT("clear.player-cleared-chat"),

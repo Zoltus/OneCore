@@ -1,8 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
-import dev.jorel.commandapi.arguments.CustomArgument;
-import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
@@ -15,10 +13,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.List;
-
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Config.BACK_HISTORY_SIZE;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Back implements ICommand, Listener {
@@ -30,80 +26,41 @@ public class Back implements ICommand, Listener {
         //"NPC" fixes citizens stuff
         if (p.hasMetadata("NPC")) return;
         if (user != null) {
-            List<Location> lastLocations = user.getLastLocations();
-            // If player has max backs it removes the oldest saved loc
-            if (lastLocations.size() == BACK_HISTORY_SIZE.getInt()) {
-                lastLocations.remove(0);
-            }
-            lastLocations.add(e.getFrom());
+            user.setLastLocation(e.getFrom());
         }
     }
 
     @Override
     public void init() {
-        // back <amount>
-        Argument<?> arg0 = backArg()
-                .executesPlayer((sender, args) -> {
-                    executes(sender, (int) args.get(0), sender);
-                });
-        // back <amount> <player>
-        Argument<Player> arg1 = new PlayerArgument()
+        // back <player>
+        Argument<Player> other = new PlayerArgument()
                 .withPermission(BACK_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
-                    executes(sender, (int) args.get(0), (Player) args.get(1));
+                    executes(sender, (Player) args.get(0));
                 });
         // back
         new Command(BACK_LABEL)
                 .withPermission(BACK_PERMISSION)
                 .withAliases(BACK_ALIASES)
                 .executesPlayer((sender, args) -> {
-                    executes(sender, 1, sender);
+                    executes(sender, sender);
                 })
-                .then(arg0.then(arg1))
+                .then(other)
                 .override();
     }
 
-    private Argument<?> backArg() {
-        return new CustomArgument<>(new StringArgument("1-" + BACK_HISTORY_SIZE.getInt()), info -> {
-            try {
-                return Integer.parseInt(info.input());
-            } catch (Exception e) {
-                throw new CustomArgument.CustomArgumentException(BACK_INVALID_NUMBER.getString());
-            }
-        });
-    }
-
-    private void executes(CommandSender sender, int backAmount, Player target) {
+    private void executes(CommandSender sender, Player target) {
         User targetUser = User.of(target);
-        //permission check
-        int maxBack = maxBack(target);
-        if (maxBack < backAmount) {
-           // todo BACK_
-            target.sendMessage("§cYou don't have permission to go back that far (ADD TO YML)");
+        Location loc = targetUser.getLastLocation();
+        if (loc == null) {
+            BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
+        } else if (sender != target) {
+            BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
+            target.teleport(targetUser.getLastLocation());
+        } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
+            target.teleport(targetUser.getLastLocation());
         } else {
-            List<Location> lastLocs = targetUser.getLastLocations();
-            if (lastLocs == null || lastLocs.isEmpty()) {
-                BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
-            } else if (backAmount > lastLocs.size()) {
-                BACK_OUT_OF_BOUNDS.send(sender, SIZE_PH, lastLocs.size());
-            } else if (sender != target) {
-                BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
-                target.teleport(targetUser.getLastLocation(backAmount));
-            } else if (sender.hasPermission(COOLDOWN_BYPASS_PERMISSION.getString())) {
-                target.teleport(targetUser.getLastLocation(backAmount));
-            } else {
-                targetUser.teleport(targetUser.getLastLocation(backAmount));
-            }
+            targetUser.teleport(targetUser.getLastLocation());
         }
-    }
-
-    public int maxBack(Player player) {
-        String perm = BACK_OTHER_PERMISSION.asPermission() + ".";
-        return player.getEffectivePermissions().stream()
-                .filter(permission -> permission.getPermission().startsWith(perm))
-                .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
-                .max(Integer::compareTo)
-                .orElse(3);
-        //Default history size todo
     }
 }
