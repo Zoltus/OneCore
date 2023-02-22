@@ -11,7 +11,7 @@ import java.util.logging.Level;
 public class EconomyHandler {
 
     public static Economy hook(OneCore plugin) {
-        if (!Config.ECONOMY.getBoolean()) {
+        if (!Config.ECONOMY_HOOK.getBoolean()) {
             return null;
         }
         plugin.getLogger().info("Hooking economy...");

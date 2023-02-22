@@ -6,7 +6,6 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.data.database.Database;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
@@ -21,7 +20,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -111,12 +109,10 @@ public final class OneCore extends JavaPlugin {
         List<Listener> list = new ArrayList<>();
         if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
             list.add(new InvSeeHandler());
-        if (Config.MENTIONS_ENABLED.getBoolean())
-            list.add(new Mentions());
         if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
             list.add(new TeleportVelocity());
         list.addAll(List.of(
-                new ChatFormatter(),
+                new ChatListener(),
                 new SignListener(plugin),
                 new JoinListener(plugin),
                 new KickedForSpamming(),
