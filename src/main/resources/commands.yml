@@ -85,8 +85,8 @@ Data:
   fly:
     enabled: true
     label: fly
-    permission: Fly
-    permission-other: Fly.other
+    permission: fly
+    permission-other: fly.other
     aliases: []
   #  - examplealias1
   gamemode:
@@ -94,7 +94,7 @@ Data:
     label: gamemode
     other-permission: gamemode.other
     # Used as gamemode.creative, etc.
-    mode-permission: gamemode.
+    mode-permission: gamemode
     permission: gamemode
     aliases:
       - gm
