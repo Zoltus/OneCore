@@ -15,7 +15,7 @@ Data:
   #  - examplealias1
   #  - examplealias2
   broadcast:
-    enabled: true
+    enabled: false
     label: broadcast
     permission: broadcast
     aliases:
@@ -27,7 +27,7 @@ Data:
     aliases:
       - cc
   economy:
-    enabled: true
+    enabled: false
     label: economy
     permission: economy
     aliases:
@@ -188,7 +188,7 @@ Data:
     aliases: []
   #  - examplealias1
   msg:
-    enabled: true
+    enabled: false
     label: msg
     permission: msg
     aliases: []
