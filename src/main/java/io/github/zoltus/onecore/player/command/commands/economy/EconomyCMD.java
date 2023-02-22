@@ -3,7 +3,6 @@ package io.github.zoltus.onecore.player.command.commands.economy;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.DoubleArgument;
 import dev.jorel.commandapi.arguments.IntegerArgument;
-import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.ICommand;
@@ -115,11 +114,7 @@ public class EconomyCMD implements ICommand {
                 .withAliases(ECONOMY_BALTOP_ALIASES.getAsArray())
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
-                    if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
-                        sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
-                    } else {
-                        printBalances(sender, 0);
-                    }
+                    printBalances(sender, 0);
                 });
 
         //Baltop <page>
@@ -128,12 +123,8 @@ public class EconomyCMD implements ICommand {
                 .withPermission(ECONOMY_BALTOP_PERMISSION.asPermission())
                 .withArguments(new IntegerArgument("page"))//todo to variable
                 .executesPlayer((sender, args) -> {
-                    if (!Config.ECONOMY.getBoolean() || !Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
-                        sender.sendMessage("To use baltop cmd u need to use oneeconomy & have economy enabled!");
-                    } else {
-                        int page = (int) args.get(0);
-                        printBalances(sender, page);
-                    }
+                    int page = (int) args.get(0);
+                    printBalances(sender, page);
                 });
 
         //Singles
