@@ -43,7 +43,7 @@ public class ChatListener implements Listener {
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     if (player.equals(target)) {
                         player.sendMessage(mentionMessage);
-                        target.playSound(target.getLocation(), Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+                        target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
                     } else {
                         player.sendMessage(formatted);
                     }
