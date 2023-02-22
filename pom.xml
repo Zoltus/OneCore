@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.zoltus</groupId>
-    <artifactId>moticore</artifactId>
+    <artifactId>OneCore</artifactId>
     <version>1.0.0</version>
     <properties>
         <!--<outputDir>F:\MineServer\plugins</outputDir> -->
@@ -194,8 +194,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${maven.compiler.release}</source>
-                    <target>${maven.compiler.release}</target>
                     <release>${maven.compiler.release}</release>
                     <compilerArgument>-XDignore.symbol.file</compilerArgument>
                     <encoding>UTF-8</encoding>
