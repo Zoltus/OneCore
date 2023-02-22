@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.IllegalFormatException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,16 +29,15 @@ public class ChatListener implements Listener {
         if (!e.getPlayer().hasPermission(Config.MENTION_PERMISSION.asPermission())) {
             return;
         }
-        String orginal = e.getMessage();
-        Matcher matcher = Pattern.compile("@(\\w+)").matcher(orginal);
+        String formatted = String.format(e.getFormat(), e.getPlayer().getName(), e.getMessage());
+        Matcher matcher = Pattern.compile("@(\\w+)").matcher(formatted);
         while (matcher.find()) {
             Player target = Bukkit.getPlayer(matcher.group(1));
             int start = matcher.start();
             if (target != null /*&& !player.equals(sender)*/) {
                 e.setCancelled(true);
-                String beforeColor = ChatColor.getLastColors(orginal.substring(0, start));
+                String beforeColor = ChatColor.getLastColors(formatted.substring(0, start));
                 String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                String formatted = String.format(e.getFormat(), e.getPlayer().getName(), orginal);
                 String mentionMessage = formatted.replace(matcher.group(),
                         Config.MENTION_COLOR.getString() + target.getDisplayName() + continueColor);
                 Bukkit.getOnlinePlayers().forEach(player -> {
@@ -53,7 +51,8 @@ public class ChatListener implements Listener {
             }
         }
     }
-        // String.format(format, this.player, this.message);
+
+    // String.format(format, this.player, this.message);
     private void handleChatFormat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
         //Enables chat colors
@@ -69,20 +68,16 @@ public class ChatListener implements Listener {
             if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
                 format = PlaceholderAPI.setPlaceholders(player, format);
             }
+            //replaces %s with the player name and the message
             e.setFormat(formatColors(format));
         }
     }
 
     private String formatColors(String format) {
-        try {
-            MiniMessage mm = MiniMessage.builder().tags(StandardTags.defaults()).build();
-            format = LegacyComponentSerializer.legacyAmpersand().serialize(mm.deserialize(format.replace("§", "&")));
-            format = ChatColor.translateAlternateColorCodes('&', format);
-        } catch (IllegalFormatException ex) {
-            Bukkit.getLogger().warning("Chat format is invalid! " +
-                    "You might be using broken placeholders which contain %!"
-                    + " Format: " + Pattern.quote(format));
-        }
+        MiniMessage mm = MiniMessage.builder().tags(StandardTags.defaults()).build();
+        format = LegacyComponentSerializer.legacyAmpersand().serialize(mm.deserialize(format.replace("§", "&")));
+        format = ChatColor.translateAlternateColorCodes('&', format);
+        //Replaces invalid format characters if there are any leftovers
         return format;
     }
 }
