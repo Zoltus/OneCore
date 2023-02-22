@@ -23,7 +23,7 @@ public class TeleportHandler implements Listener {
         if (toLoc != null
                 && user.getTeleport() != null
                 && !fromLoc.getBlock().equals(toLoc.getBlock())) {
-            Teleport teleport = user.getTeleport();
+            DelayedTeleport teleport = user.getTeleport();
             if (teleport != null) {
                 user.getTeleport().cancel(TP_CANCELLED_BY_MOVEMENT.getString());
             }
@@ -36,7 +36,7 @@ public class TeleportHandler implements Listener {
         if (e.getEntity() instanceof Player p) {
             if (p.hasMetadata("NPC")) return;
             User user = User.of(p);
-            Teleport teleport = user.getTeleport();
+            DelayedTeleport teleport = user.getTeleport();
             if (teleport != null) {
                 user.getTeleport().cancel(TP_CANCELLED_BY_DAMAGE.getString());
             }

@@ -8,7 +8,7 @@ import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import io.github.zoltus.onecore.player.teleporting.Teleport;
+import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +38,7 @@ public class User {
     private final UUID uniqueId;
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
-    private Teleport teleport;
+    private DelayedTeleport teleport;
 
     //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
@@ -101,9 +101,9 @@ public class User {
             LocationUtils.teleportSafeAsync(p, loc);
         } else {
             if (obj instanceof User target) {
-                teleport = new Teleport(this, target);
+                teleport = new DelayedTeleport(this, target);
             } else if (obj instanceof Location loc) {
-                teleport = new Teleport(this, loc);
+                teleport = new DelayedTeleport(this, loc);
             }
         }
     }

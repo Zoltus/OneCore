@@ -14,8 +14,6 @@ public enum Lang implements IConfig {
     BACK_TARGET_SENT("back.target-sent"),
     BROADCAST_PREFIX("broadcast.prefix"),
     CLEAR_PLAYER_CLEARED_CHAT("clear.player-cleared-chat"),
-    //todo used only on back?
-    COOLDOWN_BYPASS_PERMISSION("other.cooldown-bypass-permission"),
     DELHOME_DELETED("homes.delete.deleted"),
     DELHOME_OTHER("homes.delete.other"),
     SETHOME_OTHER("homes.set.other"),
