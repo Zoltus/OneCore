@@ -3,6 +3,7 @@ package io.github.zoltus.onecore.player.command.arguments;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
+import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,7 +29,7 @@ public class OfflinePlayerArgument extends CustomArgument<OfflinePlayer, String>
             } else {
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(input);
                 //Bukkit.getOfflinePlayers()
-                if (!offP.hasPlayedBefore()) {
+                if (!offP.hasPlayedBefore() || User.of(offP) == null) {
                     throw new CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
                 } else {
                     return offP;
