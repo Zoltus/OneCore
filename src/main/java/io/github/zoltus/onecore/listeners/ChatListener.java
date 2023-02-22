@@ -26,28 +26,22 @@ public class ChatListener implements Listener {
     }
 
     private void handleMentions(AsyncPlayerChatEvent e) {
-        if (!e.getPlayer().hasPermission(Config.MENTION_PERMISSION.asPermission())) {
+        Player p = e.getPlayer();
+        if (!p.hasPermission(Config.MENTION_PERMISSION.asPermission())) {
             return;
         }
-        String formatted = String.format(e.getFormat(), e.getPlayer().getName(), e.getMessage());
-        Matcher matcher = Pattern.compile("@(\\w+)").matcher(formatted);
+        String message = e.getMessage();
+        Matcher matcher = Pattern.compile("@(\\w+)").matcher(message);
         while (matcher.find()) {
             Player target = Bukkit.getPlayer(matcher.group(1));
             int start = matcher.start();
             if (target != null /*&& !player.equals(sender)*/) {
-                e.setCancelled(true);
-                String beforeColor = ChatColor.getLastColors(formatted.substring(0, start));
+                String beforeColor = ChatColor.getLastColors(message.substring(0, start));
                 String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                String mentionMessage = formatted.replace(matcher.group(),
+                message = message.replace(matcher.group(),
                         Config.MENTION_COLOR.getString() + target.getDisplayName() + continueColor);
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    if (player.equals(target)) {
-                        player.sendMessage(mentionMessage);
-                        target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
-                    } else {
-                        player.sendMessage(formatted);
-                    }
-                });
+                target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+                e.setMessage(message);
             }
         }
     }
