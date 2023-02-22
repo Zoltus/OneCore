@@ -1,20 +1,14 @@
 Data:
   other:
-    cooldown-bypass-permission: cooldowns.bypass
-    invalid-amount: '{p} Kelvoton määrä'
-    invalid-range: '{p} Kelvoton säde'
+    invalid-amount: '{p} §cKelvoton määrä!'
+    invalid-range: '{p} §cKelvoton säde!'
     # <player>
     joined: '&a&l+ &7<player>'
     # <player>
     quit: '&c&l- &7<player>'
     kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
-    mention-color: '&x&0&0&f&f&0&0&l'
-    mention-permission: mention
-    mention-sound: ITEM_GOAT_HORN_SOUND_0
-    player-never-visited-server: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
-    player-not-found: '{p} Pelaajaa ei ole paikalla tai ei löytynyt'
-    player-only-command: '{p} Tämä komento on vain PELAAJILLE!'
-    world-not-found: '{p} Maailmaa ei löytynyt'
+    player-never-visited-server: '{p} Pelaajaa ei löytynyt!'
+    world-not-found: '{p} Maailmaa ei löytynyt!'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>
     nodes:

@@ -42,7 +42,7 @@ public interface IConfig {
     String getPath();
 
     default String getString() {
-        String prefix = Yamls.CONFIG.getYml().getOrDefault("Data.prefix");
+        String prefix = Config.PREFIX.get();
         String configValue = yml().getOrDefault("Data." + getPath());
         String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
         return ChatColor.translateAlternateColorCodes('&', message);
