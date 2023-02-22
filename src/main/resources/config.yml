@@ -34,6 +34,7 @@ Data:
     # If true it resets velocity on command & plugin teleports
     velocity-reset: true
     with-vehicle-permission: teleport.withvehicle
+    force-spawn-onjoin: false
   economy:
     # Minutes
     baltop-update-interval: 5

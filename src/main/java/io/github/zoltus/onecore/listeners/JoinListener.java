@@ -2,8 +2,10 @@ package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.IConfig;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -42,8 +44,11 @@ public record JoinListener(OneCore plugin) implements Listener {
      * @param e event
      */
     @EventHandler
-    public void onLeave(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
+        if (Config.TELEPORT_SPAWN_ONJOIN.getBoolean()) {
+            p.teleport(Spawn.getSpawn());
+        }
     }
 }
