@@ -1,6 +1,5 @@
 Data:
   other:
-    invalid-amount: '{p} §cKelvoton määrä!'
     invalid-range: '{p} §cKelvoton säde!'
     # <player>
     joined: '&a&l+ &7<player>'
