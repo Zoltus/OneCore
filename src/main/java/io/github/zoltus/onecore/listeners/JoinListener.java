@@ -7,6 +7,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,7 +49,12 @@ public record JoinListener(OneCore plugin) implements Listener {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
         if (Config.TELEPORT_SPAWN_ONJOIN.getBoolean()) {
-            p.teleport(Spawn.getSpawn());
+            Location spawn = Spawn.getSpawn();
+            if (spawn == null) {
+                p.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
+            } else {
+                p.teleport(spawn);
+            }
         }
     }
 }
