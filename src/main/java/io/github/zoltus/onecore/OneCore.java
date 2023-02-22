@@ -6,6 +6,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.data.database.Database;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
@@ -17,30 +18,13 @@ import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginLoadOrder;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.dependency.Library;
-import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
-import org.bukkit.plugin.java.annotation.plugin.*;
-import org.bukkit.plugin.java.annotation.plugin.author.Author;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@Plugin(name = "MotiCore", version = "1.0-Beta")
-@Description("Core plugin for any type of server.")
-@Author("Zoltus")
-@Website("https://www.spigotmc.org/members/zoltus.306747/")
-@LogPrefix("MotiCore")
-@ApiVersion(ApiVersion.Target.v1_19)
-@LoadOrder(PluginLoadOrder.POSTWORLD)
-@SoftDependency("Vault")
-@SoftDependency("PlaceholderAPI")
-@Library("org.bstats:bstats-bukkit:3.0.0")
-@Library("org.apache.commons:commons-compress:1.21")
-@Library("org.apache.logging.log4j:log4j-core:2.18.0")
-// @Library("dev.jorel:commandapi-shade:9.0.0-SNAPSHOT") Coming when snapshot is released
 @Getter
 public final class OneCore extends JavaPlugin {
 
@@ -109,15 +93,17 @@ public final class OneCore extends JavaPlugin {
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        List.of(
-                "",
-                "§f                    o O O",
-                "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
-                "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
-                "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{==§71.0§8==|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
-                "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
-                ""
-        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            List.of(
+                    "",
+                    "§f                    o O O",
+                    "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
+                    "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
+                    "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
+                    "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
+                    ""
+            ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
+        });
     }
 
     private void registerListeners() {

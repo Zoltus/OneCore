@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
