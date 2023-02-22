@@ -11,6 +11,7 @@ import io.github.zoltus.onecore.player.teleporting.Request;
 import io.github.zoltus.onecore.player.teleporting.Teleport;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -30,7 +31,8 @@ public class User {
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
-    private final List<Location> lastLocations = new ArrayList<>();
+    @Getter @Setter
+    private Location lastLocation;
     private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
@@ -104,20 +106,6 @@ public class User {
                 teleport = new Teleport(this, loc);
             }
         }
-    }
-
-    /*
-     * Random
-     */
-
-    /**
-     * Gets players last location.
-     *
-     * @param skip locations
-     * @return last location
-     */
-    public Location getLastLocation(int skip) {
-        return (lastLocations.isEmpty() || skip > lastLocations.size()) ? null : lastLocations.get(lastLocations.size() - skip);
     }
 
     /*

@@ -4,7 +4,6 @@ Data:
   spawn: []
   prefix: '&f&lMoti&a&lMaa &8&l»&7'
   permission-prefix: onecore.
-  back-history-size: 10
   baltop-update-interval: 5
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5

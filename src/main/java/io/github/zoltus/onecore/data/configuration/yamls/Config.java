@@ -8,7 +8,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum Config implements IConfig {
-    BACK_HISTORY_SIZE("back-history-size"),
     BACKUPS_STATS_ENABLED("backups.stats-enabled"),
     BACKUPS_DATABASE_ENABLED("backups.database-enabled"),
     BACKUPS_PLAYERDATA_ENABLED("backups.playerdata-enabled"),
