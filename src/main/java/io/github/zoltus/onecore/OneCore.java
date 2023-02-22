@@ -90,7 +90,7 @@ public final class OneCore extends JavaPlugin {
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             List.of(
                     "",
                     "§f                    o O O",
@@ -100,7 +100,7 @@ public final class OneCore extends JavaPlugin {
                     "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
                     ""
             ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
-        });
+        },0, 2);
     }
 
     private void registerListeners() {
