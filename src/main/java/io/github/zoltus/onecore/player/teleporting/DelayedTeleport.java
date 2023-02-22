@@ -12,7 +12,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Config.TELEPORT_
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_STARTED;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_TARGET_QUIT;
 
-public class Teleport {
+public class DelayedTeleport {
 
     private static final OneCore plugin = OneCore.getPlugin();
     private static final int DELAY = TELEPORT_DELAY.getInt();
@@ -22,13 +22,13 @@ public class Teleport {
     private User target;
     private final BukkitTask teleTask;
 
-    public Teleport(User user, Location loc) {
+    public DelayedTeleport(User user, Location loc) {
         this.loc = loc;
         this.user = user;
         this.teleTask = start();
     }
 
-    public Teleport(User user, User target) {
+    public DelayedTeleport(User user, User target) {
         this.target = target;
         this.user = user;
         this.teleTask = start();
