@@ -39,15 +39,15 @@ public class ChatListener implements Listener {
                 e.setCancelled(true);
                 String beforeColor = ChatColor.getLastColors(orginal.substring(0, start));
                 String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                String message = orginal.replace(matcher.group(),
+                String formatted = String.format(e.getFormat(), e.getPlayer().getName(), orginal);
+                String mentionMessage = formatted.replace(matcher.group(),
                         Config.MENTION_COLOR.getString() + target.getDisplayName() + continueColor);
-                String formatted = String.format(e.getFormat(), e.getPlayer().getName(), message);
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     if (player.equals(target)) {
-                        player.sendMessage(formatted);
+                        player.sendMessage(mentionMessage);
                         target.playSound(target.getLocation(), Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
                     } else {
-                        player.sendMessage(orginal);
+                        player.sendMessage(formatted);
                     }
                 });
             }
