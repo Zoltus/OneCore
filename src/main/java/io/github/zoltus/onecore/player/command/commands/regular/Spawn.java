@@ -9,6 +9,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -17,22 +18,22 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
 public class Spawn implements ICommand {
 
-    private static final OneYml config = Yamls.CONFIG.getYml();
-
     public static Location getSpawn() {
-        return config.getLocation("Data.spawn");
+        return Yamls.CONFIG.getYml().getLocation("Data.spawn");
     }
 
     public static void setSpawn(Location location) {
-        config.set("Data.spawn", location);
-        config.save();
-        config.reload();
+        OneYml yml = Yamls.CONFIG.getYml();
+        yml.set("Data.spawn", location);
+        yml.save();
+        yml.reload();
     }
 
     @Override
     public void init() {
         //spawn <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.SPAWN_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     Location spawn = getSpawn();
                     if (spawn == null) {
@@ -41,7 +42,7 @@ public class Spawn implements ICommand {
                         OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                         Player p = offTarget.getPlayer();
                         if (p != null) {
-                            p.teleport(spawn);
+                            LocationUtils.teleportSafeAsync(p, spawn);
                         } else {
                             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
                             nbtPlayer.setLocation(spawn);

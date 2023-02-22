@@ -2,8 +2,10 @@ package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.IConfig;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,22 +22,20 @@ public record JoinListener(OneCore plugin) implements Listener {
         AsyncPlayerPreLoginEvent.Result result = e.getLoginResult();
         if (result == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(e.getUniqueId());
-            join(offP);
+            if (User.of(offP) == null) {
+                new User(offP);
+            }
         }
     }
 
     //Loads onlineplayers if they didnt exists on database
-    //Adds better support for reloading
+    //Adds better support for loading plugin midgame
     public static void loadOnlinePlayers() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            join(p);
-        }
-    }
-
-    private static void join(OfflinePlayer offP) {
-        if (User.of(offP) == null) {  //If user isnt in map or in the database it creates new one
-            new User(offP);
-        }
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            if (User.of(p) == null) {
+                new User(p);
+            }
+        });
     }
 
     /**
@@ -44,8 +44,11 @@ public record JoinListener(OneCore plugin) implements Listener {
      * @param e event
      */
     @EventHandler
-    public void onLeave(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
+        if (Config.TELEPORT_SPAWN_ONJOIN.getBoolean()) {
+            p.teleport(Spawn.getSpawn());
+        }
     }
 }
