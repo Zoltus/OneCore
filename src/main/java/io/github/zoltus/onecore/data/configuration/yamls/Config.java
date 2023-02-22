@@ -37,6 +37,7 @@ public enum Config implements IConfig {
     TELEPORT_CD_BYPASS("teleport.cooldown-bypass-permission"),
     TELEPORT_VELOCITY_RESET("teleport.velocity-reset"),
     TELEPORT_WITH_VEHICLE("teleport.with-vehicle-permission"),
+    TELEPORT_SPAWN_ONJOIN("teleport.force-spawn-onjoin"),
     USER_CONSOLE_FILTER("user-console-filter");
 
     @Getter
