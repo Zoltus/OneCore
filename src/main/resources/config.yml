@@ -3,19 +3,26 @@
 Data:
   spawn: []
   prefix: '&f&lMoti&a&lMaa &8&l»&7'
+  # This prefix will be infront of all onecore permissions.
   permission-prefix: moticore.
-  baltop-update-interval: 5
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
   kicked-for-spamming-bypass: kick.bypass
   user-console-filter: true
-  mentions-enabled: true
+  mentions:
+    enabled: true
+    # Color of the mention
+    color: '&x&0&0&f&f&0&0&l'
+    # Permission to mention players
+    permission: mention
+    # Sound to play when mentioned
+    sound: ITEM_GOAT_HORN_SOUND_0
   chat:
     color-permission: chat.colors
     colors-enabled: true
     formatter-enabled: true
     # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
-    format: '%vault_prefix%{0}&f: {1}'
+    format: '&3[&b&l%clv_player_level%&3]&b&l%yhteiso_short% %vault_prefix%{0}&f: {1}'
   sign:
     color-permission: sign.colors
     shift-edit-permission: sign.edit
@@ -23,8 +30,8 @@ Data:
   teleport:
     cooldown-bypass-permission: teleport.bypass
     delay: 3
-    expire: 10
-  # If true it resets velocity on command & plugin teleports
+    expire: 30
+    # If true it resets velocity on command & plugin teleports
     velocity-reset: true
     with-vehicle-permission: teleport.withvehicle
   economy:
