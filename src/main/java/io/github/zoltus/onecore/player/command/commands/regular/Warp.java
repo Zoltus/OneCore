@@ -5,6 +5,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.Yamls;
+import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
@@ -56,6 +57,7 @@ public class Warp implements ICommand {
                 });
         //warp <warp> <player>
         Argument<?> arg1 = new OfflinePlayerArgument()
+                .withPermission(Commands.WARP_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     WarpObj warp = (WarpObj) args.get(0);
                     String warpName = warp.name();

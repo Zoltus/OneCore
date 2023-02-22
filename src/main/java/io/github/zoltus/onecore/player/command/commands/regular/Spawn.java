@@ -33,6 +33,7 @@ public class Spawn implements ICommand {
     public void init() {
         //spawn <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.SPAWN_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     Location spawn = getSpawn();
                     if (spawn == null) {

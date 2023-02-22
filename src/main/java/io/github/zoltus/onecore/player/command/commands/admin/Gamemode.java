@@ -28,6 +28,7 @@ public class Gamemode implements ICommand {
                 });
         //gamemode creative <player>
         Argument<?> arg1 = new OfflinePlayerArgument()
+                .withPermission(GAMEMODE_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     handleTarget(sender, (OfflinePlayer) args.get(1), (GameMode) args.get(0));
                 });
