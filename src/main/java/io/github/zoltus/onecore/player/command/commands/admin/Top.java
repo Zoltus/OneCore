@@ -18,6 +18,7 @@ public class Top implements ICommand {
     public void init() {
         //top <player>
         Argument<Player> arg0 = new PlayerArgument()
+                .withPermission(Commands.TOP_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     executes(sender, (Player) args.get(0));
                 });

@@ -18,6 +18,7 @@ public class Feed implements ICommand {
     public void init() {
         //feed <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.FEED_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer target = (OfflinePlayer) args.get(0);
                     feed(target);

@@ -24,11 +24,13 @@ public class Fly implements ICommand {
     public void init() {
         //fly <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(Commands.FLY_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     handle(sender, (OfflinePlayer) args.get(0), null);
                 });
         //fly <player> true/false
         Argument<?> arg1 = new BooleanArgument(Lang.NODES_TRUE_FALSE.getString())
+                .withPermission(Commands.FLY_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     handle(sender, (OfflinePlayer) args.get(0), (Boolean) args.get(1));
                 });
