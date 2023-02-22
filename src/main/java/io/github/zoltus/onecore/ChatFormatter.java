@@ -21,13 +21,10 @@ public class ChatFormatter implements Listener {
     public void asyncChatEvent(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
         MiniMessage minimessage = MiniMessage.builder().tags(StandardTags.defaults()).build();
-
         //Enables chat colors
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-
             String legacy = LegacyComponentSerializer.legacyAmpersand().serialize(minimessage .deserialize(e.getMessage()));
-
             e.setMessage(ChatColor.translateAlternateColorCodes('&', legacy));
         }
         //Formats chat
@@ -39,7 +36,7 @@ public class ChatFormatter implements Listener {
                 format = PlaceholderAPI.setPlaceholders(player, format);
             }
             try {
-                format = LegacyComponentSerializer.legacyAmpersand().serialize(minimessage .deserialize(format.replace("§", "&")));
+                format = LegacyComponentSerializer.legacyAmpersand().serialize(minimessage.deserialize(format.replace("§", "&")));
                 e.setFormat(ChatColor.translateAlternateColorCodes('&', format));
             } catch (IllegalFormatException ex) {
                 Bukkit.getLogger().warning("Chat format is invalid! " +
