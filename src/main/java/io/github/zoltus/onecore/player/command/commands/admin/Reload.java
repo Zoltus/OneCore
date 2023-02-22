@@ -20,10 +20,7 @@ public class Reload implements ICommand {
                         .withPermission(RELOAD_PERMISSION.asPermission())
                         .executes((sender, args) -> {
                             //Reloads all ymls
-                            Stream.of(Yamls.values()).forEach(yaml -> {
-                                yaml.getYml().save();
-                                yaml.getYml().reload();
-                            });
+                            Stream.of(Yamls.values()).forEach(yaml -> yaml.getYml().reload());
                             //Sets all data to enums
                             RELOAD_RELOADED.send(sender);
                         }))
