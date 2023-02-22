@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.player.teleporting;
 
-import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
@@ -10,9 +9,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_LOCATIONS;
 

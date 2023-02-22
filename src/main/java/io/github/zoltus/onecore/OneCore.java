@@ -101,7 +101,7 @@ public final class OneCore extends JavaPlugin {
         plugin.getLogger().info("Saved users & settings to database...");
         //Unregisters all cmds on unload. Trying to support reloading plugin.
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
-        //Disables commandapi
+        //Disables commandapia
         CommandAPI.onDisable();
     }
 
