@@ -27,7 +27,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             if (p != null) {
                 return input;
-            } else if (!offP.hasPlayedBefore()) {
+            } else if (!offP.hasPlayedBefore() || User.of(offP) == null) {
                 throw new CustomArgument.CustomArgumentException(PLAYER_NEVER_VISITED_SERVER.getString());
             } else {
                 return input;
