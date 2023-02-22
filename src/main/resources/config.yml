@@ -16,13 +16,13 @@ Data:
     # Permission to mention players
     permission: mention
     # Sound to play when mentioned
-    sound: ITEM_GOAT_HORN_SOUND_0
+    sound: BLOCK_NOTE_BLOCK_BANJO
   chat:
     color-permission: chat.colors
     colors-enabled: true
     formatter-enabled: true
     # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
-    format: '&3[&b&l%clv_player_level%&3]&b&l%yhteiso_short% %vault_prefix%{0}&f: {1}'
+    format: '%vault_prefix%{0}&f: {1}'
   sign:
     color-permission: sign.colors
     shift-edit-permission: sign.edit
