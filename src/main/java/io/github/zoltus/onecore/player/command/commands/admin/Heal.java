@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
-import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
@@ -23,11 +22,10 @@ public class Heal implements ICommand {
         Argument<?> arg0 = new OfflinePlayerArgument()
                 .withPermission(Commands.HEAL_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
-                    User target = (User) args.get(0);
-                    Player onlineTarget = target.getPlayer();
-                    heal(onlineTarget);
-                    if (sender != target.getPlayer()) {
-                        HEAL_YOU_HEALED_TARGET.send(sender, PLAYER_PH, target.getName());
+                    OfflinePlayer offP = (OfflinePlayer) args.get(0);
+                    heal(offP);
+                    if (sender != offP.getPlayer()) {
+                        HEAL_YOU_HEALED_TARGET.send(sender, PLAYER_PH, offP.getName());
                     }
                 });
         //heal
