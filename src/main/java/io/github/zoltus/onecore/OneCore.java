@@ -71,7 +71,7 @@ public final class OneCore extends JavaPlugin {
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
         this.backupHandler.start();
-        sendArt();
+        //sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
     }
 
