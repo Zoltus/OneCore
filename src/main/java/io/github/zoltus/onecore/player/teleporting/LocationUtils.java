@@ -57,7 +57,9 @@ public class LocationUtils {
 
     //If player is on creative it will teleport to any loc
     public static Location getSafeLocation(Player p, Location loc) {
-        return p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
+        return p.getGameMode() != GameMode.CREATIVE
+                && p.getGameMode() != GameMode.SPECTATOR
+                && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
     }
 
     private static boolean isSafeLoc(Player p, Location feet) {
