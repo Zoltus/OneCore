@@ -170,7 +170,7 @@ Data:
     label: sethome
     permission: sethome
     #Usage example onecore.sethome.3
-    permission-amount: home
+    permission-amount: home.amount
     other-permission: sethome.other
     aliases: []
   #  - examplealias1
