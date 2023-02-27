@@ -1,6 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
+import dev.jorel.commandapi.arguments.LocationArgument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
@@ -28,6 +29,7 @@ public class Tp implements ICommand {
                        Lang.TP_TELEPORTED_OFFLINE_TARGET.send(sender, IConfig.PLAYER_PH, offlineTarget.getName());
                     }
                 });
+        //todo shorten
         //tp <player> <player>
         Argument<?> arg1 = new OfflinePlayerArgument("2")
                 .executes((sender, args) -> {
@@ -41,11 +43,25 @@ public class Tp implements ICommand {
                         Lang.TP_TELEPORTED_OFFLINE_TARGETS.send(sender, IConfig.PLAYER_PH, fromOff.getName(), IConfig.PLAYER2_PH, target.getName());
                     }
                 });
+        //tp <coord>
+        Argument<?> locArg = new LocationArgument("loc")
+                .executesPlayer((sender, args) -> {
+                    Location destination = (Location) args.get(0);
+                    tp(sender, destination);
+                });
+        /*//tp <coord> <player>
+        Argument<?> locArg2 = new OfflinePlayerArgument("2")
+                .withPermission("")
+                .executes((sender, args) -> {
+
+                });*/
         //tp
         new Command(Commands.TP_LABEL)
-                .withPermission(Commands.TP_PERMISSION_OTHER)
+                //todo fix perm
+                .withPermission(Commands.TP_PERMISSION)
                 .withAliases(Commands.TP_ALIASES)
                 .then(arg0.then(arg1))
+                .then(locArg)
                 .override();
         //tphere <player>
         new Command(Commands.TPHERE_LABEL)
