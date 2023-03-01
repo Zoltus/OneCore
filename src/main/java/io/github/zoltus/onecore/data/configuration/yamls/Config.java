@@ -15,6 +15,8 @@ public enum Config implements IConfig {
     CHAT_COLOR_PERMISSION("chat.color-permission"),
     CHAT_FORMATTER_ENABLED("chat.formatter-enabled"),
     CHAT_COLORS_ENABLED("chat.colors-enabled"),
+    CHAT_REMOVE_DUPLICATE_SPACES("chat.remove-doublespaces"),
+    CHAT_TRIM("chat.trim"),
     CURRENCY_PLURAL("economy.currency-plural"),
     CURRENCY_SINGULAR("economy.currency-singular"),
     DATA_SAVE_INTERVAL("data-save-interval-minutes"),
