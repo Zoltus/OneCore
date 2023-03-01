@@ -23,6 +23,10 @@ Data:
     formatter-enabled: true
     # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
     format: '%vault_prefix%{0}&f: {1}'
+    # If placeholder is empty it causes double spacing. This fixes it.
+    remove-doublespaces: true
+    # Removes whitespaces from start & end of message
+    trim: true
   sign:
     color-permission: sign.colors
     shift-edit-permission: sign.edit

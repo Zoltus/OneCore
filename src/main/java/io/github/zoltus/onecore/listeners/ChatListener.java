@@ -17,6 +17,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_REMOVE_DUPLICATE_SPACES;
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_TRIM;
+
 public class ChatListener implements Listener {
     //Chat listening event
     @EventHandler
@@ -61,6 +64,12 @@ public class ChatListener implements Listener {
             format = format.replace("{1}", "%s");
             if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
                 format = PlaceholderAPI.setPlaceholders(player, format);
+            }
+            if (CHAT_REMOVE_DUPLICATE_SPACES.getBoolean()) {
+                format = format.replace("  ", " ");
+            }
+            if (CHAT_TRIM.getBoolean()) {
+                format = format.trim();
             }
             //replaces %s with the player name and the message
             e.setFormat(formatColors(format));
