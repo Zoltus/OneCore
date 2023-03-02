@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
@@ -26,6 +28,18 @@ public class Back implements ICommand, Listener {
         if (p.hasMetadata("NPC")) return;
         if (user != null) {
             user.setLastLocation(e.getFrom());
+        }
+    }
+
+
+    @EventHandler
+    public void onEntityDeath(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        if (!p.hasMetadata("NPC")) {
+            User user = User.of(p);
+            if (user != null) {
+                user.setLastLocation(p.getLocation());
+            }
         }
     }
 
