@@ -4,6 +4,7 @@ import io.github.zoltus.onecore.player.User;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -13,7 +14,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_CANCELLE
 
 public class TeleportHandler implements Listener {
     // Cancels Teleport on Move
-    @EventHandler
+    @EventHandler (priority = EventPriority.MONITOR)
     public static void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         if (p.hasMetadata("NPC")) return;
@@ -31,10 +32,11 @@ public class TeleportHandler implements Listener {
     }
 
     // Cancels if damaged
-    @EventHandler
+    @EventHandler (priority = EventPriority.MONITOR)
     public static void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player p) {
-            if (p.hasMetadata("NPC")) return;
+            if (p.hasMetadata("NPC") || e.isCancelled())
+                return;
             User user = User.of(p);
             DelayedTeleport teleport = user.getTeleport();
             if (teleport != null) {
