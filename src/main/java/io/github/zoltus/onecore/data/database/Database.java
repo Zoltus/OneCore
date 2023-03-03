@@ -127,7 +127,7 @@ public class Database {
         }
     }
 
-    private User userFromResult(OfflinePlayer offP, ResultSet rs) throws SQLException {
+    private void userFromResult(OfflinePlayer offP, ResultSet rs) throws SQLException {
         boolean tpenabled = rs.getBoolean("tpenabled");
         String homes = rs.getString("homes");
         double balance = rs.getDouble("balance");
@@ -139,7 +139,6 @@ public class Database {
             newUser.setHomes(gson.fromJson(homes, new TypeToken<HashMap<String, PreLocation>>() {
             }.getType()));
         }
-        return newUser;
     }
 
     public static class DataBaseException extends RuntimeException {
