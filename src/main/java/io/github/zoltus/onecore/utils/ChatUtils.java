@@ -7,14 +7,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatUtils {
 
-    private static OneCore plugin = OneCore.getPlugin();
+    private static final OneCore plugin = OneCore.getPlugin();
     private static final MiniMessage mm = MiniMessage.miniMessage();
     private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
     // for detecting #8f8f8f
