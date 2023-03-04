@@ -48,7 +48,6 @@ public class Tp implements ICommand {
                                 IConfig.PLAYER2_PH, target.getName());
                     }
                 });
-
         //tp <coord> <player>
         Argument<?> locArg2 = new OfflinePlayerArgument("2")
                 .withPermission("")
@@ -66,7 +65,6 @@ public class Tp implements ICommand {
                 }).then(locArg2);
         //tp
         new Command(Commands.TP_LABEL)
-                //todo fix perm
                 .withPermission(Commands.TP_PERMISSION)
                 .withAliases(Commands.TP_ALIASES)
                 .then(arg0.then(arg1))
