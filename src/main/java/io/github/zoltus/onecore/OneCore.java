@@ -13,6 +13,7 @@ import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
 import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
 import lombok.Getter;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -31,6 +32,7 @@ public final class OneCore extends JavaPlugin {
     private Database database;
     private BackupHandler backupHandler;
     private CommandHandler commandHandler;
+    private BukkitAudiences adventure;
 
     @Override
     public void onLoad() {
@@ -50,6 +52,8 @@ public final class OneCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        //Enabled adventure support for bukkit
+        this.adventure = BukkitAudiences.create(this);
         //Loads CommandAPI
         CommandAPI.onEnable();
         long time = System.currentTimeMillis();
@@ -84,7 +88,19 @@ public final class OneCore extends JavaPlugin {
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
         //Disables commandapia
         CommandAPI.onDisable();
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
+
+    public BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
+
 
     /**
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
