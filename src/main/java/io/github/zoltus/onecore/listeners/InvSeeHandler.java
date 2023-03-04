@@ -45,7 +45,7 @@ public class InvSeeHandler implements Listener {
             items.forEach((key, item) -> {
                 int slot = key;
                 //Check it to make sure inv is same size, and will only set storage contents
-                if (slot < inv.getSize()) {
+                if (slot > -1 && slot < inv.getSize()) {
                     inv.setItem(slot, item);
                 }
             });
