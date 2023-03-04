@@ -34,8 +34,6 @@ public interface IConfig {
     String WORLD_PH = "<world>";
     String WEATHER_PH = "<weather>";
     String LINE_PH = "<line>";
-    String ACCEPT_PH = "<accept>";//Todo
-    String DENY_PH = "<deny>";//Todo
 
     OneYml yml();
 
