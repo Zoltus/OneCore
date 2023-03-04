@@ -221,18 +221,17 @@ Data:
     teleported-target: '{p} Teled <player> To top'
     telported: '{p} TeledToTop'
   tp:
-    accept-button: '&aHyväksy'
-    accept-button-hover: '&aPaina hyväksyäksesi!'
+    #Sends as component
+    # <player>
+    received: '{p} Saapunut pyyntö pelaajalta <player>'
     # <player>
     accepted: '{p} <player> hyväksyi pyyntösi'
+    # <player>
+    denied: '{p} Pyyntösi pelaajalle <player> hylättiin'
     cancelled-by-damage: '{p} Teleporttaus peruutettu koska vahingoituit.'
     cancelled-by-new-teleport: '{p} Teleporttaus peruutettu toisen teleportin takia.'
     cancelled-by-movement: '{p} Teleporttaus peruutettu liikkumisen takia.'
     cant-self-teleport: '{p} Et voi lähettää pyyntöä itsellesi.'
-    # <player>
-    denied: '{p} Pyyntösi pelaajalle <player> hylättiin'
-    deny-button: '&cHylkää'
-    deny-button-hover: '&cPaina hylätäksesi!'
     expired: '{p} expired'
     no-requests: '{p} Ei pyyntöjä.'
     no-safe-locations: '{p} Turvallista paikkaa ei löytynyt.'
@@ -245,11 +244,7 @@ Data:
     # <player>, <player2>
     teleported-targets: '{p} Teleportattu pelaaja <player> kohteeseen <player2>'
     # <player>
-    received: '{p} Saapunut pyyntö pelaajalta <player>'
-    # <accept>, <deny>
-    received-accept-line: <accept> | <deny>
-    # <player>
-    sent: '{p} lähetetty pelaajalle <player>'
+    sent: '{p} Lähetetty pelaajalle <player>'
     # <seconds>
     started: '{p} Teleporttaus käynnissä älä liiku, teleportataan <seconds> sekunnissa'
     # <player>
