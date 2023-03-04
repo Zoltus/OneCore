@@ -3,7 +3,6 @@ package io.github.zoltus.onecore.listeners;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
@@ -21,6 +20,9 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_REMO
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_TRIM;
 
 public class ChatListener implements Listener {
+    private static final MiniMessage mm = MiniMessage.miniMessage();
+    private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
     //Chat listening event
     @EventHandler
     public void asyncChatEvent(AsyncPlayerChatEvent e) {
@@ -55,7 +57,7 @@ public class ChatListener implements Listener {
         //Enables chat colors
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-            e.setMessage(formatColors(e.getMessage()));
+            e.setMessage(translareColors(e.getMessage()));
         }
         //Formats chat
         if (Config.CHAT_FORMATTER_ENABLED.getBoolean()) {
@@ -72,17 +74,17 @@ public class ChatListener implements Listener {
                 format = format.trim();
             }
             //replaces %s with the player name and the message
-            e.setFormat(formatColors(format));
+            e.setFormat(translareColors(format));
         }
     }
 
-    private String formatColors(String format) {
-        MiniMessage mm = MiniMessage.builder().tags(StandardTags.defaults()).build();
-        format = LegacyComponentSerializer.legacyAmpersand().serialize(mm.deserialize(format.replace("§", "&")));
-        format = ChatColor.translateAlternateColorCodes('&', format);
-        //Replaces invalid format characters if there are any leftovers
-        return format;
+    public static String translareColors(String str) {
+        str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
+        str = ChatColor.translateAlternateColorCodes('&', str);
+        return str;
     }
+
+
 }
 
 
