@@ -12,7 +12,7 @@ public class TeleportVelocity implements Listener {
      * @param e Event
      */
     @EventHandler
-    public void onjoin(PlayerTeleportEvent e) {
+    public void onTeleport(PlayerTeleportEvent e) {
         Player p = e.getPlayer();
         PlayerTeleportEvent.TeleportCause cause = e.getCause();
         if ((cause == PlayerTeleportEvent.TeleportCause.PLUGIN
