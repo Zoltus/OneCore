@@ -226,7 +226,7 @@ Data:
     #Sends as component
     # <player>
     received: '{p} Saapunut pyyntö pelaajalta <player>
-    <br><hover:show_text:''<green>Painaahyväksyäksesi!''><click:run_command:''/tpaccept''><green>Hyväksy!</click></hover>
+      <br><hover:show_text:''<green>Painaahyväksyäksesi!''><click:run_command:''/tpaccept''><green>Hyväksy!</click></hover>
       | <hover:show_text:''<red>Paina hylkääksesi!''><click:run_command:''/tpdeny''><red>Hylkää!</click></hover>'
     # <player>
     accepted: '{p} <player> hyväksyi pyyntösi'
