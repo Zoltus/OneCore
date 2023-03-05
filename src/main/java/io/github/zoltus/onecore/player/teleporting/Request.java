@@ -4,9 +4,7 @@ package io.github.zoltus.onecore.player.teleporting;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.utils.ChatUtils;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -100,6 +98,6 @@ public class Request {
 
     private void sendChat() {
         sender.sendMessage(TP_SENT.replace(PLAYER_PH, accepter.getName()));
-        TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName());
+        TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName(), TYPE_PH, type.name());
     }
 }
