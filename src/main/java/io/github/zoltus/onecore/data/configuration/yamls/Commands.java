@@ -75,7 +75,6 @@ public enum Commands implements IConfig {
     GAMEMODE_LABEL("gamemode.label"),
     GAMEMODE_OTHER_PERMISSION("gamemode.other-permission"),
     GAMEMODE_PERMISSION("gamemode.permission"),
-    GAMEMODE_MODE_PERMISSION("gamemode.mode-permission"),
     GAMEMODE_SUGGESTIONS("gamemode.suggestions"),
     GOD_ALIASES("god.aliases"),
     GOD_ENABLED("god.enabled"),
