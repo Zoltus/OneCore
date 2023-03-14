@@ -35,6 +35,7 @@ public class DelayedTeleport {
         this.teleTask = start();
     }
 
+    //Todo offline support, mayby on quitevent finish teleport, and cancel task?
     private BukkitTask start() {
         TP_STARTED.send(user, SECONDS_PH, DELAY);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
