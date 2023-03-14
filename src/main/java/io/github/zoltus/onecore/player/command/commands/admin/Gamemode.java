@@ -1,6 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
+import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.GamemodeArgument;
@@ -23,8 +24,13 @@ public class Gamemode implements ICommand {
                 .executesPlayer((player, args) -> {
                     GameMode gm = (GameMode) args.get(0);
                     String gmName = getGmName(gm);
-                    player.setGameMode(gm);
-                    GAMEMODE_CHANGED.send(player, MODE_PH, gmName);
+                    String perm = GAMEMODE_LABEL.asPermission() + "." + gm.toString().toLowerCase();
+                    if (player.hasPermission(perm)) {
+                        player.setGameMode(gm);
+                        GAMEMODE_CHANGED.send(player, MODE_PH, gmName);
+                    } else {
+                        NO_PERMISSION.send(player, IConfig.PERM_PH, perm);
+                    }
                 });
         //gamemode creative <player>
         Argument<?> arg1 = new OfflinePlayerArgument()
@@ -42,9 +48,10 @@ public class Gamemode implements ICommand {
 
     /**
      * Handle target gamemode command.
-     * @param sender Command sender
+     *
+     * @param sender    Command sender
      * @param offTarget Offline player
-     * @param gm Game mode
+     * @param gm        Game mode
      */
     private void handleTarget(CommandSender sender, OfflinePlayer offTarget, GameMode gm) {
         Player target = offTarget.getPlayer();
@@ -76,7 +83,6 @@ public class Gamemode implements ICommand {
     }
 
     /**
-     *
      * @param gm Gamemode
      * @return Gamemode translation from config
      */

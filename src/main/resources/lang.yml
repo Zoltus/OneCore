@@ -10,6 +10,8 @@ Data:
     kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
     player-never-visited-server: '{p} Pelaajaa ei löytynyt.'
     world-not-found: '{p} Maailmaa ei löytynyt!'
+    # <perm>
+    no-permission: '{p} Sinulta puuttuu oikeus: <perm>!'
     # Command nodes, Tells what to type for command arguments
     # for example /home <home-name-node>
     nodes:

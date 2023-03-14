@@ -74,6 +74,7 @@ public enum Lang implements IConfig {
     NODES_WARP_NAME("other.nodes.warp-name"),
     NODES_WEATHER("other.nodes.weather"),
     NODES_WORLD_NAME("other.nodes.world-name"),
+    NO_PERMISSION("other.no-permission"),
     PING_TARGETS_PING("ping.targets-ping"),
     PING_YOUR_PING("ping.your-ping"),
     PLAYER_NEVER_VISITED_SERVER("other.player-never-visited-server"),
