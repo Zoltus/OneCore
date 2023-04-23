@@ -16,7 +16,7 @@ import java.util.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class EconomyCMD implements ICommand {
+public class Ecomomy implements ICommand {
 
     @Override
     public void init() {
