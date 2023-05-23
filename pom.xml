@@ -15,14 +15,14 @@
         <spigotAPI.version>1.19.4-R0.1-SNAPSHOT</spigotAPI.version>
         <spigot.server.version>1.19.4-R0.1-SNAPSHOT</spigot.server.version>
         <lombok.version>1.18.24</lombok.version>
-        <bstats.version>3.0.1</bstats.version>
+        <bstats.version>3.0.2</bstats.version>
         <vault.version>1.7.1</vault.version>
         <nbtapi.version>2.11.2</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.3</placeholderapi.version>
-        <commandapi.version>9.0.0-SNAPSHOT</commandapi.version>
+        <commandapi.version>9.0.1</commandapi.version>
         <!-- Maven -->
         <maven.compiler.release>17</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -170,12 +170,12 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-legacy</artifactId>
-            <version>4.13.0</version>
+            <version>4.13.1</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.13.0</version>
+            <version>4.13.1</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
