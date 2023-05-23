@@ -17,7 +17,8 @@ public class GamemodeArgument extends CustomArgument<GameMode, String> implement
         super(new StringArgument(Lang.NODES_GAMEMODE.getString()), info -> {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
-                throw new CustomArgument.CustomArgumentException(Lang.GAMEMODE_INVALID_GAMEMODE.getString());
+                
+                throw CustomArgumentException.fromString(Lang.GAMEMODE_INVALID_GAMEMODE.getString());
             } else {
                 return gm;
             }

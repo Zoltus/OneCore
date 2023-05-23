@@ -29,7 +29,7 @@ public class Time implements ICommand {
         return new CustomArgument<>(new StringArgument(NODES_TIME.getString()), info -> {
             Long time = toTime(info.input());
             if (time == null) {
-                throw new CustomArgument.CustomArgumentException(Lang.TIME_INVALID_TIME.getString());
+                throw CustomArgument.CustomArgumentException.fromString(Lang.TIME_INVALID_TIME.getString());
             } else {
                 return time;
             }

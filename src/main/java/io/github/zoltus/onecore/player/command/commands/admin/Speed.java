@@ -33,7 +33,7 @@ public class Speed implements ICommand {
                 }
                 return speed;
             } catch (Exception ex) {
-                throw new CustomArgument.CustomArgumentException(SPEED_MODE_INVALID_MODE.getString());
+                throw CustomArgument.CustomArgumentException.fromString(SPEED_MODE_INVALID_MODE.getString());
             }
         }).replaceSuggestions(ArgumentSuggestions.strings(info ->
                 toSuggestion(info.currentArg(), new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"})));
@@ -44,7 +44,7 @@ public class Speed implements ICommand {
                 new StringArgument(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString()), info -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {
-                throw new CustomArgument.CustomArgumentException(SPEED_MODE_INVALID_SPEED.getString());
+                throw CustomArgument.CustomArgumentException.fromString(SPEED_MODE_INVALID_SPEED.getString());
             } else {
                 return input;
             }

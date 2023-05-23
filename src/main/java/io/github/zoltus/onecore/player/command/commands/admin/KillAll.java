@@ -47,7 +47,7 @@ public class KillAll implements ICommand {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {
-                throw new CustomArgument.CustomArgumentException(INVALID_RANGE.getString());
+                throw CustomArgument.CustomArgumentException.fromString(INVALID_RANGE.getString());
             }
         });
     }

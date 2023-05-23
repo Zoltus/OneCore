@@ -22,7 +22,7 @@ public class Weather implements ICommand {
         return new CustomArgument<>(new StringArgument(Lang.NODES_WEATHER.getString()), info -> {
             String input = info.input();
             if (!Arrays.asList(Commands.WEATHER_SUGGESTIONS.getAsArray()).contains(input.toLowerCase())) {
-                throw new CustomArgument.CustomArgumentException(Lang.WEATHER_INVALID_WEATHER.getString());
+                throw CustomArgument.CustomArgumentException.fromString(Lang.WEATHER_INVALID_WEATHER.getString());
             } else {
                 return input;
             }
