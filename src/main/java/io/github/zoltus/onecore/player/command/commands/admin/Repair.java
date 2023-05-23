@@ -34,7 +34,7 @@ public class Repair implements ICommand {
         return new CustomArgument<>(new StringArgument(NODES_SLOT.getString()), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
-                throw new CustomArgument.CustomArgumentException(REPAIR_SLOT_INVALID_SLOT.getString());
+                throw CustomArgument.CustomArgumentException.fromString(REPAIR_SLOT_INVALID_SLOT.getString());
             } else {
                 return input;
             }

@@ -36,7 +36,7 @@ public class Warp implements ICommand {
             String input = info.input();
             Location warp =  Yamls.WARPS.getYml().getLocation(input);
             if (warp == null) {
-                throw new CustomArgument.CustomArgumentException(WARP_NOT_FOUND.replace(LIST_PH,getKeys()));
+                throw CustomArgument.CustomArgumentException.fromString(WARP_NOT_FOUND.replace(LIST_PH,getKeys()));
             } else {
                 return new WarpObj(input, warp);
             }
