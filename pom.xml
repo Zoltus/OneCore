@@ -262,7 +262,7 @@
                         </relocation>
                         <relocation>
                             <pattern>io.papermc.lib</pattern>
-                            <shadedPattern>lib.io.papermc</shadedPattern>
+                            <shadedPattern>lib.io.papermc.lib</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.tr7zw</pattern>
