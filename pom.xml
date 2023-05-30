@@ -261,7 +261,7 @@
                             <shadedPattern>io.github.zoltus.onecore</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>io.papermc</pattern>
+                            <pattern>io.papermc.lib</pattern>
                             <shadedPattern>lib.io.papermc</shadedPattern>
                         </relocation>
                         <relocation>
