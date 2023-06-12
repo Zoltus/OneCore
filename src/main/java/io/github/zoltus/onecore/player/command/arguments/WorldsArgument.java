@@ -7,6 +7,9 @@ import io.github.zoltus.onecore.player.command.IArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_WORLD_NAME;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WORLD_NOT_FOUND;
 
@@ -30,7 +33,11 @@ public class WorldsArgument extends CustomArgument<World, String> implements IAr
     }
 
     private String[] worldSuggestions(String input) {
-        return filter(input, Bukkit.getWorlds().stream()
-                .map(World::getName).toArray(String[]::new));
+        List<String> list = new ArrayList<>();
+        for (World world : Bukkit.getWorlds()) {
+            String name = world.getName();
+            list.add(name);
+        }
+        return filter(input, list.toArray(new String[0]));
     }
 }

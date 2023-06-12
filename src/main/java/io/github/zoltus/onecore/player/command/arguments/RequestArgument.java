@@ -4,7 +4,11 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
+import io.github.zoltus.onecore.player.teleporting.Request;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestArgument extends PlayerArgument implements IArgument {
     public RequestArgument() {
@@ -14,9 +18,14 @@ public class RequestArgument extends PlayerArgument implements IArgument {
     public RequestArgument(String add) {
         super(add);
         replaceSuggestions(ArgumentSuggestions
-                .strings(info -> filter(info.currentArg(), User.of((Player) info.sender())
-                .getRequests()
-                .stream().map(request -> request.getSender().getName())
-                .toArray(String[]::new))));
+                .strings(info -> {
+                    List<String> list = new ArrayList<>();
+                    for (Request request : User.of((Player) info.sender())
+                            .getRequests()) {
+                        String name = request.getSender().getName();
+                        list.add(name);
+                    }
+                    return filter(info.currentArg(), list.toArray(new String[0]));
+                }));
     }
 }
