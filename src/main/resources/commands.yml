@@ -175,8 +175,8 @@ Data:
     aliases: []
   #  - examplealias1
   invsee:
-    edit-permission: invsee.edit
     enabled: true
+    edit-permission: invsee.edit
     label: invsee
     permission: invsee.view
     aliases: []
