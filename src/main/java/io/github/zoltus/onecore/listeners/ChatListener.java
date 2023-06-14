@@ -51,6 +51,7 @@ public class ChatListener implements Listener {
         }
     }
 
+    //todo better errorcatch
     // String.format(format, this.player, this.message);
     private void handleChatFormat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
@@ -74,7 +75,14 @@ public class ChatListener implements Listener {
                 format = format.trim();
             }
             //replaces %s with the player name and the message
-            e.setFormat(translareColors(format));
+            String colorFormatted = translareColors(format);
+            try {
+                e.setFormat(colorFormatted);
+            } catch (Exception ex) {
+                System.out.println("Error while formatting chat message! " +
+                        "This might be caused by invalid placeholders in the chat format!" +
+                        "Have you installed PlaceholderAPI and its expansion? /papi ecloud download <expansion>");
+            }
         }
     }
 
