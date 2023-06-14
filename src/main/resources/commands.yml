@@ -374,14 +374,14 @@ Data:
     aliases: []
   #  - examplealias1
   weather:
+    enabled: true
+    label: weather
+    permission: weather
     clear-aliases:
       - c
       - clear
       - s
       - sun
-    enabled: true
-    label: weather
-    permission: weather
     rain-aliases:
       - rain
       - r
