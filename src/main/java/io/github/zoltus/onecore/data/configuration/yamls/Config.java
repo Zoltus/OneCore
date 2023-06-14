@@ -27,6 +27,7 @@ public enum Config implements IConfig {
     MENTIONS_ENABLED("mentions.enabled"),
     MENTION_COLOR("mentions.color"),
     MENTION_PERMISSION("mentions.permission"),
+    MENTION_EVERYONE_PERMISSION("mentions.mention-everyone-permission"),
     MENTION_SOUND("mentions.sound"),
     PERMISSION_PREFIX("permission-prefix"),
     PREFIX("prefix"),

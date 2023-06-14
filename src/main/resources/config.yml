@@ -15,6 +15,8 @@ Data:
     color: '&x&0&0&f&f&0&0&l'
     # Permission to mention players
     permission: mention
+    # Permission to mention everyone
+    mention-everyone-permission: mention-everyone
     # Sound to play when mentioned
     sound: BLOCK_NOTE_BLOCK_BANJO
   chat:

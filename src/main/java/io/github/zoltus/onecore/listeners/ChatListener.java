@@ -30,22 +30,35 @@ public class ChatListener implements Listener {
         handleMentions(e);
     }
 
+    //todo @everyone bugs a bit with normal mentions if combines "hi@everyone a dd@Zoltus abb"
     private void handleMentions(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         if (!p.hasPermission(Config.MENTION_PERMISSION.asPermission())) {
             return;
         }
         String message = e.getMessage();
-        Matcher matcher = Pattern.compile("@(\\w+)").matcher(message);
+        //Handle @<player>
+        Matcher matcher = Pattern.compile("@(\\w+)|@everyone").matcher(message);
         while (matcher.find()) {
-            Player target = Bukkit.getPlayer(matcher.group(1));
             int start = matcher.start();
-            if (target != null /*&& !player.equals(sender)*/) {
-                String beforeColor = ChatColor.getLastColors(message.substring(0, start));
-                String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-                message = message.replace(matcher.group(),
-                        Config.MENTION_COLOR.getString() + target.getDisplayName() + continueColor);
-                target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+            String beforeColor = ChatColor.getLastColors(message.substring(0, start));
+            String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
+            //Handle @everyone
+            if (matcher.group().equals("@everyone")) {
+                if (p.hasPermission(Config.MENTION_EVERYONE_PERMISSION.asPermission())) {
+                    for (Player target : Bukkit.getOnlinePlayers()) {
+                        message = message.replace(matcher.group(), Config.MENTION_COLOR.getString()
+                                + "@Everyone" + continueColor);
+                        target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+                    }
+                }
+            } else {
+                Player target = Bukkit.getPlayer(matcher.group(1));
+                if (target != null /*&& !player.equals(sender)*/) {
+                    message = message.replace(matcher.group(), Config.MENTION_COLOR.getString()
+                            + target.getDisplayName() + continueColor);
+                    target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+                }
             }
         }
         e.setMessage(message);
@@ -79,9 +92,9 @@ public class ChatListener implements Listener {
             try {
                 e.setFormat(colorFormatted);
             } catch (Exception ex) {
-                System.out.println("Error while formatting chat message! " +
-                        "This might be caused by invalid placeholders in the chat format!" +
-                        "Have you installed PlaceholderAPI and its expansion? /papi ecloud download <expansion>");
+                System.out.println("Error while formatting chat message! "
+                        + "This might be caused by invalid placeholders in the chat format!"
+                        + "Have you installed PlaceholderAPI and its expansion? /papi ecloud download <expansion>");
             }
         }
     }
