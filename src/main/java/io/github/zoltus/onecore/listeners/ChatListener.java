@@ -46,9 +46,9 @@ public class ChatListener implements Listener {
                 message = message.replace(matcher.group(),
                         Config.MENTION_COLOR.getString() + target.getDisplayName() + continueColor);
                 target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
-                e.setMessage(message);
             }
         }
+        e.setMessage(message);
     }
 
     //todo better errorcatch
