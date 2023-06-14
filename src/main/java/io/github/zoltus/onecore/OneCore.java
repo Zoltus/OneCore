@@ -25,7 +25,7 @@ import java.util.List;
 
 @Getter
 public final class OneCore extends JavaPlugin {
-
+//    jenkins test commit.
     @Getter
     private static OneCore plugin;
     private Economy vault;
