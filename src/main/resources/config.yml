@@ -20,8 +20,8 @@ Data:
     # Sound to play when mentioned
     sound: BLOCK_NOTE_BLOCK_BANJO
   chat:
-    color-permission: chat.colors
     colors-enabled: true
+    color-permission: chat.colors
     formatter-enabled: true
     # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
     format: '%vault_prefix%{0}&f: {1}'
@@ -31,8 +31,8 @@ Data:
     trim: true
   sign:
     color-permission: sign.colors
-    shift-edit-permission: sign.edit
     shift-edit-enabled: true
+    shift-edit-permission: sign.edit
   teleport:
     cooldown-bypass-permission: teleport.bypass
     delay: 3
