@@ -48,7 +48,8 @@ public record JoinListener(OneCore plugin) implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
-        if (Config.TELEPORT_SPAWN_ONJOIN.getBoolean()) {
+        if (Config.TELEPORT_SPAWN_ONJOIN.getBoolean() ||
+                (!p.hasPlayedBefore() && Config.TELEPORT_SPAWN_ON_FIRST_JOIN.getBoolean())) {
             Location spawn = Spawn.getSpawn();
             if (spawn == null) {
                 p.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
