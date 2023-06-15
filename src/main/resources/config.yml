@@ -12,7 +12,7 @@ Data:
   mentions:
     enabled: true
     # Color of the mention
-    color: '&x&0&0&f&f&0&0&l'
+    color: '<#00ff00>&l'
     # Permission to mention players
     permission: mention
     # Permission to mention everyone
