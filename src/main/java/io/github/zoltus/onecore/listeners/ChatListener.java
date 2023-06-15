@@ -61,7 +61,8 @@ public class ChatListener implements Listener {
                 }
             }
         }
-        e.setMessage(message);
+        String colorFormatted = translareColors(message);
+        e.setMessage(colorFormatted);
     }
 
     //todo better errorcatch
