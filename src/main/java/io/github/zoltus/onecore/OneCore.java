@@ -25,6 +25,7 @@ import java.util.List;
 
 @Getter
 public final class OneCore extends JavaPlugin {
+    //Test
     @Getter
     private static OneCore plugin;
     private Economy vault;
