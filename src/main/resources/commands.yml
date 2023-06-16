@@ -237,6 +237,12 @@ Data:
     permission: setspawn
     aliases: []
   #  - examplealias1
+  setfirstjoinspawn:
+    enabled: true
+    label: setfirstjoinspawn
+    permission: set-first-join-spawn
+    aliases: []
+  #  - examplealias1
   setwarp:
     enabled: true
     label: setwarp

@@ -49,14 +49,8 @@ public record JoinListener(OneCore plugin) implements Listener {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
 
-        //FirstJoinSpawn
-        if (!p.hasPlayedBefore()) {
-            User user = User.of(p);
-            Location firstJoinSpawn = Spawn.getFirstJoinSpawn();
-            if (firstJoinSpawn != null) {
-                user.teleport(firstJoinSpawn);
-            }
-        } else if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
+        //ForceSpawns
+        if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
             Location spawn = Spawn.getSpawn();
             if (spawn == null) {
                 p.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
@@ -64,5 +58,16 @@ public record JoinListener(OneCore plugin) implements Listener {
                 p.teleport(spawn);
             }
         }
+
+        //If first join it teleports to firstjoinspawn
+        if (!p.hasPlayedBefore()) {
+            User user = User.of(p);
+            Location firstJoinSpawn = Spawn.getFirstJoinSpawn();
+            if (firstJoinSpawn != null) {
+                user.teleport(firstJoinSpawn);
+            }
+        }
+
+
     }
 }

@@ -22,9 +22,9 @@ public class SetFirstJoinSpawn implements ICommand {
                     SETSPAWN_SET.send(p);
                 });
         //setspawn
-        new Command(Commands.SETSPAWN_LABEL)
-                .withPermission(Commands.SETSPAWN_PERMISSION)
-                .withAliases(Commands.SETSPAWN_ALIASES)
+        new Command(Commands.SET_FIRST_JOIN_SPAWN_LABEL)
+                .withPermission(Commands.SET_FIRST_JOIN_SPAWN_PERMISSION)
+                .withAliases(Commands.SET_FIRST_JOIN_SPAWN_ALIASES)
                 .executesPlayer((p, args) -> {
                     Spawn.setFirstJoinSpawn(p.getLocation());
                     SETSPAWN_SET.send(p);
