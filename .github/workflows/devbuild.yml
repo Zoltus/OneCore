@@ -21,6 +21,7 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
       - name: Extract Version from pom.xml
+        id: extract_version
         run: |
           version=$(grep -m 1 "<version>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
           echo "version=$version" >> $GITHUB_ENV
@@ -35,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MotiCore-${{ steps.extract_version.outputs.version }}.jar
-          path: ${{ env.artifactPath }}/MotiCore-${{ steps.extract_version.outputs.version }}.jar
+          path: ${{ env.artifactPath }}/*.jar
