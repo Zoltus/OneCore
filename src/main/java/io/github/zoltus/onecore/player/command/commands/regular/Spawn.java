@@ -18,8 +18,20 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
 public class Spawn implements ICommand {
 
+    //todo improve & cleanup
     public static Location getSpawn() {
         return Yamls.CONFIG.getYml().getLocation("Data.spawn");
+    }
+
+    public static Location getFirstJoinSpawn() {
+        return Yamls.CONFIG.getYml().getLocation("Data.first-join-spawn");
+    }
+
+    public static void setFirstJoinSpawn(Location location) {
+        OneYml yml = Yamls.CONFIG.getYml();
+        yml.set("Data.first-join-spawn", location);
+        yml.save();
+        yml.reload();
     }
 
     public static void setSpawn(Location location) {

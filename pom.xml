@@ -24,6 +24,7 @@
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.3</placeholderapi.version>
         <commandapi.version>9.0.3</commandapi.version>
+        <worldguard.version>9.0.3</worldguard.version>
         <!-- Maven -->
         <maven.compiler.release>17</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -72,10 +73,15 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-        <!-- Need Brigadier for testing -->
+        <!-- todo ? Need Brigadier for testing -->
         <repository>
             <id>minecraft-libraries</id>
             <url>https://libraries.minecraft.net</url>
+        </repository>
+        <!-- Worldguard -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
         </repository>
     </repositories>
     <!-- Dependencies -->
@@ -182,6 +188,13 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
             <version>4.3.0</version>
+        </dependency>
+        <!-- Worldguard for tabcomplete -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.8</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
