@@ -27,8 +27,8 @@ public class SetHome implements ICommand {
         Argument<?> arg1 = new OfflinePlayerArgument()
                 .withPermission(Commands.SETHOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
-                    setHome(sender, offP, (String) args.get(1));
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(1));
+                    setHome(sender, offP, (String) args.get(0));
                 });
         //sethome
         new Command(Commands.SETHOME_LABEL)
