@@ -61,13 +61,10 @@ public record JoinListener(OneCore plugin) implements Listener {
 
         //If first join it teleports to firstjoinspawn
         if (!p.hasPlayedBefore()) {
-            User user = User.of(p);
             Location firstJoinSpawn = Spawn.getFirstJoinSpawn();
             if (firstJoinSpawn != null) {
-                user.teleport(firstJoinSpawn);
+                p.teleport(firstJoinSpawn);
             }
         }
-
-
     }
 }
