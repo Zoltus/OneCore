@@ -41,7 +41,6 @@ Data:
     velocity-reset: true
     with-vehicle-permission: teleport.withvehicle
     force-spawn-on-join: false
-    force-spawn-on-first-join: true
   economy:
     # Minutes
     baltop-update-interval: 5
