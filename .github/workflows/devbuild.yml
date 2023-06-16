@@ -2,16 +2,17 @@ name: Development Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   development_build:
     name: Build dev jars
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Setup JDK
@@ -26,21 +27,12 @@ jobs:
           echo "::set-output name=version::$version"
       - name: Build with Maven
         run: |
-         mvn clean package
+          mvn clean package
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
           echo "git_hash=$git_hash" >> $GITHUB_ENV
           echo "artifactPath=$(pwd)/target" >> $GITHUB_ENV
       - name: Upload Plugin jar
         uses: actions/upload-artifact@v3
         with:
-          name: MotiCore-${{  steps.extract_version.outputs.version }}.jar
-          path: ${{ env.artifactPath }}/MotiCore-${{ env.GITHUB_RUN_NUMBER }}.jar
-          
-          
-          
-          
-          
-          
-          
-          
-         
+          name: MotiCore-${{ steps.extract_version.outputs.version }}.jar
+          path: ${{ env.artifactPath }}/MotiCore-${{ steps.extract_version.outputs.version }}.jar
