@@ -14,11 +14,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Get project version
-        id: get_version
-        run: echo "::set-output name=version::$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml)"
-      - name: Print project version
-        run: echo "Project version is ${{ steps.get_version.outputs.version }}"
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
@@ -26,11 +21,10 @@ jobs:
           java-version: '17'
       - name: Build with Maven
         run: |
-         mvn package
+         mvn clean package
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
           echo "git_hash=$git_hash" >> $GITHUB_ENV
-          echo "snapshotVersion=5.5-SNAPSHOT" >> $GITHUB_ENV
-          echo "artifactPath=$(pwd)/builds" >> $GITHUB_ENV
+          echo "artifactPath=$(pwd)/target" >> $GITHUB_ENV
       - name: Upload Plugin jar
         uses: actions/upload-artifact@v3
         with:
