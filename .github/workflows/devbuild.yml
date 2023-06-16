@@ -19,6 +19,11 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
+      - name: Extract Version from pom.xml
+        run: |
+          version=$(grep -m 1 "<version>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
+          echo "version=$version" >> $GITHUB_ENV
+          echo "::set-output name=version::$version"
       - name: Build with Maven
         run: |
          mvn clean package
@@ -28,7 +33,7 @@ jobs:
       - name: Upload Plugin jar
         uses: actions/upload-artifact@v3
         with:
-          name: MotiCore-${{ steps.get_version.outputs.version }}.jar
+          name: MotiCore-${{  steps.extract_version.outputs.version }}.jar
           path: ${{ env.artifactPath }}/MotiCore-${{ env.GITHUB_RUN_NUMBER }}.jar
           
           
