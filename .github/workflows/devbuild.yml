@@ -43,6 +43,10 @@ jobs:
             echo "Uploading $name"
             echo "::set-output name=jar::$file"
           done
+      - name: Prepare Artifact Directory
+        run: |
+          mkdir -p artifacts
+          cp ${{ steps.upload_jar.outputs.jar }} artifacts/${{ steps.upload_jar.outputs.jar_name }}
       - name: Upload Jars as Artifacts
         uses: actions/upload-artifact@v3
         with:
