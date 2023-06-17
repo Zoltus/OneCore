@@ -25,22 +25,17 @@ public class BackupHandler {
     private int upTimeHours = 0;
     private final List<Integer> hours = List.of(4, 12, 24);
     private final List<File> backupFiles = new ArrayList<>();
-    //output directory
-    private final File dataFolder;
-    private final File outputDirectory;
-    private final File worldFolder;
 
     public BackupHandler(OneCore plugin) {
         this.plugin = plugin;
-        this.dataFolder = plugin.getDataFolder();
-        this.outputDirectory = new File(dataFolder, "backups");
+        //output directory
+        File dataFolder = plugin.getDataFolder();
+        File outputDirectory = new File(dataFolder, "backups");
+        File worldFolder = Bukkit.getWorlds().get(0).getWorldFolder();
         //noinspection ResultOfMethodCallIgnored
-        this.outputDirectory.mkdirs();
-        this.worldFolder = Bukkit.getWorlds().get(0).getWorldFolder();
-    }
+        outputDirectory.mkdirs();
 
-    //Backups based time from startup
-    public void start() {
+        //Backups based time from startup
         if (Config.BACKUPS_STATS_ENABLED.getBoolean()) {
             backupFiles.add(new File(worldFolder, "stats"));
         }
