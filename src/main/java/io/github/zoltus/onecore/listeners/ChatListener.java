@@ -156,9 +156,11 @@ public class ChatListener implements Listener {
                 format = format.trim();
             }
             //replaces %s with the player name and the message
-            String colorFormatted = translareColors(format);
+            if (player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
+                format = translareColors(format);
+            }
             try {
-                e.setFormat(colorFormatted);
+                e.setFormat(format);
             } catch (Exception ex) {
                 System.out.println("Error while formatting chat message! "
                         + "This might be caused by invalid placeholders in the chat format!"
