@@ -36,13 +36,15 @@ jobs:
           echo "git_hash=$git_hash" >> $GITHUB_ENV
           echo "artifactPath=$(pwd)/target" >> $GITHUB_ENV
       - name: Upload Plugin jars
+        id: upload_jar
         run: |
           for file in $(find ${{ env.artifactPath }} -name '*.jar'); do
             name=$(basename "$file")
             echo "Uploading $name"
             echo "::set-output name=jar::$file"
-            uses: actions/upload-artifact@v3
-            with:
-              name: MotiCore-${{ steps.extract_version.outputs.version }}-$name 
-              path: ${{ steps.upload_jar.outputs.jar }}
           done
+      - name: Upload Jars as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: MotiCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
+          path: ${{ steps.upload_jar.outputs.jar }}/.
