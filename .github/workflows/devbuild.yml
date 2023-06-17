@@ -38,11 +38,14 @@ jobs:
       - name: Upload Plugin jars
         id: upload_jar
         run: |
-          for file in $(find ${{ env.artifactPath }} -name '*.jar'); do
-            name=$(basename "$file")
-            echo "Uploading $name"
-            echo "::set-output name=jar::$file"
-          done
+          file="MotiCore-${{ steps.extract_version.outputs.version }}.jar"
+          if [[ -f ${{ env.artifactPath }}/$file ]]; then
+            echo "Uploading $file"
+            echo "::set-output name=jar::${{ env.artifactPath }}/$file"
+          else
+            echo "No matching jar file found: $file"
+            exit 1
+          fi
       - name: Upload Jars as Artifacts
         uses: actions/upload-artifact@v3
         with:
