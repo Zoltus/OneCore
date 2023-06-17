@@ -12,6 +12,7 @@ import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
 import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
+import io.github.zoltus.onecore.worldguard.WGComplete;
 import io.github.zoltus.onecore.worldguard.WGFlags;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -138,6 +139,7 @@ public final class OneCore extends JavaPlugin {
                 new QuitListener(),
                 new TeleportHandler(),
                 new TestListener(),
+                new WGComplete(),
                 worldGuardFlags));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
