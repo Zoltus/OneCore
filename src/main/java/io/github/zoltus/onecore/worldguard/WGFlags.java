@@ -50,7 +50,6 @@ public class WGFlags implements Listener {
         Location location = BukkitAdapter.adapt(e.getEntity().getLocation());
         if ((cause == HangingBreakEvent.RemoveCause.OBSTRUCTION || cause == HangingBreakEvent.RemoveCause.PHYSICS)
                 && regionContainer.createQuery().queryState(location, null, BLOCK_UPDATE) == StateFlag.State.DENY) {
-            Bukkit.broadcastMessage("test");
             e.setCancelled(true);
         }
     }
