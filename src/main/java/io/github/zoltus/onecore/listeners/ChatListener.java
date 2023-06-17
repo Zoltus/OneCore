@@ -52,10 +52,12 @@ public class ChatListener implements Listener {
     @EventHandler
     public void tabcomplete(TabCompleteEvent event) {
         String buffer = event.getBuffer();
+        if (!(event.getSender() instanceof Player player)) {
+            return;
+        }
         //If worldguard enabled add tabcomplete for regions
         if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")
                 && buffer.startsWith("/rg")) {
-            Player player = (Player) event.getSender();
             RegionManager rgManager = WorldGuard.getInstance().getPlatform()
                     .getRegionContainer().get(BukkitAdapter.adapt(player.getWorld()));
             if (rgManager == null || !StringUtils.startsWithAny(buffer, "/rg", "/region")) {
