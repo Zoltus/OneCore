@@ -38,7 +38,7 @@ jobs:
       - name: Upload Plugin jars
         id: upload_jar
         run: |
-          file="MotiCore-${{ steps.extract_version.outputs.version }}.jar"
+          file="moticore-${{ steps.extract_version.outputs.version }}.jar"
           if [[ -f ${{ env.artifactPath }}/$file ]]; then
             echo "Uploading $file"
             echo "::set-output name=jar::${{ env.artifactPath }}/$file"
