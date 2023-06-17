@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface IArgument {
 
+    //todo cleanup
     default String[] toSuggestion(String input, String[] list) {
         return filter(input, list);
     }
