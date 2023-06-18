@@ -2,9 +2,9 @@
 
 Data:
   spawn: []
-  prefix: '&f&lOneCore &8&l»&7'
+  prefix: '&f&lMoti&a&lMaa &8&l»&7'
   # This prefix will be infront of all onecore permissions.
-  permission-prefix: onecore.
+  permission-prefix: moticore.
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
   kicked-for-spamming-bypass: kick.bypass
