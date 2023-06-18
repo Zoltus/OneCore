@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
+import io.github.zoltus.onecore.player.command.commands.admin.Vanish;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
@@ -13,14 +14,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Data
@@ -31,7 +30,8 @@ public class User {
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Location lastLocation;
     private final List<Request> requests = new ArrayList<>();
 
@@ -106,6 +106,16 @@ public class User {
             } else if (obj instanceof Location loc) {
                 teleport = new DelayedTeleport(this, loc);
             }
+        }
+    }
+
+    public void setVanished(boolean vanished) {
+        this.vanished = vanished;
+        Set<UUID> vanished1 = Vanish.getVanished();
+        if (vanished) {
+            vanished1.add(uniqueId);
+        } else {
+            vanished1.remove(uniqueId);
         }
     }
 

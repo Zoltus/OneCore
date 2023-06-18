@@ -52,21 +52,39 @@ public class Database {
         }
     }
 
-    //Creates tables if doesnt exist async?
     private void createTables() {
-        //Creates tables
-        try (Connection con = connection();
-             Statement stmt = con.createStatement()) {
+        // Creates tables
+        try (Connection con = connection(); Statement stmt = con.createStatement()) {
             stmt.execute("""
-                    CREATE TABLE IF NOT EXISTS player(
-                        uuid VARCHAR(36) NOT NULL UNIQUE,
-                        tpenabled BOOLEAN NOT NULL DEFAULT 1,
-                        balance DOUBLE NOT NULL DEFAULT 0,
-                        homes TEXT,
-                        PRIMARY KEY (uuid)
-                        );""");
+                CREATE TABLE IF NOT EXISTS player(
+                    uuid VARCHAR(36) NOT NULL UNIQUE,
+                    tpenabled BOOLEAN NOT NULL DEFAULT 1,
+                    balance DOUBLE NOT NULL DEFAULT 0,
+                    homes TEXT,
+                    isvanished BOOLEAN NOT NULL DEFAULT 0,
+                    PRIMARY KEY (uuid)
+                );
+                """);
+            // Add the new column if it doesn't exist
+            addColumnIfNotExists(stmt, "player", "isvanished", "BOOLEAN NOT NULL DEFAULT 0");
         } catch (SQLException e) {
             throw new DataBaseException("§4Database table creation failed!\n §c" + e.getMessage());
+        }
+    }
+
+    private void addColumnIfNotExists(Statement stmt, String tableName, String columnName, String columnDefinition) throws SQLException {
+        ResultSet rs = stmt.executeQuery("PRAGMA table_info(" + tableName + ");");
+        boolean columnExists = false;
+        while (rs.next()) {
+            String existingColumnName = rs.getString("name");
+            if (existingColumnName.equals(columnName)) {
+                columnExists = true;
+                break;
+            }
+        }
+
+        if (!columnExists) {
+            stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnDefinition + ";");
         }
     }
 
@@ -83,7 +101,7 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO player(uuid, tpenabled, homes, balance) VALUES(?,?,?,?)";
+        final String sql = "INSERT OR REPLACE INTO player(uuid, tpenabled, homes, balance, isvanished) VALUES(?,?,?,?,?)";
         try (Connection con = connection()
              ; PreparedStatement pStm = con.prepareStatement(sql)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
@@ -101,16 +119,17 @@ public class Database {
         UUID uuid = user.getUniqueId();
         pStm.setString(1, uuid.toString());
         pStm.setBoolean(2, user.isTpEnabled());
-        pStm.setDouble(4, user.getBalance());
         String homes = new Gson().toJson(user.getHomes(), HashMap.class);
         pStm.setString(3, homes);
+        pStm.setDouble(4, user.getBalance());
+        pStm.setBoolean(5, user.isVanished());
     }
 
     public void cacheUsers() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT uuid, tpenabled, homes, balance FROM player")
+             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM player")
              ; ResultSet rs = pStm.executeQuery()) {
             int index = 0;
             while (rs.next()) {
@@ -128,10 +147,12 @@ public class Database {
     }
 
     private void userFromResult(OfflinePlayer offP, ResultSet rs) throws SQLException {
+        boolean isvanished = rs.getBoolean("isvanished");
         boolean tpenabled = rs.getBoolean("tpenabled");
         String homes = rs.getString("homes");
         double balance = rs.getDouble("balance");
         User newUser = new User(offP);
+        newUser.setVanished(isvanished);
         newUser.setBalance(balance);
         newUser.setTpEnabled(tpenabled);
         Gson gson = new Gson();
