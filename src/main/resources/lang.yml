@@ -270,6 +270,13 @@ Data:
     teleported: '{p} <player> teleportattu sinuun!'
     # <player>
     offline-target: '{p} <player> Oli kirjautunut ulos, ja on teleportattu sinuun'
+  vanish:
+    visible: näkyvä
+    invisible: läpinäkyvä
+    # Above states used in <mode>
+    self: '{p} Olet nyt <mode>!'
+    # <player>, <mode>
+    other: '{p} Pelaajan <player> läpinäkyvyys asetettu: <mode>!'
   warp:
     # <list>
     list: 'Warpit: <list>'

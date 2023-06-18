@@ -39,6 +39,7 @@ public class CommandHandler {
                 SystemInfo.class, Tp.class, Tpa.class,
                 Tpaccept.class, TpaHere.class, TpDeny.class,
                 TpToggle.class, Time.class, Top.class,
+                Vanish.class,
                 Warp.class, Weather.class
         );
         for (Class<? extends ICommand> cmd : cmds) {

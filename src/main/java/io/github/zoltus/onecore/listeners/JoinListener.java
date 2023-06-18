@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.commands.admin.Vanish;
 import io.github.zoltus.onecore.player.command.commands.regular.Spawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,10 +17,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.Set;
+import java.util.UUID;
+
 public record JoinListener(OneCore plugin) implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onJoin(AsyncPlayerPreLoginEvent e) {
+    public void handleUserOnJoin(AsyncPlayerPreLoginEvent e) {
         AsyncPlayerPreLoginEvent.Result result = e.getLoginResult();
         if (result == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(e.getUniqueId());
@@ -45,10 +49,9 @@ public record JoinListener(OneCore plugin) implements Listener {
      * @param e event
      */
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
+    public void handleSpawnOnJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
-
         //ForceSpawns
         if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
             Location spawn = Spawn.getSpawn();
@@ -64,6 +67,30 @@ public record JoinListener(OneCore plugin) implements Listener {
             Location firstJoinSpawn = Spawn.getFirstJoinSpawn();
             if (firstJoinSpawn != null) {
                 p.teleport(firstJoinSpawn);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void handleVanishOnJoin(PlayerJoinEvent e) {
+        Player joiner = e.getPlayer();
+        Set<UUID> vanished = Vanish.getVanished();
+        // Hide vanished players from the joining player
+        for (UUID vanishedUUID : vanished) {
+            Player vanishedPlayer = Bukkit.getPlayer(vanishedUUID);
+            if (vanishedPlayer != null
+                    && vanishedPlayer != joiner
+                    && !Vanish.canSeeVanished(joiner)) {
+                joiner.hidePlayer(vanishedPlayer);
+            }
+        }
+
+        // Hide the joining player from online players if vanished
+        for (Player viewer : Bukkit.getOnlinePlayers()) {
+            if (viewer != joiner
+                    && vanished.contains(joiner.getUniqueId())
+                    && !Vanish.canSeeVanished(viewer)) {
+                viewer.hidePlayer(joiner);
             }
         }
     }
