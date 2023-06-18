@@ -23,12 +23,15 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-      - name: Extract Version from pom.xml
-        id: extract_version
+      - name: Extract Version and Artifact ID from pom.xml
+        id: extract_version_artifact_id
         run: |
           version=$(grep -m 1 "<version>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
+          artifactId=$(grep -m 1 "<artifactId>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
           echo "version=$version" >> $GITHUB_ENV
           echo "::set-output name=version::$version"
+          echo "artifactId=$artifactId" >> $GITHUB_ENV
+          echo "::set-output name=artifactId::$artifactId"
       - name: Build with Maven
         run: |
           mvn clean package
@@ -38,7 +41,7 @@ jobs:
       - name: Upload Plugin jars
         id: upload_jar
         run: |
-          file="moticore-${{ steps.extract_version.outputs.version }}.jar"
+          file="${{ steps.extract_version_artifact_id.outputs.artifactId }}-${{ steps.extract_version_artifact_id.outputs.version }}.jar"
           if [[ -f ${{ env.artifactPath }}/$file ]]; then
             echo "Uploading $file"
             echo "::set-output name=jar::${{ env.artifactPath }}/$file"
@@ -49,5 +52,5 @@ jobs:
       - name: Upload Jars as Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MotiCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
+          name: ${{ steps.extract_version_artifact_id.outputs.artifactId }}-${{ steps.extract_version_artifact_id.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
           path: ${{ steps.upload_jar.outputs.jar }}
