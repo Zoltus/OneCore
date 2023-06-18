@@ -15,7 +15,7 @@ Data:
   #  - examplealias1
   #  - examplealias2
   broadcast:
-    enabled: true
+    enabled: false
     label: broadcast
     permission: broadcast
     aliases:
@@ -27,7 +27,7 @@ Data:
     aliases:
       - cc
   economy:
-    enabled: true
+    enabled: false
     label: economy
     permission: economy
     aliases:
@@ -92,9 +92,9 @@ Data:
   gamemode:
     enabled: true
     label: gamemode
-    other-permission: gamemode.other
-    # Used as gamemode.creative, etc.
-    mode-permission: gamemode
+    other-permission: gamemode-other
+    # permprefix.gamemode unlocks /gamemode
+    # permprefix.gamemode.survival unlocks /gamemode survival and its aliases
     permission: gamemode
     aliases:
       - gm
@@ -170,13 +170,13 @@ Data:
     label: sethome
     permission: sethome
     #Usage example onecore.sethome.3
-    permission-amount: home
+    permission-amount: home.amount
     other-permission: sethome.other
     aliases: []
   #  - examplealias1
   invsee:
-    edit-permission: invsee.edit
     enabled: true
+    edit-permission: invsee.edit
     label: invsee
     permission: invsee.view
     aliases: []
@@ -188,7 +188,7 @@ Data:
     aliases: []
   #  - examplealias1
   msg:
-    enabled: true
+    enabled: false
     label: msg
     permission: msg
     aliases: []
@@ -235,6 +235,12 @@ Data:
     enabled: true
     label: setspawn
     permission: setspawn
+    aliases: []
+  #  - examplealias1
+  setfirstjoinspawn:
+    enabled: true
+    label: setfirstjoinspawn
+    permission: set-first-join-spawn
     aliases: []
   #  - examplealias1
   setwarp:
@@ -366,6 +372,13 @@ Data:
     permission: tptoggle
     aliases: []
   #  - examplealias1
+  vanish:
+    enabled: true
+    label: vanish
+    permission: vanish
+    permission-other: vanish.other
+    aliases: []
+  #  - examplealias1
   warp:
     enabled: true
     label: warp
@@ -374,14 +387,14 @@ Data:
     aliases: []
   #  - examplealias1
   weather:
+    enabled: true
+    label: weather
+    permission: weather
     clear-aliases:
       - c
       - clear
       - s
       - sun
-    enabled: true
-    label: weather
-    permission: weather
     rain-aliases:
       - rain
       - r

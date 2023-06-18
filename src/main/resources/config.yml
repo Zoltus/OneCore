@@ -12,21 +12,27 @@ Data:
   mentions:
     enabled: true
     # Color of the mention
-    color: '&x&0&0&f&f&0&0&l'
+    color: '<#00ff00>&l'
     # Permission to mention players
     permission: mention
+    # Permission to mention everyone
+    mention-everyone-permission: mention-everyone
     # Sound to play when mentioned
-    sound: ITEM_GOAT_HORN_SOUND_0
+    sound: BLOCK_NOTE_BLOCK_BANJO
   chat:
-    color-permission: chat.colors
     colors-enabled: true
+    color-permission: chat.colors
     formatter-enabled: true
     # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
-    format: '&3[&b&l%clv_player_level%&3]&b&l%yhteiso_short% %vault_prefix%{0}&f: {1}'
+    format: '%vault_prefix%{0}&f: {1}'
+    # If placeholder is empty it causes double spacing. This fixes it.
+    remove-doublespaces: true
+    # Removes whitespaces from start & end of message
+    trim: true
   sign:
     color-permission: sign.colors
-    shift-edit-permission: sign.edit
     shift-edit-enabled: true
+    shift-edit-permission: sign.edit
   teleport:
     cooldown-bypass-permission: teleport.bypass
     delay: 3
@@ -34,7 +40,7 @@ Data:
     # If true it resets velocity on command & plugin teleports
     velocity-reset: true
     with-vehicle-permission: teleport.withvehicle
-    force-spawn-onjoin: false
+    force-spawn-on-join: false
   economy:
     # Minutes
     baltop-update-interval: 5

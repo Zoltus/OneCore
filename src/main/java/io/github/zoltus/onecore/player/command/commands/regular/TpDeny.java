@@ -8,6 +8,7 @@ import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.RequestArgument;
 import io.github.zoltus.onecore.player.teleporting.Request;
 import io.github.zoltus.onecore.player.User;
+import org.bukkit.entity.Player;
 
 
 public class TpDeny implements ICommand {
@@ -18,8 +19,10 @@ public class TpDeny implements ICommand {
         //tpdeny <player>
         Argument<?> arg0 = new RequestArgument()
                 .executesPlayer((player, args) -> {
-                    User user = User.of(player);
-                    handle(Request.get((User) args.get(0), user), user);
+                    User sender = User.of(player);
+                    User target = User.of((Player) args.get(0));
+                    Request request = Request.get(target, sender);
+                    handle(request, sender);
                 });
         //tpdeny
         new Command(Commands.TPDENY_LABEL)

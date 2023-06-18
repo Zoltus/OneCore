@@ -2,14 +2,9 @@ package io.github.zoltus.onecore.player.teleporting;
 
 
 import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.utils.ChatBuilder;
 import lombok.Getter;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -103,18 +98,6 @@ public class Request {
 
     private void sendChat() {
         sender.sendMessage(TP_SENT.replace(PLAYER_PH, accepter.getName()));
-                ChatBuilder cb = new ChatBuilder(
-                TP_RECEIVED.replace(PLAYER_PH, sender.getName())
-                , TP_RECEIVED_ACCEPT_LINE.getString()
-        );
-        ChatBuilder.Component comp = new ChatBuilder.Component(ACCEPT_PH, TP_ACCEPT_BUTTON.getString());
-        comp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + Commands.TPACCEPT_LABEL.getString() + " " + sender.getName()));
-        comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_ACCEPT_BUTTON_HOVER.getString())));
-        ChatBuilder.Component comp2 = new ChatBuilder.Component(DENY_PH, TP_DENY_BUTTON.getString());
-        comp2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + Commands.TPDENY_LABEL.getString() + " " + sender.getName()));
-        comp2.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(TP_DENY_BUTTON_HOVER.getString())));
-        cb.addComponents(comp, comp2);
-        cb.build();
-        cb.send(accepter.getPlayer());
+        TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName(), TYPE_PH, type.name());
     }
 }

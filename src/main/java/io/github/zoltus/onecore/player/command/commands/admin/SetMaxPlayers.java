@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 
 import java.lang.reflect.Field;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.*;
+import static io.github.zoltus.onecore.data.configuration.IConfig.AMOUNT_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SETMAXPLAYERS_SET;
 
 public class SetMaxPlayers implements ICommand {
@@ -32,10 +32,19 @@ public class SetMaxPlayers implements ICommand {
                         })).override();
     }
 
+    private final String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private final int subversion = Integer.parseInt(version.split("_")[1]);
+
     private void setMaxPlayers(int amount) throws ReflectiveOperationException {
         String bukkitversion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
         Object playerlist = Class.forName("org.bukkit.craftbukkit." + bukkitversion + ".CraftServer").getDeclaredMethod("getHandle").invoke(Bukkit.getServer());
-        Field maxplayers = playerlist.getClass().getSuperclass().getDeclaredField("f");
+        String maxplayersfield = switch (subversion) {
+            case 12,13,14,15,16 -> "maxPlayers";
+            case 17,18,19 -> "f";
+            case 20 -> "g";
+            default -> throw new IllegalStateException("Server version: 1." + subversion + " is not supported!");
+        };
+        Field maxplayers = playerlist.getClass().getSuperclass().getDeclaredField(maxplayersfield);
         maxplayers.setAccessible(true);
         maxplayers.set(playerlist, amount);
     }

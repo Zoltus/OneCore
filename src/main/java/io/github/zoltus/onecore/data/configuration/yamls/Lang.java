@@ -4,6 +4,7 @@ import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.utils.ChatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
@@ -73,6 +74,7 @@ public enum Lang implements IConfig {
     NODES_WARP_NAME("other.nodes.warp-name"),
     NODES_WEATHER("other.nodes.weather"),
     NODES_WORLD_NAME("other.nodes.world-name"),
+    NO_PERMISSION("other.no-permission"),
     PING_TARGETS_PING("ping.targets-ping"),
     PING_YOUR_PING("ping.your-ping"),
     PLAYER_NEVER_VISITED_SERVER("other.player-never-visited-server"),
@@ -125,15 +127,11 @@ public enum Lang implements IConfig {
     TPHERE_TELEPORTED("tphere.teleported"),
     TPHERE_OFFLINE_TARGET("tphere.offline-target"),
     TP_ACCEPTED("tp.accepted"),
-    TP_ACCEPT_BUTTON("tp.accept-button"),
-    TP_ACCEPT_BUTTON_HOVER("tp.accept-button-hover"),
     TP_CANCELLED_BY_DAMAGE("tp.cancelled-by-damage"),
     TP_CANCELLED_BY_NEW_TELE("tp.cancelled-by-new-teleport"),
     TP_CANCELLED_BY_MOVEMENT("tp.cancelled-by-movement"),
     TP_CANT_SELF_TELEPORT("tp.cant-self-teleport"),
     TP_DENIED("tp.denied"),
-    TP_DENY_BUTTON("tp.deny-button"),
-    TP_DENY_BUTTON_HOVER("tp.deny-button-hover"),
     TP_EXPIRED("tp.expired"),
     TP_NO_REQUESTS("tp.no-requests"),
     TP_NO_SAFE_LOCATIONS("tp.no-safe-locations"),
@@ -142,7 +140,6 @@ public enum Lang implements IConfig {
     TP_TELEPORTED_TARGETS("tp.teleported-targets"),
     TP_TELEPORTED_TARGET("tp.teleported-target"),
     TP_RECEIVED("tp.received"),
-    TP_RECEIVED_ACCEPT_LINE("tp.received-accept-line"),
     TP_SENT("tp.sent"),
     TP_STARTED("tp.started"),
     TP_TARGET_QUIT("tp.target-quit"),
@@ -151,6 +148,10 @@ public enum Lang implements IConfig {
     TP_YOU_ACCEPTED("tp.you-accepted"),
     TP_YOU_ALREADY_SENT_REQUEST("tp.you-already-sent-request"),
     TP_YOU_DENIED("tp.you-denied"),
+    VANISH_SELF("vanish.self"),
+    VANISH_OTHER("vanish.other"),
+    VANISH_VISIBLE("vanish.visible"),
+    VANISH_INVISIBLE("vanish.invisible"),
     WARP_LIST("warp.list"),
     WARP_NOT_FOUND("warp.not-found"),
     WARP_TARGET_SENT("warp.target-sent"),
@@ -166,7 +167,8 @@ public enum Lang implements IConfig {
     }
 
     public void send(CommandSender sender, Object... replaces) {
-        sender.sendMessage(replace(replaces));
+        String replaced = replace(replaces);
+        ChatUtils.mmSend(sender, replaced);
     }
 
     public void send(User user, Object... replaces) {

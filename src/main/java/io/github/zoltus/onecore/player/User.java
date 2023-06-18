@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
+import io.github.zoltus.onecore.player.command.commands.admin.Vanish;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
@@ -17,10 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Data
@@ -31,7 +29,8 @@ public class User {
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Location lastLocation;
     private final List<Request> requests = new ArrayList<>();
 
@@ -39,6 +38,7 @@ public class User {
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
     private DelayedTeleport teleport;
+    private boolean vanished = false;
 
     //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
@@ -108,6 +108,16 @@ public class User {
         }
     }
 
+    public void setVanished(boolean vanished) {
+        this.vanished = vanished;
+        Set<UUID> vanished1 = Vanish.getVanished();
+        if (vanished) {
+            vanished1.add(uniqueId);
+        } else {
+            vanished1.remove(uniqueId);
+        }
+    }
+
     /*
      * Homes
      */
@@ -169,10 +179,13 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    //Todo clean, uses Player check if this needs nullcheck
     public boolean hasFreeHomeSlot() {
         String perm = Commands.SETHOME_AMOUNT_PERMISSION.asPermission() + ".";
-        return getPlayer().getEffectivePermissions().stream()
+        Player player = getPlayer();
+        if (player.hasPermission("*") || getPlayer().hasPermission(perm + "*")) {
+            return true;
+        }
+        return player.getEffectivePermissions().stream()
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
                 .max(Integer::compareTo)

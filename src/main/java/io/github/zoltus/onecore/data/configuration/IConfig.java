@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public interface IConfig {
+    //TODO remove all thes and start using <var1> <var2> etc?
     //Placeholders
     String PLAYER_PH = "<player>";
     String PLAYER2_PH = "<player2>";
     String AMOUNT_PH = "<amount>";
     String BALANCE_PH = "<balance>";
-    String SIZE_PH = "<size>";
     String HOME_PH = "<home>";
     String TOGGLE_PH = "<toggle>";
     String SECONDS_PH = "<seconds>";
@@ -34,11 +34,9 @@ public interface IConfig {
     String WORLD_PH = "<world>";
     String WEATHER_PH = "<weather>";
     String LINE_PH = "<line>";
-    String ACCEPT_PH = "<accept>";//Todo
-    String DENY_PH = "<deny>";//Todo
+    String PERM_PH = "<perm>";
 
     OneYml yml();
-
     String getPath();
 
     default String getString() {

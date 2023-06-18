@@ -24,6 +24,7 @@ public class LocationUtils {
         };
     }
 
+    //todo async
     public static void teleportSafeAsync(Player p, Location loc) {
         Location safeLoc = getSafeLocation(p, loc);
         if (safeLoc == null) {
@@ -57,7 +58,9 @@ public class LocationUtils {
 
     //If player is on creative it will teleport to any loc
     public static Location getSafeLocation(Player p, Location loc) {
-        return p.getGameMode() != GameMode.CREATIVE && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
+        return p.getGameMode() != GameMode.CREATIVE
+                && p.getGameMode() != GameMode.SPECTATOR
+                && !p.isInvulnerable() ? getSafeLoc(p, loc) : loc;
     }
 
     private static boolean isSafeLoc(Player p, Location feet) {
@@ -66,7 +69,10 @@ public class LocationUtils {
         Block belowBlock = feet.clone().add(0, -1, 0).getBlock();
         boolean feetCheck = feetBlock.isPassable() && !isDamageBlock(feetBlock);
         boolean headCheck = headBlock.isPassable() && !isDamageBlock(headBlock);
-        boolean belowCheck = (!p.isFlying() && !belowBlock.isPassable()) && !isDamageBlock(belowBlock);
+        boolean belowCheck = (!p.isFlying() && !belowBlock.isPassable())
+                || (p.isFlying() && belowBlock.isPassable())
+                || (p.isFlying() && !belowBlock.isPassable())
+                && !isDamageBlock(belowBlock);
         return feetCheck && headCheck && belowCheck;
     }
 
@@ -75,6 +81,7 @@ public class LocationUtils {
         return w != null && w.getWorldBorder().isInside(loc) && isSafeLoc(p, loc);
     }
 
+    //TODO if player is flying it teleports 1 too high
     private static Location getSafeLoc(Player p, Location start) {
         //if orginal location is safe return it
         if (checkLoc(p, start)) {

@@ -19,6 +19,7 @@ public class DelayedTeleport {
 
     private Location loc;
     private final User user;
+    //Target to teleport to, if null it will teleport to loc
     private User target;
     private final BukkitTask teleTask;
 
@@ -34,14 +35,19 @@ public class DelayedTeleport {
         this.teleTask = start();
     }
 
+    //Todo offline support, mayby on quitevent finish teleport, and cancel task?
     private BukkitTask start() {
         TP_STARTED.send(user, SECONDS_PH, DELAY);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            //If target is set and isnt online
             if (target != null && !target.isOnline()) {
                 TP_TARGET_QUIT.replace(PLAYER_PH, target.getName());
             } else {
                 Location destination = target == null ? loc : target.getPlayer().getLocation();
-                LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
+                //Checks if teleporter is still online.
+                if (user.isOnline()) {
+                    LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
+                }
             }
             user.setTeleport(null);
         }, 20L * DELAY);

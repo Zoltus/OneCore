@@ -12,25 +12,32 @@ import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
 import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
+import io.github.zoltus.onecore.worldguard.WGComplete;
+import io.github.zoltus.onecore.worldguard.WGFlags;
 import lombok.Getter;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public final class OneCore extends JavaPlugin {
-
+    //Jenkins test
     @Getter
     private static OneCore plugin;
     private Economy vault;
     private Database database;
     private BackupHandler backupHandler;
     private CommandHandler commandHandler;
+    private BukkitAudiences adventure;
+    private ConsoleFilter consoleFilter;
+    private WGFlags worldGuardFlags;
 
     @Override
     public void onLoad() {
@@ -46,10 +53,13 @@ public final class OneCore extends JavaPlugin {
                         .dispatcherFile(new File(getDataFolder(), "command_registration.json"))
                         // Point to the NBT API we want to use
                         .initializeNBTAPI(NBTContainer.class, NBTContainer::new));
+        this.worldGuardFlags = new WGFlags(this);
     }
 
     @Override
     public void onEnable() {
+        //Enabled adventure support for bukkit
+        this.adventure = BukkitAudiences.create(this);
         //Loads CommandAPI
         CommandAPI.onEnable();
         long time = System.currentTimeMillis();
@@ -59,18 +69,18 @@ public final class OneCore extends JavaPlugin {
         this.vault = EconomyHandler.hook(this);
         //Registers Commands if enabled. Needs to be before listeners.
         this.commandHandler = CommandHandler.register(this);
-        //Registers Listeners
-        registerListeners();
         // Inits metrics to bstats
         new Metrics(this, 12829); //todo fix for test
         // Starts caching users
-        ConsoleFilter.init();
+        this.consoleFilter = ConsoleFilter.init();
         this.database.cacheUsers();
-        //todo mayby remove, creates user for new users
+        //todo mayby remove, creates user for new users, supports if loaded mid server
         JoinListener.loadOnlinePlayers();
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
-        this.backupHandler.start();
+        this.worldGuardFlags.onEnable();
+        //Registers Listeners
+        registerListeners();
         sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
     }
@@ -84,23 +94,33 @@ public final class OneCore extends JavaPlugin {
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
         //Disables commandapia
         CommandAPI.onDisable();
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
+
+    public BukkitAudiences adventure() {
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
+
 
     /**
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            List.of(
-                    "",
-                    "§f                    o O O",
-                    "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
-                    "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
-                    "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
-                    "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
-                    ""
-            ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line));
-        },0, 2);
+        Bukkit.getScheduler().runTaskLater(this, () -> List.of(
+                "",
+                "§f                    o O O",
+                "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
+                "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
+                "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
+                "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
+                ""
+        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 2L);
     }
 
     private void registerListeners() {
@@ -118,7 +138,9 @@ public final class OneCore extends JavaPlugin {
                 new KickedForSpamming(),
                 new QuitListener(),
                 new TeleportHandler(),
-                new TestListener()));
+                new TestListener(),
+                new WGComplete(),
+                worldGuardFlags));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 }

@@ -1,0 +1,56 @@
+name: Development Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  development_build:
+    name: Build dev jars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: create a custom version using run number offset by 1000 (run_number + 1000)
+        run: |
+          echo "VERSION_NUMBER_WITH_OFFSET=$((250+GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      - name: Extract Version and Artifact ID from pom.xml
+        id: extract_version_artifact_id
+        run: |
+          version=$(grep -m 1 "<version>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
+          artifactId=$(grep -m 1 "<artifactId>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
+          echo "version=$version" >> $GITHUB_ENV
+          echo "::set-output name=version::$version"
+          echo "artifactId=$artifactId" >> $GITHUB_ENV
+          echo "::set-output name=artifactId::$artifactId"
+      - name: Build with Maven
+        run: |
+          mvn clean package
+          git_hash=$(git rev-parse --short "$GITHUB_SHA")
+          echo "git_hash=$git_hash" >> $GITHUB_ENV
+          echo "artifactPath=$(pwd)/target" >> $GITHUB_ENV
+      - name: Upload Plugin jars
+        id: upload_jar
+        run: |
+          file="${{ steps.extract_version_artifact_id.outputs.artifactId }}-${{ steps.extract_version_artifact_id.outputs.version }}.jar"
+          if [[ -f ${{ env.artifactPath }}/$file ]]; then
+            echo "Uploading $file"
+            echo "::set-output name=jar::${{ env.artifactPath }}/$file"
+          else
+            echo "No matching jar file found: $file"
+            exit 1
+          fi
+      - name: Upload Jars as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.extract_version_artifact_id.outputs.artifactId }}-${{ steps.extract_version_artifact_id.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
+          path: ${{ steps.upload_jar.outputs.jar }}
