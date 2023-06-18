@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 public class WGFlags implements Listener {
 
-    public static StateFlag BLOCK_UPDATE = new StateFlag("hanging-physics", true);
+    public static final StateFlag BLOCK_UPDATE = new StateFlag("hanging-physics", true);
     private RegionContainer regionContainer;
     private final WorldGuard worldGuard;
 
