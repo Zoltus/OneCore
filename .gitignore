@@ -11,3 +11,4 @@ OneCore.iml
 McTemplate.iml
 TODO.yml
 /logs/
+/src/main/java/io/github/zoltus/onecore/data/configuration/test/
