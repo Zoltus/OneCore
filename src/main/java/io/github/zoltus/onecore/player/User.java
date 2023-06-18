@@ -39,6 +39,7 @@ public class User {
     private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
     private DelayedTeleport teleport;
+    private boolean vanished = false;
 
     //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
@@ -169,10 +170,13 @@ public class User {
         return homes.keySet().toArray(new String[0]);
     }
 
-    //Todo clean, uses Player check if this needs nullcheck
     public boolean hasFreeHomeSlot() {
         String perm = Commands.SETHOME_AMOUNT_PERMISSION.asPermission() + ".";
-        return getPlayer().getEffectivePermissions().stream()
+        Player player = getPlayer();
+        if (player.hasPermission("*") || getPlayer().hasPermission(perm + "*")) {
+            return true;
+        }
+        return player.getEffectivePermissions().stream()
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
                 .max(Integer::compareTo)
