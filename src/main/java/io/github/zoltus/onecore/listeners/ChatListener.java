@@ -65,7 +65,7 @@ public class ChatListener implements Listener {
         e.setMessage(colorFormatted);
     }
 
-    //todo better errorcatch
+    //todo better errorcatch, doesnt work properly
     // String.format(format, this.player, this.message);
     private void handleChatFormat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
