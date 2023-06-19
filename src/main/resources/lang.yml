@@ -219,11 +219,11 @@ Data:
   time:
     # <time>, <world>
     changed: '{p} Aika vaihdettu <time> maailmassa: <world>'
-    invalid-time: '{p} Viallinen aika'
+    invalid-time: '{p} Viallinen aika!'
   top:
     # <player>
-    teleported-target: '{p} Teled <player> To top'
-    telported: '{p} TeledToTop'
+    teleported-target: '{p} Teleporttasit pelaajan <player> ylimpään blockkiin!'
+    telported: '{p} Teleporttasit ylimpään blockkiin!'
   tp:
     #Sends as component
     # <player>, <type> tp type
