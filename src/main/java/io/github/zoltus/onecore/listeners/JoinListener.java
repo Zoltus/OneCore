@@ -17,9 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.Set;
-import java.util.UUID;
-
 public record JoinListener(OneCore plugin) implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -71,27 +68,20 @@ public record JoinListener(OneCore plugin) implements Listener {
         }
     }
 
+    //todo cleanup
     @EventHandler(priority = EventPriority.MONITOR)
     public void handleVanishOnJoin(PlayerJoinEvent e) {
-        Player joiner = e.getPlayer();
-        Set<UUID> vanished = Vanish.getVanished();
-        // Hide vanished players from the joining player
-        for (UUID vanishedUUID : vanished) {
-            Player vanishedPlayer = Bukkit.getPlayer(vanishedUUID);
-            if (vanishedPlayer != null
-                    && vanishedPlayer != joiner
-                    && !Vanish.canSeeVanished(joiner)) {
-                joiner.hidePlayer(vanishedPlayer);
-            }
-        }
+        Player joinerPlayer = e.getPlayer();
+        User joiner = User.of(joinerPlayer);
 
-        // Hide the joining player from online players if vanished
-        for (Player viewer : Bukkit.getOnlinePlayers()) {
-            if (viewer != joiner
-                    && vanished.contains(joiner.getUniqueId())
-                    && !Vanish.canSeeVanished(viewer)) {
-                viewer.hidePlayer(joiner);
+        Bukkit.getOnlinePlayers().forEach(viewer -> {
+            User user = User.of(viewer);
+            if ((!user.isVanished() || Vanish.canSeeVanished(joinerPlayer))
+                    && (!joiner.isVanished() || Vanish.canSeeVanished(viewer))) {
+                return;
             }
-        }
+            viewer.hidePlayer(joinerPlayer);
+            joinerPlayer.hidePlayer(viewer);
+        });
     }
 }

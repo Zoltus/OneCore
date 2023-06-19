@@ -152,6 +152,7 @@ public enum Lang implements IConfig {
     VANISH_OTHER("vanish.other"),
     VANISH_VISIBLE("vanish.visible"),
     VANISH_INVISIBLE("vanish.invisible"),
+    VANISH_INVISIBLE_ACTION_BAR("vanish.invisible-actionbar"),
     WARP_LIST("warp.list"),
     WARP_NOT_FOUND("warp.not-found"),
     WARP_TARGET_SENT("warp.target-sent"),

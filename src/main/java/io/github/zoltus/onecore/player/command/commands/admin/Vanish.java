@@ -6,22 +6,15 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
-import lombok.Getter;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class Vanish implements ICommand, Listener {
-
-    @Getter
-    private static final Set<UUID> vanished = new HashSet<>();
+public class Vanish implements ICommand {
 
     @Override
     public void init() {
@@ -39,7 +32,11 @@ public class Vanish implements ICommand, Listener {
                     executes(p, p);
                 }).then(arg0)
                 .override();
-    }
+
+        //Refresh vanished players action bar every 2.5s same for godmode?
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
+                () -> User.getUsers().values().forEach(this::sendActionBar),0,50);
+}
 
     private void executes(CommandSender sender, Player target) {
         User user = User.of(target);
@@ -56,7 +53,6 @@ public class Vanish implements ICommand, Listener {
                 }
             }
         });
-
         String vanishedString = vanished ? VANISH_INVISIBLE.getString() : VANISH_VISIBLE.getString();
 
         if (target == sender) {
@@ -65,10 +61,19 @@ public class Vanish implements ICommand, Listener {
             VANISH_SELF.send(target, MODE_PH, vanishedString);
             VANISH_OTHER.send(sender, PLAYER_PH, target.getName(), MODE_PH, vanishedString);
         }
+        sendActionBar(user);
     }
 
     public static boolean canSeeVanished(Player viewer) {
         return viewer.hasPermission(Commands.VANISH_PERMISSION.asPermission())
                 || viewer.hasPermission(Commands.VANISH_PERMISSION_OTHER.asPermission());
+    }
+
+    private void sendActionBar(User user) {
+        if (user.isOnline() && user.isVanished()) {
+            Player player = user.getPlayer();
+            String actionbar = VANISH_INVISIBLE_ACTION_BAR.getString();
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionbar));
+        }
     }
 }

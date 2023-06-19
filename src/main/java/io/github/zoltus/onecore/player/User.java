@@ -5,11 +5,10 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
-import io.github.zoltus.onecore.player.command.commands.admin.Vanish;
+import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,10 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -110,12 +112,6 @@ public class User {
 
     public void setVanished(boolean vanished) {
         this.vanished = vanished;
-        Set<UUID> vanished1 = Vanish.getVanished();
-        if (vanished) {
-            vanished1.add(uniqueId);
-        } else {
-            vanished1.remove(uniqueId);
-        }
     }
 
     /*
