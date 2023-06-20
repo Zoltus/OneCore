@@ -35,7 +35,7 @@ public class Vanish implements ICommand {
 
         //Refresh vanished players action bar every 2.5s same for godmode?
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
-                () -> User.getUsers().values().forEach(this::sendActionBar),0,50);
+                () -> Bukkit.getOnlinePlayers().forEach(this::sendActionBar),0,50);
 }
 
     private void executes(CommandSender sender, Player target) {
@@ -61,7 +61,7 @@ public class Vanish implements ICommand {
             VANISH_SELF.send(target, MODE_PH, vanishedString);
             VANISH_OTHER.send(sender, PLAYER_PH, target.getName(), MODE_PH, vanishedString);
         }
-        sendActionBar(user);
+        sendActionBar(target);
     }
 
     public static boolean canSeeVanished(Player viewer) {
@@ -69,9 +69,9 @@ public class Vanish implements ICommand {
                 || viewer.hasPermission(Commands.VANISH_PERMISSION_OTHER.asPermission());
     }
 
-    private void sendActionBar(User user) {
+    private void sendActionBar(Player player) {
+        User user = User.of(player);
         if (user.isOnline() && user.isVanished()) {
-            Player player = user.getPlayer();
             String actionbar = VANISH_INVISIBLE_ACTION_BAR.getString();
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionbar));
         }
