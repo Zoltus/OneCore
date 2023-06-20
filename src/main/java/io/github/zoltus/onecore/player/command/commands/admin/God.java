@@ -5,9 +5,12 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.nbt.NBTPlayer;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -23,14 +26,14 @@ public class God implements ICommand {
                     if (target.getPlayer() != null) {
                         Player onlTarget = target.getPlayer();
                         onlTarget.setInvulnerable(result = !onlTarget.isInvulnerable());
-                        GOD_SET_TO.send(onlTarget, MODE_PH, result);
+                        GOD_SELF.send(onlTarget, MODE_PH, result);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(target);
                         nbtPlayer.setInvulnerable(result = !nbtPlayer.getInvulnerable());
                         nbtPlayer.save();
                     }
                     if (sender != target.getPlayer()) {
-                        GOD_CHANGED_TARGETS_GOD.send(sender, PLAYER_PH, target.getName(), MODE_PH, result);
+                        GOD_OTHER.send(sender, PLAYER_PH, target.getName(), MODE_PH, result);
                     }
                 });
         //god
@@ -39,8 +42,18 @@ public class God implements ICommand {
                 .withAliases(Commands.GOD_ALIASES)
                 .executesPlayer((p, args) -> {
                     p.setInvulnerable(!p.isInvulnerable());
-                    GOD_SET_TO.send(p, MODE_PH, p.isInvulnerable());
+                    GOD_SELF.send(p, MODE_PH, p.isInvulnerable());
                 }).then(arg0).override();
+
+
+        //Refresh vanished players action bar every 2.5s same for godmode?
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
+                () -> Bukkit.getOnlinePlayers().forEach(player -> {
+                    if (player.isInvulnerable()) {
+                        String actionbar = GOD_ACTION_BAR.getString();
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionbar));
+                    }
+                }), 0, 50);
     }
 }
 

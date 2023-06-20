@@ -105,10 +105,11 @@ Data:
     # <player> <mode>
     targets-gamemode-changed: '{p} Vaihdoit pelaajan <player> pelimuodoksi: <mode>!'
   god:
-    # <player> <mode>
-    changed-targets-god: '{p} Vaihdoit pelaajan <player> god modeksi: <mode>.'
     # <mode>
-    set-to: '{p} Godmode asetettu: <mode>.'
+    self: '{p} Godmode asetettu: <mode>.'
+    # <player> <mode>
+    other: '{p} Vaihdoit pelaajan <player> god modeksi: <mode>.'
+    actionbar: '&cGodmode on päällä!'
   heal:
     you-got-healed: '{p} Sinut on parannettu!'
     # <player>

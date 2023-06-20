@@ -73,7 +73,6 @@ public record JoinListener(OneCore plugin) implements Listener {
     public void handleVanishOnJoin(PlayerJoinEvent e) {
         Player joinerPlayer = e.getPlayer();
         User joiner = User.of(joinerPlayer);
-
         Bukkit.getOnlinePlayers().forEach(viewer -> {
             User user = User.of(viewer);
             if ((!user.isVanished() || Vanish.canSeeVanished(joinerPlayer))
