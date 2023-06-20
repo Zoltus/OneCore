@@ -72,15 +72,18 @@ public record JoinListener(OneCore plugin) implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void handleVanishOnJoin(PlayerJoinEvent e) {
         Player joinerPlayer = e.getPlayer();
-        User joiner = User.of(joinerPlayer);
-        Bukkit.getOnlinePlayers().forEach(viewer -> {
-            User user = User.of(viewer);
-            if ((!user.isVanished() || Vanish.canSeeVanished(joinerPlayer))
-                    && (!joiner.isVanished() || Vanish.canSeeVanished(viewer))) {
-                return;
+        User joinerP = User.of(joinerPlayer);
+        Bukkit.getOnlinePlayers().forEach(joinedP -> {
+            User joinedUser = User.of(joinedP);
+            //Zoltus joinaa = hidee defaultilta
+            if (joinerP.isVanished() && !Vanish.canSeeVanished(joinedP)) {
+                joinedP.hidePlayer(joinerPlayer);
             }
-            viewer.hidePlayer(joinerPlayer);
-            joinerPlayer.hidePlayer(viewer);
+            //default joinaa = hidee Zoltuksen
+            if (joinedUser.isVanished() && !Vanish.canSeeVanished(joinerPlayer)) {
+                joinerPlayer.hidePlayer(joinedP);
+            }
         });
+
     }
 }
