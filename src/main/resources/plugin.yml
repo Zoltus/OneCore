@@ -1,6 +1,6 @@
 main: io.github.zoltus.onecore.OneCore
-name: MotiCore
-prefix: MotiCore
+name: OneCore
+prefix: OneCore
 version: ${project.version}
 description: Core plugin for any type of server.
 load: POSTWORLD
