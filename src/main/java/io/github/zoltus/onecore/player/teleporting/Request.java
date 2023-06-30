@@ -88,7 +88,7 @@ public class Request {
     public void deny() {
         removeRequest();
         TP_DENIED.send(sender, PLAYER_PH, accepter.getName());
-        TP_YOU_DENIED.send(accepter, PLAYER_PH, accepter.getName());
+        TP_YOU_DENIED.send(accepter, PLAYER_PH, sender.getName());
     }
 
     private void removeRequest() {
