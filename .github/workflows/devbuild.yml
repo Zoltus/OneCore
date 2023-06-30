@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MotiCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
-          path: ${{ env.artifactPath }}/moticore-${{ env.VERSION_NUMBER_WITH_OFFSET }}-b${{ github.run_number }}.jar
+          path: ${{ env.artifactPath }}/moticore-${{ steps.extract_version.outputs.version }}.jar
