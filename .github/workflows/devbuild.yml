@@ -28,10 +28,9 @@ jobs:
           version=$(grep -m 1 "<version>" pom.xml | sed -E 's/.*>(.*)<.*/\1/')
           echo "version=$version" >> $GITHUB_ENV
           echo "::set-output name=version::$version"
-          echo "git_hash=$git_hash" >> $GITHUB_ENV
           echo "artifactPath=$(pwd)/target" >> $GITHUB_ENV
       - name: Upload Jars as Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: MotiCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
-          path: ${{ steps.upload_jar.outputs.jar }}.jar
+          path: ${{ env.artifactPath }}/moticore-${{ env.VERSION_NUMBER_WITH_OFFSET }}-b${{ github.run_number }}.jar
