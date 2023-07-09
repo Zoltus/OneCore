@@ -7,7 +7,7 @@ Data:
   permission-prefix: moticore.
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
-  kicked-for-spamming-bypass: kick.bypass
+  kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
   mentions:
     enabled: true
@@ -51,8 +51,8 @@ Data:
     baltop-update-interval: 5
     currency-plural: €
     currency-singular: €
-    enabled-hook: false
-    use-oneeconomy: false
+    enabled-hook: true
+    use-oneeconomy: true
     start-money: 500
   backups:
     #broken atm
