@@ -23,8 +23,13 @@ Data:
     colors-enabled: true
     color-permission: chat.colors
     formatter-enabled: true
-    # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
-    format: '%vault_prefix%{0}&f: {1}'
+    # To use PlaceholderAPI use {<papi_placeholder>} and make sure you have installed
+    # right papi expansions with /papi ecloud download <expansion>.
+    # If you want to use % in the format use %% instead.
+    # {0} = player
+    # {1} = message
+    # {vault_prefix} = Example papi placeholder for vault prefix. (/papi ecloud download vault)
+    format: '{vault_prefix}{0}&f: {1}'
     # If placeholder is empty it causes double spacing. This fixes it.
     remove-doublespaces: true
     # Removes whitespaces from start & end of message
