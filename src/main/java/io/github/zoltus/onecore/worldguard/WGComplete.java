@@ -13,6 +13,7 @@ import org.bukkit.event.server.TabCompleteEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class WGComplete implements Listener {
 
@@ -35,8 +36,7 @@ public class WGComplete implements Listener {
             return;
         }
         //If worldguard enabled add tabcomplete for regions
-        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")
-                && buffer.startsWith("/rg")) {
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard") && buffer.startsWith("/rg")) {
             RegionManager rgManager = WorldGuard.getInstance().getPlatform()
                     .getRegionContainer().get(BukkitAdapter.adapt(player.getWorld()));
             if (rgManager == null || !StringUtils.startsWithAny(buffer, "/rg", "/region")) {
@@ -50,7 +50,9 @@ public class WGComplete implements Listener {
                 completions = wgCommands;
                 ///rg <action> <complete>
             } else if (args.length == 3 && StringUtils.startsWithAny(args[1], wgRegionCommands)) {
-                completions = List.copyOf(rgManager.getRegions().keySet());
+                Set<String> allRegions = rgManager.getRegions().keySet();
+                allRegions.add("__global__");
+                completions = List.copyOf(allRegions);
                 //Rg flag <region> <complete>
             } else if (args.length == 4 && StringUtils.startsWithAny(args[1], "flag", "f")) {
                 List<Flag<?>> allFlags = WorldGuard.getInstance().getFlagRegistry().getAll();
