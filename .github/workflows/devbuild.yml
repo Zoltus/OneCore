@@ -32,5 +32,5 @@ jobs:
       - name: Upload Jars as Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: MotiCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
-          path: ${{ env.artifactPath }}/moticore-${{ steps.extract_version.outputs.version }}.jar
+          name: OneCore-${{ steps.extract_version.outputs.version }}-b${{ env.VERSION_NUMBER_WITH_OFFSET }}
+          path: ${{ env.artifactPath }}/onecore-${{ steps.extract_version.outputs.version }}.jar
