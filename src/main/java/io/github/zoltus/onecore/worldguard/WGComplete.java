@@ -50,7 +50,9 @@ public class WGComplete implements Listener {
                 completions = wgCommands;
                 ///rg <action> <complete>
             } else if (args.length == 3 && StringUtils.startsWithAny(args[1], wgRegionCommands)) {
-                Set<String> allRegions = rgManager.getRegions().keySet();
+                Set<String> regions = rgManager.getRegions().keySet();
+                //Convert allRegions to arraylist:
+                ArrayList<String> allRegions = new ArrayList<>(regions);
                 allRegions.add("__global__");
                 completions = List.copyOf(allRegions);
                 //Rg flag <region> <complete>
