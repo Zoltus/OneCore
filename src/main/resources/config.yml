@@ -2,12 +2,12 @@
 
 Data:
   spawn: []
-  prefix: '&f&lOneCore &8&l»&7'
+  prefix: '&9&lOne&l<#559fff>Core &8&l»&7'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
   # How player & server data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
-  kicked-for-spamming-bypass: kick.bypass
+  kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
   mentions:
     enabled: true
@@ -23,8 +23,13 @@ Data:
     colors-enabled: true
     color-permission: chat.colors
     formatter-enabled: true
-    # {0} = player & {1} = message and PlaceholderAPI support if installed. Dont use %s!
-    format: '%vault_prefix%{0}&f: {1}'
+    # To use PlaceholderAPI use {<papi_placeholder>} and make sure you have installed
+    # right papi expansions with /papi ecloud download <expansion>.
+    # If you want to use % in the format use %% instead.
+    # {0} = player
+    # {1} = message
+    # {vault_prefix} = Example papi placeholder for vault prefix. (/papi ecloud download vault)
+    format: '{vault_prefix}{0}&f: {1}'
     # If placeholder is empty it causes double spacing. This fixes it.
     remove-doublespaces: true
     # Removes whitespaces from start & end of message
@@ -46,8 +51,8 @@ Data:
     baltop-update-interval: 5
     currency-plural: €
     currency-singular: €
-    enabled-hook: false
-    use-oneeconomy: false
+    enabled-hook: true
+    use-oneeconomy: true
     start-money: 500
   backups:
     #broken atm

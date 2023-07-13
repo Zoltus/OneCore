@@ -53,7 +53,9 @@ public final class OneCore extends JavaPlugin {
                         .dispatcherFile(new File(getDataFolder(), "command_registration.json"))
                         // Point to the NBT API we want to use
                         .initializeNBTAPI(NBTContainer.class, NBTContainer::new));
-        this.worldGuardFlags = new WGFlags(this);
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            this.worldGuardFlags = new WGFlags(this);
+        }
     }
 
     @Override
@@ -78,7 +80,9 @@ public final class OneCore extends JavaPlugin {
         JoinListener.loadOnlinePlayers();
         //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
-        this.worldGuardFlags.onEnable();
+        if (worldGuardFlags != null) {
+            this.worldGuardFlags.onEnable();
+        }
         //Registers Listeners
         registerListeners();
         sendArt();

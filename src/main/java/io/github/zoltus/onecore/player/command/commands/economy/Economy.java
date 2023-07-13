@@ -16,7 +16,7 @@ import java.util.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
-public class Ecomomy implements ICommand {
+public class Economy implements ICommand {
 
     @Override
     public void init() {
@@ -100,8 +100,8 @@ public class Ecomomy implements ICommand {
                 .withPermission(ECONOMY_SET_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    User target = (User) args.get(1);
-                    double amount = (double) args.get(2);
+                    User target = (User) args.get(0);
+                    double amount = (double) args.get(1);
                     if (target.setBalance(amount)) {
                         ECONOMY_SET_SET.send(sender,
                                 PLAYER_PH, target.getName(),

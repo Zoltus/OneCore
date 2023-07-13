@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.zoltus</groupId>
-    <artifactId>moticore</artifactId>
+    <artifactId>onecore</artifactId>
     <version>1.0.0</version>
     <properties>
         <!--<outputDir>F:\MineServer\plugins</outputDir>
@@ -30,9 +30,6 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
-        <!-- Sonar scan -->
-        <sonar.organization>motimaa-net</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>

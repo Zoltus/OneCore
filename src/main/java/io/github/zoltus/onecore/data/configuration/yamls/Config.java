@@ -23,7 +23,7 @@ public enum Config implements IConfig {
     ECONOMY_HOOK("economy.enabled-hook"),
     ECONOMY_BALTOP_INTERVAL("economy.baltop-update-interval"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
-    KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass"),
+    KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass-permission"),
     MENTIONS_ENABLED("mentions.enabled"),
     MENTION_COLOR("mentions.color"),
     MENTION_PERMISSION("mentions.permission"),

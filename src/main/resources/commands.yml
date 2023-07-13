@@ -27,7 +27,7 @@ Data:
     aliases:
       - cc
   economy:
-    enabled: false
+    enabled: true
     label: economy
     permission: economy
     aliases:
@@ -68,8 +68,8 @@ Data:
       aliases: []
   #  - examplealias1
   enderchest:
-    edit-permission: enderchest.edit
     enabled: true
+    edit-permission: enderchest.edit
     label: enderchest
     other-permission: enderchest
     permission: enderchest
