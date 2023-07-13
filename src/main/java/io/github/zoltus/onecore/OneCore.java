@@ -135,6 +135,8 @@ public final class OneCore extends JavaPlugin {
             list.add(new InvSeeHandler());
         if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
             list.add(new TeleportVelocity());
+        if (worldGuardFlags != null)
+            list.add(worldGuardFlags);
         list.addAll(List.of(
                 new ChatListener(),
                 new SignListener(plugin),
@@ -143,8 +145,7 @@ public final class OneCore extends JavaPlugin {
                 new QuitListener(),
                 new TeleportHandler(),
                 new TestListener(),
-                new WGComplete(),
-                worldGuardFlags));
+                new WGComplete()));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 }
