@@ -20,7 +20,7 @@ public class PWeather implements ICommand {
         //pweather <weather>
         Argument<?> arg0 = new WeatherArgument(true)
                 .executesPlayer((p, args) -> {
-                    changeWeather(p, (WeatherInput) args.get(0), (Player) p.getWorld());
+                    changeWeather(p, (WeatherInput) args.get(0), p);
                 });
         //pweather <weather> <player>
         Argument<?> arg1 = new PlayerArgument()
@@ -48,5 +48,4 @@ public class PWeather implements ICommand {
         }
         Lang.PWEATHER_CHANGED.send(target, IConfig.WEATHER_PH, alias);
     }
-    //resetPlayerWeather(), resetPlayerTime()
 }
