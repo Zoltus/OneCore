@@ -152,11 +152,11 @@ Data:
   #  - examplealias1
   home:
     # Default homename if player types only /sethome
-    default-name: koti
     enabled: true
     label: home
     permission: home
     permission-other: home.other
+    default-name: koti
     aliases:
     - koti
   delhome:
