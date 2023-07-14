@@ -23,7 +23,7 @@ public class WGComplete implements Listener {
             "claim", "addmember", "addowner", "removemember", "select", "info", "flags", "list",
             "flag", "setpriority", "setparent", "teleport", "load", "reload", "save", "write");
 
-    private final String[] wgRegionCommands = {"flag", "flags", "select",
+    private final String[] wgRegionCommands = {"flag", "flags", "select", "redefine",
             "sel", "s", "remove", "rem", "delete",
             "del", "move", "update", "claim", "addmember", "addmem", "am", "addowner", "ao", "removemember",
             "remmember", "remmem", "rm", "removeowner", "ro", "info", "i",
