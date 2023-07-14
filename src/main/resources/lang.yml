@@ -217,6 +217,12 @@ Data:
     username: 'System Username: <username>'
     # <version>
     version: 'System Version: <version>'
+  ptime:
+    # <time>
+    changed: '{p} Aika vaihdettu <time>'
+    # <time>, <player>
+    changed-other: '{p} Pelaajan <player> ajaksi vaihdettu <time>.'
+    invalid-time: '{p} Viallinen aika!'
   time:
     # <time>, <world>
     changed: '{p} Aika vaihdettu <time> maailmassa: <world>'
@@ -286,6 +292,11 @@ Data:
     not-found: '{p} Warppia ei löytynyt. Warpit: <list>'
     # <player>, <warp>
     target-sent: '{p} Sent target <player> to warp <warp>'
+  pweather:
+    # <weather>
+    changed: '{p} Sää muutettu: <weather>'
+    # <weather>, <player>
+    changed-other: '{p} Pelajan <player> sää muutettu: <weather>'
   weather:
     # <weather>, <world>
     changed: '{p} Sää muutettu <weather> maailmassa <world>'

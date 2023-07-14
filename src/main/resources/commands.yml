@@ -307,19 +307,21 @@ Data:
     # Aliases for time
     aliases: []
     #  - examplealias1
-    single-word-aliases:
-      # Sets time to
-      day:
-        - day
-      # Sets time to
-      night:
-        - night
-      # Sets time to
-      morning:
-        - morning
-      # Sets time to
-      afternoon:
-        - afternoon
+    day-aliases:
+      - day
+    night-aliases:
+      - night
+    morning-aliases:
+      - morning
+    afternoon-aliases:
+      - afternoon
+  ptime:
+    enabled: true
+    label: ptime
+    permission: ptime
+    permission-other: ptime-other
+    aliases: []
+  #  - examplealias1
   top:
     enabled: true
     label: top
@@ -386,34 +388,23 @@ Data:
     permission-other: warp.other
     aliases: []
   #  - examplealias1
+  # Player weather uses same clear and rain aliases as weather command.
+  pweather:
+    enabled: true
+    label: pweather
+    permission: pweather
+    aliases: []
+  #  - examplealias1
   weather:
     enabled: true
     label: weather
     permission: weather
+    aliases: []
+    #  - examplealias1
     clear-aliases:
-      - c
       - clear
-      - s
-      - sun
     rain-aliases:
       - rain
-      - r
-      - sade
-    single-word-cmds:
-      - sun
-      - storm
-      - rain
+    # Rain with thunder
     storm-aliases:
       - storm
-      - lightning
-      - salama
-    suggestions:
-      - sun
-      - storm
-      - rain
-      - clear
-    aliases:
-      - sun
-      - storm
-      - rain
-      - clear

@@ -38,9 +38,9 @@ public class CommandHandler {
                 SetWarp.class, SignEdit.class, Spawn.class, Speed.class,
                 SystemInfo.class, Tp.class, Tpa.class,
                 Tpaccept.class, TpaHere.class, TpDeny.class,
-                TpToggle.class, Time.class, Top.class,
+                TpToggle.class, Time.class, PTime.class, Top.class,
                 Vanish.class,
-                Warp.class, Weather.class
+                Warp.class, Weather.class, PWeather.class
         );
         for (Class<? extends ICommand> cmd : cmds) {
             if (ICommand.isEnabled(cmd)) {
