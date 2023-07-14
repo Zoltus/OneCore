@@ -31,6 +31,7 @@ public class PTime implements ICommand {
                 .then(arg0.then(arg1))
                 .override();
     }
+    //todo reset
 
     private void changeTime(CommandSender sender, long time, Player target) {
         target.setPlayerTime(time, false);
