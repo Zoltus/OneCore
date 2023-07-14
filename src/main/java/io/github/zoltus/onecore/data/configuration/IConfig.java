@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.data.configuration;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import net.md_5.bungee.api.ChatColor;
+import io.github.zoltus.onecore.listeners.ChatListener;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -43,7 +43,7 @@ public interface IConfig {
         String prefix = Config.PREFIX.get();
         String configValue = yml().getOrDefault("Data." + getPath());
         String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return ChatListener.translareColors(message);
     }
 
     default String asPermission() {
