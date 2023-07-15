@@ -65,11 +65,11 @@ public class ChatListener implements Listener {
         e.setMessage(colorFormatted);
     }
 
-    //todo better errorcatch
+    //todo better errorcatch, doesnt work properly
     // String.format(format, this.player, this.message);
     private void handleChatFormat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
-        //Enables chat colors
+        //Enables chat colors if player has permission
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
             e.setMessage(translareColors(e.getMessage()));
@@ -80,7 +80,7 @@ public class ChatListener implements Listener {
             format = format.replace("{0}", "%s");
             format = format.replace("{1}", "%s");
             if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-                format = PlaceholderAPI.setPlaceholders(player, format);
+                format = PlaceholderAPI.setBracketPlaceholders(player, format);
             }
             if (CHAT_REMOVE_DUPLICATE_SPACES.getBoolean()) {
                 format = format.replace("  ", " ");
@@ -88,16 +88,12 @@ public class ChatListener implements Listener {
             if (CHAT_TRIM.getBoolean()) {
                 format = format.trim();
             }
-            //replaces %s with the player name and the message
-            if (player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-                format = translareColors(format);
-            }
+            //Translates colors for chat format
+            format = translareColors(format);
             try {
                 e.setFormat(format);
             } catch (Exception ex) {
-                System.out.println("Error while formatting chat message! "
-                        + "This might be caused by invalid placeholders in the chat format!"
-                        + "Have you installed PlaceholderAPI and its expansion? /papi ecloud download <expansion>");
+                System.out.println("Error while formatting chat message! " + ex.getMessage());
             }
         }
     }
@@ -110,3 +106,6 @@ public class ChatListener implements Listener {
 
 
 }
+
+
+
