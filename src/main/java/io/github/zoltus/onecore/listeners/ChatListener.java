@@ -2,7 +2,13 @@ package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentBuilder;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
@@ -61,7 +67,7 @@ public class ChatListener implements Listener {
                 }
             }
         }
-        String colorFormatted = translareColors(message);
+        String colorFormatted = translateColors(message);
         e.setMessage(colorFormatted);
     }
 
@@ -72,7 +78,7 @@ public class ChatListener implements Listener {
         //Enables chat colors if player has permission
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-            e.setMessage(translareColors(e.getMessage()));
+            e.setMessage(translateColors(e.getMessage()));
         }
         //Formats chat
         if (Config.CHAT_FORMATTER_ENABLED.getBoolean()) {
@@ -82,6 +88,9 @@ public class ChatListener implements Listener {
             if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
                 format = PlaceholderAPI.setBracketPlaceholders(player, format);
             }
+            //TagResolver.resolver("myhover", Tag.styling(ComponentBuilder)); // will display your custom text as hover
+            Placeholder.component("name", Component.text("TEST", NamedTextColor.RED));
+
             if (CHAT_REMOVE_DUPLICATE_SPACES.getBoolean()) {
                 format = format.replace("  ", " ");
             }
@@ -89,7 +98,7 @@ public class ChatListener implements Listener {
                 format = format.trim();
             }
             //Translates colors for chat format
-            format = translareColors(format);
+            format = translateColors(format);
             try {
                 e.setFormat(format);
             } catch (Exception ex) {
@@ -98,7 +107,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    public static String translareColors(String str) {
+    public static String translateColors(String str) {
         str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
         str = ChatColor.translateAlternateColorCodes('&', str);
         return str;

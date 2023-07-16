@@ -43,7 +43,7 @@ public interface IConfig {
         String prefix = Config.PREFIX.get();
         String configValue = yml().getOrDefault("Data." + getPath());
         String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
-        return ChatListener.translareColors(message);
+        return ChatListener.translateColors(message);
     }
 
     default String asPermission() {
