@@ -2,6 +2,8 @@ package io.github.zoltus.onecore.data;
 
 
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.data.configuration.OneYml;
+import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
