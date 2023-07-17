@@ -7,8 +7,8 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.WeatherArgument;
+import io.github.zoltus.onecore.player.command.arguments.WeatherInput;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
-import io.github.zoltus.onecore.player.command.commands.WeatherMode;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
@@ -18,12 +18,12 @@ public class Weather implements ICommand {
         //weather <weather>
         Argument<?> arg0 = new WeatherArgument(false)
                 .executesPlayer((p, args) -> {
-                    changeWeather(p, (WeatherMode) args.get(0), p.getWorld());
+                    changeWeather(p, (WeatherInput) args.get(0), p.getWorld());
                 });
         //weather <weather> <world>
         Argument<?> arg1 = new WorldsArgument()
                 .executes((sender, args) -> {
-                    changeWeather(sender, (WeatherMode) args.get(0), (World) args.get(1));
+                    changeWeather(sender, (WeatherInput) args.get(0), (World) args.get(1));
                 });
         new Command(Commands.WEATHER_LABEL)
                 .withPermission(Commands.WEATHER_PERMISSION)
@@ -32,8 +32,8 @@ public class Weather implements ICommand {
                 .override();
     }
 
-    private void changeWeather(CommandSender sender, WeatherMode weatherType, World w) {
-        switch (weatherType) {
+    private void changeWeather(CommandSender sender, WeatherInput weatherType, World w) {
+        switch (weatherType.weather()) {
             case CLEAR -> {
                 w.setStorm(false);
                 w.setWeatherDuration(0);
@@ -48,6 +48,6 @@ public class Weather implements ICommand {
                 w.setThundering(false);
             }
         }
-        Lang.WEATHER_CHANGED.send(sender, IConfig.WEATHER_PH, weatherType, IConfig.WORLD_PH, w.getName());
+        Lang.WEATHER_CHANGED.send(sender, IConfig.WEATHER_PH, weatherType.input(), IConfig.WORLD_PH, w.getName());
     }
 }
