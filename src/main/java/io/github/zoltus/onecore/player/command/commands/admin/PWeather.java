@@ -36,7 +36,7 @@ public class PWeather implements ICommand {
     }
 
     private void changeWeather(CommandSender sender, WeatherInput weatherType, Player target) {
-        String alias = weatherType.alias();
+        String alias = weatherType.input();
         WeatherMode weatherMode = weatherType.weather();
         switch (weatherMode) {
             case CLEAR -> target.setPlayerWeather(WeatherType.CLEAR);
