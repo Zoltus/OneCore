@@ -393,6 +393,7 @@ Data:
     enabled: true
     label: pweather
     permission: pweather
+    permission-other: pweather.other
     aliases: []
   #  - examplealias1
   weather:
