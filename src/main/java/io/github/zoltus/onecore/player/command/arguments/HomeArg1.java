@@ -5,6 +5,7 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
             if (p != null) {
                 return input;
             } else if (!offP.hasPlayedBefore() || User.of(offP) == null) {
-                throw CustomArgumentException.fromString(PLAYER_NEVER_VISITED_SERVER.getString());
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.getString()));
             } else {
                 return input;
             }

@@ -4,6 +4,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.command.IArgument;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -23,7 +24,7 @@ public class WorldsArgument extends CustomArgument<World, String> implements IAr
         super(new StringArgument(NODES_WORLD_NAME.get() + add), info -> {
             World world = Bukkit.getWorld(info.input());
             if (world == null) {
-                throw CustomArgumentException.fromString(WORLD_NOT_FOUND.getString());
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(WORLD_NOT_FOUND.getString()));
             } else {
                 return world;
             }

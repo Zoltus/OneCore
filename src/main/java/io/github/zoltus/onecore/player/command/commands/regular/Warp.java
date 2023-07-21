@@ -9,6 +9,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -36,7 +37,7 @@ public class Warp implements ICommand {
             String input = info.input();
             Location warp =  Yamls.WARPS.getYml().getLocation(input);
             if (warp == null) {
-                throw CustomArgument.CustomArgumentException.fromString(WARP_NOT_FOUND.replace(LIST_PH,getKeys()));
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(WARP_NOT_FOUND.replace(LIST_PH,getKeys())));
             } else {
                 return new WarpObj(input, warp);
             }

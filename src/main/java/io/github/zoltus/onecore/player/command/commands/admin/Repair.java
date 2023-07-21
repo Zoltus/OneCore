@@ -8,6 +8,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class Repair implements ICommand {
         return new CustomArgument<>(new StringArgument(NODES_SLOT.getString()), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
-                throw CustomArgument.CustomArgumentException.fromString(REPAIR_SLOT_INVALID_SLOT.getString());
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(REPAIR_SLOT_INVALID_SLOT.getString()));
             } else {
                 return input;
             }

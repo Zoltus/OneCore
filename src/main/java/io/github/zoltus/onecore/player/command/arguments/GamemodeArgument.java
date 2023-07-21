@@ -6,6 +6,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.IArgument;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;
 
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class GamemodeArgument extends CustomArgument<GameMode, String> implement
         super(new StringArgument(Lang.NODES_GAMEMODE.getString()), info -> {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
-                throw CustomArgumentException.fromString(Lang.GAMEMODE_INVALID_GAMEMODE.getString());
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.GAMEMODE_INVALID_GAMEMODE.getString()));
             } else {
                 return gm;
             }
