@@ -112,8 +112,6 @@ public class ChatListener implements Listener {
         str = ChatColor.translateAlternateColorCodes('&', str);
         return str;
     }
-
-
 }
 
 

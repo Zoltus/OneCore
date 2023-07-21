@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -12,19 +13,21 @@ import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
 import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
-import io.github.zoltus.onecore.worldguard.WGComplete;
 import io.github.zoltus.onecore.worldguard.WGFlags;
+import io.github.zoltus.onecore.worldguard.WGTabComplete;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 @Getter
 public final class OneCore extends JavaPlugin {
@@ -53,8 +56,12 @@ public final class OneCore extends JavaPlugin {
                         .dispatcherFile(new File(getDataFolder(), "command_registration.json"))
                         // Point to the NBT API we want to use
                         .initializeNBTAPI(NBTContainer.class, NBTContainer::new));
-        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-            this.worldGuardFlags = new WGFlags(this);
+
+        Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (worldGuard == null) {
+            plugin.getLogger().log(Level.WARNING, "WorldGuard not found, WorldGuard Extra Flags disabled.");
+        } else {
+            this.worldGuardFlags = new WGFlags((WorldGuardPlugin) worldGuard);
         }
     }
 
@@ -145,7 +152,7 @@ public final class OneCore extends JavaPlugin {
                 new QuitListener(),
                 new TeleportHandler(),
                 new TestListener(),
-                new WGComplete()));
+                new WGTabComplete()));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
 }
