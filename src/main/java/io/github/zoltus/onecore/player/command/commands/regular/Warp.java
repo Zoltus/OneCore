@@ -1,56 +1,35 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
-import dev.jorel.commandapi.arguments.ArgumentSuggestions;
-import dev.jorel.commandapi.arguments.CustomArgument;
-import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.player.command.arguments.WarpArgument;
+import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.Command;
-import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
 import java.util.Set;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WARP_LIST;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WARP_TARGET_SENT;
 
 public class Warp implements ICommand {
 
-    record WarpObj(String name, Location location) {
-    }
-
-    //Tape fix just incase
-    private Set<String> getKeys() {
-        return Yamls.WARPS.getYml().getKeys(false);
-    }
-
-    private Argument<?> warpArg() {
-        return new CustomArgument<>(new StringArgument(NODES_WARP_NAME.getString()), info -> {
-            String input = info.input();
-            Location warp =  Yamls.WARPS.getYml().getLocation(input);
-            if (warp == null) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(WARP_NOT_FOUND.replace(LIST_PH,getKeys())));
-            } else {
-                return new WarpObj(input, warp);
-            }
-        }).replaceSuggestions(ArgumentSuggestions
-                .strings(info -> toSuggestion(info.currentArg(), getKeys()
-                        .toArray(new String[0]))));
+    public record WarpObj(String name, Location location) {
     }
 
     //todo cleanup
     @Override
     public void init() {
         //warp <warp>
-        Argument<?> arg0 = warpArg()
+        Argument<?> arg0 = new WarpArgument()
                 .executesPlayer((p, args) -> {
                     WarpObj warp = (WarpObj) args.get(0);
                     User user = User.of(p);
@@ -81,9 +60,13 @@ public class Warp implements ICommand {
                 .withPermission(WARP_PERMISSION)
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
-                    WARP_LIST.send(p, LIST_PH, getKeys().toString());
+                    WARP_LIST.send(p, LIST_PH, getWarps().toString());
                 }).then(arg0.then(arg1))
                 .override();
+    }
+
+    public static Set<String> getWarps() {
+        return Yamls.WARPS.getYml().getKeys(false);
     }
 }
 

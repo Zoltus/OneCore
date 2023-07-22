@@ -178,6 +178,9 @@ Data:
     set: '{p} Maksimi määräksi pelaajia asetettu <amount>'
   setspawn:
     set: '{p} Spawn asetettu'
+  delwarp:
+    # <warp>
+    warp-deleted: '{p} Warppi <warp> poistettu!'
   setwarp:
     # <warp>
     set: '{p} warp: <warp> asetettu'

@@ -28,7 +28,7 @@ public class CommandHandler {
         //faster startup when disabling cmds
         List<Class<? extends ICommand>> cmds = List.of(
                 Back.class, Broadcast.class, ClearChat.class,
-                DelHome.class, Feed.class,
+                DelHome.class, DelWarp.class, Feed.class,
                 Fly.class, Gamemode.class, God.class,
                 Heal.class, Home.class, EnderChest.class,
                 Invsee.class, KillAll.class, Msg.class,

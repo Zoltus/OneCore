@@ -17,6 +17,7 @@ public enum Lang implements IConfig {
     CLEAR_PLAYER_CLEARED_CHAT("clear.player-cleared-chat"),
     DELHOME_DELETED("homes.delete.deleted"),
     DELHOME_OTHER("homes.delete.other"),
+    DELWARP_DELETED("delwarp.warp-deleted"),
     SETHOME_OTHER("homes.set.other"),
     ECONOMY_BALANCE_TARGETS_BALANCE("economy.balance.targets-balance"),
     ECONOMY_BALANCE_YOUR_BALANCE("economy.balance.your-balance"),

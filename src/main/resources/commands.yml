@@ -165,6 +165,12 @@ Data:
     permission: delhome
     aliases: []
   #  - examplealias1
+  delwarp:
+    enabled: true
+    label: delwarp
+    permission: delwarp
+    aliases: []
+  #  - examplealias1
   sethome:
     enabled: true
     label: sethome
