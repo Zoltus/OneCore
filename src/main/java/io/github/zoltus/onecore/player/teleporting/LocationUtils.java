@@ -96,7 +96,7 @@ public class LocationUtils {
         for (int x = startX - radius; x < startX + radius; x++) {
             for (int y = startY - radius + 1; y < startY + radius - 1; y++) {
                 for (int z = startZ - radius; z < startZ + radius; z++) {
-                    Location loc = new Location(start.getWorld(), x, y, z);
+                    Location loc = new Location(start.getWorld(), x, y, z, start.getYaw(), start.getPitch());
                     int distance = (int) start.distance(loc);
                     //Sets the location if its safe and changes it if new location is closer
                     if (checkLoc(p, loc) && distance < closestDistance) {
