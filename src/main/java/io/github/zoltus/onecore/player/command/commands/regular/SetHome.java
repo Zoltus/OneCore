@@ -15,7 +15,7 @@ import org.bukkit.command.CommandSender;
 
 public class SetHome implements ICommand {
 
-    //todo homelimit test
+    //todo homelimit test, todo swap  home and player arg
     @Override
     public void init() {
         //sethome <home>
@@ -27,7 +27,7 @@ public class SetHome implements ICommand {
         Argument<?> arg1 = new OfflinePlayerArgument()
                 .withPermission(Commands.SETHOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(1));
+                    OfflinePlayer offP = (OfflinePlayer) args.get(1);
                     setHome(sender, offP, (String) args.get(0));
                 });
         //sethome
