@@ -27,6 +27,7 @@ public final class OneEconomy extends AbstractEconomy {
     @Setter
     private static LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
 
+
     private final Logger logger;
     private final OneCore plugin;
     private final String name = "OneEconomy";

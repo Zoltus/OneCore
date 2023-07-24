@@ -12,6 +12,7 @@ import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
 import io.github.zoltus.onecore.listeners.tweaks.TeleportVelocity;
+import io.github.zoltus.onecore.placeholders.PapiExpansion;
 import io.github.zoltus.onecore.player.teleporting.TeleportHandler;
 import io.github.zoltus.onecore.worldguard.WGFlags;
 import io.github.zoltus.onecore.worldguard.WGTabComplete;
@@ -92,6 +93,10 @@ public final class OneCore extends JavaPlugin {
         }
         //Registers Listeners
         registerListeners();
+
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PapiExpansion(this).register();
+        }
         sendArt();
         plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
     }
