@@ -19,16 +19,18 @@ public class SetHome implements ICommand {
     @Override
     public void init() {
         //sethome <home>
-        Argument<?> arg0 = new StringArgument(Lang.NODES_HOME_NAME.getString())
+        Argument<?> arg1 = new StringArgument(Lang.NODES_HOME_NAME.getString())
                 .executesPlayer((p, args) -> {
-                    setHome(p, p, (String) args.get(0));
+                    //This arg can be in arg 0 or 1 position
+                    Object arg = args.args().length == 1 ? args.get(0) : args.get(1);
+                    setHome(p, p, (String) arg);
                 });
         //sethome <home> <player>
-        Argument<?> arg1 = new OfflinePlayerArgument()
+        Argument<?> arg0 = new OfflinePlayerArgument()
                 .withPermission(Commands.SETHOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
-                    OfflinePlayer offP = (OfflinePlayer) args.get(1);
-                    setHome(sender, offP, (String) args.get(0));
+                    OfflinePlayer offP = (OfflinePlayer) args.get(0);
+                    setHome(sender, offP, (String) args.get(1));
                 });
         //sethome
         new Command(Commands.SETHOME_LABEL)
@@ -36,7 +38,9 @@ public class SetHome implements ICommand {
                 .withAliases(Commands.SETHOME_ALIASES)
                 .executesPlayer((p, args) -> {
                     setHome(p, p, null);
-                }).then(arg0.then(arg1))
+                })
+                .then(arg1)
+                .then(arg0.then(arg1))
                 .override();
     }
 
@@ -45,7 +49,7 @@ public class SetHome implements ICommand {
         if (target == null) {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            //Async because it scans permissions and if user has lot it could slow down the server.
+            //Async because sethome scans permissions and if user has lot it could slow down the server.
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                 String finalHome = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
                 boolean isSelf = sender.getName().equals(offP.getName());
