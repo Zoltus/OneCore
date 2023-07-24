@@ -130,7 +130,7 @@ public enum Lang implements IConfig {
     PTIME_CHANGED("ptime.changed"),
     PTIME_CHANGED_OTHER("ptime.changed-other"),
     TOP_TELEPORTED_TARGET("top.teleported-target"),
-    TOP_TELPORTED("top.telported"),
+    TOP_TELPORTED("top.teleported"),
     TPHERE_TELEPORTED("tphere.teleported"),
     TPHERE_OFFLINE_TARGET("tphere.offline-target"),
     TP_ACCEPTED("tp.accepted"),

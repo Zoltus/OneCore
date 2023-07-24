@@ -2,15 +2,15 @@
 #For new line use <br>
 Data:
   # <variable>
-  variable-color: '<color:#ff6666><variable></color>'
+  variable-color: '<color:#ff6666><variable></color><color:#e6e6e6>'
   other:
-    invalid-range: '{p} §cKelvoton säde.'
+    invalid-range: '{p} Kelvoton säde!'
     # <player>
     joined: '&a&l+ &7<player>'
     # <player>
     quit: '&c&l- &7<player>'
-    kicked-for-spamming-reason: '{p} §cSinut potkittiin, koska spammasit!'
-    player-never-visited-server: '{p} Pelaajaa ei löytynyt.'
+    kicked-for-spamming-reason: '{p} Sinut potkittiin, koska spammasit!'
+    player-never-visited-server: '{p} Pelaajaa ei löytynyt!'
     world-not-found: '{p} Maailmaa ei löytynyt!'
     # <perm>
     no-permission: '{p} Sinulta puuttuu oikeus: <perm>!'
@@ -55,30 +55,30 @@ Data:
       top-players: '{p} Top 10 pelaajat:'
     give:
       # <player>, <amount>, <balance>
-      gave: '{p} Annoit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
+      gave: '{p} Annoit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>.'
       # <amount>, <balance>
-      your-balance-was-increaced: '{p} Ylläpitäjä antoi sinulle <amount>, Uusi rahamääräsi
-        on <balance>!'
-    not-enought: '{p} Sinulla ei ole tarpeeksi varaa!'
+      your-balance-was-increaced: '{p} Palvelin antoi sinulle <amount>, Uusi rahamääräsi
+        on <balance>.'
+    not-enought: '{p} Sinulla ei ole tarpeeksi rahaa!'
     # <player>, <amount>, <balance>
     target-doesnt-have-enought-money: '{p} Pelaajalla <player> ei ollut tarpeeksi
-      varaa. Hänellä on <balance> ja yritit ottaa <amount>!'
+      varaa. Hänellä on <balance> ja yritit ottaa <amount>.'
     pay:
       # <player>, <amount>, <balance>
-      received: '{p} Sait <amount> pelaajalta <player>. Uusi rahamääräsi on <balance>!'
+      received: '{p} Sait <amount> pelaajalta <player>. Uusi rahamääräsi on <balance>.'
       # <player>, <amount>, <balance>
-      sent: '{p} Lähetit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>!'
+      sent: '{p} Lähetit <amount> pelaajalle <player>. Uusi rahamääräsi on <balance>.'
     set:
       # <player>, <amount>
-      set: '{p} Asetit pelaajan <player> raha määräksi <amount>!'
+      set: '{p} Asetit pelaajan <player> raha määräksi <amount>.'
       # <amount>
-      your-balance-was-set: '{p} Raha määräksesi on asetettu <amount>, ylläpidon toimesta!'
+      your-balance-was-set: '{p} Raha määräksesi on asetettu <amount>, palvelimen toimesta.'
     take:
       #  <player>, <amount>, <balance>
-      took: '{p} Poistit <amount> pelaajalta <player>, Uusi rahamääräsi on <balance>!'
+      took: '{p} Poistit <amount> pelaajalta <player>, hänen uusi rahamäärä on <balance>.'
       # <amount>, <balance>
-      your-balance-reduced: '{p} Sinulta poistettiin <amount> Ylläpidon toimesta!
-        Uusi rahamääräsi on <balance>!'
+      your-balance-reduced: '{p} Sinulta poistettiin <amount> palvelimen toimesta.
+        Uusi rahamääräsi on <balance>.'
     # <player>
     transfer:
       # <player>, <player2>, <amount>
@@ -90,7 +90,7 @@ Data:
     you-have-been-healed: '{p} Sinut on ruokittu!'
   fly:
     # <player> <toggle>
-    you-switched-target: '{p} Asetit pelaajan <player> lennon "<toggle>"'
+    you-switched-target: '{p} Asetit pelaajan <player> lennon <toggle>.'
     # <toggle>
     your-flight-is-now: '{p} Lentosi vaihdettiin: <toggle>!'
   gamemode:
@@ -100,8 +100,8 @@ Data:
     adventure: seikkailia
     spectator: katsoja
     # <mode>
-    changed: '{p} Asetit pelimuodoksi: <mode>'
-    invalid-gamemode: '{p} Kelvoton pelimuoto'
+    changed: '{p} Asetit pelimuodoksi: <mode>.'
+    invalid-gamemode: '{p} Kelvoton pelimuoto!'
     # <player> <mode>
     target-already-in-gamemode: '{p} <player> on jo pelimuodossa <mode>!'
     # <player> <mode>
@@ -115,7 +115,7 @@ Data:
   heal:
     you-got-healed: '{p} Sinut on parannettu!'
     # <player>
-    you-healed-target: '{p} Paransit pelaajan: <player>'
+    you-healed-target: '{p} Paransit pelaajan: <player>.'
   homes:
     home:
       # <list>
@@ -127,17 +127,17 @@ Data:
       # <home>
       full-homes: '{p} Sinulla on jo täysi määrä koteja, poista /delhome <home>'
       # <home>
-      set: '{p} Asetit kodin: <home>'
+      set: '{p} Asetit kodin: <home>.'
       # <home>, <player>
-      other: '{p} Koti <home> asetettu pelaajalle <player>'
+      other: '{p} Koti <home> asetettu pelaajalle <player>.'
     delete:
       # <home>
-      deleted: '{p} Koti poistettu <home>'
+      deleted: '{p} Koti poistettu <home>.'
       # <home>, <player>
-      other: '{p} Koti <home> poistettu pelaajalta <player>'
+      other: '{p} Koti <home> poistettu pelaajalta <player>.'
   killall:
     # <amount>, <type>, <radius>
-    removed-entitys: '{p} Tapettu <amount> <type> alueelta <radius>'
+    removed-entitys: '{p} Tapettu <amount> <type> alueelta <radius>.'
   msg:
     # <player>, <player2>, <message>
     received-msg: '{p} [<player> > <player2>] : <message>'
@@ -145,22 +145,22 @@ Data:
     sent-msg: '{p} [<player> > <player2>] : <message>'
   ping:
     # <player>, <ping>
-    targets-ping: '{p} Pelaajan <player> ping on <ping>'
+    targets-ping: '{p} Pelaajan <player> ping on <ping>.'
     # <ping>
-    your-ping: '{p} Sinun ping on <ping>'
+    your-ping: '{p} Sinun ping on <ping>.'
   playtime:
     # <time>
-    targets-playtime: '{p} Pelaajan <player> peliaika on <time>'
+    targets-playtime: '{p} Pelaajan <player> peliaika on <time>.'
     time-format: HH:mm:ss
     # <player>, <time>
-    your-playtime: '{p} Sinun peliaikasi on <time>'
+    your-playtime: '{p} Sinun peliaikasi on <time>.'
   reload:
     reloaded: §aFiles reloaded!
   repair:
     # <slot>
-    nothing-to-fix: '{p} Mitään korjattavaa ei löytynyt sijainnissa <slot>'
+    nothing-to-fix: '{p} Mitään korjattavaa ei löytynyt sijainnissa <slot>.'
     # <slot>
-    self-repaired: '{p} Asioita korjattu sijainnista <slot>'
+    self-repaired: '{p} Asioita korjattu sijainnista <slot>.'
     slot-all: all
     slot-armor: armor
     slot-hand: hand
@@ -168,43 +168,43 @@ Data:
     slot-inventory: inventory
     slot-offhand: offhand
     # <player>, <slot>
-    you-repaired-target: '{p} Korjasit pelaajan: <player> tavarat sijainnista <slot>'
+    you-repaired-target: '{p} Korjasit pelaajan: <player> tavarat sijainnista <slot>.'
     # <slot>
-    your-items-got-repaired: '{p} Sinun tavarasi sijainnista <slot> korjattiin'
+    your-items-got-repaired: '{p} Sinun tavarasi sijainnista <slot> korjattiin.'
   seen:
     date-format: dd.MM.yyyy | HH:mm
     # <player>, <time>
-    last-seen: '{p} <player> nähtiin viimeksi <time>'
+    last-seen: '{p} <player> nähtiin viimeksi <time>.'
   setmaxplayers:
     # <amount>
-    set: '{p} Maksimi määräksi pelaajia asetettu <amount>'
+    set: '{p} Maksimi määräksi pelaajia asetettu <amount>.'
   setspawn:
-    set: '{p} Spawn asetettu'
+    set: '{p} Spawn asetettu!'
   delwarp:
     # <warp>
     warp-deleted: '{p} Warppi <warp> poistettu!'
   setwarp:
     # <warp>
-    set: '{p} warp: <warp> asetettu'
+    set: '{p} Warp: <warp> asetettu'
   spawn:
     is-not-set: '{p} spawn ei ole asetettu, aseta se käyttämällä /setspawn'
     # <player>
-    target-sent: '{p} Lähetetty pelaaja <player> spawnille'
+    target-sent: '{p} Lähetetty pelaaja <player> spawnille.'
   signedit:
-    sign-updated: '{p} Kyltti päivitetty'
-    sign-not-found: '{p} Kylttiä ei löytynyt'
-    sign-copied: '{p} Kyltti kopioitu'
+    sign-updated: '{p} Kyltti päivitetty.'
+    sign-not-found: '{p} Kylttiä ei löytynyt.'
+    sign-copied: '{p} Kyltti kopioitu.'
     # <line>
     sign-copied-line: '{p} Kopioitu rivi <line>'
   speed:
     mode-fly: fly
-    mode-invalid-mode: '{p} Viallinen tila'
-    mode-invalid-speed: '{p} Viallinen nopeus, käytä 0-10'
+    mode-invalid-mode: '{p} Viallinen tila!'
+    mode-invalid-speed: '{p} Viallinen nopeus, käytä 0-10!'
     mode-walk: walk
     # <player>, <mode>, <amount>
-    you-set-speed: '{p} Pelaajan <player> nopeus asetettu <amount> tilaan <mode>'
+    you-set-speed: '{p} Pelaajan <player> nopeus asetettu <amount> tilaan <mode>.'
     # <mode>, <amount>
-    your-speed-set: '{p} Nopeus asetettu <amount> tilaan <mode>'
+    your-speed-set: '{p} Nopeus asetettu <amount> tilaan <mode>.'
   system:
     # <used>, <total>
     disk-usage: 'System Disk usage: <used>GB/<total>GB'
@@ -224,18 +224,18 @@ Data:
     version: 'System Version: <version>'
   ptime:
     # <time>
-    changed: '{p} Aika vaihdettu <time>'
+    changed: '{p} Aika vaihdettu <time>!'
     # <time>, <player>
     changed-other: '{p} Pelaajan <player> ajaksi vaihdettu <time>.'
     invalid-time: '{p} Viallinen aika!'
   time:
     # <time>, <world>
-    changed: '{p} Aika vaihdettu <time> maailmassa: <world>'
+    changed: '{p} Aika vaihdettu <time> maailmassa: <world>.'
     invalid-time: '{p} Viallinen aika!'
   top:
     # <player>
     teleported-target: '{p} Teleporttasit pelaajan <player> ylimpään blockkiin!'
-    telported: '{p} Teleporttasit ylimpään blockkiin!'
+    teleported: '{p} Teleporttasit ylimpään palikkaan!'
   tp:
     #Sends as component
     # <player>, <type> tp type
@@ -243,45 +243,45 @@ Data:
       <br><hover:show_text:''<green>Painaahyväksyäksesi!''><click:run_command:''/tpaccept''><green>Hyväksy!</click></hover>
       | <hover:show_text:''<red>Paina hylkääksesi!''><click:run_command:''/tpdeny''><red>Hylkää!</click></hover>'
     # <player>
-    accepted: '{p} <player> hyväksyi pyyntösi'
+    accepted: '{p} <player> hyväksyi pyyntösi.'
     # <player>
-    denied: '{p} Pyyntösi pelaajalle <player> hylättiin'
+    denied: '{p} Pyyntösi pelaajalle <player> hylättiin.'
     cancelled-by-damage: '{p} Teleporttaus peruutettu koska vahingoituit.'
     cancelled-by-new-teleport: '{p} Teleporttaus peruutettu toisen teleportin takia.'
     cancelled-by-movement: '{p} Teleporttaus peruutettu liikkumisen takia.'
     cant-self-teleport: '{p} Et voi lähettää pyyntöä itsellesi.'
-    expired: '{p} expired'
+    expired: '{p} Pyyntö vanhentui!'
     no-requests: '{p} Ei pyyntöjä.'
     no-safe-locations: '{p} Turvallista paikkaa ei löytynyt.'
     # <player> //Copilot. translate messages!
-    teleported-offline-target: '{p} Teleporttasit offline pelaajaan: <player>'
+    teleported-offline-target: '{p} Teleporttasit offline pelaajaan: <player>.'
     # <player>, <player2>
     teleported-offline-targets: '{p} Teleportattu pelaaja <player> kohteeseen <player2> (One or both were offline)'
     # <player>
-    teleported-target: '{p} Sinut teleportattiin pelaajaan <player>'
+    teleported-target: '{p} Sinut teleportattiin pelaajaan <player>.'
     # <player>, <player2>
-    teleported-targets: '{p} Teleportattu pelaaja <player> kohteeseen <player2>'
+    teleported-targets: '{p} Teleportattu pelaaja <player> kohteeseen <player2>.'
     # <player>
-    sent: '{p} Lähetetty pelaajalle <player>'
+    sent: '{p} Lähetetty pelaajalle <player>.'
     # <seconds>
-    started: '{p} Teleporttaus käynnissä älä liiku, teleportataan <seconds> sekunnissa'
+    started: '{p} Teleporttaus käynnissä älä liiku, teleportataan <seconds> sekunnissa.'
     # <player>
-    target-quit: '{p} Teleporttaus peruutettu sillä pelaaja <player> lähti paikalta'
+    target-quit: '{p} Teleporttaus peruutettu sillä pelaaja <player> lähti paikalta.'
     # <player>
-    toggle-is-off: '{p} Pelaajalla <player> on teleporttaus poissa käytöstä'
+    toggle-is-off: '{p} Pelaajalla <player> on teleporttaus poissa käytöstä.'
     # <toggle>
-    toggle-switched: '{p} Teleporttaus vaihdettu: <toggle>'
+    toggle-switched: '{p} Teleporttaus vaihdettu: <toggle>.'
     # <player>
-    you-accepted: '{p} Hyväksyit pelaajan <player> pyynnön'
+    you-accepted: '{p} Hyväksyit pelaajan <player> pyynnön.'
     # <player>
-    you-already-sent-request: '{p} Lähetit jo pyynnön pelaajalle <player>'
+    you-already-sent-request: '{p} Lähetit jo pyynnön pelaajalle <player>.'
     # <player>
-    you-denied: '{p} Sinä hylkäsit pelaajan <player> pyynnön'
+    you-denied: '{p} Sinä hylkäsit pelaajan <player> pyynnön.'
   tphere:
     # <player>
-    teleported: '{p} <player> teleportattu sinuun!'
+    teleported: '{p} <player> teleporttasi sinuun!'
     # <player>
-    offline-target: '{p} <player> Oli kirjautunut ulos, ja on teleportattu sinuun'
+    offline-target: '{p} <player> Oli kirjautunut ulos, ja on teleportattu sinuun.'
   vanish:
     visible: näkyvä
     invisible: näkymätön
@@ -296,13 +296,13 @@ Data:
     # <list>
     not-found: '{p} Warppia ei löytynyt. Warpit: <list>'
     # <player>, <warp>
-    target-sent: '{p} Sent target <player> to warp <warp>'
+    target-sent: '{p} Pelaaja <player> lähetetty sijaintiin <warp>'
   pweather:
     # <weather>
-    changed: '{p} Sää muutettu: <weather>'
+    changed: '{p} Sää muutettu: <weather>.'
     # <weather>, <player>
-    changed-other: '{p} Pelajan <player> sää muutettu: <weather>'
+    changed-other: '{p} Pelaajan <player> sää muutettu: <weather>.'
   weather:
     # <weather>, <world>
-    changed: '{p} Sää muutettu <weather> maailmassa <world>'
+    changed: '{p} Sää muutettu <weather> maailmassa <world>.'
     invalid-weather: '{p} Kelvoton sää!'
