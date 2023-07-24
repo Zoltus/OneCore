@@ -1,6 +1,8 @@
 #Supports Minimessage format and normal minecraft format
 #For new line use <br>
 Data:
+  # <variable>
+  variable-color: '<color:#ff6666><variable></color>'
   other:
     invalid-range: '{p} §cKelvoton säde.'
     # <player>
@@ -44,7 +46,7 @@ Data:
     balance:
       # <player>, <balance>
       targets-balance: '{p} Pelaajan <player> rahamäärä on: <balance>.'
-      # <balance>
+      # <balance> '<color:#ff6666><balance></color>'
       your-balance: '{p} Rahasi: <balance>.'
     baltop:
       empty: '&7Top lista on tyhjä.'

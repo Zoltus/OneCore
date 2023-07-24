@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 
 @AllArgsConstructor
 public enum Lang implements IConfig {
+    VARIABLE_COLOR("variable-color"),
     BACK_NO_HISTORY("back.no-history"),
     BACK_TARGET_SENT("back.target-sent"),
     BROADCAST_PREFIX("broadcast.prefix"),
@@ -188,15 +189,26 @@ public enum Lang implements IConfig {
         String ph = null;
         String message = getString();
         for (Object objRp : replaces) {
-            String replace = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
+            String value = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
+            //color
             if (ph == null) {
-                ph = replace;
+                ph = value;
             } else {
-                message = message.replaceAll(ph, replace);
+                //  ph              = <balance>
+                //  value           = 100
+                //  variable-color  =
+                // <color:#ff6666><variable></color>
+                String variableColors = VARIABLE_COLOR.get();
+                //<color:#ff6666><balance></color>
+                String coloredVar = variableColors.replace("<variable>", ph);
+                // '{p} Rahasi: <balance>.'
+                message = message.replaceAll(ph, coloredVar);
+                // '{p} Rahasi: <color:#ff6666><balance></color>.'
+                message = message.replaceAll(ph, value);
+                // '{p} Rahasi: <color:#ff6666>value</color>.'
                 ph = null;
             }
         }
         return message;
     }
-
 }
