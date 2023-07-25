@@ -48,7 +48,7 @@ public record JoinListener(OneCore plugin) implements Listener {
     @EventHandler
     public void handleSpawnOnJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        e.setJoinMessage(Lang.JOINED.replace(IConfig.PLAYER_PH, p.getName()));
+        e.setJoinMessage(Lang.JOINED.replaceColored(IConfig.PLAYER_PH, p.getName()));
         //ForceSpawns
         if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
             Location spawn = Spawn.getSpawn();
