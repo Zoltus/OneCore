@@ -3,6 +3,7 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
+import io.github.zoltus.onecore.listeners.ChatListener;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.utils.ChatUtils;
 import lombok.AllArgsConstructor;
@@ -183,6 +184,10 @@ public enum Lang implements IConfig {
         if (user.isOnline()) {
             send(user.getPlayer(), replaces);
         }
+    }
+
+    public String replaceColored(Object... replaces) {
+        return ChatListener.translateColors(replace(replaces));
     }
 
     public String replace(Object... replaces) {

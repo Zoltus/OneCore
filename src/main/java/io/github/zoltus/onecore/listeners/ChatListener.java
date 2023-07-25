@@ -107,6 +107,8 @@ public class ChatListener implements Listener {
         }
     }
 
+    //todo to chatutils
+
     public static String translateColors(String str) {
         str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
         str = ChatColor.translateAlternateColorCodes('&', str);
