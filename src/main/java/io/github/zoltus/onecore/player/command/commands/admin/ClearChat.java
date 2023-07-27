@@ -17,6 +17,8 @@ public class ClearChat implements ICommand {
                 .executes((sender, args) -> {
                     Bukkit.broadcastMessage(StringUtils.repeat(" \n", 100));
                     Bukkit.broadcastMessage(Lang.CLEAR_PLAYER_CLEARED_CHAT.getString());
+                }).executesConsole((sender, args) -> {
+                    sender.sendMessage(StringUtils.repeat(" \n", 100));
                 }).override();
     }
 }
