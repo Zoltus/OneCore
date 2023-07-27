@@ -56,11 +56,13 @@ public class Speed implements ICommand {
     public void init() {
         //speed <amount>
         Argument<?> arg0 = speedIntArg()
+                .withPermission(Commands.SPEED_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     handle(sender, sender, (float) args.get(0), null);
                 });
         //speed <amount> <player>
         Argument<?> arg1 = new OfflinePlayerArgument()
+                .withPermission(Commands.SPEED_PERMISSION_OTHER.asPermission())
                 .executes((player, args) -> {
                     handle(player, (OfflinePlayer) args.get(1), (float) args.get(0), null);
                 });
@@ -70,7 +72,6 @@ public class Speed implements ICommand {
                     handle(sender, (OfflinePlayer) args.get(1), (float) args.get(0), (String) args.get(2));
                 });
         new Command(Commands.SPEED_LABEL)
-                .withPermission(Commands.SPEED_PERMISSION_OTHER)
                 .withAliases(Commands.SPEED_ALIASES)
                 .then(arg0.then(arg1.then(arg2)))
                 .override();
