@@ -24,12 +24,14 @@
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.3</placeholderapi.version>
         <commandapi.version>9.0.3</commandapi.version>
-        <worldguard.version>9.0.3</worldguard.version>
         <!-- Maven -->
         <maven.compiler.release>17</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
+        <adventure-serializer.version>4.14.0</adventure-serializer.version>
+        <adventure-bukkit.version>4.3.0</adventure-bukkit.version>
+        <worldguard.version>7.0.9-beta1</worldguard.version>
     </properties>
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>
@@ -174,23 +176,23 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-legacy</artifactId>
-            <version>4.14.0</version>
+            <version>${adventure-serializer.version}</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.14.0</version>
+            <version>${adventure-serializer.version}</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.3.0</version>
+            <version>${adventure-bukkit.version}</version>
         </dependency>
         <!-- Worldguard for tabcomplete -->
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.9-beta1</version>
+            <version>${worldguard.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
