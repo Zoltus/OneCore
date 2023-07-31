@@ -80,13 +80,12 @@ public final class OneCore extends JavaPlugin {
         //Registers Commands if enabled. Needs to be before listeners.
         this.commandHandler = CommandHandler.register(this);
         // Inits metrics to bstats
-        new Metrics(this, 12829); //todo fix for test
+        new Metrics(this, 12829);
         // Starts caching users
         this.consoleFilter = ConsoleFilter.init();
         this.database.cacheUsers();
         //todo mayby remove, creates user for new users, supports if loaded mid server
         JoinListener.loadOnlinePlayers();
-        //todo cleanup
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
         if (worldGuardFlags != null) {
             this.worldGuardFlags.onEnable();
