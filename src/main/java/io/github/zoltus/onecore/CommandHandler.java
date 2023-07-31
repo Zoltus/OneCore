@@ -24,6 +24,7 @@ public class CommandHandler {
                 && ICommand.isEnabled(Economy.class)) {
             new Economy().register();
         }
+        //todo redo cmd classes & registering
         //Creates instanceof the class if its enabled and then registers it.
         //faster startup when disabling cmds
         List<Class<? extends ICommand>> cmds = List.of(

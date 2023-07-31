@@ -68,7 +68,6 @@ public record JoinListener(OneCore plugin) implements Listener {
         }
     }
 
-    //todo cleanup
     @EventHandler(priority = EventPriority.MONITOR)
     public void handleVanishOnJoin(PlayerJoinEvent e) {
         Player joinerPlayer = e.getPlayer();

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public interface IConfig {
-    //TODO remove all thes and start using <var1> <var2> etc?
     //Placeholders
     String PLAYER_PH = "<player>";
     String PLAYER2_PH = "<player2>";

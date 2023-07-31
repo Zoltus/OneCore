@@ -47,7 +47,6 @@ public class ConsoleFilter implements Filter {
         return hideListContains(ChatColor.stripColor(message)) ? Result.DENY : Result.ACCEPT;
     }
 
-    //todo benchmark, improve
     private boolean hideListContains(String message) {
         OneYml filters = Yamls.CONSOLE_FILTER.getYml();
         List<String> hideKeys = filters.getOrDefault("Hide", new ArrayList<>());
