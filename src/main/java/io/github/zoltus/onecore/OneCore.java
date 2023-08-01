@@ -93,7 +93,7 @@ public final class OneCore extends JavaPlugin {
         //Registers Listeners
         registerListeners();
 
-        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PapiExpansion(this).register();
         }
         sendArt();
@@ -127,15 +127,15 @@ public final class OneCore extends JavaPlugin {
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskLater(this, () -> List.of(
-                "",
-                "§f                    o O O",
-                "§9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____",
-                "§9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!",
-                "§9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾| ",
-                "§9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' ",
-                ""
-        ).forEach(line -> Bukkit.getConsoleSender().sendMessage(line)), 2L);
+        Bukkit.getScheduler().runTaskLater(this, () ->
+                Bukkit.getConsoleSender().sendMessage("""
+                        §f                    o O O
+                        §9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____
+                        §9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!
+                        §9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾|
+                        §9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-'
+                        """
+                ), 2L);
     }
 
     private void registerListeners() {
