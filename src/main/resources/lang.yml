@@ -2,7 +2,7 @@
 #For new line use <br>
 Data:
   # <variable>
-  variable-color: '<color:#ff6666><variable></color><color:#e6e6e6>'
+  variable-color: '<color:#559fff><variable></color><color:#e6e6e6>'
   other:
     invalid-range: '{p} Kelvoton säde!'
     # <player>

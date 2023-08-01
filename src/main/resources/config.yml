@@ -2,7 +2,7 @@
 
 Data:
   spawn: []
-  prefix: '&9&lOne&l<#559fff>&lCore &8&l»&7'
+  prefix: '&9&lOne&l<#559fff>&lCore &8&l»<color:#e6e6e6>'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
   # How player & server data is saved. Baltop also updates after database is updated.
