@@ -404,6 +404,8 @@ Data:
     permission-other: pweather.other
     aliases: []
   #  - examplealias1
+    reset-aliases:
+      - reset
   weather:
     enabled: true
     label: weather
