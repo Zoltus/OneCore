@@ -16,7 +16,7 @@ public class Time implements ICommand {
     @Override
     public void init() {
         //TIME <TIME>
-        Argument<?> arg0 = new TimeArgument()
+        Argument<?> arg0 = new TimeArgument(false)
                 .executesPlayer((p, args) -> {
                     changeTime(p, (long) args.get(0), p.getWorld());
                 });

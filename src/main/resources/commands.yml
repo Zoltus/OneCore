@@ -328,6 +328,8 @@ Data:
     permission-other: ptime-other
     aliases: []
   #  - examplealias1
+    reset-aliases:
+    - reset
   top:
     enabled: true
     label: top

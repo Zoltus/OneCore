@@ -191,6 +191,7 @@ public enum Commands implements IConfig {
     PTIME_LABEL("ptime.label"),
     PTIME_PERMISSION("ptime.permission"),
     PTIME_PERMISSION_OTHER("ptime.permission-other"),
+    PTIME_RESET_ALIASES("ptime.reset-aliases"),
     TIME_ALIASES("time.aliases"),
     TIME_ENABLED("time.enabled"),
     TIME_LABEL("time.label"),

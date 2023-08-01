@@ -16,7 +16,7 @@ public class PTime implements ICommand {
     @Override
     public void init() {
         //TIME <time>
-        Argument<?> arg0 = new TimeArgument()
+        Argument<?> arg0 = new TimeArgument(true)
                 .executesPlayer((p, args) -> {
                     changeTime(p, (long) args.get(0), p);
                 });
@@ -34,10 +34,14 @@ public class PTime implements ICommand {
     //todo reset
 
     private void changeTime(CommandSender sender, long time, Player target) {
-        target.setPlayerTime(time, false);
-        if (sender != target) {
-            PTIME_CHANGED_OTHER.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
+        if (time < 0) {
+            target.resetPlayerTime();
+        } else {
+            target.setPlayerTime(time, false);
+            PTIME_CHANGED.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
+            if (sender != target) {
+                PTIME_CHANGED_OTHER.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
+            }
         }
-        PTIME_CHANGED.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
     }
 }
