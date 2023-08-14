@@ -72,7 +72,7 @@ public final class OneCore extends JavaPlugin {
         this.adventure = BukkitAudiences.create(this);
         //Loads CommandAPI
         CommandAPI.onEnable();
-        long time = System.currentTimeMillis();
+        //long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
         this.database = Database.init(this);
         // Hooks economy if its enabled on config.
@@ -97,7 +97,7 @@ public final class OneCore extends JavaPlugin {
             new PapiExpansion(this).register();
         }
         sendArt();
-        plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
+        //plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
     }
 
     @Override
