@@ -48,7 +48,7 @@ public class Database {
             return connection = connection == null
                     || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
         } catch (Exception e) {
-            throw new DataBaseException("§4Database connection failed!\n §c" + e.getMessage());
+            throw new DatabaseException("§4Database connection failed!\n §c" + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class Database {
             // Add the new column if it doesn't exist
             addColumnIfNotExists(stmt, "player", "isvanished", "BOOLEAN NOT NULL DEFAULT 0");
         } catch (SQLException e) {
-            throw new DataBaseException("§4Database table creation failed!\n §c" + e.getMessage());
+            throw new DatabaseException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
@@ -111,7 +111,7 @@ public class Database {
             }
             pStm.executeBatch();
         } catch (SQLException e) {
-            throw new DataBaseException("§4Error saving players!\n §c" + e.getMessage());
+            throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
@@ -142,7 +142,7 @@ public class Database {
             }
             plugin.getLogger().info("Finished caching " + index + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
-            throw new DataBaseException("§4Error caching users: \n §c" + e.getMessage());
+            throw new DatabaseException("§4Error caching users: \n §c" + e.getMessage());
         }
     }
 
@@ -162,8 +162,8 @@ public class Database {
         }
     }
 
-    public static class DataBaseException extends RuntimeException {
-        public DataBaseException(String message) {
+    public static class DatabaseException extends RuntimeException {
+        public DatabaseException(String message) {
             super(message);
         }
     }
