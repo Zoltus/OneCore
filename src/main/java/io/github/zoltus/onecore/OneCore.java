@@ -54,7 +54,7 @@ public final class OneCore extends JavaPlugin {
                         // Turn on verbose output for command registration logs
                         .verboseOutput(false)
                         // Give file where Brigadier's command registration tree should be dumped
-                        .dispatcherFile(new File(getDataFolder(), "command_registration.json"))
+                        //.dispatcherFile(new File(getDataFolder(), "command_registration.json"))
                         // Point to the NBT API we want to use
                         .initializeNBTAPI(NBTContainer.class, NBTContainer::new));
 
