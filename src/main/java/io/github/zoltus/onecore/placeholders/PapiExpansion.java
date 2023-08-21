@@ -68,6 +68,14 @@ public class PapiExpansion extends PlaceholderExpansion {
                 index++;
             }
             return type.equals(baltopName) ? "none" : "0.0";
+        } else if (type.equals("timeleft")) {
+            long time = NumberUtils.toInt(split[1]);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
+            String dateString = dateFormat.format(new Date(time));
+           // SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);
+
+            return null;
         }
         return null;
     }
