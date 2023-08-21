@@ -248,6 +248,7 @@ Data:
     denied: '{p} Pyyntösi pelaajalle <player> hylättiin.'
     cancelled-by-damage: '{p} Teleporttaus peruutettu koska vahingoituit.'
     cancelled-by-new-teleport: '{p} Teleporttaus peruutettu toisen teleportin takia.'
+    cancelled-by-teleport: '{p} Teleporttaus peruutettu koska toinen osallinen teleporttasi.'
     cancelled-by-movement: '{p} Teleporttaus peruutettu liikkumisen takia.'
     cant-self-teleport: '{p} Et voi lähettää pyyntöä itsellesi.'
     expired: '{p} Pyyntö vanhentui!'
