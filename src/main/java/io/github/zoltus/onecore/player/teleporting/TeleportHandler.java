@@ -9,8 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_CANCELLED_BY_DAMAGE;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_CANCELLED_BY_MOVEMENT;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class TeleportHandler implements Listener {
     // Cancels Teleport on Move

@@ -1,6 +1,7 @@
 package io.github.zoltus.onecore.utils;
 
 import io.github.zoltus.onecore.OneCore;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
