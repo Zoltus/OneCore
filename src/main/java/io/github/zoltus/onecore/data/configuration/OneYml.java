@@ -65,7 +65,7 @@ public class OneYml extends YamlConfiguration {
         try {
             save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot save " + file, e);
         }
     }
 
@@ -103,7 +103,7 @@ public class OneYml extends YamlConfiguration {
                 return connection.getInputStream();
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Bukkit.getLogger().log(Level.SEVERE, "Could not get resource " + filename, ex);
         }
         return null;
     }

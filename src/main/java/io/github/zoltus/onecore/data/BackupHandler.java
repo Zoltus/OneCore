@@ -67,7 +67,7 @@ public class BackupHandler {
                                     createTarGz(file, outputDirectory, name);
                                 }
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                plugin.getLogger().warning("Backup failed! " + e.getMessage());
                             }
                         });
             }
@@ -99,7 +99,7 @@ public class BackupHandler {
                 tarArchiveOutputStream.closeArchiveEntry();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            plugin.getLogger().warning("Backup failed creating tar! " + e.getMessage());
         }
     }
 }

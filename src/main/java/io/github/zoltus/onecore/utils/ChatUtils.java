@@ -71,6 +71,11 @@ public class ChatUtils {
     }
 
     public static void mmSend(CommandSender sender, String str) {
-        plugin.adventure().sender(sender).sendMessage(translateColors(str));
+        try (BukkitAudiences adventure = plugin.adventure()) {
+            adventure.sender(sender).sendMessage(translateColors(str));
+        } catch (IllegalStateException e) {
+            plugin.getLogger().warning("§cError sending message to " + sender.getName() + "!");
+            plugin.getLogger().warning("§c" + e.getMessage());
+        }
     }
 }
