@@ -13,7 +13,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class TeleportHandler implements Listener {
     // Cancels Teleport on Move
-    @EventHandler (priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public static void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         if (p.hasMetadata("NPC")) return;
@@ -31,7 +31,7 @@ public class TeleportHandler implements Listener {
     }
 
     // Cancels if damaged
-    @EventHandler (priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public static void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player p) {
             if (p.hasMetadata("NPC") || e.isCancelled())
