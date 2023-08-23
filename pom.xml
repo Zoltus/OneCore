@@ -200,7 +200,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <profiles>
         <profile>
             <id>noa-local</id>
@@ -221,7 +220,6 @@
             </build>
         </profile>
     </profiles>
-
     <build>
         <finalName>${project.name}-${project.version}</finalName>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
