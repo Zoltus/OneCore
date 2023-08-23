@@ -7,8 +7,6 @@
     <artifactId>onecore</artifactId>
     <version>1.0.0</version>
     <properties>
-        <!--<outputDir>F:\MineServer\plugins</outputDir>
-        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>-->
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
@@ -235,15 +233,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- Jar loc
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <configuration>
-                    <outputDirectory>${outputDir}</outputDirectory>
-                </configuration>
-            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
