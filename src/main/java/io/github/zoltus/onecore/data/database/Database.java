@@ -52,26 +52,77 @@ public class Database {
         }
     }
 
+        /*
+CREATE TABLE IF NOT EXISTS players
+(
+    uuid       VARCHAR(36) PRIMARY KEY,
+    tpenabled  BOOLEAN NOT NULL DEFAULT 0,
+    isvanished BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS balances
+(
+    uuid    VARCHAR(36) PRIMARY KEY,
+    balance DOUBLE NOT NULL,
+    FOREIGN KEY balances(uuid) REFERENCES players(uuid)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS homes
+(
+    uuid  VARCHAR(36),
+    name  VARCHAR(16),
+    world CHAR   NOT NULL,
+    x     DOUBLE NOT NULL,
+    y     DOUBLE NOT NULL,
+    z     DOUBLE NOT NULL,
+    yaw   DOUBLE NOT NULL,
+    pitch DOUBLE NOT NULL,
+    PRIMARY KEY (uuid, name),
+    FOREIGN KEY homes(uuid) REFERENCES players(uuid)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+     */
+
     private void createTables() {
         // Creates tables
         try (Connection con = connection(); Statement stmt = con.createStatement()) {
             stmt.execute("""
-                CREATE TABLE IF NOT EXISTS player(
-                    uuid VARCHAR(36) NOT NULL UNIQUE,
-                    tpenabled BOOLEAN NOT NULL DEFAULT 1,
-                    balance DOUBLE NOT NULL DEFAULT 0,
-                    homes TEXT,
-                    isvanished BOOLEAN NOT NULL DEFAULT 0,
-                    PRIMARY KEY (uuid)
-                );
-                """);
-            // Add the new column if it doesn't exist
-            addColumnIfNotExists(stmt, "player", "isvanished", "BOOLEAN NOT NULL DEFAULT 0");
+                    CREATE TABLE IF NOT EXISTS players(
+                    uuid       VARCHAR(36) PRIMARY KEY,
+                    tpenabled  BOOLEAN NOT NULL DEFAULT 0,
+                    isvanished BOOLEAN NOT NULL DEFAULT 0
+                    );
+                    CREATE TABLE IF NOT EXISTS balances(
+                        uuid    VARCHAR(36) PRIMARY KEY,
+                        balance DOUBLE NOT NULL,
+                        FOREIGN KEY balances(uuid) REFERENCES players(uuid)
+                            ON DELETE RESTRICT
+                            ON UPDATE CASCADE
+                    );         
+                    CREATE TABLE IF NOT EXISTS homes(
+                        uuid  VARCHAR(36),
+                        NAME  VARCHAR(16),
+                        world CHAR   NOT NULL,
+                        x     DOUBLE NOT NULL,
+                        y     DOUBLE NOT NULL,
+                        z     DOUBLE NOT NULL,
+                        yaw   DOUBLE NOT NULL,
+                        pitch DOUBLE NOT NULL,
+                        PRIMARY KEY (uuid, NAME),
+                        FOREIGN KEY homes(uuid) REFERENCES players(uuid)
+                            ON DELETE RESTRICT
+                            ON UPDATE CASCADE
+                    );
+                    """);
         } catch (SQLException e) {
             throw new DatabaseException("§4Database table creation failed!\n §c" + e.getMessage());
         }
     }
 
+    /*
     private void addColumnIfNotExists(Statement stmt, String tableName, String columnName, String columnDefinition) throws SQLException {
         ResultSet rs = stmt.executeQuery("PRAGMA table_info(" + tableName + ");");
         boolean columnExists = false;
@@ -86,7 +137,7 @@ public class Database {
         if (!columnExists) {
             stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnDefinition + ";");
         }
-    }
+    }*/
 
     private void initAutoSaver() {
         scheduler.runTaskTimerAsynchronously(plugin, this::saveUsersAsync,
@@ -101,35 +152,60 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO player(uuid, tpenabled, homes, balance, isvanished) VALUES(?,?,?,?,?)";
+        final String sqlPlayers = "INSERT INTO players (uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
+        final String sqlBalances = "INSERT INTO balances (uuid, balance) VALUES (?, ?)";
+        final String sqlHomes = "INSERT INTO homes (uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement(sql)) {
+             ; PreparedStatement pStm = con.prepareStatement(sqlPlayers)
+             ; PreparedStatement pStm2 = con.prepareStatement(sqlBalances)
+             ; PreparedStatement pStmHomes = con.prepareStatement(sqlHomes)) {
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
                 User user = entry.getValue();
-                userToDatabase(user, pStm);
+                UUID uuid = user.getUniqueId();
+                // Player data
+                pStm.setString(1, uuid.toString());
+                pStm.setBoolean(2, user.isTpEnabled());
+                pStm.setBoolean(3, user.isVanished());
+                pStm.executeUpdate();
+                // Balance
+                pStm2.setString(1, uuid.toString());
+                pStm2.setDouble(2, user.getBalance());
+                pStm2.executeUpdate();
+                // Homes
+                for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
+                    PreLocation home = homeEntry.getValue();
+                    pStmHomes.setString(1, uuid.toString());
+                    pStmHomes.setString(2, homeEntry.getKey());
+                    pStmHomes.setString(3, home.getWorldName());
+                    pStmHomes.setDouble(4, home.getX());
+                    pStmHomes.setDouble(5, home.getY());
+                    pStmHomes.setDouble(6, home.getZ());
+                    pStmHomes.setDouble(7, home.getYaw());
+                    pStmHomes.setDouble(8, home.getPitch());
+                    pStmHomes.addBatch();
+                }
+                //Add Batch
                 pStm.addBatch();
+                pStm2.addBatch();
+                pStmHomes.executeBatch();
             }
             pStm.executeBatch();
+            pStm2.executeBatch();
         } catch (SQLException e) {
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
+    //homes
 
-    private void userToDatabase(User user, PreparedStatement pStm) throws SQLException {
-        UUID uuid = user.getUniqueId();
-        pStm.setString(1, uuid.toString());
-        pStm.setBoolean(2, user.isTpEnabled());
-        String homes = new Gson().toJson(user.getHomes(), HashMap.class);
-        pStm.setString(3, homes);
-        pStm.setDouble(4, user.getBalance());
-        pStm.setBoolean(5, user.isVanished());
-    }
 
     public void cacheUsers() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM player")
+             ; PreparedStatement pStm = con.prepareStatement("""
+                SELECT players.uuid, tpenabled, isvanished, balances.balance
+                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""")
              ; ResultSet rs = pStm.executeQuery()) {
             int index = 0;
             while (rs.next()) {
