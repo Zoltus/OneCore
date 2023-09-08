@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore.player.teleporting;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * PreLocation, Location without world, only world name
  * so it can be created before worlds are loaded
  */
+@Getter
 public class PreLocation implements Serializable {
     private final transient Location loc;
     private final String worldName;
