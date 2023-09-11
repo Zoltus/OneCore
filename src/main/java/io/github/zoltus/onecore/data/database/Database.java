@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
@@ -49,42 +50,8 @@ public class Database {
                     || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
         } catch (Exception e) {
             throw new DatabaseException("§4Database connection failed!\n §c" + e.getMessage());
-        }
+        }                // Balance
     }
-
-        /*
-CREATE TABLE IF NOT EXISTS players
-(
-    uuid       VARCHAR(36) PRIMARY KEY,
-    tpenabled  BOOLEAN NOT NULL DEFAULT 0,
-    isvanished BOOLEAN NOT NULL DEFAULT 0
-);
-
-CREATE TABLE IF NOT EXISTS balances
-(
-    uuid    VARCHAR(36) PRIMARY KEY,
-    balance DOUBLE NOT NULL,
-    FOREIGN KEY balances(uuid) REFERENCES players(uuid)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS homes
-(
-    uuid  VARCHAR(36),
-    name  VARCHAR(16),
-    world CHAR   NOT NULL,
-    x     DOUBLE NOT NULL,
-    y     DOUBLE NOT NULL,
-    z     DOUBLE NOT NULL,
-    yaw   DOUBLE NOT NULL,
-    pitch DOUBLE NOT NULL,
-    PRIMARY KEY (uuid, name),
-    FOREIGN KEY homes(uuid) REFERENCES players(uuid)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE
-);
-     */
 
     private void createTables() {
         // Creates tables
@@ -145,33 +112,44 @@ CREATE TABLE IF NOT EXISTS homes
     }
 
     public void saveUsersAsync() {
-        scheduler.runTaskAsynchronously(plugin, this::saveUsers);
+        scheduler.runTaskAsynchronously(plugin, this::saveData);
     }
 
     /**
      * Saves users which has been edited to database there has been changes on their data
      */
-    public void saveUsers() {
+    public void saveData() {
         final String sqlPlayers = "INSERT INTO players (uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
-        final String sqlBalances = "INSERT INTO balances (uuid, balance) VALUES (?, ?)";
+        //todo save balance from balances map if use oneeconomy
         final String sqlHomes = "INSERT INTO homes (uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sqlBalances = "INSERT INTO balances (uuid, balance) VALUES (?, ?)";
 
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement(sqlPlayers)
-             ; PreparedStatement pStm2 = con.prepareStatement(sqlBalances)
-             ; PreparedStatement pStmHomes = con.prepareStatement(sqlHomes)) {
+             ; PreparedStatement pStmPlayers = con.prepareStatement(sqlPlayers)
+             ; PreparedStatement pStmHomes = con.prepareStatement(sqlHomes)
+             ; PreparedStatement pStmBalances = con.prepareStatement(sqlBalances)
+        ) {
+            //todo balances load separate
+
+            // Save balances
+            if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+                for (Map.Entry<UUID, Double> entry : OneEconomy.getBalances().entrySet()) {
+                    Double bal = entry.getValue();
+                    String uuid = entry.getKey().toString();
+                    pStmBalances.setString(1, uuid);
+                    pStmBalances.setDouble(2, bal);
+                    pStmBalances.addBatch();
+                }
+            }
+            //Save user homes and data
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
                 User user = entry.getValue();
                 UUID uuid = user.getUniqueId();
                 // Player data
-                pStm.setString(1, uuid.toString());
-                pStm.setBoolean(2, user.isTpEnabled());
-                pStm.setBoolean(3, user.isVanished());
-                pStm.executeUpdate();
-                // Balance
-                pStm2.setString(1, uuid.toString());
-                pStm2.setDouble(2, user.getBalance());
-                pStm2.executeUpdate();
+                pStmPlayers.setString(1, uuid.toString());
+                pStmPlayers.setBoolean(2, user.isTpEnabled());
+                pStmPlayers.setBoolean(3, user.isVanished());
+                pStmPlayers.executeUpdate();
                 // Homes
                 for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
                     PreLocation home = homeEntry.getValue();
@@ -186,26 +164,24 @@ CREATE TABLE IF NOT EXISTS homes
                     pStmHomes.addBatch();
                 }
                 //Add Batch
-                pStm.addBatch();
-                pStm2.addBatch();
+                pStmBalances.executeBatch();
+                pStmPlayers.addBatch();
                 pStmHomes.executeBatch();
             }
-            pStm.executeBatch();
-            pStm2.executeBatch();
+            pStmPlayers.executeBatch();
         } catch (SQLException e) {
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
-    //homes
 
-
-    public void cacheUsers() {
+    public void cacheData() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
-        try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("""
+        String sql = """
                 SELECT players.uuid, tpenabled, isvanished, balances.balance
-                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""")
+                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""";
+        try (Connection con = connection()
+             ; PreparedStatement pStm = con.prepareStatement(sql)
              ; ResultSet rs = pStm.executeQuery()) {
             int index = 0;
             while (rs.next()) {
