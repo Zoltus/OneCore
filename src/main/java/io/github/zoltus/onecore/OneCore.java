@@ -82,7 +82,7 @@ public final class OneCore extends JavaPlugin {
         new Metrics(this, 12829);
         // Starts caching users
         this.consoleFilter = ConsoleFilter.init();
-        this.database.cacheUsers();
+        this.database.cacheData();
         //todo mayby remove, creates user for new users, supports if loaded mid server
         JoinListener.loadOnlinePlayers();
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
@@ -102,7 +102,7 @@ public final class OneCore extends JavaPlugin {
     @Override
     public void onDisable() {
         // Saves all users & settings on disable
-        database.saveUsers();
+        database.saveData();
         plugin.getLogger().info("Saved users & settings to database...");
         //Unregisters all cmds on unload. Trying to support reloading plugin.
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));

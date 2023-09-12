@@ -1,7 +1,5 @@
 package io.github.zoltus.onecore.data.database;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
@@ -12,7 +10,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,7 +23,7 @@ public class Database {
     private Database(OneCore plugin) {
         plugin.getLogger().info("Loading database...");
         this.plugin = plugin;
-        this.connection = connection(); //test
+        this.connection = connection();
         //todo if these are normal settings anyways
         // "PRAGMA mmap_size = 30000000000;
         this.config.setJournalMode(SQLiteConfig.JournalMode.WAL);
@@ -53,38 +50,44 @@ public class Database {
     }
 
     private void createTables() {
-        // Creates tables
         try (Connection con = connection(); Statement stmt = con.createStatement()) {
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS player(
-                    uuid VARCHAR(36) NOT NULL UNIQUE,
-                    tpenabled BOOLEAN NOT NULL DEFAULT 1,
-                    balance DOUBLE NOT NULL DEFAULT 0,
-                    homes TEXT,
-                    isvanished BOOLEAN NOT NULL DEFAULT 0,
-                    PRIMARY KEY (uuid)
-                );
-                """);
-            // Add the new column if it doesn't exist
-            addColumnIfNotExists(stmt, "player", "isvanished", "BOOLEAN NOT NULL DEFAULT 0");
+            String players = """
+                    CREATE TABLE IF NOT EXISTS players (
+                        uuid       VARCHAR(36) PRIMARY KEY,
+                        tpenabled  BOOLEAN NOT NULL DEFAULT 0,
+                        isvanished BOOLEAN NOT NULL DEFAULT 0
+                    );
+                    """;
+            String balances = """
+                    CREATE TABLE IF NOT EXISTS balances (
+                        uuid    VARCHAR(36) PRIMARY KEY,
+                        balance DOUBLE NOT NULL,
+                        FOREIGN KEY (uuid) REFERENCES players(uuid)
+                            ON DELETE RESTRICT
+                            ON UPDATE CASCADE
+                    );
+                    """;
+            String homes = """
+                    CREATE TABLE IF NOT EXISTS homes (
+                        uuid  VARCHAR(36),
+                        NAME  VARCHAR(16),
+                        world CHAR   NOT NULL,
+                        x     DOUBLE NOT NULL,
+                        y     DOUBLE NOT NULL,
+                        z     DOUBLE NOT NULL,
+                        yaw   FLOAT NOT NULL,
+                        pitch FLOAT NOT NULL,
+                        PRIMARY KEY (uuid, NAME),
+                        FOREIGN KEY (uuid) REFERENCES players(uuid)
+                            ON DELETE RESTRICT
+                            ON UPDATE CASCADE
+                    );
+                    """;
+            stmt.execute(players);
+            stmt.execute(balances);
+            stmt.execute(homes);
         } catch (SQLException e) {
             throw new DatabaseException("§4Database table creation failed!\n §c" + e.getMessage());
-        }
-    }
-
-    private void addColumnIfNotExists(Statement stmt, String tableName, String columnName, String columnDefinition) throws SQLException {
-        ResultSet rs = stmt.executeQuery("PRAGMA table_info(" + tableName + ");");
-        boolean columnExists = false;
-        while (rs.next()) {
-            String existingColumnName = rs.getString("name");
-            if (existingColumnName.equals(columnName)) {
-                columnExists = true;
-                break;
-            }
-        }
-
-        if (!columnExists) {
-            stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnDefinition + ";");
         }
     }
 
@@ -94,71 +97,103 @@ public class Database {
     }
 
     public void saveUsersAsync() {
-        scheduler.runTaskAsynchronously(plugin, this::saveUsers);
+        scheduler.runTaskAsynchronously(plugin, this::saveData);
     }
 
     /**
      * Saves users which has been edited to database there has been changes on their data
      */
-    public void saveUsers() {
-        final String sql = "INSERT OR REPLACE INTO player(uuid, tpenabled, homes, balance, isvanished) VALUES(?,?,?,?,?)";
+    public void saveData() {
+        final String sqlPlayers = "INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
+        final String sqlHomes = "INSERT OR REPLACE INTO homes(uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sqlBalances = "INSERT OR REPLACE INTO balances(uuid, balance) VALUES (?, ?)";
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement(sql)) {
+             ; PreparedStatement playerStmt = con.prepareStatement(sqlPlayers)
+             ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
+             ; PreparedStatement balanceStmt = con.prepareStatement(sqlBalances)) {
+            //Save user homeStmt and data
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
                 User user = entry.getValue();
-                userToDatabase(user, pStm);
-                pStm.addBatch();
+                String uuid = user.getUniqueId().toString();
+                // Player data
+                playerStmt.setString(1, uuid);
+                playerStmt.setBoolean(2, user.isTpEnabled());
+                playerStmt.setBoolean(3, user.isVanished());
+                playerStmt.addBatch();
+                // Saves economy if OneEconomy is enabled
+                // Economy needs to be handled after player data is inserted
+                if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+                    balanceStmt.setString(1, uuid);
+                    balanceStmt.setDouble(2, user.getBalance());
+                    balanceStmt.addBatch();
+                }
+                // Homes
+                for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
+                    PreLocation home = homeEntry.getValue();
+                    homeStmt.setString(1, user.getUniqueId().toString());
+                    homeStmt.setString(2, homeEntry.getKey());
+                    homeStmt.setString(3, home.getWorldName());
+                    homeStmt.setDouble(4, home.getX());
+                    homeStmt.setDouble(5, home.getY());
+                    homeStmt.setDouble(6, home.getZ());
+                    homeStmt.setFloat(7, home.getYaw());
+                    homeStmt.setFloat(8, home.getPitch());
+                    homeStmt.addBatch();
+                }
+                playerStmt.addBatch();
             }
-            pStm.executeBatch();
+            playerStmt.executeBatch();
+            balanceStmt.executeBatch();
+            homeStmt.executeBatch();
         } catch (SQLException e) {
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
-    private void userToDatabase(User user, PreparedStatement pStm) throws SQLException {
-        UUID uuid = user.getUniqueId();
-        pStm.setString(1, uuid.toString());
-        pStm.setBoolean(2, user.isTpEnabled());
-        String homes = new Gson().toJson(user.getHomes(), HashMap.class);
-        pStm.setString(3, homes);
-        pStm.setDouble(4, user.getBalance());
-        pStm.setBoolean(5, user.isVanished());
-    }
 
-    public void cacheUsers() {
+    public void cacheData() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
+        String sql = """
+                SELECT players.uuid, tpenabled, isvanished, balances.balance
+                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""";
+        //Homes needs to be separate, otherwise it would return duplicate data
+        String sqlHomes = "SELECT * from homes;";
         try (Connection con = connection()
-             ; PreparedStatement pStm = con.prepareStatement("SELECT * FROM player")
-             ; ResultSet rs = pStm.executeQuery()) {
-            int index = 0;
-            while (rs.next()) {
-                String uuid = rs.getString("uuid");
+             ; PreparedStatement playerStm = con.prepareStatement(sql)
+             ; PreparedStatement homeStm = con.prepareStatement(sqlHomes)
+             ; ResultSet rsPlayer = playerStm.executeQuery()
+             ; ResultSet rshomes = homeStm.executeQuery()) {
+            while (rsPlayer.next()) {
+                String uuid = rsPlayer.getString("uuid");
                 OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                if (User.of(offP) == null) { //If user havent been loaded yet by login it loads it
-                    userFromResult(offP, rs); // without this loading could happen twice
-                }
-                index++;
+                User newUser = new User(offP);
+                //String homes = rsPlayer.getString("homes");
+                double balance = rsPlayer.getDouble("balance");
+                boolean isvanished = rsPlayer.getBoolean("isvanished");
+                boolean tpenabled = rsPlayer.getBoolean("tpenabled");
+                newUser.setVanished(isvanished);
+                newUser.setBalance(balance);
+                newUser.setTpEnabled(tpenabled);
             }
-            plugin.getLogger().info("Finished caching " + index + " users, took: " + (System.currentTimeMillis() - l) + "ms");
+            //Gets all homes and sets them for players
+            while (rshomes.next()) {
+                UUID uuid = UUID.fromString(rshomes.getString("uuid"));
+                String homeName = rshomes.getString("name");
+                String world = rshomes.getString("world");
+                double x = rshomes.getDouble("x");
+                double y = rshomes.getDouble("y");
+                double z = rshomes.getDouble("z");
+                float yaw = rshomes.getFloat("yaw");
+                float pitch = rshomes.getFloat("pitch");
+                PreLocation preLoc = new PreLocation(world, x, y, z, yaw, pitch);
+                User user = User.of(uuid);
+                user.setHome(homeName, preLoc);
+            }
+            plugin.getLogger().info("Finished caching " + User.getUsers().size()
+                    + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
             throw new DatabaseException("§4Error caching users: \n §c" + e.getMessage());
-        }
-    }
-
-    private void userFromResult(OfflinePlayer offP, ResultSet rs) throws SQLException {
-        boolean isvanished = rs.getBoolean("isvanished");
-        boolean tpenabled = rs.getBoolean("tpenabled");
-        String homes = rs.getString("homes");
-        double balance = rs.getDouble("balance");
-        User newUser = new User(offP);
-        newUser.setVanished(isvanished);
-        newUser.setBalance(balance);
-        newUser.setTpEnabled(tpenabled);
-        Gson gson = new Gson();
-        if (homes != null) {
-            newUser.setHomes(gson.fromJson(homes, new TypeToken<HashMap<String, PreLocation>>() {
-            }.getType()));
         }
     }
 
