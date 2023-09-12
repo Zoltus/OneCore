@@ -43,4 +43,21 @@ public class TeleportHandler implements Listener {
             }
         }
     }
+
+    /*
+    // Cancels if teleports
+    @EventHandler(priority = EventPriority.MONITOR)
+    public static void onPlayerTeleport(PlayerTeleportEvent e) {
+        Player p = e.getPlayer();
+        if (p.hasMetadata("NPC") || e.isCancelled())
+            return;
+        User user = User.of(p);
+
+        DelayedTeleport teleport = user.getTeleport();
+        //list to target of the players who are teleporting to the player
+        //TODO config: cancel teleport on teleport, meaning cancel if either teleports
+        if (teleport != null) {
+            user.getTeleport().cancel(TP_CANCELLED_BY_TELEPORT.getString());
+        }
+    }*/
 }

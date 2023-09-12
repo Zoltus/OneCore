@@ -137,6 +137,7 @@ public enum Lang implements IConfig {
     TP_ACCEPTED("tp.accepted"),
     TP_CANCELLED_BY_DAMAGE("tp.cancelled-by-damage"),
     TP_CANCELLED_BY_NEW_TELE("tp.cancelled-by-new-teleport"),
+    TP_CANCELLED_BY_TELEPORT("tp.cancelled-by-teleport"),
     TP_CANCELLED_BY_MOVEMENT("tp.cancelled-by-movement"),
     TP_CANT_SELF_TELEPORT("tp.cant-self-teleport"),
     TP_DENIED("tp.denied"),

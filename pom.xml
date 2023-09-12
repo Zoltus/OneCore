@@ -7,8 +7,6 @@
     <artifactId>onecore</artifactId>
     <version>1.0.0</version>
     <properties>
-        <!--<outputDir>F:\MineServer\plugins</outputDir>
-        <outputDir>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDir>-->
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
@@ -202,6 +200,26 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>noa-local</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>${maven-jar-plugin.version}</version>
+                        <configuration>
+                            <outputDirectory>D:\Noa\Minecraft\Servers\@Test_Server\plugins</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <finalName>${project.name}-${project.version}</finalName>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
@@ -213,15 +231,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- Jar loc
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <configuration>
-                    <outputDirectory>${outputDir}</outputDirectory>
-                </configuration>
-            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
