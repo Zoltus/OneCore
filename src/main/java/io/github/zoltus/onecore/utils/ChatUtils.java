@@ -1,6 +1,7 @@
 package io.github.zoltus.onecore.utils;
 
 import io.github.zoltus.onecore.OneCore;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -22,7 +23,6 @@ public class ChatUtils {
     // for detecting §x§8§f§8§f§8§f
     private static final Pattern pattern2 = Pattern
             .compile("&x&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}&\\p{XDigit}");
-
 
 
     /**
@@ -71,11 +71,8 @@ public class ChatUtils {
     }
 
     public static void mmSend(CommandSender sender, String str) {
-        try (BukkitAudiences adventure = plugin.adventure()) {
-            adventure.sender(sender).sendMessage(translateColors(str));
-        } catch (IllegalStateException e) {
-            plugin.getLogger().warning("§cError sending message to " + sender.getName() + "!");
-            plugin.getLogger().warning("§c" + e.getMessage());
-        }
+        BukkitAudiences adventure = plugin.adventure();
+        Audience audience = adventure.sender(sender);
+        audience.sendMessage(translateColors(str));
     }
 }
