@@ -10,8 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.concurrent.CompletableFuture;
-
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_HOME_NAME;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_NEVER_VISITED_SERVER;
 
@@ -34,12 +32,11 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
                 return input;
             }
         });
-        replaceSuggestions(ArgumentSuggestions.stringsAsync(info -> CompletableFuture.supplyAsync(() -> {
+        replaceSuggestions(ArgumentSuggestions.strings(info -> {
             String prevArg = (String) info.previousArgs().get(0);
-            //If arg lenght 0 it will try to asyncload first argument as oneuser from db
             OfflinePlayer offP = Bukkit.getOfflinePlayer(prevArg);
             User target = User.of(offP);
             return target != null ? filter(info.currentArg(), target.getHomeArray()) : filter(info.currentArg());
-        })));
+        }));
     }
 }
