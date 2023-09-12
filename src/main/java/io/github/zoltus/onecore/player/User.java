@@ -51,9 +51,8 @@ public class User {
         users.put(uniqueId, this);
         //Bukkit.broadcastMessage("§cNew");
         //Sets balance to 0 if it doesnt exist, for toplist
-        if (plugin.getVault() != null
-                && !OneEconomy.getBalances().containsKey(uniqueId)) {
-            OneEconomy.getBalances().put(uniqueId, Config.START_MONEY.getDouble());
+        if (plugin.getVault() != null) {
+            OneEconomy.getBalances().computeIfAbsent(uniqueId, k -> Config.START_MONEY.getDouble());
         }
     }
 
