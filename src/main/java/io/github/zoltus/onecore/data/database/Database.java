@@ -53,14 +53,16 @@ public class Database {
         try (Connection con = connection(); Statement stmt = con.createStatement()) {
             String players = """
                     CREATE TABLE IF NOT EXISTS players (
-                        uuid       VARCHAR(36) PRIMARY KEY,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        uuid       VARCHAR(36) UNIQUE,
                         tpenabled  BOOLEAN NOT NULL DEFAULT 0,
                         isvanished BOOLEAN NOT NULL DEFAULT 0
                     );
                     """;
             String balances = """
                     CREATE TABLE IF NOT EXISTS balances (
-                        uuid    VARCHAR(36) PRIMARY KEY,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        uuid    VARCHAR(36) UNIQUE,
                         balance DOUBLE NOT NULL,
                         FOREIGN KEY (uuid) REFERENCES players(uuid)
                             ON DELETE RESTRICT
@@ -69,15 +71,15 @@ public class Database {
                     """;
             String homes = """
                     CREATE TABLE IF NOT EXISTS homes (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uuid  VARCHAR(36),
-                        NAME  VARCHAR(16),
+                        name  VARCHAR(16),
                         world CHAR   NOT NULL,
                         x     DOUBLE NOT NULL,
                         y     DOUBLE NOT NULL,
                         z     DOUBLE NOT NULL,
                         yaw   FLOAT NOT NULL,
                         pitch FLOAT NOT NULL,
-                        PRIMARY KEY (uuid, NAME),
                         FOREIGN KEY (uuid) REFERENCES players(uuid)
                             ON DELETE RESTRICT
                             ON UPDATE CASCADE
@@ -129,9 +131,10 @@ public class Database {
                 }
                 // Homes
                 for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
+                    String name = homeEntry.getKey();
                     PreLocation home = homeEntry.getValue();
                     homeStmt.setString(1, user.getUniqueId().toString());
-                    homeStmt.setString(2, homeEntry.getKey());
+                    homeStmt.setString(2, name);
                     homeStmt.setString(3, home.getWorldName());
                     homeStmt.setDouble(4, home.getX());
                     homeStmt.setDouble(5, home.getY());
@@ -140,7 +143,6 @@ public class Database {
                     homeStmt.setFloat(8, home.getPitch());
                     homeStmt.addBatch();
                 }
-                playerStmt.addBatch();
             }
             playerStmt.executeBatch();
             balanceStmt.executeBatch();
