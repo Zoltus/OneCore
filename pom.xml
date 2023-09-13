@@ -89,11 +89,12 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <!-- Compile till in maven central -->
+        <!-- Commands -->
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
             <version>${commandapi.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Spigot -->
         <dependency>
