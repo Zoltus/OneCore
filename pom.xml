@@ -16,7 +16,7 @@
         <bstats.version>3.0.2</bstats.version>
         <vault.version>1.7.1</vault.version>
         <!-- TODO Does commandapi ship with this? -->
-        <nbtapi.version>2.11.3</nbtapi.version>
+        <nbtapi.version>2.12.0-RC1</nbtapi.version>
         <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
