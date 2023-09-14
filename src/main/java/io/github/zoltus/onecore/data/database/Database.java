@@ -54,7 +54,7 @@ public class Database {
             String players = """
                     CREATE TABLE IF NOT EXISTS players (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid       CHAR(36) NOT NULL, UNIQUE,
+                        uuid       CHAR(36) NOT NULL UNIQUE,
                         tpenabled  BOOLEAN NOT NULL DEFAULT 0,
                         isvanished BOOLEAN NOT NULL DEFAULT 0
                     );
@@ -62,7 +62,7 @@ public class Database {
             String balances = """
                     CREATE TABLE IF NOT EXISTS balances (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid    CHAR(36) NOT NULL, UNIQUE,
+                        uuid    CHAR(36) NOT NULL UNIQUE,
                         balance DOUBLE NOT NULL,
                         FOREIGN KEY (uuid) REFERENCES players(uuid)
                             ON DELETE RESTRICT
@@ -72,7 +72,7 @@ public class Database {
             String homes = """
                     CREATE TABLE IF NOT EXISTS homes (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid  CHAR(36) NOT NULL, UNIQUE,
+                        uuid  CHAR(36) NOT NULL UNIQUE,
                         name  VARCHAR(16) NOT NULL,
                         world VARCHAR(255) NOT NULL,
                         x     DOUBLE NOT NULL,
