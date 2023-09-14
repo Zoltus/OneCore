@@ -11,7 +11,7 @@ Data:
     # How often player & server data is saved. Baltop also updates after database is updated.
     save-interval-minutes: 5
     data:
-      # Supported: SQLite, H2, MySQL or MariaDB,
+      # Supported: SQLite, H2, MySQL, MariaDB, PostgreSQL
       storage: SQLite
       address: localhost
       # Default ports: MySQL: 3306, PostgreSQL: 5432, MongoDB: 27017
