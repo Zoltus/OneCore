@@ -10,8 +10,8 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.20-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.20-R0.1-SNAPSHOT</spigot.server.version>
+        <spigotAPI.version>1.20.1-R0.1-SNAPSHOT</spigotAPI.version>
+        <spigot.server.version>1.20.1-R0.1-SNAPSHOT</spigot.server.version>
         <lombok.version>1.18.30</lombok.version>
         <bstats.version>3.0.2</bstats.version>
         <vault.version>1.7.1</vault.version>
