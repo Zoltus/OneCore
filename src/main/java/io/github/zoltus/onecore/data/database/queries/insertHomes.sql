@@ -1,0 +1,1 @@
+INSERT OR REPLACE INTO homes(uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?);

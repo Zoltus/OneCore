@@ -1,0 +1,1 @@
+INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished) VALUES (?, ?, ?);
