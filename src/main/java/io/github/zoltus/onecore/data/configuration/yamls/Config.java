@@ -20,6 +20,7 @@ public enum Config implements IConfig {
     CURRENCY_PLURAL("economy.currency-plural"),
     CURRENCY_SINGULAR("economy.currency-singular"),
     DATA_SAVE_INTERVAL("database.save-interval-minutes"),
+    DB_SAVE_INTERVAL("database.save-interval-minutes"),
     ECONOMY_HOOK("economy.enabled-hook"),
     ECONOMY_BALTOP_INTERVAL("economy.baltop-update-interval"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
