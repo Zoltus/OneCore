@@ -1,5 +1,6 @@
 package io.github.zoltus.onecore.data.database;
 
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.player.User;
@@ -7,89 +8,62 @@ import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.sqlite.SQLiteConfig;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Map;
 import java.util.UUID;
 
-public class Database {
-    private Connection connection;
-    private final OneCore plugin;
-    private final BukkitScheduler scheduler = Bukkit.getScheduler();
-    private final int saveInterval = Config.DATA_SAVE_INTERVAL.getInt();
-    private final SQLiteConfig config = new SQLiteConfig();
+public abstract class Database {
 
-    private Database(OneCore plugin) {
-        plugin.getLogger().info("Loading database...");
+    private final OneCore plugin;
+    protected final String databaseURL;
+    private final String createTables;
+    private final String insertHomes;
+    private final String insertPlayers;
+    private final String insertBalances;
+    private final String selectHomes;
+    private final String selectPlayersAndBalances;
+
+    private final HikariDataSource hikari;
+
+    private Connection connection;
+    private final BukkitScheduler scheduler = Bukkit.getScheduler();
+    private final int saveInterval = Config.DB_SAVE_INTERVAL.getInt();
+    private final int port = Config.DB_PORT.getInt();
+    private final String userName = Config.DB_USERNAME.getString();
+    private final String password = Config.DB_PASSWORD.getString();
+    private final String database = Config.DB_DATABASE.getString();
+    private final String address = Config.DB_ADDRESS.getString();
+
+    protected Database(OneCore plugin,
+                       String databaseURL,
+                       String createTables,
+                       String insertHomes,
+                       String insertPlayers,
+                       String insertBalances,
+                       String selectHomes,
+                       String selectPlayersAndBalances) {
         this.plugin = plugin;
-        this.connection = connection();
-        //todo if these are normal settings anyways
-        // "PRAGMA mmap_size = 30000000000;
-        this.config.setJournalMode(SQLiteConfig.JournalMode.WAL);
-        this.config.setTempStore(SQLiteConfig.TempStore.MEMORY);
-        this.config.setSynchronous(SQLiteConfig.SynchronousMode.NORMAL);
-        this.config.setPragma(SQLiteConfig.Pragma.FOREIGN_KEYS, "1");
+        this.databaseURL = databaseURL;
+        this.createTables = createTables;
+        this.insertHomes = insertHomes;
+        this.insertPlayers = insertPlayers;
+        this.insertBalances = insertBalances;
+        this.selectHomes = selectHomes;
+        this.selectPlayersAndBalances = selectPlayersAndBalances;
+        this.hikari = initHikari();
+
         createTables();
         initAutoSaver();
     }
 
-    public static Database init(OneCore plugin) {
-        Database database = plugin.getDatabase();
-        return database == null ? new Database(plugin) : database;
-    }
+    public abstract HikariDataSource initHikari();
 
-    private Connection connection() {
-        try {
-            String url = "jdbc:sqlite:" + plugin.getDataFolder() + "/database.db";
-            return connection = connection == null
-                    || connection.isClosed() ? DriverManager.getConnection(url, config.toProperties()) : connection;
-        } catch (Exception e) {
-            throw new DatabaseException("§4Database connection failed!\n §c" + e.getMessage());
-        }
-    }
-
-    private void createTables() {
-        try (Connection con = connection(); Statement stmt = con.createStatement()) {
-            String players = """
-                    CREATE TABLE IF NOT EXISTS players (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid       CHAR(36) NOT NULL UNIQUE,
-                        tpenabled  BOOLEAN NOT NULL DEFAULT 0,
-                        isvanished BOOLEAN NOT NULL DEFAULT 0
-                    );
-                    """;
-            String balances = """
-                    CREATE TABLE IF NOT EXISTS balances (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid    CHAR(36) NOT NULL UNIQUE,
-                        balance DOUBLE NOT NULL,
-                        FOREIGN KEY (uuid) REFERENCES players(uuid)
-                            ON DELETE RESTRICT
-                            ON UPDATE CASCADE
-                    );
-                    """;
-            String homes = """
-                    CREATE TABLE IF NOT EXISTS homes (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        uuid  CHAR(36) NOT NULL UNIQUE,
-                        name  VARCHAR(16) NOT NULL,
-                        world VARCHAR(255) NOT NULL,
-                        x     DOUBLE NOT NULL,
-                        y     DOUBLE NOT NULL,
-                        z     DOUBLE NOT NULL,
-                        yaw   FLOAT NOT NULL,
-                        pitch FLOAT NOT NULL,
-                        FOREIGN KEY (uuid) REFERENCES players(uuid)
-                            ON DELETE RESTRICT
-                            ON UPDATE CASCADE
-                    );
-                    """;
-            stmt.execute(players);
-            stmt.execute(balances);
-            stmt.execute(homes);
-        } catch (SQLException e) {
-            throw new DatabaseException("§4Database table creation failed!\n §c" + e.getMessage());
+    public void closeConnectionPool() {
+        if (hikari != null && !hikari.isClosed()) {
+            hikari.close();
         }
     }
 
@@ -102,14 +76,30 @@ public class Database {
         scheduler.runTaskAsynchronously(plugin, this::saveData);
     }
 
+    /*
+     * mysql needs auto_increment
+     * sqlite needs autoincrement
+     */
+    private void createTables() {
+        try (Connection con = hikari.getConnection(); Statement stmt = con.createStatement()) {
+            String[] queries = getQuery(createTables);
+            for (String query : queries) {
+                stmt.addBatch(query);
+            }
+            stmt.executeBatch();
+        } catch (SQLException ex) {
+            throw new Database.DatabaseException("§4Database table creation failed!\n §c" + ex.getMessage());
+        }
+    }
+
     /**
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveData() {
-        final String sqlPlayers = "INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
-        final String sqlHomes = "INSERT OR REPLACE INTO homes(uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        final String sqlBalances = "INSERT OR REPLACE INTO balances(uuid, balance) VALUES (?, ?)";
-        try (Connection con = connection()
+        final String sqlPlayers = getQuery(insertPlayers)[0];
+        final String sqlHomes = getQuery(insertHomes)[0];
+        final String sqlBalances = getQuery(insertBalances)[0];
+        try (Connection con = hikari.getConnection()
              ; PreparedStatement playerStmt = con.prepareStatement(sqlPlayers)
              ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
              ; PreparedStatement balanceStmt = con.prepareStatement(sqlBalances)) {
@@ -148,7 +138,7 @@ public class Database {
             balanceStmt.executeBatch();
             homeStmt.executeBatch();
         } catch (SQLException e) {
-            throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
+            throw new Database.DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
 
@@ -156,12 +146,10 @@ public class Database {
     public void cacheData() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
-        String sql = """
-                SELECT players.uuid, tpenabled, isvanished, balances.balance
-                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""";
-        //Homes needs to be separate, otherwise it would return duplicate data
-        String sqlHomes = "SELECT * from homes;";
-        try (Connection con = connection()
+        String sql = getQuery(selectPlayersAndBalances)[0];
+        //Homes needs to be separate, otherwise it would return duplicate data.
+        String sqlHomes = getQuery(selectHomes)[0];
+        try (Connection con = hikari.getConnection()
              ; PreparedStatement playerStm = con.prepareStatement(sql)
              ; PreparedStatement homeStm = con.prepareStatement(sqlHomes)
              ; ResultSet rsPlayer = playerStm.executeQuery()
@@ -195,10 +183,23 @@ public class Database {
             plugin.getLogger().info("Finished caching " + User.getUsers().size()
                     + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
-            throw new DatabaseException("§4Error caching users: \n §c" + e.getMessage());
+            throw new Database.DatabaseException("§4Error caching users: \n §c" + e.getMessage());
         }
     }
 
+    private String[] getQuery(String file) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(file)) {
+            if (in == null) {
+                throw new IOException("InputStream is null. File might not be found.");
+            } else {
+                return new String(in.readAllBytes()).split(";");
+            }
+        } catch (IOException ex) {
+            throw new Database.DatabaseException("§4Database failed to get query!\n §c" + ex.getMessage());
+        }
+    }
+
+    //Todo runtime? switch to normal?
     public static class DatabaseException extends RuntimeException {
         public DatabaseException(String message) {
             super(message);
