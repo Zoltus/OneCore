@@ -103,6 +103,7 @@ public final class OneCore extends JavaPlugin {
     public void onDisable() {
         // Saves all users & settings on disable
         databaseManager.getDatabase().saveData();
+        databaseManager.getDatabase().closeConnectionPool();
         plugin.getLogger().info("Saved users & settings to database...");
         //Unregisters all cmds on unload. Trying to support reloading plugin.
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
