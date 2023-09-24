@@ -7,7 +7,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.database.Database;
+import io.github.zoltus.onecore.data.database.DatabaseManager;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
@@ -31,11 +31,11 @@ import java.util.logging.Level;
 
 @Getter
 public final class OneCore extends JavaPlugin {
-    //Jenkins test
+
     @Getter
     private static OneCore plugin;
     private Economy vault;
-    private Database database;
+    private DatabaseManager databaseManager;
     private BackupHandler backupHandler;
     private CommandHandler commandHandler;
     private BukkitAudiences adventure;
@@ -73,7 +73,7 @@ public final class OneCore extends JavaPlugin {
         CommandAPI.onEnable();
         //long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
-        this.database = Database.init(this);
+        this.databaseManager = new DatabaseManager(this);
         // Hooks economy if its enabled on config.
         this.vault = EconomyHandler.hook(this);
         //Registers Commands if enabled. Needs to be before listeners.
@@ -82,7 +82,7 @@ public final class OneCore extends JavaPlugin {
         new Metrics(this, 12829);
         // Starts caching users
         this.consoleFilter = ConsoleFilter.init();
-        this.database.cacheData();
+        this.databaseManager.getDatabase().cacheData();
         //todo mayby remove, creates user for new users, supports if loaded mid server
         JoinListener.loadOnlinePlayers();
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
