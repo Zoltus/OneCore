@@ -11,6 +11,7 @@ libraries:
   - org.apache.commons:commons-compress:1.21
   - org.apache.logging.log4j:log4j-core:2.18.0
   - dev.jorel:commandapi-bukkit-shade:9.1.0
+  - com.h2database:h2:2.2.222
 softdepend:
   - Vault
   - PlaceholderAPI
