@@ -1,6 +1,5 @@
 package io.github.zoltus.onecore.placeholders;
 
-import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -17,12 +16,6 @@ import java.util.UUID;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SEEN_DATE_FORMAT;
 
 public class PapiExpansion extends PlaceholderExpansion {
-
-    private final OneCore plugin;
-
-    public PapiExpansion(OneCore plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public @NotNull String getIdentifier() {
