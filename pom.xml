@@ -99,12 +99,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.42.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
@@ -195,6 +189,37 @@
             <version>${worldguard.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Databases -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.43.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version> <!-- or the latest version -->
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version> <!-- or the latest version -->
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -233,7 +258,9 @@
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
-                    <compilerArgument>-XDignore.symbol.file</compilerArgument>
+                    <compilerArgs>
+                        <compilerArgument>-XDignore.symbol.file</compilerArgument>
+                    </compilerArgs>
                     <encoding>UTF-8</encoding>
                     <!-- Add the processor path for the plugin -->
                     <annotationProcessorPaths>
@@ -244,7 +271,6 @@
                             <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <!--  <compilerArgs>-enable-preview</compilerArgs> -->
                 </configuration>
             </plugin>
             <!-- For Shading -->
