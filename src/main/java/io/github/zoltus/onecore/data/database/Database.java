@@ -39,12 +39,12 @@ public abstract class Database {
     }
 
     private void initAutoSaver() {
-        scheduler.runTaskTimerAsynchronously(plugin, this::saveUsersAsync,
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::saveUsersAsync,
                 (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
     }
 
     public void saveUsersAsync() {
-        scheduler.runTaskAsynchronously(plugin, this::saveData);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, this::saveData);
     }
 
     /*
