@@ -7,7 +7,6 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,43 +17,15 @@ import java.util.UUID;
 public abstract class Database {
 
     private final OneCore plugin;
-    protected final String databaseURL;
-    private final String createTables;
-    private final String insertHomes;
-    private final String insertPlayers;
-    private final String insertBalances;
-    private final String selectHomes;
-    private final String selectPlayersAndBalances;
-
     private final HikariDataSource hikari;
-
-    private Connection connection;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
     private final int saveInterval = Config.DB_SAVE_INTERVAL.getInt();
-    private final int port = Config.DB_PORT.getInt();
-    private final String userName = Config.DB_USERNAME.getString();
-    private final String password = Config.DB_PASSWORD.getString();
-    private final String database = Config.DB_DATABASE.getString();
-    private final String address = Config.DB_ADDRESS.getString();
 
-    protected Database(OneCore plugin,
-                       String databaseURL,
-                       String createTables,
-                       String insertHomes,
-                       String insertPlayers,
-                       String insertBalances,
-                       String selectHomes,
-                       String selectPlayersAndBalances) {
+    protected Database(OneCore plugin, DBCredentials dbCredentials, DBQueries query) {
         this.plugin = plugin;
-        this.databaseURL = databaseURL;
-        this.createTables = createTables;
-        this.insertHomes = insertHomes;
-        this.insertPlayers = insertPlayers;
-        this.insertBalances = insertBalances;
-        this.selectHomes = selectHomes;
-        this.selectPlayersAndBalances = selectPlayersAndBalances;
+        this.query = query;
+        this.dbCredentials = dbCredentials;
         this.hikari = initHikari();
-
         createTables();
         initAutoSaver();
     }
@@ -82,7 +53,7 @@ public abstract class Database {
      */
     private void createTables() {
         try (Connection con = hikari.getConnection(); Statement stmt = con.createStatement()) {
-            String[] queries = getQuery(createTables);
+            String[] queries = getQuery(query.createTables());
             for (String query : queries) {
                 stmt.addBatch(query);
             }
@@ -96,9 +67,9 @@ public abstract class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveData() {
-        final String sqlPlayers = getQuery(insertPlayers)[0];
-        final String sqlHomes = getQuery(insertHomes)[0];
-        final String sqlBalances = getQuery(insertBalances)[0];
+        final String sqlPlayers = getQuery(query.insertPlayers())[0];
+        final String sqlHomes = getQuery(query.insertHomes())[0];
+        final String sqlBalances = getQuery(query.insertBalances())[0];
         try (Connection con = hikari.getConnection()
              ; PreparedStatement playerStmt = con.prepareStatement(sqlPlayers)
              ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
@@ -146,9 +117,9 @@ public abstract class Database {
     public void cacheData() {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
-        String sql = getQuery(selectPlayersAndBalances)[0];
+        String sql = getQuery(query.selectPlayersAndBalances())[0];
         //Homes needs to be separate, otherwise it would return duplicate data.
-        String sqlHomes = getQuery(selectHomes)[0];
+        String sqlHomes = getQuery(query.selectHomes())[0];
         try (Connection con = hikari.getConnection()
              ; PreparedStatement playerStm = con.prepareStatement(sql)
              ; PreparedStatement homeStm = con.prepareStatement(sqlHomes)
