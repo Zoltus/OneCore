@@ -18,7 +18,8 @@ public abstract class Database {
 
     private final OneCore plugin;
     private final HikariDataSource hikari;
-    private final BukkitScheduler scheduler = Bukkit.getScheduler();
+    private final DBQueries query;
+    protected final DBCredentials dbCredentials;
     private final int saveInterval = Config.DB_SAVE_INTERVAL.getInt();
 
     protected Database(OneCore plugin, DBCredentials dbCredentials, DBQueries query) {
