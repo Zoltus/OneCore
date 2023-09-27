@@ -22,6 +22,7 @@
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.3</placeholderapi.version>
         <commandapi.version>9.1.0</commandapi.version>
+        <placeholderapi.version>2.11.4</placeholderapi.version>
         <!-- Maven -->
         <maven.compiler.release>21</maven.compiler.release>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
