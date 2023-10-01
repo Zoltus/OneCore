@@ -35,7 +35,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <brigadier.version>1.0.500</brigadier.version>
-        <log4j-core.version>2.17.1</log4j-core.version>
+        <log4j-core.version>3.0.0-alpha1</log4j-core.version>
     </properties>
     <!-- Maven shade snapshot for java 16+-->
     <pluginRepositories>
