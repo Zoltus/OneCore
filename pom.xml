@@ -20,7 +20,7 @@
         <apache-compress>1.24.0</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
-        <placeholderapi.version>2.11.4</placeholderapi.version>
+        <placeholderapi.version>2.11.5</placeholderapi.version>
         <commandapi.version>9.2.0</commandapi.version>
         <!-- Maven -->
         <maven.compiler.release>21</maven.compiler.release>
