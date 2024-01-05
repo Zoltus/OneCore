@@ -10,17 +10,18 @@ public class DatabaseManager {
     private final Database database;
     private final OneCore plugin;
     private final DBCredentials credentials;
+    String createTables = "";
 
     public DatabaseManager(OneCore plugin) {
         this.plugin = plugin;
         this.credentials = getCredentials();
         this.database = switch (Config.DB_TYPE.getString().toLowerCase()) {
-            case "h2" -> new H2(plugin, credentials);
-            case "mysql" -> new MySQL(plugin, credentials);
-            case "mariadb" -> new MariaDB(plugin, credentials);
-            case "postgresql" -> new PostgreSQL(plugin, credentials);
+            case "h2" -> new H2(plugin, credentials, createTables);
+            case "mysql" -> new MySQL(plugin, credentials, createTables);
+            case "mariadb" -> new MariaDB(plugin, credentials, createTables);
+            case "postgresql" -> new PostgreSQL(plugin, credentials, createTables);
             //default sqlite
-            default -> new SQLite(plugin, credentials);
+            default -> new SQLite(plugin, credentials, createTables);
         };
     }
 

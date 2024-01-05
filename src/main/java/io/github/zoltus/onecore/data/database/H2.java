@@ -1,19 +1,16 @@
 package io.github.zoltus.onecore.data.database;
 
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.zoltus.onecore.OneCore;
 
 public class H2 extends Database {
 
-    public H2(OneCore plugin) {
-        super(plugin,
-                String.format("jdbc:h2:%s/database.db", plugin.getDataFolder()),
-                "createTables.sql",
-                "insertHomes.sql",
-                "insertPlayers.sql",
-                "insertBalances.sql",
-                "selectHomes.sql",
-                "selectPlayersAndBalances.sql");
+    public H2(OneCore plugin, DBCredentials credentials, DBQueries queries) {
+        super(plugin, credentials, queries);
     }
 
-
+    @Override
+    public HikariDataSource initHikari() {
+        return null;
+    }
 }
