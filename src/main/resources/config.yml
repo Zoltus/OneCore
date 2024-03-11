@@ -5,7 +5,7 @@ Data:
   prefix: '&9&lOne&l<#559fff>&lCore &8&l»<color:#e6e6e6>'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
-  # How player & server data is saved. Baltop also updates after database is updated.
+  # How often player&server&balance data is saved. Baltop also updates after database is updated.
   data-save-interval-minutes: 5
   kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
@@ -47,8 +47,6 @@ Data:
     with-vehicle-permission: teleport.withvehicle
     force-spawn-on-join: false
   economy:
-    # Minutes
-    baltop-update-interval: 5
     currency-plural: €
     currency-singular: €
     enabled-hook: true

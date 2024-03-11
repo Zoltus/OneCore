@@ -13,6 +13,10 @@ import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -186,11 +190,32 @@ public class Economy implements ICommand {
     }
 
     public void printBalances(CommandSender sender, int page) {
-        LinkedHashMap<UUID, Double> balances = OneEconomy.getBalances();
+        LinkedHashMap<UUID, Double> balances = OneEconomy.getBalanceTop();
         if (balances.isEmpty()) {
             sender.sendMessage(ECONOMY_BALTOP_EMPTY.getString());
         } else {
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                int startIndex = Math.min(page * 10, balances.size());
+                int endIndex = Math.min(startIndex + 10, balances.size());
+                List<Map.Entry<UUID, Double>> pageEntries = new ArrayList<>(balances.entrySet())
+                        .subList(startIndex, endIndex);
+                if (pageEntries.isEmpty()) {
+                    sender.sendMessage("No data available.");
+                    return;
+                }
+                sender.sendMessage(ECONOMY_BALTOP_TOP_PLAYERS.getString());
+                pageEntries.forEach(entry -> {
+                    String name = Bukkit.getOfflinePlayer(entry.getKey()).getName();
+                    ECONOMY_BALTOP_LINE.send(sender, PLAYER_PH, name, AMOUNT_PH, entry.getValue());
+                });
+            });
+
+        }
+    }
+}
+            /*
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                //todo cleanup
                 int startIndex = page * 10;
                 int endIndex = startIndex + 10;
                 if (startIndex > balances.size()) {
@@ -217,6 +242,4 @@ public class Economy implements ICommand {
                     }
                 }
             });
-        }
-    }
-}
+            */
