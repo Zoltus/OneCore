@@ -22,14 +22,17 @@ public class Home implements ICommand {
         //home <home>
         Argument<?> homeArg0 = new HomeArg0() //String
                 .executesPlayer((p, args) -> {
-                    teleportHome(p, p, (String) args.get(0));
+                    //todo? String home = (String) args.getOptional(0).orElse(Commands.HOME_DEFAULT_NAME.getString());
+                    String home = (String) args.getOrDefault(0, Commands.HOME_DEFAULT_NAME.getString());
+                    teleportHome(p, p, home);
                 });
         //home <player> <home>
         Argument<?> homeArg1 = new HomeArg1() //
                 .withPermission(Commands.HOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
-                    teleportHome(sender, offP, (String) args.get(1));
+                    String home = (String) args.getOrDefault(1, Commands.HOME_DEFAULT_NAME.getString());
+                    teleportHome(sender, offP, home);
                 });
         //home
         new Command(Commands.HOME_LABEL)
@@ -46,7 +49,7 @@ public class Home implements ICommand {
         if (target == null) {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            home = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home.toLowerCase();
+            home = home.toLowerCase();
             PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
