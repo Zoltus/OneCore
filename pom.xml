@@ -16,7 +16,7 @@
         <vault.version>1.7.1</vault.version>
         <!-- TODO Does commandapi ship with this? -->
         <nbtapi.version>2.12.2</nbtapi.version>
-        <apache-compress>1.24.0</apache-compress>
+        <apache-compress>1.22</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.5</placeholderapi.version>
@@ -93,7 +93,6 @@
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
             <version>${commandapi.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!-- Spigot -->
         <dependency>
