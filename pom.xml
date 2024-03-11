@@ -10,25 +10,24 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.20-R0.1-SNAPSHOT</spigotAPI.version>
-        <spigot.server.version>1.20-R0.1-SNAPSHOT</spigot.server.version>
-        <lombok.version>1.18.24</lombok.version>
+        <spigotAPI.version>1.20.4-R0.1-SNAPSHOT</spigotAPI.version>
+        <lombok.version>1.18.30</lombok.version>
         <bstats.version>3.0.2</bstats.version>
         <vault.version>1.7.1</vault.version>
         <!-- TODO Does commandapi ship with this? -->
-        <nbtapi.version>2.12.0-RC1</nbtapi.version>
-        <apache-compress>1.22</apache-compress>
+        <nbtapi.version>2.12.2</nbtapi.version>
+        <apache-compress>1.24.0</apache-compress>
         <log4j.version>2.19.0</log4j.version>
         <paperlib.version>1.0.8</paperlib.version>
-        <placeholderapi.version>2.11.3</placeholderapi.version>
+        <placeholderapi.version>2.11.5</placeholderapi.version>
         <commandapi.version>9.3.0</commandapi.version>
         <!-- Maven -->
         <maven.compiler.release>17</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.3.1-SNAPSHOT</maven-shade-plugin.version>
-        <adventure-serializer.version>4.14.0</adventure-serializer.version>
-        <adventure-bukkit.version>4.3.0</adventure-bukkit.version>
+        <adventure-serializer.version>4.16.0</adventure-serializer.version>
+        <adventure-bukkit.version>4.3.2</adventure-bukkit.version>
         <worldguard.version>7.0.9</worldguard.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -142,12 +141,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>brigadier</artifactId>
-            <version>${brigadier.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
             <version>${apache-compress}</version>
@@ -198,6 +191,13 @@
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
             <version>${worldguard.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- commandapi requires -->
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>brigadier</artifactId>
+            <version>${brigadier.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
