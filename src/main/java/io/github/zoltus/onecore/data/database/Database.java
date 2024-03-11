@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data.database;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -147,11 +149,11 @@ public class Database {
             playerStmt.executeBatch();
             balanceStmt.executeBatch();
             homeStmt.executeBatch();
+            updateBalTop();
         } catch (SQLException e) {
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
-
 
     public void cacheData() {
         long l = System.currentTimeMillis();
@@ -166,36 +168,65 @@ public class Database {
              ; PreparedStatement homeStm = con.prepareStatement(sqlHomes)
              ; ResultSet rsPlayer = playerStm.executeQuery()
              ; ResultSet rshomes = homeStm.executeQuery()) {
-            while (rsPlayer.next()) {
-                String uuid = rsPlayer.getString("uuid");
-                OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                User newUser = new User(offP);
-                //String homes = rsPlayer.getString("homes");
-                double balance = rsPlayer.getDouble("balance");
-                boolean isvanished = rsPlayer.getBoolean("isvanished");
-                boolean tpenabled = rsPlayer.getBoolean("tpenabled");
-                newUser.setVanished(isvanished);
-                newUser.setBalance(balance);
-                newUser.setTpEnabled(tpenabled);
-            }
+            loadPlayerData(rsPlayer);
             //Gets all homes and sets them for players
-            while (rshomes.next()) {
-                UUID uuid = UUID.fromString(rshomes.getString("uuid"));
-                String homeName = rshomes.getString("name");
-                String world = rshomes.getString("world");
-                double x = rshomes.getDouble("x");
-                double y = rshomes.getDouble("y");
-                double z = rshomes.getDouble("z");
-                float yaw = rshomes.getFloat("yaw");
-                float pitch = rshomes.getFloat("pitch");
-                PreLocation preLoc = new PreLocation(world, x, y, z, yaw, pitch);
-                User user = User.of(uuid);
-                user.setHome(homeName, preLoc);
-            }
+            loadHomes(rshomes);
+            //Loads baltop
+            updateBalTop();
             plugin.getLogger().info("Finished caching " + User.getUsers().size()
                     + " users, took: " + (System.currentTimeMillis() - l) + "ms");
         } catch (SQLException e) {
             throw new DatabaseException("§4Error caching users: \n §c" + e.getMessage());
+        }
+    }
+
+    private static void loadHomes(ResultSet rshomes) throws SQLException {
+        while (rshomes.next()) {
+            UUID uuid = UUID.fromString(rshomes.getString("uuid"));
+            String homeName = rshomes.getString("name");
+            String world = rshomes.getString("world");
+            double x = rshomes.getDouble("x");
+            double y = rshomes.getDouble("y");
+            double z = rshomes.getDouble("z");
+            float yaw = rshomes.getFloat("yaw");
+            float pitch = rshomes.getFloat("pitch");
+            PreLocation preLoc = new PreLocation(world, x, y, z, yaw, pitch);
+            User user = User.of(uuid);
+            user.setHome(homeName, preLoc);
+        }
+    }
+
+    private static void loadPlayerData(ResultSet rsPlayer) throws SQLException {
+        while (rsPlayer.next()) {
+            String uuid = rsPlayer.getString("uuid");
+            OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            User newUser = new User(offP);
+            double balance = rsPlayer.getDouble("balance");
+            boolean isvanished = rsPlayer.getBoolean("isvanished");
+            boolean tpenabled = rsPlayer.getBoolean("tpenabled");
+            newUser.setVanished(isvanished);
+            newUser.setBalance(balance);
+            newUser.setTpEnabled(tpenabled);
+        }
+    }
+
+    public void updateBalTop() {
+        String sql = """
+                SELECT players.uuid, balances.balance
+                    FROM players LEFT JOIN balances ON players.uuid = balances.uuid ORDER BY balances.balance;""";
+        try (Connection con = connection()
+             ; PreparedStatement playerStm = con.prepareStatement(sql)
+             ; ResultSet rsPlayer = playerStm.executeQuery()) {
+            LinkedHashMap<UUID, Double> balanceTop = OneEconomy.getBalanceTop();
+            //Clear baltop
+            balanceTop.clear();
+            while (rsPlayer.next()) {
+                String uuid = rsPlayer.getString("uuid");
+                double balance = rsPlayer.getDouble("balance");
+                balanceTop.put(UUID.fromString(uuid), balance);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("§4Error loading baltop: \n §c" + e.getMessage());
         }
     }
 

@@ -26,14 +26,28 @@ public final class OneEconomy extends AbstractEconomy {
     @Getter
     @Setter
     private static LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
+    //load baltop from db
 
+    @Getter
+    private static final LinkedHashMap<UUID, Double> balanceTop = new LinkedHashMap<>();
 
     private final Logger logger;
     private final OneCore plugin;
     private final String name = "OneEconomy";
 
+    public OneEconomy(OneCore plugin) {
+        this.plugin = plugin;
+        this.logger = createLogger();
+        sortScheduler();
+    }
+
     public boolean isEnabled() {
         return (plugin.getVault() != null);
+    }
+
+    private void sortScheduler() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
+                () -> plugin.getDatabase().updateBalTop(), 0, 20L * 60 * Config.DATA_SAVE_INTERVAL.getInt());
     }
 
     //Economy
@@ -48,21 +62,6 @@ public final class OneEconomy extends AbstractEconomy {
     private final EconomyResponse notAdded = new EconomyResponse(0.0D, 0.0D,
             EconomyResponse.ResponseType.NOT_IMPLEMENTED, "OneCore does not support banks!");
 
-    public OneEconomy(OneCore plugin) {
-        this.plugin = plugin;
-        this.logger = createLogger();
-        sortScheduler();
-    }
-
-    private void sortScheduler() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
-            LinkedHashMap<UUID, Double> sorted = new LinkedHashMap<>();
-            balances.entrySet().stream()
-                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                    .forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
-            setBalances(sorted);
-        }, 0, 20L * 60 * Config.ECONOMY_BALTOP_INTERVAL.getInt());
-    }
 
     private Logger createLogger() {
         try {
