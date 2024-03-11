@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 public class SetHome implements ICommand {
 
     //todo homelimit test, todo swap  home and player arg
+    //todo äö support, switch to textarg?
     @Override
     public void init() {
         //sethome <home>

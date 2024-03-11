@@ -11,6 +11,8 @@ import org.bukkit.Statistic;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.TIME_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -36,6 +38,23 @@ public class PlayTime implements ICommand {
                     PLAYTIME_YOUR_PLAYTIME.send(player, TIME_PH, timeMessage);
                 }).then(arg0)
                 .override();
+
+        /* todo? Optional
+        new CommandAPICommand("asd")
+                .withPermission(PLAYTIME_PERMISSION.getString())
+                .withAliases(PLAYTIME_ALIASES.getString())
+                .withOptionalArguments(new OfflinePlayerArgument())
+                .executesPlayer((sender, args) -> {
+                    OfflinePlayer offTarget = (OfflinePlayer) args.getOptional(0).orElse(null);
+                    if (offTarget == null) {
+                        String timeMessage = secondsToTime(sender.getStatistic(Statistic.PLAY_ONE_MINUTE));
+                        PLAYTIME_YOUR_PLAYTIME.send(sender, TIME_PH, timeMessage);
+                    } else {
+                        int playtime = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
+                        String timeMessage = secondsToTime(playtime);
+                        PLAYTIME_TARGETS_PLAYTIME.send(sender, TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());
+                    }
+                }).override();*/
     }
 
     private String secondsToTime(int seconds) {
