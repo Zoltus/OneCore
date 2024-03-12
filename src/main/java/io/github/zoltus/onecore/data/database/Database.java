@@ -55,7 +55,6 @@ public class Database {
         try (Connection con = connection(); Statement stmt = con.createStatement()) {
             String players = """
                     CREATE TABLE IF NOT EXISTS players (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uuid       CHAR(36) NOT NULL UNIQUE,
                         tpenabled  BOOLEAN NOT NULL DEFAULT 0,
                         isvanished BOOLEAN NOT NULL DEFAULT 0
@@ -63,14 +62,12 @@ public class Database {
                     """;
             String balances = """
                     CREATE TABLE IF NOT EXISTS balances (
-                        player_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uuid    CHAR(36) NOT NULL UNIQUE,
                         balance DOUBLE NOT NULL
                     );
                     """;
             String homes = """
                     CREATE TABLE IF NOT EXISTS homes (
-                        player_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uuid  CHAR(36) NOT NULL,
                         name  VARCHAR(16) NOT NULL,
                         world VARCHAR(255) NOT NULL,
@@ -83,6 +80,8 @@ public class Database {
                     );
                     """;
             /*
+            Players:
+             id INTEGER PRIMARY KEY AUTOINCREMENT,
             Balances:
                 player_id INTEGER PRIMARY KEY NOT NULL,
                  FOREIGN KEY (player_id) REFERENCES players(id)
@@ -121,7 +120,7 @@ public class Database {
              ; PreparedStatement playerStmt = con.prepareStatement(sqlPlayers)
              ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
              ; PreparedStatement balanceStmt = con.prepareStatement(sqlBalances)) {
-            //con.setAutoCommit(false);
+            con.setAutoCommit(false);
             //Save user homeStmt and data
             for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
                 User user = entry.getValue();
@@ -139,6 +138,7 @@ public class Database {
                     balanceStmt.addBatch();
                 }
                 // Homes
+                //todo need to remove homes that dont exist
                 for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
                     String name = homeEntry.getKey();
                     PreLocation home = homeEntry.getValue();
@@ -156,11 +156,11 @@ public class Database {
             playerStmt.executeBatch();
             balanceStmt.executeBatch();
             homeStmt.executeBatch();
-            //con.commit();
-            //con.setAutoCommit(true);
+            con.commit();
+            con.setAutoCommit(true);
             updateBalTop();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
         }
     }
