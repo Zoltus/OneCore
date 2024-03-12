@@ -15,6 +15,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
+
 public class Home implements ICommand {
 
     @Override
@@ -49,7 +51,7 @@ public class Home implements ICommand {
         if (target == null) {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
-            home = home.toLowerCase();
+            home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
