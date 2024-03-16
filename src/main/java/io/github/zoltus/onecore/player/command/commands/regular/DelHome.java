@@ -40,9 +40,10 @@ public class DelHome implements ICommand {
             sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
             boolean isSelf = sender.getName().equals(offP.getName());
+            //todo set home delete to true
             //todo ? if has default home, it uses it, else takes first home from list
             home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
-            //todo check if user has home
+            //todo check if user has home is it needed its in args?
             target.delHome(home);
             DELHOME_DELETED.send(target, HOME_PH, home);
             if (!isSelf) {

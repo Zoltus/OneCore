@@ -7,13 +7,12 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
-import io.github.zoltus.onecore.player.teleporting.PreLocation;
 import io.github.zoltus.onecore.player.teleporting.Request;
+import io.github.zoltus.onecore.utils.HomeLocation;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -39,7 +38,8 @@ public class User {
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
-    private HashMap<String, PreLocation> homes = new HashMap<>();
+    private HashMap<String, HomeLocation> homes = new HashMap<>();
+    //Deleted homes List<String> deleted
     private DelayedTeleport teleport;
     private boolean vanished = false;
 
@@ -128,7 +128,7 @@ public class User {
      * @param home name
      * @return location of the home
      */
-    public PreLocation getHome(String home) {
+    public HomeLocation getHome(String home) {
         return homes.get(home);
     }
 
@@ -139,7 +139,9 @@ public class User {
      * @param loc  location
      */
     public void setHome(String home, Location loc) {
-        setHome(home, new PreLocation(loc));
+        HomeLocation updatedHome = homes.getOrDefault(home, new HomeLocation(loc, false));
+        updatedHome.setToDelete(false);
+        setHome(home, updatedHome);
     }
 
     /**
@@ -147,7 +149,7 @@ public class User {
      *
      * @param loc location
      */
-    public void setHome(String name, PreLocation loc) {
+    public void setHome(String name, HomeLocation loc) {
         homes.put(name, loc);
     }
 
@@ -167,6 +169,7 @@ public class User {
      * @return true if player has home with specific name
      */
     public boolean hasHome(String home) {
+        //todo needs to check also if home is "toDelete"
         return homes.containsKey(home);
     }
 

@@ -1,4 +1,4 @@
-package io.github.zoltus.onecore.player.teleporting;
+package io.github.zoltus.onecore.utils;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
