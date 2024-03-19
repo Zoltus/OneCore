@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
-import io.github.zoltus.onecore.utils.HomeLocation;
+import io.github.zoltus.onecore.utils.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -52,7 +52,7 @@ public class Home implements ICommand {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
             home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
-            HomeLocation loc = target.getHome(home);
+            PreLocation loc = target.getHome(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
                 user.teleport(loc.toLocation());

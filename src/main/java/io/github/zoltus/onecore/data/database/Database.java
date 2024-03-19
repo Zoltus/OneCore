@@ -114,54 +114,73 @@ public class Database {
      */
     public void saveData() {
         final String sqlPlayers = "INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
+        final String sqlClearHomes = "DELETE FROM homes WHERE uuid = ?;";
         final String sqlHomes = "INSERT OR REPLACE INTO homes(uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         final String sqlBalances = "INSERT OR REPLACE INTO balances(uuid, balance) VALUES (?, ?)";
         try (Connection con = connection()
              ; PreparedStatement playerStmt = con.prepareStatement(sqlPlayers)
+             ; PreparedStatement clearStmt = con.prepareStatement(sqlClearHomes)
              ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
              ; PreparedStatement balanceStmt = con.prepareStatement(sqlBalances)) {
-            con.setAutoCommit(false);
-            //Save user homeStmt and data
-            for (Map.Entry<UUID, User> entry : User.getUsers().entrySet()) {
+            //con.setAutoCommit(false);
+            User.getUsers().entrySet().stream().parallel().forEach(entry -> {
                 User user = entry.getValue();
                 String uuid = user.getUniqueId().toString();
-                // Player data
-                playerStmt.setString(1, uuid);
-                playerStmt.setBoolean(2, user.isTpEnabled());
-                playerStmt.setBoolean(3, user.isVanished());
-                playerStmt.addBatch();
-                // Saves economy if OneEconomy is enabled
-                // Economy needs to be handled after player data is inserted
-                if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
-                    balanceStmt.setString(1, uuid);
-                    balanceStmt.setDouble(2, user.getBalance());
-                    balanceStmt.addBatch();
+                try {
+                    handleUserSettings(playerStmt, uuid, user);
+                    handleBalance(balanceStmt, uuid, user);
+                    handleHomes(clearStmt, homeStmt, uuid, user);
+                } catch (SQLException e) {
+                    throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
                 }
-                // Homes
-                //todo need to remove homes that dont exist
-                for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
-                    String name = homeEntry.getKey();
-                    PreLocation home = homeEntry.getValue();
-                    homeStmt.setString(1, user.getUniqueId().toString());
-                    homeStmt.setString(2, name);
-                    homeStmt.setString(3, home.getWorldName());
-                    homeStmt.setDouble(4, home.getX());
-                    homeStmt.setDouble(5, home.getY());
-                    homeStmt.setDouble(6, home.getZ());
-                    homeStmt.setFloat(7, home.getYaw());
-                    homeStmt.setFloat(8, home.getPitch());
-                    homeStmt.addBatch();
-                }
-            }
+            });
             playerStmt.executeBatch();
             balanceStmt.executeBatch();
+            clearStmt.executeBatch();
             homeStmt.executeBatch();
-            con.commit();
-            con.setAutoCommit(true);
-            updateBalTop();
+            //con.commit();
+            //con.setAutoCommit(true);
         } catch (SQLException e) {
             //e.printStackTrace();
             throw new DatabaseException("§4Error saving players!\n §c" + e.getMessage());
+        }
+        updateBalTop();
+    }
+
+    private static void handleUserSettings(PreparedStatement playerStmt, String uuid, User user) throws SQLException {
+        playerStmt.setString(1, uuid);
+        playerStmt.setBoolean(2, user.isTpEnabled());
+        playerStmt.setBoolean(3, user.isVanished());
+        playerStmt.addBatch();
+    }
+
+    private static void handleBalance(PreparedStatement balanceStmt, String uuid, User user) throws SQLException {
+        // Saves economy if OneEconomy is enabled
+        // Economy needs to be handled after player data is inserted
+        if (Config.ECONOMY_USE_ONEECONOMY.getBoolean()) {
+            balanceStmt.setString(1, uuid);
+            balanceStmt.setDouble(2, user.getBalance());
+            balanceStmt.addBatch();
+        }
+    }
+
+    private static void handleHomes(PreparedStatement clearStmt, PreparedStatement homeStmt, String uuid, User user) throws SQLException {
+        //Clear all user homes
+        clearStmt.setString(1, uuid);
+        clearStmt.addBatch();
+        //Insert new homes
+        for (Map.Entry<String, PreLocation> homeEntry : user.getHomes().entrySet()) {
+            String name = homeEntry.getKey();
+            PreLocation home = homeEntry.getValue();
+            homeStmt.setString(1, user.getUniqueId().toString());
+            homeStmt.setString(2, name);
+            homeStmt.setString(3, home.getWorldName());
+            homeStmt.setDouble(4, home.getX());
+            homeStmt.setDouble(5, home.getY());
+            homeStmt.setDouble(6, home.getZ());
+            homeStmt.setFloat(7, home.getYaw());
+            homeStmt.setFloat(8, home.getPitch());
+            homeStmt.addBatch();
         }
     }
 

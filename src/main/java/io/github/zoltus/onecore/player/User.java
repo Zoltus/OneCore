@@ -8,7 +8,7 @@ import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.teleporting.DelayedTeleport;
 import io.github.zoltus.onecore.player.teleporting.LocationUtils;
 import io.github.zoltus.onecore.player.teleporting.Request;
-import io.github.zoltus.onecore.utils.HomeLocation;
+import io.github.zoltus.onecore.utils.PreLocation;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +38,7 @@ public class User {
 
     private final UUID uniqueId;
     private boolean tpEnabled = true;
-    private HashMap<String, HomeLocation> homes = new HashMap<>();
+    private HashMap<String, PreLocation> homes = new HashMap<>();
     //Deleted homes List<String> deleted
     private DelayedTeleport teleport;
     private boolean vanished = false;
@@ -128,7 +128,7 @@ public class User {
      * @param home name
      * @return location of the home
      */
-    public HomeLocation getHome(String home) {
+    public PreLocation getHome(String home) {
         return homes.get(home);
     }
 
@@ -139,8 +139,7 @@ public class User {
      * @param loc  location
      */
     public void setHome(String home, Location loc) {
-        HomeLocation updatedHome = homes.getOrDefault(home, new HomeLocation(loc, false));
-        updatedHome.setToDelete(false);
+        PreLocation updatedHome = homes.getOrDefault(home, new PreLocation(loc));
         setHome(home, updatedHome);
     }
 
@@ -149,7 +148,7 @@ public class User {
      *
      * @param loc location
      */
-    public void setHome(String name, HomeLocation loc) {
+    public void setHome(String name, PreLocation loc) {
         homes.put(name, loc);
     }
 
