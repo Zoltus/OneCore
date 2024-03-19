@@ -56,13 +56,12 @@ public class Home implements ICommand {
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
                 user.teleport(loc.toLocation());
+                boolean isSelf = sender.getName().equals(offP.getName());
+                if (!isSelf) {
+                    Lang.HOME_TELEPORT_OTHERS.send(sender, IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home);
+                }
             } else {
                 Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
-                return;
-            }
-            boolean isSelf = sender.getName().equals(offP.getName());
-            if (!isSelf) {
-                Lang.HOME_TELEPORT_OTHERS.send(sender, IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home);
             }
         }
     }
