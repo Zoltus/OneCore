@@ -16,6 +16,8 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,11 +41,12 @@ public class User {
     private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
-    private boolean tpEnabled = true;
     private HashMap<String, PreLocation> homes = new HashMap<>();
-    //Deleted homes List<String> deleted
     private DelayedTeleport teleport;
-    private boolean vanished = false;
+    private boolean hasTpEnabled = true;
+    private boolean isVanished = false;
+    private boolean isGod = false;
+    //private boolean isGod = false; todo god? or use mc?
 
     //todo onjoin set player object, on leave null? So then i could remove getPlayer() and isOnline() methods
 
@@ -65,10 +68,17 @@ public class User {
      OneUser -> never -> new
      */
 
+    @Nullable
     public static User of(OfflinePlayer offP) {
         return users.get(offP.getUniqueId());
     }
 
+    @NotNull
+    public static User of(Player p) {
+        return users.get(p.getUniqueId());
+    }
+
+    @Nullable
     public static User of(UUID uuid) {
         return users.get(uuid);
     }
@@ -117,7 +127,7 @@ public class User {
     }
 
     public void setVanished(boolean vanished) {
-        this.vanished = vanished;
+        this.isVanished = vanished;
     }
 
     /*

@@ -34,7 +34,8 @@ public record JoinListener(OneCore plugin) implements Listener {
     //Adds better support for loading plugin midgame
     public static void loadOnlinePlayers() {
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (User.of(p) == null) {
+            User user = User.of(p.getUniqueId());
+            if (user == null) {
                 new User(p);
             }
         });

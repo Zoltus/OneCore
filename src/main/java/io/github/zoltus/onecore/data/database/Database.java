@@ -149,7 +149,7 @@ public class Database {
 
     private static void handleUserSettings(PreparedStatement playerStmt, String uuid, User user) throws SQLException {
         playerStmt.setString(1, uuid);
-        playerStmt.setBoolean(2, user.isTpEnabled());
+        playerStmt.setBoolean(2, user.isHasTpEnabled());
         playerStmt.setBoolean(3, user.isVanished());
         playerStmt.addBatch();
     }
@@ -235,7 +235,7 @@ public class Database {
             boolean tpenabled = rsPlayer.getBoolean("tpenabled");
             newUser.setVanished(isvanished);
             newUser.setBalance(balance);
-            newUser.setTpEnabled(tpenabled);
+            newUser.setHasTpEnabled(tpenabled);
         }
     }
 

@@ -25,9 +25,7 @@ public class Back implements ICommand, Listener {
         User user = User.of(p);
         //"NPC" fixes citizens stuff
         if (p.hasMetadata("NPC")) return;
-        if (user != null) {
-            user.setLastLocation(e.getFrom());
-        }
+        user.setLastLocation(e.getFrom());
     }
 
 
@@ -36,9 +34,7 @@ public class Back implements ICommand, Listener {
         Player p = e.getEntity();
         if (!p.hasMetadata("NPC")) {
             User user = User.of(p);
-            if (user != null) {
-                user.setLastLocation(p.getLocation());
-            }
+            user.setLastLocation(p.getLocation());
         }
     }
 

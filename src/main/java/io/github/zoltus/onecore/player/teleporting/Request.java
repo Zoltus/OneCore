@@ -67,7 +67,7 @@ public class Request {
     public static void send(User sender, User accepter, TeleportType type) {
         if (sender == accepter) { //Cant self teleport
             TP_CANT_SELF_TELEPORT.send(sender);
-        } else if (!accepter.isTpEnabled()) { //Cant teleport if tp toggled
+        } else if (!accepter.isHasTpEnabled()) { //Cant teleport if tp toggled
             TP_TOGGLE_IS_OFF.send(sender, PLAYER_PH, accepter.getName());
         } else if (hasRequest(sender, accepter)) {
             TP_YOU_ALREADY_SENT_REQUEST.send(sender, PLAYER_PH, accepter.getName());

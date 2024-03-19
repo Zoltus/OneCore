@@ -10,6 +10,7 @@ import io.github.zoltus.onecore.player.command.arguments.UserArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class Economy implements ICommand {
                 .withPermission(ECONOMY_PAY_PERMISSION.asPermission())
                 .withArguments(new UserArgument(), new DoubleArgument(NODES_AMOUNT.getString()))
                 .executes((sender, args) -> {
-                    transfer(User.of((OfflinePlayer) sender), (User) args.get(0), (double) args.get(1), null);
+                    transfer(User.of((Player) sender), (User) args.get(0), (double) args.get(1), null);
                 });
         // give <player> <amount>
         CommandAPICommand give = new CommandAPICommand(ECONOMY_GIVE_LABEL.getString())

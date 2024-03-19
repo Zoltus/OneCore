@@ -17,8 +17,8 @@ public class TpToggle implements ICommand {
                 .withAliases(TPTOGGLE_ALIASES)
                 .executesPlayer((player, args) -> {
                     User user = User.of(player);
-                    user.setTpEnabled(!user.isTpEnabled());
-                    Lang.TP_TOGGLE_SWITCHED.send(user, TOGGLE_PH, user.isTpEnabled());
+                    user.setHasTpEnabled(!user.isHasTpEnabled());
+                    Lang.TP_TOGGLE_SWITCHED.send(user, TOGGLE_PH, user.isHasTpEnabled());
                 })
                 .override();
     }
