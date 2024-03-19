@@ -52,7 +52,7 @@ public class Home implements ICommand {
             sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
         } else {
             home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
-            PreLocation loc = target.getHome(home);
+            PreLocation loc = target.getorDefaultHOme(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
                 user.teleport(loc.toLocation());

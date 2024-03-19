@@ -9,11 +9,10 @@ import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import io.github.zoltus.onecore.utils.PreLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
 
 public class SetHome implements ICommand {
 
@@ -54,9 +53,10 @@ public class SetHome implements ICommand {
         } else {
             //Async because sethome scans permissions and if user has lot it could slow down the server.
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                String finalHome = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
                 boolean isSelf = sender.getName().equals(offP.getName());
                 boolean canHaveMoreHomes = target.hasFreeHomeSlot();
+                String finalHome = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home;
+
                 if ((target.hasHome(finalHome) || canHaveMoreHomes) || !isSelf) {
                     target.setHome(finalHome, target.getPlayer().getLocation());
                     Lang.SETHOME_SET.send(target, IConfig.HOME_PH, finalHome);

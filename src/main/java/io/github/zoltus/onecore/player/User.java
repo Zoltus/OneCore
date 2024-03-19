@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
+
 
 @Data
 public class User {
@@ -123,13 +125,13 @@ public class User {
      */
 
     /**
-     * Gets player home
+     * Gets player home, if home is not found, returns default home
      *
      * @param home name
      * @return location of the home
      */
-    public PreLocation getHome(String home) {
-        return homes.get(home);
+    public PreLocation getorDefaultHOme(String home) {
+        return homes.get(home.toLowerCase()) != null ? homes.get(home.toLowerCase()) : homes.get(HOME_DEFAULT_NAME.getString());
     }
 
     /**
@@ -139,8 +141,8 @@ public class User {
      * @param loc  location
      */
     public void setHome(String home, Location loc) {
-        PreLocation updatedHome = homes.getOrDefault(home, new PreLocation(loc));
-        setHome(home, updatedHome);
+        PreLocation updatedHome = homes.getOrDefault(home.toLowerCase(), new PreLocation(loc));
+        setHome(home.toLowerCase(), updatedHome);
     }
 
     /**
@@ -149,7 +151,7 @@ public class User {
      * @param loc location
      */
     public void setHome(String name, PreLocation loc) {
-        homes.put(name, loc);
+        homes.put(name.toLowerCase(), loc);
     }
 
     /**
@@ -158,7 +160,7 @@ public class User {
      * @param home name
      */
     public void delHome(String home) {
-        homes.remove(home);
+        homes.remove(home.toLowerCase());
     }
 
     /**
@@ -169,7 +171,7 @@ public class User {
      */
     public boolean hasHome(String home) {
         //todo needs to check also if home is "toDelete"
-        return homes.containsKey(home);
+        return homes.containsKey(home.toLowerCase());
     }
 
     /**
