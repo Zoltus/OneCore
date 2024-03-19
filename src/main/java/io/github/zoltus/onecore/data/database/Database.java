@@ -56,8 +56,9 @@ public class Database {
             String players = """
                     CREATE TABLE IF NOT EXISTS players (
                         uuid       CHAR(36) NOT NULL UNIQUE,
-                        tpenabled  BOOLEAN NOT NULL DEFAULT 0,
-                        isvanished BOOLEAN NOT NULL DEFAULT 0
+                        tpenabled  BOOLEAN NOT NULL DEFAULT true,
+                        isvanished BOOLEAN NOT NULL DEFAULT 0,
+                        isgod      BOOLEAN NOT NULL DEFAULT 0
                     );
                     """;
             String balances = """
@@ -113,7 +114,7 @@ public class Database {
      * Saves users which has been edited to database there has been changes on their data
      */
     public void saveData() {
-        final String sqlPlayers = "INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished) VALUES (?, ?, ?)";
+        final String sqlPlayers = "INSERT OR REPLACE INTO players(uuid, tpenabled, isvanished, isgod) VALUES (?, ?, ?, ?)";
         final String sqlClearHomes = "DELETE FROM homes WHERE uuid = ?;";
         final String sqlHomes = "INSERT OR REPLACE INTO homes(uuid, name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         final String sqlBalances = "INSERT OR REPLACE INTO balances(uuid, balance) VALUES (?, ?)";
@@ -151,6 +152,7 @@ public class Database {
         playerStmt.setString(1, uuid);
         playerStmt.setBoolean(2, user.isHasTpEnabled());
         playerStmt.setBoolean(3, user.isVanished());
+        playerStmt.setBoolean(4, user.isGod());
         playerStmt.addBatch();
     }
 
@@ -188,7 +190,7 @@ public class Database {
         long l = System.currentTimeMillis();
         plugin.getLogger().info("Caching users");
         String sql = """
-                SELECT players.uuid, tpenabled, isvanished, balances.balance
+                SELECT players.uuid, tpenabled, isvanished, isgod, balances.balance
                     FROM players LEFT JOIN balances ON players.uuid = balances.uuid;""";
         //Homes needs to be separate, otherwise it would return duplicate data
         String sqlHomes = "SELECT * from homes;";
@@ -231,11 +233,13 @@ public class Database {
             OfflinePlayer offP = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
             User newUser = new User(offP);
             double balance = rsPlayer.getDouble("balance");
-            boolean isvanished = rsPlayer.getBoolean("isvanished");
-            boolean tpenabled = rsPlayer.getBoolean("tpenabled");
-            newUser.setVanished(isvanished);
+            boolean isVanished = rsPlayer.getBoolean("isvanished");
+            boolean hasTpEnabled = rsPlayer.getBoolean("tpenabled");
+            boolean isGod = rsPlayer.getBoolean("isgod");
+            newUser.setVanished(isVanished);
             newUser.setBalance(balance);
-            newUser.setHasTpEnabled(tpenabled);
+            newUser.setHasTpEnabled(hasTpEnabled);
+            newUser.setGod(isGod);
         }
     }
 
