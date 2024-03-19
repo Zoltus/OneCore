@@ -13,10 +13,6 @@ import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 

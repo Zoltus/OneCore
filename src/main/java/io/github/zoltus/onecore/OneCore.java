@@ -93,7 +93,7 @@ public final class OneCore extends JavaPlugin {
         registerListeners();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new PapiExpansion(this).register();
+            new PapiExpansion().register();
         }
         sendArt();
         //plugin.getLogger().info("Successfully enabled. (" + (System.currentTimeMillis() - time) + "ms)");
