@@ -103,7 +103,7 @@ Data:
       - creative
       - spectator
     aliases-adventure:
-      - 2
+      - "2"
       - a
       - adv
       - adventure
@@ -112,7 +112,7 @@ Data:
       - se
       - sei
     aliases-creative:
-      - 1
+      - "1"
       - c
       - creative
       - crea
@@ -121,7 +121,7 @@ Data:
       - lu
       - l
     aliases-spectator:
-      - 3
+      - "3"
       - sp
       - spec
       - spe
@@ -130,7 +130,7 @@ Data:
       - kat
       - katselu
     aliases-survival:
-      - 0
+      - "0"
       - s
       - survival
       - surv
