@@ -44,7 +44,16 @@ public class DelHome implements ICommand {
             //todo ? if has default home, it uses it, else takes first home from list
             home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
             //todo check if user has home is it needed its in args?
-            target.delHome(home);
+
+            if (target.hasHome(home)) {
+                target.delHome(home);
+            } else {
+                sender.sendMessage(HOME_LIST.getString());
+
+            }
+
+
+
             DELHOME_DELETED.send(target, HOME_PH, home);
             if (!isSelf) {
                 DELHOME_OTHER.send(sender, PLAYER_PH, target.getName(), HOME_PH, home);
