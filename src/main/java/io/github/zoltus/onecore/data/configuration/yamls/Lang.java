@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 
+@Getter
 @AllArgsConstructor
 public enum Lang implements IConfig {
     VARIABLE_COLOR("variable-color"),
@@ -169,7 +170,6 @@ public enum Lang implements IConfig {
     WEATHER_INVALID_WEATHER("weather.invalid-weather"),
     WORLD_NOT_FOUND("other.world-not-found");
 
-    @Getter
     final String path;
 
     public OneYml yml() {
@@ -193,7 +193,7 @@ public enum Lang implements IConfig {
 
     public String replace(Object... replaces) {
         String ph = null;
-        String message = getString();
+        StringBuilder sb = new StringBuilder(getString());
         for (Object objRp : replaces) {
             String value = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
             //color
@@ -208,13 +208,19 @@ public enum Lang implements IConfig {
                 //<color:#ff6666><balance></color>
                 String coloredVar = variableColors.replace("<variable>", ph);
                 // '{p} Rahasi: <balance>.'
-                message = message.replaceAll(ph, coloredVar);
+                int index = sb.indexOf(ph);
+                if (index != -1) {
+                    sb.replace(index, index + ph.length(), coloredVar);
+                }
                 // '{p} Rahasi: <color:#ff6666><balance></color>.'
-                message = message.replaceAll(ph, value);
+                index = sb.indexOf(coloredVar);
+                if (index != -1) {
+                    sb.replace(index, index + coloredVar.length(), value);
+                }
                 // '{p} Rahasi: <color:#ff6666>value</color>.'
                 ph = null;
             }
         }
-        return message;
+        return sb.toString();
     }
 }
