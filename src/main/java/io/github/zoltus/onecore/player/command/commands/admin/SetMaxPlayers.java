@@ -5,12 +5,6 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import org.bukkit.Bukkit;
-
-import java.lang.reflect.Field;
-
-import static io.github.zoltus.onecore.data.configuration.IConfig.AMOUNT_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SETMAXPLAYERS_SET;
 
 public class SetMaxPlayers implements ICommand {
 
@@ -22,16 +16,18 @@ public class SetMaxPlayers implements ICommand {
                 .withAliases(Commands.SETMAXPLAYERS_ALIASES)
                 .then(new IntegerArgument(Lang.NODES_AMOUNT.getString())
                         .executesPlayer((p, args) -> {
+                            /*
                             try {
                                 int maxPlayers = (int) args.get(0);
                                 setMaxPlayers(maxPlayers);
                                 SETMAXPLAYERS_SET.send(p, AMOUNT_PH, maxPlayers);
                             } catch (ReflectiveOperationException e) {
                                 p.sendMessage("Error changing max players!");
-                            }
+                            }*/
                         })).override();
     }
 
+    /*
     private final String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     private final int subversion = Integer.parseInt(version.split("_")[1]);
 
@@ -47,5 +43,5 @@ public class SetMaxPlayers implements ICommand {
         Field maxplayers = playerlist.getClass().getSuperclass().getDeclaredField(maxplayersfield);
         maxplayers.setAccessible(true);
         maxplayers.set(playerlist, amount);
-    }
+    }*/
 }

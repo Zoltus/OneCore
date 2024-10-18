@@ -1,41 +1,39 @@
 package io.github.zoltus.onecore.utils;
 
 import io.github.zoltus.onecore.OneCore;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.function.Consumer;
+
 public class SpeedChangeScheduler {
-    @Getter
     private BukkitTask task;
-    private long ticks;
     private final OneCore plugin;
     private final boolean async;
-    private final Runnable runnable;
+    private final Consumer<SpeedChangeScheduler> consumer;
 
-    public SpeedChangeScheduler(OneCore plugin, long ticks, boolean async, Runnable runnable) {
+    private SpeedChangeScheduler(OneCore plugin, long ticks, long delay, boolean async, Consumer<SpeedChangeScheduler> consumer) {
         this.async = async;
-        this.ticks = ticks;
         this.plugin = plugin;
-        this.runnable = runnable;
-        run();
+        this.consumer = consumer;
+        scheduleTask(ticks, delay);
     }
 
-    public void reSchedule(long ticks) {
+    public static SpeedChangeScheduler run(OneCore plugin, long ticks, long delay, boolean async, Consumer<SpeedChangeScheduler> consumer) {
+        return new SpeedChangeScheduler(plugin, ticks, delay, async, consumer);
+    }
+
+    public void reSchedule(long ticks, long delay) {
         if (task != null) {
             task.cancel();
         }
-        if (this.ticks != ticks) {
-            this.ticks = ticks;
-            run();
-        }
+        scheduleTask(ticks, delay);
     }
 
-    private void run() {
-        if (async) {
-           this.task = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, runnable, 0, ticks);
-        } else {
-            this.task = Bukkit.getScheduler().runTaskTimer(plugin, runnable, 0, ticks);
-        }
+    private void scheduleTask(long ticks, long delay) {
+        Runnable runnable = () -> consumer.accept(this);
+        this.task = async
+                ? Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, runnable, delay, ticks)
+                : Bukkit.getScheduler().runTaskTimer(plugin, runnable, delay, ticks);
     }
 }

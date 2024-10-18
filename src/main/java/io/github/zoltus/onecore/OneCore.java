@@ -74,7 +74,7 @@ public final class OneCore extends JavaPlugin {
         //long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
         this.database = Database.init(this);
-        // Hooks economy if its enabled on config.
+        // Hooks economy if its enabled on config. todo, if enabled conomy and no vault, throws error
         this.vault = EconomyHandler.hook(this);
         //Registers Commands if enabled. Needs to be before listeners.
         this.commandHandler = CommandHandler.register(this);

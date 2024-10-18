@@ -1,11 +1,13 @@
 package io.github.zoltus.onecore.player.command;
 
+
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.executors.CommandExecutor;
 import dev.jorel.commandapi.executors.PlayerCommandExecutor;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 
-public class Command extends CommandTree {
+public class Command extends CommandTree
+{
 
     //Used for hardcoded onecore command
     public Command(String commandName) {

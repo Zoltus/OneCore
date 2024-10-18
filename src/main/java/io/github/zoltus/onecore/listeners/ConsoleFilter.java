@@ -15,6 +15,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleFilter implements Filter {
 
@@ -72,6 +73,11 @@ public class ConsoleFilter implements Filter {
     }
 
     public boolean isStopped() {
+        return false;
+    }
+
+    @Override
+    public boolean stop(long timeout, TimeUnit timeUnit) {
         return false;
     }
 
