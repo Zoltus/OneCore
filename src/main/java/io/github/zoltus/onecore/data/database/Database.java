@@ -244,6 +244,9 @@ public class Database {
     }
 
     public void updateBalTop() {
+        if (plugin.getVault() == null) {
+            return;
+        }
         String sql = """
                 SELECT players.uuid, balances.balance
                     FROM players LEFT JOIN balances ON players.uuid = balances.uuid ORDER BY balances.balance;""";
