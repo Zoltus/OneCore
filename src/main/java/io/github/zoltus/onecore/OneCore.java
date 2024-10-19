@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -112,6 +113,8 @@ public final class OneCore extends JavaPlugin {
             this.adventure.close();
             this.adventure = null;
         }
+        // Closes database connection
+        database.closeConnection();
     }
 
     public BukkitAudiences adventure() {

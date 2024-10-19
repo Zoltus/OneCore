@@ -5,6 +5,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.economy.OneEconomy;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.utils.PreLocation;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Database {
+    @Getter
     private Connection connection;
     private final OneCore plugin;
     private final BukkitScheduler scheduler = Bukkit.getScheduler();
@@ -34,6 +36,16 @@ public class Database {
         this.config.setPragma(SQLiteConfig.Pragma.FOREIGN_KEYS, "1");
         createTables();
         initAutoSaver();
+    }
+
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("§4Error closing database connection!\n §c" + e.getMessage());
+        }
     }
 
     public static Database init(OneCore plugin) {
