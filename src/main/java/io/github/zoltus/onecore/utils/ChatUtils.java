@@ -71,8 +71,9 @@ public class ChatUtils {
     }
 
     public static void mmSend(CommandSender sender, String str) {
-        BukkitAudiences adventure = plugin.adventure();
-        Audience audience = adventure.sender(sender);
-        audience.sendMessage(translateColors(str));
+        try (BukkitAudiences adventure = plugin.adventure()) {
+            Audience audience = adventure.sender(sender);
+            audience.sendMessage(translateColors(str));
+        }
     }
 }
