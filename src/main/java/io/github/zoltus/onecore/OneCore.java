@@ -126,7 +126,7 @@ public final class OneCore extends JavaPlugin {
      * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
      */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskLater(this, () ->
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () ->
                 Bukkit.getConsoleSender().sendMessage("""
                         
                         §f                    o O O
