@@ -97,7 +97,7 @@ public class Request {
     }
 
     private void sendChat() {
-        sender.sendMessage(TP_SENT.replace(PLAYER_PH, accepter.getName()));
+        TP_SENT.send(sender, PLAYER_PH, accepter.getName()); // todo test
         TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName(), TYPE_PH, type.name());
     }
 }

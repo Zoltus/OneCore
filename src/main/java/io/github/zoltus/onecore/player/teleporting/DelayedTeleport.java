@@ -41,7 +41,7 @@ public class DelayedTeleport {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             //If target is set and isnt online
             if (target != null && !target.isOnline()) {
-                TP_TARGET_QUIT.replace(PLAYER_PH, target.getName());
+                TP_TARGET_QUIT.send(user, PLAYER_PH, target.getName()); // todo test
             } else {
                 Location destination = target == null ? loc : target.getPlayer().getLocation();
                 //Checks if teleporter is still online.
