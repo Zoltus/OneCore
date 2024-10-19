@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
 
@@ -31,7 +32,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DE
 public class User {
 
     @Getter
-    private static final HashMap<UUID, User> users = new HashMap<>();
+    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>(); // todo concurrent access?
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;
@@ -41,7 +42,7 @@ public class User {
     private final List<Request> requests = new ArrayList<>();
 
     private final UUID uniqueId;
-    private HashMap<String, PreLocation> homes = new HashMap<>();
+    private ConcurrentHashMap<String, PreLocation> homes = new ConcurrentHashMap<>();
     private DelayedTeleport teleport;
     private boolean hasTpEnabled = true;
     private boolean isVanished = false;

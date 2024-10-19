@@ -136,8 +136,7 @@ public class Database {
              ; PreparedStatement homeStmt = con.prepareStatement(sqlHomes)
              ; PreparedStatement balanceStmt = con.prepareStatement(sqlBalances)) {
             //con.setAutoCommit(false);
-            User.getUsers().entrySet().stream().parallel().forEach(entry -> {
-                User user = entry.getValue();
+            User.getUsers().forEach((key, user) -> {
                 String uuid = user.getUniqueId().toString();
                 try {
                     handleUserSettings(playerStmt, uuid, user);
