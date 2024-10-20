@@ -24,12 +24,12 @@ public class PWeather implements ICommand {
                 });
         //pweather <weather> <player>
         Argument<?> arg1 = new PlayerArgument()
-                .withPermission(Commands.PWEATHER_PERMISSION.asPermission())
+                .withPermission(Commands.PWEATHER_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     changeWeather(sender, (WeatherInput) args.get(0), (Player) args.get(1));
                 });
         new Command(Commands.PWEATHER_LABEL)
-                .withPermission(Commands.PWEATHER_PERMISSION_OTHER)
+                .withPermission(Commands.PWEATHER_PERMISSION)
                 .withAliases(Commands.PWEATHER_ALIASES)
                 .then(arg0.then(arg1))
                 .override();
