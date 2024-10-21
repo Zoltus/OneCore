@@ -25,7 +25,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -124,22 +123,16 @@ public final class OneCore extends JavaPlugin {
         return this.adventure;
     }
 
-
-    /**
-     * Sends art with 1 tick delay so the art will be sent after the server has been fully loaded.
-     */
     private void sendArt() {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () ->
-                Bukkit.getConsoleSender().sendMessage("""
-                        
-                        §f                    o O O
-                        §9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____
-                        §9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!
-                        §9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾|
-                        §9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-'
-                        
-                        """
-                ), 2L);
+        Bukkit.getConsoleSender().sendMessage("""
+                
+                §f                    o O O
+                §9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____
+                §9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!
+                §9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾|
+                §9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' 
+                """);
+        Bukkit.getConsoleSender().sendMessage(" ");
     }
 
     private void registerListeners() {
