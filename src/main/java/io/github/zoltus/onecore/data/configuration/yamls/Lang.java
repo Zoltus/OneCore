@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 
-@Getter
 @AllArgsConstructor
 public enum Lang implements IConfig {
     VARIABLE_COLOR("variable-color"),
@@ -170,6 +169,7 @@ public enum Lang implements IConfig {
     WEATHER_INVALID_WEATHER("weather.invalid-weather"),
     WORLD_NOT_FOUND("other.world-not-found");
 
+    @Getter
     final String path;
 
     public OneYml yml() {

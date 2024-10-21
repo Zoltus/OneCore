@@ -67,13 +67,13 @@ public class ChatUtils {
         String format = mm.serialize(deserialize);
         //Removes escapes \
         String replace = format.replace("\\<", "<");
+        //<hover:show_text:<red>Paina hylkääksesi!><click:run_command:/tpdeny>Hylkää!</click></hover>
         return mm.deserialize(replace);
     }
 
     public static void mmSend(CommandSender sender, String str) {
-        try (BukkitAudiences adventure = plugin.adventure()) {
-            Audience audience = adventure.sender(sender);
-            audience.sendMessage(translateColors(str));
-        }
+        BukkitAudiences adventure = plugin.adventure();
+        Audience audience = adventure.sender(sender);
+        audience.sendMessage(translateColors(str));
     }
 }

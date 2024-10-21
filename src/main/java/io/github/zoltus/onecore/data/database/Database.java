@@ -68,7 +68,7 @@ public class Database {
             String players = """
                     CREATE TABLE IF NOT EXISTS players (
                         uuid       CHAR(36) NOT NULL UNIQUE,
-                        tpenabled  BOOLEAN NOT NULL DEFAULT true,
+                        tpenabled  BOOLEAN NOT NULL DEFAULT 1,
                         isvanished BOOLEAN NOT NULL DEFAULT 0,
                         isgod      BOOLEAN NOT NULL DEFAULT 0
                     );
