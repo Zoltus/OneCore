@@ -75,6 +75,7 @@ Data:
     permission: enderchest
     aliases:
       - ec
+      - echest
   feed:
     enabled: true
     label: feed
