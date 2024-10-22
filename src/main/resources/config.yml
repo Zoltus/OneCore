@@ -46,6 +46,7 @@ Data:
     # If true it resets velocity on command & plugin teleports
     velocity-reset: true
     with-vehicle-permission: teleport.withvehicle
+    with-leash-permission: teleport.withleash
     force-spawn-on-join: false
   economy:
     currency-plural: €

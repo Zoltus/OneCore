@@ -23,7 +23,7 @@ public enum Config implements IConfig {
     ECONOMY_HOOK("economy.enabled-hook"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass-permission"),
-    MENTIONS_ENABLED("mentions.enabled"),
+    MENTIONS_ENABLED("mentions.enabled"), // todo
     MENTION_COLOR("mentions.color"),
     MENTION_PERMISSION("mentions.permission"),
     MENTION_EVERYONE_PERMISSION("mentions.mention-everyone-permission"),
@@ -39,6 +39,7 @@ public enum Config implements IConfig {
     TELEPORT_CD_BYPASS("teleport.cooldown-bypass-permission"),
     TELEPORT_VELOCITY_RESET("teleport.velocity-reset"),
     TELEPORT_WITH_VEHICLE("teleport.with-vehicle-permission"),
+    TELEPORT_WITH_LEASH("teleport.with-leash-permission"),
     TELEPORT_SPAWN_ON_JOIN("teleport.force-spawn-on-join"),
     USER_CONSOLE_FILTER("user-console-filter");
 

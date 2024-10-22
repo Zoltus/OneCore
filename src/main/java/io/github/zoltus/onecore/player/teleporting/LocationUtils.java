@@ -8,7 +8,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_NO_SAFE_LOCATIONS;
 
@@ -17,9 +20,9 @@ public class LocationUtils {
     private static boolean isDamageBlock(Block b) {
         return switch (b.getType()) {
             case LAVA, LAVA_CAULDRON, END_PORTAL,
-                    NETHER_PORTAL, FIRE, CAMPFIRE,
-                    SOUL_FIRE, SOUL_CAMPFIRE, MAGMA_BLOCK, VOID_AIR,
-                    CACTUS, SWEET_BERRY_BUSH -> true;
+                 NETHER_PORTAL, FIRE, CAMPFIRE,
+                 SOUL_FIRE, SOUL_CAMPFIRE, MAGMA_BLOCK, VOID_AIR,
+                 CACTUS, SWEET_BERRY_BUSH -> true;
             default -> false;
         };
     }
@@ -34,9 +37,19 @@ public class LocationUtils {
                 //Removes falldamage. Incase paper doesnt.
                 p.setFallDistance(0);
                 Entity vehicle = p.getVehicle();
-                if (vehicle != null
-                        && p.hasPermission(Config.TELEPORT_WITH_VEHICLE.asPermission())) {
-                    PaperLib.teleportAsync(p, safeLoc).thenRun(() -> {
+
+                //Scans leashed entitys for the player
+                final List<LivingEntity> leashedEntitys;
+                if (p.hasPermission(Config.TELEPORT_WITH_LEASH.asPermission())) {
+                    leashedEntitys = getLeashedEntities(p);
+                } else {
+                    leashedEntitys = null;
+                }
+
+                PaperLib.teleportAsync(p, safeLoc).thenRun(() -> {
+                    //Teleport with vehicle
+                    if (vehicle != null && p.hasPermission(Config.TELEPORT_WITH_VEHICLE.asPermission())) {
+                        //todo cleanup this world mess?
                         //Tape fix to be able to teleport with horse while riding it.
                         //So it only works if there is more than 1 world.
                         for (World world : Bukkit.getWorlds()) {
@@ -47,12 +60,30 @@ public class LocationUtils {
                         vehicle.teleport(loc);
                         vehicle.setFallDistance(-Float.MAX_VALUE);
                         vehicle.addPassenger(p);
-                    });
-                } else {
-                    PaperLib.teleportAsync(p, safeLoc);
-                }
+                    }
+
+                    //Teleport with leash
+                    if (leashedEntitys != null && !leashedEntitys.isEmpty()
+                            && p.hasPermission(Config.TELEPORT_WITH_LEASH.asPermission())) {
+                        for (LivingEntity leashed : leashedEntitys) {
+                            leashed.teleport(loc);
+                            p.sendMessage("Teleporting: " + leashed.getName());
+                            p.setLeashHolder(leashed);
+                        }
+                    }
+                });
             }
         }
+    }
+
+    private static List<LivingEntity> getLeashedEntities(Player p) {
+        return p.getNearbyEntities(10, 10, 10).stream()
+                .filter(entity -> entity instanceof LivingEntity leashed
+                        && leashed.isLeashed()
+                        && leashed.getLeashHolder().equals(p)
+                )
+                .map(entity -> (LivingEntity) entity)
+                .toList();
     }
 
 
