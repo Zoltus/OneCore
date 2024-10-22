@@ -67,7 +67,6 @@ public class LocationUtils {
                             && p.hasPermission(Config.TELEPORT_WITH_LEASH.asPermission())) {
                         for (LivingEntity leashed : leashedEntitys) {
                             leashed.teleport(loc);
-                            p.sendMessage("Teleporting: " + leashed.getName());
                             p.setLeashHolder(leashed);
                         }
                     }
