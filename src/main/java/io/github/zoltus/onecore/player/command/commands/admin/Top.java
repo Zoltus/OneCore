@@ -38,7 +38,7 @@ public class Top implements ICommand {
         //Gets highest block and adds +1 to y
         loc.setY((double) w.getHighestBlockYAt(loc) + 1);
         //Resets player velocity so player is falling and teleports to water floating, it wont just fall throught because of the velocity
-        LocationUtils.teleportSafeAsync(target, loc);
+        LocationUtils.teleportWMountSafeAsync(target, loc);
         if (target == sender) {
             TOP_TELPORTED.send(target);
         } else {

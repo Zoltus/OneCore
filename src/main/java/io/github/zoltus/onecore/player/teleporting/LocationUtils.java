@@ -24,8 +24,8 @@ public class LocationUtils {
         };
     }
 
-    //todo async
-    public static void teleportSafeAsync(Player p, Location loc) {
+    //todo async/rename?
+    public static void teleportWMountSafeAsync(Player p, Location loc) {
         Location safeLoc = getSafeLocation(p, loc);
         if (safeLoc == null) {
             p.sendMessage(TP_NO_SAFE_LOCATIONS.getString());

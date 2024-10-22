@@ -54,7 +54,7 @@ public class Spawn implements ICommand {
                         OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                         Player p = offTarget.getPlayer();
                         if (p != null) {
-                            LocationUtils.teleportSafeAsync(p, spawn);
+                            LocationUtils.teleportWMountSafeAsync(p, spawn);
                         } else {
                             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
                             nbtPlayer.setLocation(spawn);

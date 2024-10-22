@@ -46,7 +46,7 @@ public class DelayedTeleport {
                 Location destination = target == null ? loc : target.getPlayer().getLocation();
                 //Checks if teleporter is still online.
                 if (user.isOnline()) {
-                    LocationUtils.teleportSafeAsync(user.getPlayer(), destination);
+                    LocationUtils.teleportWMountSafeAsync(user.getPlayer(), destination);
                 }
             }
             user.setTeleport(null);

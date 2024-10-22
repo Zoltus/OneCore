@@ -45,7 +45,7 @@ public class Warp implements ICommand {
                     Player p = offTarget.getPlayer();
                     Location loc = warp.location();
                     if (p != null) {
-                        LocationUtils.teleportSafeAsync(p, loc);
+                        LocationUtils.teleportWMountSafeAsync(p, loc);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
                         nbtPlayer.setLocation(loc);

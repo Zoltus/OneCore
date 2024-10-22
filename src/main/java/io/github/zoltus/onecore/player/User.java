@@ -20,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -117,7 +116,7 @@ public class User {
             } else if (obj instanceof Location location) {
                 loc = location;
             }
-            LocationUtils.teleportSafeAsync(p, loc);
+            LocationUtils.teleportWMountSafeAsync(p, loc);
         } else {
             if (obj instanceof User target) {
                 teleport = new DelayedTeleport(this, target);
