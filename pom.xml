@@ -231,6 +231,24 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>noa-121</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>${maven-jar-plugin.version}</version>
+                        <configuration>
+                            <outputDirectory>D:\Noa\Minecraft\Servers\Mixnu\plugins</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <build>
         <finalName>${project.name}-${project.version}</finalName>
