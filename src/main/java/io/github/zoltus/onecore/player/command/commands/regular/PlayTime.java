@@ -8,11 +8,11 @@ import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Duration;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_TARGETS_PLAYTIME;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_YOUR_PLAYTIME;
 
 public class PlayTime implements ICommand {
 
@@ -55,8 +55,14 @@ public class PlayTime implements ICommand {
                 }).override();*/
     }
 
-    private String secondsToTime(int seconds) {
-        SimpleDateFormat df = new SimpleDateFormat(PLAYTIME_TIME_FORMAT.getString());
-        return df.format(new Date((seconds / 20) * 1000L));
+    private String secondsToTime(int ticks) {
+        int totalSeconds = ticks / 20;
+        Duration duration = Duration.ofSeconds(totalSeconds);
+        long days = duration.toDays();
+        long hours = duration.toHours();
+        long minutes = duration.toMinutesPart();
+        long seconds = duration.toSecondsPart();
+        // Format DD:HH:MM:SS todo to config
+        return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
     }
 }
