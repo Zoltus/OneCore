@@ -71,8 +71,8 @@ Data:
     enabled: true
     edit-permission: enderchest.edit
     label: enderchest
-    other-permission: enderchest
     permission: enderchest
+    other-permission: enderchest.other
     aliases:
       - ec
       - echest
