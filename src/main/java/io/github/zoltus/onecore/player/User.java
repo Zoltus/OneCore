@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -109,7 +110,9 @@ public class User {
         if (teleport != null) {
             teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString());
         }
-        if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())) {
+        if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())
+                || p.getGameMode() == GameMode.CREATIVE
+                || p.getGameMode() == GameMode.SPECTATOR) {
             Location loc = null;
             if (obj instanceof User target) {
                 loc = target.getPlayer().getLocation(); //todo offline sup?
