@@ -101,6 +101,7 @@ public class Tp implements ICommand {
     private void tp(CommandSender sender, OfflinePlayer offTarget, Location loc) {
         Player target = offTarget.getPlayer();
         if (target != null) {
+            target.setVelocity(target.getVelocity().zero());
             target.teleport(loc);
         } else {
             NBTPlayer nbtPlayer = new NBTPlayer(offTarget);
