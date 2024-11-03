@@ -8,6 +8,7 @@ import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.database.Database;
+import io.github.zoltus.onecore.data.database.SQLiteImpl;
 import io.github.zoltus.onecore.economy.EconomyHandler;
 import io.github.zoltus.onecore.listeners.*;
 import io.github.zoltus.onecore.listeners.tweaks.KickedForSpamming;
@@ -73,7 +74,7 @@ public final class OneCore extends JavaPlugin {
         CommandAPI.onEnable();
         //long time = System.currentTimeMillis();
         // Loads db & baltop todo only obj
-        this.database = Database.init(this);
+        this.database = SQLiteImpl.init(this);
         // Hooks economy if its enabled on config. todo, if enabled conomy and no vault, throws error
         this.vault = EconomyHandler.hook(this);
         //Registers Commands if enabled. Needs to be before listeners.
@@ -82,7 +83,7 @@ public final class OneCore extends JavaPlugin {
         new Metrics(this, 12829);
         // Starts caching users
         this.consoleFilter = ConsoleFilter.init();
-        this.database.cacheData();
+        this.database.loadData();
         //todo mayby remove, creates user for new users, supports if loaded mid server
         JoinListener.loadOnlinePlayers();
         this.backupHandler = new BackupHandler(this); // Initializes backup handler //todo reenable
@@ -102,7 +103,7 @@ public final class OneCore extends JavaPlugin {
     @Override
     public void onDisable() {
         // Saves all users & settings on disable
-        database.saveData();
+        database.saveData(false);
         plugin.getLogger().info("Saved users & settings to database...");
         //Unregisters all cmds on unload. Trying to support reloading plugin.
         CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
