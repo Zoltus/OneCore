@@ -40,7 +40,7 @@ public class Heal implements ICommand {
     private void heal(OfflinePlayer target) {
         Player p = target.getPlayer();
         if (p != null) {
-            AttributeInstance amount = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance amount = p.getAttribute(Attribute.MAX_HEALTH);
             if (amount != null) {
                 p.setHealth(amount.getDefaultValue());
             }
