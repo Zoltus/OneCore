@@ -185,7 +185,7 @@ Data:
     enabled: true
     edit-permission: invsee.edit
     label: invsee
-    permission: invsee.view
+    permission: invsee
     aliases: []
   #  - examplealias1
   killall:
