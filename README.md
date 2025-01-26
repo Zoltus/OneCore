@@ -96,5 +96,10 @@ A comprehensive essential commands plugin for Minecraft servers, providing core 
 | /tpdeny                     | \<player>                               | onecore.tpdeny                                                        | -               |
 | /tptoggle                   | \<player(todo)>                         | onecore.tptoggle                                                      | -               |
 | /warp                       | \<warp> \<player>                       | onecore.warp<br>onecore.warp.other                                    | true            |
+
+## ⚙️ Adding new Database systems
+1. Create class and Implement Database (Look into how SQLiteImpl is done)
+2. OneCore.java change this.database = `SQLiteImpl.init(this);` to `this.database = <yourImpl>.init(this);`
+
 </div>
 
