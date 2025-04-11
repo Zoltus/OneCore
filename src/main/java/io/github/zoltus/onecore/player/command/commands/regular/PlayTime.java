@@ -10,6 +10,8 @@ import org.bukkit.Statistic;
 
 import java.time.Duration;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.TIME_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_TARGETS_PLAYTIME;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_YOUR_PLAYTIME;

@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.QUIT;
 
 public class QuitListener implements Listener {

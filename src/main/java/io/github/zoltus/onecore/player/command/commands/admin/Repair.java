@@ -19,6 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.SLOT_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Repair implements ICommand {

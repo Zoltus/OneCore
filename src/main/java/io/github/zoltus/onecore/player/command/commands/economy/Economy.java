@@ -14,10 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.AMOUNT_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.BALANCE_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER2_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Economy implements ICommand {

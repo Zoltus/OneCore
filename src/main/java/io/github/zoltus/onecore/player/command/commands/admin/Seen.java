@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class Seen implements ICommand {
 

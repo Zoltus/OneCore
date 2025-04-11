@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -13,6 +12,9 @@ import io.github.zoltus.onecore.player.command.commands.WeatherMode;
 import org.bukkit.WeatherType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.WEATHER_PH;
 
 public class PWeather implements ICommand {
     @Override
@@ -44,10 +46,10 @@ public class PWeather implements ICommand {
             case NONE -> target.resetPlayerWeather();
         }
         if (sender != target) {
-            Lang.PWEATHER_OTHER_CHANGED.rb(IConfig.WEATHER_PH, alias)
-                    .rb(IConfig.PLAYER_PH, target.getName())
+            Lang.PWEATHER_OTHER_CHANGED.rb(WEATHER_PH, alias)
+                    .rb(PLAYER_PH, target.getName())
                     .send(sender);
         }
-        Lang.PWEATHER_CHANGED.rb(IConfig.WEATHER_PH, alias).send(target);
+        Lang.PWEATHER_CHANGED.rb(WEATHER_PH, alias).send(target);
     }
 }

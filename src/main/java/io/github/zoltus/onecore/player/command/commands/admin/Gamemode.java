@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.GamemodeArgument;
@@ -12,6 +11,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
@@ -29,7 +29,7 @@ public class Gamemode implements ICommand {
                         player.setGameMode(gm);
                         GAMEMODE_CHANGED.rb(MODE_PH, gmName).send(player);
                     } else {
-                        NO_PERMISSION.rb(IConfig.PERM_PH, perm).send(player);
+                        NO_PERMISSION.rb(PERM_PH, perm).send(player);
                     }
                 });
         //gamemode creative <player>
@@ -76,7 +76,7 @@ public class Gamemode implements ICommand {
             }
             if (gmChanged) {
                 GAMEMODE_TARGETS_GAMEMODE_CHANGED
-                        .rb(gmName, PLAYER_PH)
+                        .rb(PLAYER_PH, gmName)
                         .rb(MODE_PH, offTarget.getName())
                         .send(sender);
             } else {

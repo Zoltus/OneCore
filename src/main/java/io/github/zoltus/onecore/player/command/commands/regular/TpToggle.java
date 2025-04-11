@@ -1,10 +1,11 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
-import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.Command;
+import io.github.zoltus.onecore.player.command.ICommand;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.TOGGLE_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 
 public class TpToggle implements ICommand {

@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Vanish implements ICommand {

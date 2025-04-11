@@ -20,6 +20,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.stream.Stream;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.LINE_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements ICommand {

@@ -22,6 +22,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class God implements ICommand, Listener {
     @Override

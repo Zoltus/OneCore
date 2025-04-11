@@ -11,7 +11,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_GOT_HEALED;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.HEAL_YOU_HEALED_TARGET;
 

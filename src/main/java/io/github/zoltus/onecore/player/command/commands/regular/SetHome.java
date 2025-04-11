@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
@@ -12,6 +11,9 @@ import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.HOME_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 
 public class SetHome implements ICommand {
 
@@ -58,13 +60,13 @@ public class SetHome implements ICommand {
 
                 if ((target.hasHome(finalHome) || canHaveMoreHomes) || !isSelf) {
                     target.setHome(finalHome, target.getPlayer().getLocation());
-                    Lang.SETHOME_SET.rb(IConfig.HOME_PH, finalHome).send(target);
+                    Lang.SETHOME_SET.rb(HOME_PH, finalHome).send(target);
                 } else {
                     Lang.SETHOME_FULL_HOMES.send(target);
                     return;
                 }
                 if (!isSelf) {
-                    Lang.SETHOME_OTHER.rb(IConfig.PLAYER_PH, offP.getName()).rb(IConfig.HOME_PH, finalHome).send(sender);
+                    Lang.SETHOME_OTHER.rb(PLAYER_PH, offP.getName()).rb(HOME_PH, finalHome).send(sender);
                 }
             });
         }

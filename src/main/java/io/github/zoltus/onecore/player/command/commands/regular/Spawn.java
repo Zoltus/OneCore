@@ -16,6 +16,8 @@ import org.bukkit.entity.Player;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+
 public class Spawn implements ICommand {
 
     //todo improve & cleanup
@@ -61,7 +63,7 @@ public class Spawn implements ICommand {
                             nbtPlayer.save();
                         }
                         if (offTarget.getPlayer() != sender) {
-                            Lang.SPAWN_TARGET_SENT.rb(IConfig.PLAYER_PH, offTarget.getName()).send(sender);
+                            Lang.SPAWN_TARGET_SENT.rb(PLAYER_PH, offTarget.getName()).send(sender);
                         }
                     }
                 });

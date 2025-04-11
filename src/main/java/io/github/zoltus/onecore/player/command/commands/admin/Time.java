@@ -9,7 +9,9 @@ import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.TIME_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.WORLD_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TIME_CHANGED;
 
 public class Time implements ICommand {
 

@@ -10,6 +10,7 @@ import io.github.zoltus.onecore.player.command.arguments.WarpArgument;
 import io.github.zoltus.onecore.player.command.commands.regular.Warp;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class DelWarp implements ICommand {
     private final OneYml warps = Yamls.WARPS.getYml();
@@ -20,7 +21,7 @@ public class DelWarp implements ICommand {
         Argument<?> arg0 = new WarpArgument()
                 .executes((sender, args) -> {
                     Warp.WarpObj warp = (Warp.WarpObj) args.get(0);
-                    Lang.DELWARP_DELETED.rb(Lang.WARP_PH, warp.name()).send(sender);
+                    Lang.DELWARP_DELETED.rb(WARP_PH, warp.name()).send(sender);
                     warps.set(warp.name(), null);
                     warps.save();
                     warps.reload();

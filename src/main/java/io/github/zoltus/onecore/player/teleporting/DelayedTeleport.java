@@ -1,15 +1,13 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
-import static io.github.zoltus.onecore.data.configuration.IConfig.SECONDS_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.TELEPORT_DELAY;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_STARTED;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TP_TARGET_QUIT;

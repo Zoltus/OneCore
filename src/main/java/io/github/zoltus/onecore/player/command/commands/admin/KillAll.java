@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class KillAll implements ICommand {

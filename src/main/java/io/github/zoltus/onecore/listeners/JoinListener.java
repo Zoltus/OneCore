@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
@@ -16,6 +15,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 
 public record JoinListener(OneCore plugin) implements Listener {
 
@@ -49,7 +50,7 @@ public record JoinListener(OneCore plugin) implements Listener {
     @EventHandler
     public void handleSpawnOnJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        e.setJoinMessage(Lang.JOINED.rb(IConfig.PLAYER_PH, p.getName()).buildLegacyString());
+        e.setJoinMessage(Lang.JOINED.rb(PLAYER_PH, p.getName()).buildLegacyString());
         //ForceSpawns
         if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
             Location spawn = Spawn.getSpawn();

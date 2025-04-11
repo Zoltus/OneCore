@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.player.nbt.NBTPlayer;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FEED_YOU_FED_TARGET;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FEED_YOU_HAVE_BEEN_HEALED;
 

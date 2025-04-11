@@ -13,8 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.PLAYER_PH;
-import static io.github.zoltus.onecore.data.configuration.IConfig.TOGGLE_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FLY_YOUR_FLIGHT_IS_NOW;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.FLY_YOU_SWITCHED_TARGET;
 

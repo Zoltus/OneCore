@@ -7,7 +7,9 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.WARP_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_WARP_NAME;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SETWARP_SET;
 
 public class SetWarp implements ICommand {
 

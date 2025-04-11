@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Set;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WARP_LIST;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WARP_TARGET_SENT;

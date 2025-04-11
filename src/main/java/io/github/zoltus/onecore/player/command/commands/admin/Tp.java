@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.LocationArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -14,6 +13,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER2_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+
 public class Tp implements ICommand {
     @Override
     public void init() {
@@ -24,9 +26,9 @@ public class Tp implements ICommand {
                     Location destination = getLoc(offlineTarget);
                     sender.teleport(destination);
                     if (offlineTarget.isOnline()) {
-                        Lang.TP_TELEPORTED_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName()).send(sender);
+                        Lang.TP_TELEPORTED_TARGET.rb(PLAYER_PH, offlineTarget.getName()).send(sender);
                     } else {
-                        Lang.TP_TELEPORTED_OFFLINE_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName()).send(sender);
+                        Lang.TP_TELEPORTED_OFFLINE_TARGET.rb(PLAYER_PH, offlineTarget.getName()).send(sender);
                     }
                 });
         //tp <player> <player>
@@ -37,12 +39,12 @@ public class Tp implements ICommand {
                     Location destination = getLoc(target);
                     tp(sender, fromOff, destination);
                     if (fromOff.isOnline() && target.isOnline()) {
-                        Lang.TP_TELEPORTED_TARGETS.rb(IConfig.PLAYER_PH, fromOff.getName())
-                                .rb(IConfig.PLAYER2_PH, target.getName())
+                        Lang.TP_TELEPORTED_TARGETS.rb(PLAYER_PH, fromOff.getName())
+                                .rb(PLAYER2_PH, target.getName())
                                 .send(sender);
                     } else {
-                        Lang.TP_TELEPORTED_OFFLINE_TARGETS.rb(IConfig.PLAYER_PH, fromOff.getName())
-                                .rb(IConfig.PLAYER2_PH, target.getName())
+                        Lang.TP_TELEPORTED_OFFLINE_TARGETS.rb(PLAYER_PH, fromOff.getName())
+                                .rb(PLAYER2_PH, target.getName())
                                 .send(sender);
                     }
                 });
@@ -77,10 +79,10 @@ public class Tp implements ICommand {
                             OfflinePlayer offlineTarget = (OfflinePlayer) args.get(0);
                             tp(sender, offlineTarget, sender.getLocation());
                             if (offlineTarget.isOnline()) {
-                                Lang.TPHERE_TELEPORTED.rb(IConfig.PLAYER_PH, offlineTarget.getName())
+                                Lang.TPHERE_TELEPORTED.rb(PLAYER_PH, offlineTarget.getName())
                                         .send(sender);
                             } else {
-                                Lang.TPHERE_OFFLINE_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName())
+                                Lang.TPHERE_OFFLINE_TARGET.rb(PLAYER_PH, offlineTarget.getName())
                                         .send(sender);
                             }
                         })).override();

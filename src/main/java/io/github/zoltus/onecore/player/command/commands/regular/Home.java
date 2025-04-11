@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
@@ -15,6 +14,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
 
 public class Home implements ICommand {
@@ -58,12 +58,12 @@ public class Home implements ICommand {
                 user.teleport(loc.toLocation());
                 boolean isSelf = sender.getName().equals(offP.getName());
                 if (!isSelf) {
-                    Lang.HOME_TELEPORT_OTHERS.rb(IConfig.PLAYER_PH, target.getName())
-                            .rb(IConfig.HOME_PH, home)
+                    Lang.HOME_TELEPORT_OTHERS.rb(PLAYER_PH, target.getName())
+                            .rb(HOME_PH, home)
                             .send(sender);
                 }
             } else {
-                Lang.HOME_LIST.rb(IConfig.LIST_PH, target.getHomes().keySet()).send(sender);
+                Lang.HOME_LIST.rb(LIST_PH, target.getHomes().keySet()).send(sender);
             }
         }
     }

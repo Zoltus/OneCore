@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.player.command.commands.regular.Warp;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 
-import static io.github.zoltus.onecore.data.configuration.IConfig.LIST_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.NODES_WORLD_NAME;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.WARP_NOT_FOUND;
 

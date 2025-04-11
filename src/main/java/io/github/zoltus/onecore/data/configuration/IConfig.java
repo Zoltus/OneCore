@@ -6,28 +6,6 @@ import io.github.zoltus.onecore.data.configuration.yamls.LangBuilder;
 import java.util.List;
 
 public interface IConfig {
-    //Placeholders
-    String PLAYER_PH = "<player>";
-    String PLAYER2_PH = "<player2>";
-    String AMOUNT_PH = "<amount>";
-    String BALANCE_PH = "<balance>";
-    String HOME_PH = "<home>";
-    String TOGGLE_PH = "<toggle>";
-    String SECONDS_PH = "<seconds>";
-    String MODE_PH = "<mode>";
-    String LIST_PH = "<list>";
-    String TYPE_PH = "<type>";
-    String RADIUS_PH = "<radius>";
-    String MESSAGE_PH = "<message>";
-    String PING_PH = "<ping>";
-    String TIME_PH = "<time>";
-    String SLOT_PH = "<slot>";
-    String WARP_PH = "<warp>";
-    String WORLD_PH = "<world>";
-    String WEATHER_PH = "<weather>";
-    String LINE_PH = "<line>";
-    String PERM_PH = "<perm>";
-
     OneYml yml();
 
     String getPath();

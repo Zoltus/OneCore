@@ -2,7 +2,6 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
 import dev.jorel.commandapi.arguments.ChatArgument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -11,6 +10,8 @@ import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class Msg implements ICommand {
     //todo /r response
@@ -26,13 +27,13 @@ public class Msg implements ICommand {
                     String message = BaseComponent.toPlainText((BaseComponent[]) args.get(1));
                     message = ChatColor.translateAlternateColorCodes('&', message);
                     Lang.MSG_SENT_MSG
-                            .rb(IConfig.PLAYER_PH, targetName)
-                            .rb(IConfig.PLAYER2_PH, senderName)
-                            .rb(IConfig.MESSAGE_PH, message).send(sender);
+                            .rb(PLAYER_PH, targetName)
+                            .rb(PLAYER2_PH, senderName)
+                            .rb(MESSAGE_PH, message).send(sender);
                     Lang.MSG_RECEIVED_MSG
-                            .rb(IConfig.PLAYER_PH, senderName)
-                            .rb(IConfig.PLAYER2_PH, targetName)
-                            .rb(IConfig.MESSAGE_PH, message).send(target);
+                            .rb(PLAYER_PH, senderName)
+                            .rb(PLAYER2_PH, targetName)
+                            .rb(MESSAGE_PH, message).send(target);
                 });
         //base
         new Command(Commands.MSG_LABEL)

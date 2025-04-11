@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.admin;
 
 import dev.jorel.commandapi.arguments.Argument;
-import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
@@ -11,6 +10,9 @@ import io.github.zoltus.onecore.player.command.arguments.WeatherInput;
 import io.github.zoltus.onecore.player.command.arguments.WorldsArgument;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.WEATHER_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.WORLD_PH;
 
 public class Weather implements ICommand {
     @Override
@@ -48,8 +50,8 @@ public class Weather implements ICommand {
                 w.setThundering(false);
             }
         }
-        Lang.WEATHER_CHANGED.rb(IConfig.WEATHER_PH, weatherType.input())
-                .rb(IConfig.WORLD_PH, w.getName())
+        Lang.WEATHER_CHANGED.rb(WEATHER_PH, weatherType.input())
+                .rb(WORLD_PH, w.getName())
                 .send(sender);
     }
 }

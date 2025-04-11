@@ -11,7 +11,9 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TOP_TELEPORTED_TARGET;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.TOP_TELPORTED;
 
 public class Top implements ICommand {
     @Override

@@ -2,15 +2,11 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
+import io.github.zoltus.onecore.data.configuration.PlaceHolder;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.utils.ChatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -190,13 +186,13 @@ public enum Lang implements IConfig {
         LangBuilder builder = new LangBuilder(this);
         builder.send(sender);
     }
-
+/*
     public LangBuilder rb(IConfig placeholderKey, Object value) {
         LangBuilder builder = new LangBuilder(this);
         return builder.rb(placeholderKey, value);
-    }
+    }*/
 
-    public LangBuilder rb(String placeholder, Object value) {
+    public LangBuilder rb(PlaceHolder placeholder, Object value) {
         LangBuilder builder = new LangBuilder(this);
         return builder.rb(placeholder, value);
     }

@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class Back implements ICommand, Listener {
 

@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.IConfig;
+import io.github.zoltus.onecore.data.configuration.PlaceHolder;
 import io.github.zoltus.onecore.player.User;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public class LangBuilder {
 
     private final String baseLangEntry;
-    private final Map<String, Object> replacements = new HashMap<>();
+    private final Map<PlaceHolder, Object> replacements = new HashMap<>();
 
     private static final OneCore plugin = OneCore.getPlugin();
     private static final MiniMessage mm = MiniMessage.miniMessage();
@@ -34,16 +35,14 @@ public class LangBuilder {
         this.baseLangEntry = baseLangEntry;
     }
 
-    public LangBuilder rb(@NotNull IConfig placeholderKey, @Nullable Object value) {
+/*    public LangBuilder rb(@NotNull IConfig placeholderKey, @Nullable Object value) {
         String placeholder = placeholderKey.get();
         replacements.put(placeholder, value);
         return this;
-    }
+    }*/
 
-    public LangBuilder rb(@NotNull String placeholder, @Nullable Object value) {
-        if (!placeholder.isEmpty()) {
-            replacements.put(placeholder, value);
-        }
+    public LangBuilder rb(@NotNull PlaceHolder placeholder, @Nullable Object value) {
+        replacements.put(placeholder, value);
         return this;
     }
 
@@ -52,10 +51,10 @@ public class LangBuilder {
         String colorTemplate = Lang.VARIABLE_COLOR.get();
         StringBuilder sb = new StringBuilder(baseLangEntry);
         // Always replace {p} with the prefix
-        replacements.put("{p}", Config.PREFIX.get());
+        replacements.put(PlaceHolder.PREFIX_PH, Config.PREFIX.get());
 
-        for (Map.Entry<String, Object> entry : replacements.entrySet()) {
-            String placeholder = entry.getKey();
+        for (Map.Entry<PlaceHolder, Object> entry : replacements.entrySet()) {
+            String placeholder = entry.getKey().getPlaceholder();
             Object value = entry.getValue();
             String valueStr = (value instanceof IConfig config) ? config.get() : Objects.toString(value, "");
             // Create the final colored replacement value string

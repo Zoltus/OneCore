@@ -7,6 +7,8 @@ import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
 import org.bukkit.entity.Player;
 
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PING_PH;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PING_TARGETS_PING;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PING_YOUR_PING;

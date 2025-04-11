@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
+import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
 
 public class Speed implements ICommand {
 
