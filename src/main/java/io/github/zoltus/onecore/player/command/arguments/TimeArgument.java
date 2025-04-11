@@ -28,10 +28,10 @@ public class TimeArgument extends CustomArgument<Long, String> implements IArgum
     }
 
     public TimeArgument(boolean isPlayerTime, String add) {
-        super(new StringArgument(NODES_TIME.getString()), info -> {
+        super(new StringArgument(NODES_TIME.get()), info -> {
             Long time = toTime(info.input());
             if (time == null) {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.TIME_INVALID_TIME.getString()));
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.TIME_INVALID_TIME.get()));
             } else {
                 return time;
             }

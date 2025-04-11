@@ -2,7 +2,7 @@
 
 Data:
   spawn: []
-  prefix: '&9&lOne&l<#559fff>&lCore &8&l»<color:#e6e6e6>'
+  prefix: '<blue><bold>One</bold><#559fff><bold>Core </bold><dark_gray><bold>»</bold><#e6e6e6>'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
   # How often player & server data is saved.
@@ -13,7 +13,7 @@ Data:
   mentions:
     enabled: true
     # Color of the mention
-    color: '<#00ff00>&l'
+    color: '<#00ff00><bold>'
     # Permission to mention players
     permission: mention
     # Permission to mention everyone
@@ -30,7 +30,7 @@ Data:
     # {0} = player
     # {1} = message
     # {vault_prefix} = Example papi placeholder for vault prefix. (/papi ecloud download vault)
-    format: '{vault_prefix}{0}&f: {1}'
+    format: '{vault_prefix}{0}<white>: {1}'
     # If placeholder is empty it causes double spacing. This fixes it.
     remove-doublespaces: true
     # Removes whitespaces from start & end of message
@@ -57,5 +57,5 @@ Data:
   backups:
     #broken atm
     stats-enabled: false
-    playerdata-enabled: true
-    database-enabled: true
+    playerdata-enabled: false
+    database-enabled: false

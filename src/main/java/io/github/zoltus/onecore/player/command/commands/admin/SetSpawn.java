@@ -15,7 +15,7 @@ public class SetSpawn implements ICommand {
     @Override
     public void init() {
         //setspawn <location>
-        Argument<?> arg0 = new LocationArgument(NODES_LOCATION.getString())
+        Argument<?> arg0 = new LocationArgument(NODES_LOCATION.get())
                 .executesPlayer((p, args) -> {
                     Spawn.setSpawn((Location) args.get(0));
                     SETSPAWN_SET.send(p);

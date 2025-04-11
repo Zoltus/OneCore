@@ -44,8 +44,10 @@ public class PWeather implements ICommand {
             case NONE -> target.resetPlayerWeather();
         }
         if (sender != target) {
-            Lang.PWEATHER_OTHER_CHANGED.send(sender, IConfig.WEATHER_PH, alias, IConfig.PLAYER_PH, target.getName());
+            Lang.PWEATHER_OTHER_CHANGED.rb(IConfig.WEATHER_PH, alias)
+                    .rb(IConfig.PLAYER_PH, target.getName())
+                    .send(sender);
         }
-        Lang.PWEATHER_CHANGED.send(target, IConfig.WEATHER_PH, alias);
+        Lang.PWEATHER_CHANGED.rb(IConfig.WEATHER_PH, alias).send(target);
     }
 }

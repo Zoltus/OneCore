@@ -49,7 +49,7 @@ public class Spawn implements ICommand {
                 .executes((sender, args) -> {
                     Location spawn = getSpawn();
                     if (spawn == null) {
-                        sender.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
+                        Lang.SPAWN_IS_NOT_SET.send(sender);
                     } else {
                         OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                         Player p = offTarget.getPlayer();
@@ -61,7 +61,7 @@ public class Spawn implements ICommand {
                             nbtPlayer.save();
                         }
                         if (offTarget.getPlayer() != sender) {
-                            Lang.SPAWN_TARGET_SENT.send(sender, IConfig.PLAYER_PH, offTarget.getName());
+                            Lang.SPAWN_TARGET_SENT.rb(IConfig.PLAYER_PH, offTarget.getName()).send(sender);
                         }
                     }
                 });
@@ -73,7 +73,7 @@ public class Spawn implements ICommand {
                     User user = User.of(player);
                     Location spawn = getSpawn();
                     if (spawn == null) {
-                        user.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
+                        Lang.SPAWN_IS_NOT_SET.send(user);
                     } else {
                         user.teleport(spawn);
                     }

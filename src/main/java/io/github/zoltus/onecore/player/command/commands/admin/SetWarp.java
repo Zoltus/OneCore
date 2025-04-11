@@ -17,14 +17,14 @@ public class SetWarp implements ICommand {
         new Command(Commands.SETWARP_LABEL)
                 .withPermission(Commands.SETWARP_PERMISSION)
                 .withAliases(Commands.SETWARP_ALIASES)
-                .then(new StringArgument(NODES_WARP_NAME.getString())
+                .then(new StringArgument(NODES_WARP_NAME.get())
                 .executesPlayer((p, args) -> {
                     String warp = (String) args.get(0);
                     OneYml warps = Yamls.WARPS.getYml();
                     warps.set(warp, p.getLocation());
                     warps.save();
                     warps.reload();
-                    SETWARP_SET.send(p, WARP_PH, warp);
+                    SETWARP_SET.rb(WARP_PH, warp).send(p);
                 })).override();
         //todo /setwarp <warp> <coords> new LocationArgument("location")
     }

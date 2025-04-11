@@ -42,7 +42,7 @@ public class Top implements ICommand {
         if (target == sender) {
             TOP_TELPORTED.send(target);
         } else {
-            TOP_TELEPORTED_TARGET.send(target, PLAYER_PH, target.getName());
+            TOP_TELEPORTED_TARGET.rb(PLAYER_PH, target.getName()).send(target);
         }
     }
 }

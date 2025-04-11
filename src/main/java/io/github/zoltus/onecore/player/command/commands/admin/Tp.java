@@ -24,11 +24,9 @@ public class Tp implements ICommand {
                     Location destination = getLoc(offlineTarget);
                     sender.teleport(destination);
                     if (offlineTarget.isOnline()) {
-                        Lang.TP_TELEPORTED_TARGET.send(sender,
-                                IConfig.PLAYER_PH, offlineTarget.getName());
+                        Lang.TP_TELEPORTED_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName()).send(sender);
                     } else {
-                       Lang.TP_TELEPORTED_OFFLINE_TARGET.send(sender,
-                               IConfig.PLAYER_PH, offlineTarget.getName());
+                        Lang.TP_TELEPORTED_OFFLINE_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName()).send(sender);
                     }
                 });
         //tp <player> <player>
@@ -39,13 +37,13 @@ public class Tp implements ICommand {
                     Location destination = getLoc(target);
                     tp(sender, fromOff, destination);
                     if (fromOff.isOnline() && target.isOnline()) {
-                        Lang.TP_TELEPORTED_TARGETS.send(sender,
-                                IConfig.PLAYER_PH, fromOff.getName(),
-                                IConfig.PLAYER2_PH, target.getName());
+                        Lang.TP_TELEPORTED_TARGETS.rb(IConfig.PLAYER_PH, fromOff.getName())
+                                .rb(IConfig.PLAYER2_PH, target.getName())
+                                .send(sender);
                     } else {
-                        Lang.TP_TELEPORTED_OFFLINE_TARGETS.send(sender,
-                                IConfig.PLAYER_PH, fromOff.getName(),
-                                IConfig.PLAYER2_PH, target.getName());
+                        Lang.TP_TELEPORTED_OFFLINE_TARGETS.rb(IConfig.PLAYER_PH, fromOff.getName())
+                                .rb(IConfig.PLAYER2_PH, target.getName())
+                                .send(sender);
                     }
                 });
         //tp <coord> <player>
@@ -79,11 +77,11 @@ public class Tp implements ICommand {
                             OfflinePlayer offlineTarget = (OfflinePlayer) args.get(0);
                             tp(sender, offlineTarget, sender.getLocation());
                             if (offlineTarget.isOnline()) {
-                                Lang.TPHERE_TELEPORTED.send(sender,
-                                        IConfig.PLAYER_PH, offlineTarget.getName());
+                                Lang.TPHERE_TELEPORTED.rb(IConfig.PLAYER_PH, offlineTarget.getName())
+                                        .send(sender);
                             } else {
-                                Lang.TPHERE_OFFLINE_TARGET.send(sender,
-                                        IConfig.PLAYER_PH, offlineTarget.getName());
+                                Lang.TPHERE_OFFLINE_TARGET.rb(IConfig.PLAYER_PH, offlineTarget.getName())
+                                        .send(sender);
                             }
                         })).override();
     }

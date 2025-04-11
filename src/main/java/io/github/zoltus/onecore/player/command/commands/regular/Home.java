@@ -25,7 +25,7 @@ public class Home implements ICommand {
         Argument<?> homeArg0 = new HomeArg0() //String
                 .executesPlayer((p, args) -> {
                     //todo? String home = (String) args.getOptional(0).orElse(Commands.HOME_DEFAULT_NAME.getString());
-                    String home = (String) args.getOrDefault(0, Commands.HOME_DEFAULT_NAME.getString());
+                    String home = (String) args.getOrDefault(0, Commands.HOME_DEFAULT_NAME.get());
                     teleportHome(p, p, home);
                 });
         //home <player> <home>
@@ -33,7 +33,7 @@ public class Home implements ICommand {
                 .withPermission(Commands.HOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
-                    String home = (String) args.getOrDefault(1, Commands.HOME_DEFAULT_NAME.getString());
+                    String home = (String) args.getOrDefault(1, Commands.HOME_DEFAULT_NAME.get());
                     teleportHome(sender, offP, home);
                 });
         //home
@@ -49,19 +49,21 @@ public class Home implements ICommand {
     private void teleportHome(CommandSender sender, OfflinePlayer offP, String home) {
         User target = User.of(offP);
         if (target == null) {
-            sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
+            Lang.PLAYER_NEVER_VISITED_SERVER.send(sender);
         } else {
-            home = home == null ? HOME_DEFAULT_NAME.getString() : home.toLowerCase();
+            home = home == null ? HOME_DEFAULT_NAME.get() : home.toLowerCase();
             PreLocation loc = target.getorDefaultHOme(home);
             User user = User.of((Player) sender); //Cant be other than player since u cant tele others to their homes
             if (loc != null) {
                 user.teleport(loc.toLocation());
                 boolean isSelf = sender.getName().equals(offP.getName());
                 if (!isSelf) {
-                    Lang.HOME_TELEPORT_OTHERS.send(sender, IConfig.PLAYER_PH, target.getName(), IConfig.HOME_PH, home);
+                    Lang.HOME_TELEPORT_OTHERS.rb(IConfig.PLAYER_PH, target.getName())
+                            .rb(IConfig.HOME_PH, home)
+                            .send(sender);
                 }
             } else {
-                Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
+                Lang.HOME_LIST.rb(IConfig.LIST_PH, target.getHomes().keySet()).send(sender);
             }
         }
     }

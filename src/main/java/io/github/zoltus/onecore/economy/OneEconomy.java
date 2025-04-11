@@ -52,11 +52,11 @@ public final class OneEconomy extends AbstractEconomy {
 
     //Economy
     public String currencyNamePlural() {
-        return Config.CURRENCY_PLURAL.getString();
+        return Config.CURRENCY_PLURAL.get();
     }
 
     public String currencyNameSingular() {
-        return Config.CURRENCY_SINGULAR.getString();
+        return Config.CURRENCY_SINGULAR.get();
     }
 
     private final EconomyResponse notAdded = new EconomyResponse(0.0D, 0.0D,

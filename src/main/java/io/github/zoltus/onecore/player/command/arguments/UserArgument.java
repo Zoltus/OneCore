@@ -20,7 +20,7 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
     }
 
     public UserArgument(String add) {
-        super(new StringArgument(NODES_PLAYER.getString() + add), info -> {
+        super(new StringArgument(NODES_PLAYER.get() + add), info -> {
             String input = info.input();
             Player p = Bukkit.getPlayer(input);
             if (p != null) {
@@ -30,7 +30,7 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
                 User user = User.of(offP);
                 if (!offP.hasPlayedBefore() || user == null) {
                     throw CustomArgumentException
-                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.getString()));
+                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
                 } else {
                     return user;
                 }

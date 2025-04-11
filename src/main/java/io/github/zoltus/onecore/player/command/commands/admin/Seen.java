@@ -21,9 +21,11 @@ public class Seen implements ICommand {
                 .then(new OfflinePlayerArgument()
                         .executes((sender, args) -> {
                             OfflinePlayer oTarget = (OfflinePlayer) args.get(0);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.get());
                             String dateString = dateFormat.format(new Date(oTarget.getLastPlayed()));
-                            SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);
+                            SEEN_LAST_SEEN.rb(PLAYER_PH, oTarget.getName())
+                                    .rb(TIME_PH, dateString)
+                                    .send(sender);
                         })).override();
     }
 }

@@ -20,7 +20,7 @@ public class KickedForSpamming implements Listener {
             if (e.getPlayer().hasPermission(Config.KICKED_FOR_SPAMMING_BYPASS.asPermission())) {
                 e.setCancelled(true);
             } else {
-                e.setReason(KICKED_FOR_SPAMMING.getString());
+                e.setReason(KICKED_FOR_SPAMMING.get());
             }
         }
     }

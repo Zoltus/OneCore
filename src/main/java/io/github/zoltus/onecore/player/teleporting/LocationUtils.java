@@ -31,7 +31,7 @@ public class LocationUtils {
     public static void teleportWMountSafeAsync(Player p, Location loc) {
         Location safeLoc = getSafeLocation(p, loc);
         if (safeLoc == null) {
-            p.sendMessage(TP_NO_SAFE_LOCATIONS.getString());
+            TP_NO_SAFE_LOCATIONS.send(p);
         } else {
             if (loc.getWorld() != null) {
                 //Removes falldamage. Incase paper doesnt.

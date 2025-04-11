@@ -17,7 +17,7 @@ public class HomeArg0 extends StringArgument implements IArgument {
     //try to register cmd as /home <player> and /home <string>
     public HomeArg0() {
         //todo check which arg this is based on current input/prev args and return according to it
-        super(NODES_HOME_NAME_OR_PLAYER.getString());
+        super(NODES_HOME_NAME_OR_PLAYER.get());
         replaceSuggestions(ArgumentSuggestions.strings(info -> {
             CommandSender sender = info.sender();
             User target = User.of((Player) sender);

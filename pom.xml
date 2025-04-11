@@ -19,16 +19,16 @@
         <apache-compress>1.27.1</apache-compress>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.6</placeholderapi.version>
-        <commandapi.version>9.7.0</commandapi.version>
+        <commandapi.version>10.0.0</commandapi.version>
         <sqlite-jdbc.version>3.45.3.0</sqlite-jdbc.version>
         <!-- Maven -->
         <maven.compiler.release>21</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
-        <adventure-serializer.version>4.18.0</adventure-serializer.version>
+        <adventure-serializer.version>4.20.0</adventure-serializer.version>
         <adventure-bukkit.version>4.3.4</adventure-bukkit.version>
-        <worldguard.version>7.0.12</worldguard.version>
+        <worldguard.version>7.0.13</worldguard.version>
         <commons-io.version>2.16.1</commons-io.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <brigadier.version>1.0.500</brigadier.version>
@@ -231,29 +231,10 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>noa-121</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <version>${maven-jar-plugin.version}</version>
-                        <configuration>
-                            <outputDirectory>D:\Noa\Minecraft\Servers\Mixnu\plugins</outputDirectory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
     <build>
         <finalName>${project.name}-${project.version}</finalName>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-        <!--<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -269,7 +250,6 @@
                     <release>${maven.compiler.release}</release>
                     <compilerArgument>-XDignore.symbol.file</compilerArgument>
                     <encoding>UTF-8</encoding>
-                    <!-- Add the processor path for the plugin -->
                     <annotationProcessorPaths>
                         <path>
                             <!-- Lombok Processing -->
@@ -333,7 +313,6 @@
                     </relocations>
                 </configuration>
             </plugin>
-            <!-- Maven source plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

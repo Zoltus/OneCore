@@ -25,7 +25,7 @@ public class Heal implements ICommand {
                     OfflinePlayer offP = (OfflinePlayer) args.get(0);
                     heal(offP);
                     if (sender != offP.getPlayer()) {
-                        HEAL_YOU_HEALED_TARGET.send(sender, PLAYER_PH, offP.getName());
+                        HEAL_YOU_HEALED_TARGET.rb(PLAYER_PH, offP.getName()).send(sender);
                     }
                 });
         //heal

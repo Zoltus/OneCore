@@ -24,7 +24,7 @@ public class WorldsArgument extends CustomArgument<World, String> implements IAr
         super(new StringArgument(NODES_WORLD_NAME.get() + add), info -> {
             World world = Bukkit.getWorld(info.input());
             if (world == null) {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(WORLD_NOT_FOUND.getString()));
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(WORLD_NOT_FOUND.get()));
             } else {
                 return world;
             }

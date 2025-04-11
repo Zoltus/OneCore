@@ -1,10 +1,9 @@
 package io.github.zoltus.onecore.data.configuration;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.listeners.ChatListener;
+import io.github.zoltus.onecore.data.configuration.yamls.LangBuilder;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 public interface IConfig {
     //Placeholders
@@ -24,12 +23,6 @@ public interface IConfig {
     String TIME_PH = "<time>";
     String SLOT_PH = "<slot>";
     String WARP_PH = "<warp>";
-    String USED_PH = "<used>";
-    String TOTAL_PH = "<total>";
-    String SYSTEM_PH = "<system-os>";
-    String PROCESSORS_PH = "<processors>";
-    String VERSION_PH = "<version>";
-    String USERNAME_PH = "<username>";
     String WORLD_PH = "<world>";
     String WEATHER_PH = "<weather>";
     String LINE_PH = "<line>";
@@ -37,13 +30,6 @@ public interface IConfig {
 
     OneYml yml();
     String getPath();
-
-    default String getString() {
-        String prefix = Config.PREFIX.get();
-        String configValue = yml().getOrDefault("Data." + getPath());
-        String message = configValue.replaceAll(Pattern.quote("{p}"), prefix);
-        return ChatListener.translateColors(message);
-    }
 
     default String asPermission() {
         String configValue = yml().getOrDefault("Data." + getPath());
@@ -56,6 +42,11 @@ public interface IConfig {
 
     default <T> T get() {
         return (T) yml().get("Data." + getPath());
+    }
+
+    default String asLegacyString() {
+         LangBuilder builder = new LangBuilder(this);
+        return builder.buildLegacyString();
     }
 
     default int getInt() {

@@ -29,7 +29,7 @@ public class WarpArgument extends CustomArgument<Warp.WarpObj, String> implement
             if (warp == null) {
                 throw CustomArgument.CustomArgumentException
                         .fromBaseComponents(TextComponent
-                                .fromLegacyText(WARP_NOT_FOUND.replace(LIST_PH, Warp.getWarps())));
+                                .fromLegacyText(WARP_NOT_FOUND.rb(LIST_PH, Warp.getWarps()).buildString()));
             } else {
                 return new Warp.WarpObj(input, warp);
             }

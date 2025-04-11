@@ -6,9 +6,9 @@ Data:
   other:
     invalid-range: '{p} Kelvoton säde!'
     # <player>
-    joined: '&a&l+ &7<player>'
+    joined: '<green><bold>+ </bold><gray><player>'
     # <player>
-    quit: '&c&l- &7<player>'
+    quit: '<red><bold>- </bold><gray><player>'
     kicked-for-spamming-reason: '{p} Sinut potkittiin, koska spammasit!'
     player-never-visited-server: '{p} Pelaajaa ei löytynyt!'
     world-not-found: '{p} Maailmaa ei löytynyt!'
@@ -39,9 +39,9 @@ Data:
     # <player>
     target-sent: '{p} Pelaaja <player> teleportattu sijaintiin.'
   broadcast:
-    prefix: '&8&l[&c&lIlmoitus&8&l] &7'
+    prefix: '<dark_gray><bold>[</bold><red><bold>Ilmoitus</bold><dark_gray><bold>] </bold><gray>'
   clear:
-    player-cleared-chat: '{p} Chat &x&9&2&a&d&9&9&ltyhjennetty!'
+    player-cleared-chat: '{p} Chat <#92ad99><bold>tyhjennetty!'
   economy:
     balance:
       # <player>, <balance>
@@ -49,9 +49,9 @@ Data:
       # <balance> '<color:#ff6666><balance></color>'
       your-balance: '{p} Rahasi: <balance>.'
     baltop:
-      empty: '&7Top lista on tyhjä.'
+      empty: '<gray>Top lista on tyhjä.'
       # <player>, <amount>
-      line: '&7<player> : <amount>'
+      line: '<gray><player> : <amount>'
       top-players: '{p} Top 10 pelaajat:'
     give:
       # <player>, <amount>, <balance>
@@ -111,7 +111,7 @@ Data:
     self: '{p} Godmode asetettu: <mode>.'
     # <player> <mode>
     other: '{p} Vaihdoit pelaajan <player> god modeksi: <mode>.'
-    actionbar: '&cGodmode on päällä!'
+    actionbar: '<red>Godmode on päällä!'
   heal:
     you-got-healed: '{p} Sinut on parannettu!'
     # <player>
@@ -222,9 +222,10 @@ Data:
   tp:
     #Sends as component
     # <player>, <type> tp type
-    received: '{p} Saapunut pyyntö pelaajalta <player> (<type>)
-      <br><hover:show_text:''<green>Painaahyväksyäksesi!''><click:run_command:''/tpaccept''><green>Hyväksy!</click></hover>
-      | <hover:show_text:''<red>Paina hylkääksesi!''><click:run_command:''/tpdeny''><red>Hylkää!</click></hover>'
+    received: >
+      {p} Saapunut pyyntö pelaajalta <player> (<type>)<br>
+      <hover:show_text:"<green>Painaahyväksyäksesi!"><click:run_command:"/tpaccept"><green>Hyväksy!</click></hover> |
+      <hover:show_text:"<red>Paina hylkääksesi!"><click:run_command:"/tpdeny"><red>Hylkää!</click></hover>
     # <player>
     accepted: '{p} <player> hyväksyi pyyntösi.'
     # <player>
@@ -269,7 +270,7 @@ Data:
   vanish:
     visible: näkyvä
     invisible: näkymätön
-    invisible-actionbar: '&eOlet nyt läpinäkyvä!'
+    invisible-actionbar: '<yellow>Olet nyt läpinäkyvä!'
     # Above states used in <mode>
     self: '{p} Olet nyt <mode>!'
     # <player>, <mode>

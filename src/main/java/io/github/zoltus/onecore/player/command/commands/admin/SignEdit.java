@@ -24,6 +24,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements ICommand {
     private final NamespacedKey store = new NamespacedKey(plugin, "all_lines");
+
     //todo cleanup, color perms?
     @Override
     public void init() {
@@ -68,7 +69,7 @@ public class SignEdit implements ICommand {
                     int line = (int) args.get(1);
                     if (sign != null) {
                         writeLine(player, line, sign.getLine(line));
-                        SIGNEDIT_SIGN_COPIED_LINE.send(player, LINE_PH, line);
+                        SIGNEDIT_SIGN_COPIED_LINE.rb(LINE_PH, line).send(player);
                     }
                 }));
         //signedit paste
@@ -103,7 +104,7 @@ public class SignEdit implements ICommand {
                 .override();
     }
 
-    private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.getString())
+    private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.get())
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
                 if (sign != null && sign.getLines().length != 0) {
@@ -129,7 +130,7 @@ public class SignEdit implements ICommand {
     private String[] readLines(Player p) {
         PersistentDataContainer cont = p.getPersistentDataContainer();
         String combined = cont.get(store, PersistentDataType.STRING);
-        return combined == null ? new String[]{"","","",""} : combined.split("\n");
+        return combined == null ? new String[]{"", "", "", ""} : combined.split("\n");
     }
 
     private void writeLines(Player p, String[] signLines) {

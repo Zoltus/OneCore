@@ -20,14 +20,16 @@ public class Ping implements ICommand {
                 .withPermission(Commands.PING_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     Player target = (Player) args.get(0);
-                    PING_TARGETS_PING.send(sender, PING_PH, target.getPing(), PLAYER_PH, target.getName());
+                    PING_TARGETS_PING.rb(PING_PH, target.getPing())
+                            .rb(PLAYER_PH, target.getName())
+                            .send(sender);
                 });
         //Ping
         new Command(PING_LABEL)
                 .withPermission(PING_PERMISSION)
                 .withAliases(PING_ALIASES)
                 .executesPlayer((player, args) -> {
-                    PING_YOUR_PING.send(player, PING_PH, player.getPing());
+                    PING_YOUR_PING.rb(PING_PH, player.getPing()).send(player);
                 }).then(arg0)
                 .override();
     }

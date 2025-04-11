@@ -1,6 +1,8 @@
 package io.github.zoltus.onecore.player.teleporting;
 
 import io.github.zoltus.onecore.OneCore;
+import io.github.zoltus.onecore.data.configuration.IConfig;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,11 +39,11 @@ public class DelayedTeleport {
 
     //Todo offline support, mayby on quitevent finish teleport, and cancel task?
     private BukkitTask start() {
-        TP_STARTED.send(user, SECONDS_PH, DELAY);
+        TP_STARTED.rb(SECONDS_PH, DELAY).send(user);
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             //If target is set and isnt online
             if (target != null && !target.isOnline()) {
-                TP_TARGET_QUIT.send(user, PLAYER_PH, target.getName()); // todo test
+                TP_TARGET_QUIT.rb(PLAYER_PH, target.getName()).send(user); // todo test
             } else {
                 Location destination = target == null ? loc : target.getPlayer().getLocation();
                 //Checks if teleporter is still online.
@@ -53,10 +55,10 @@ public class DelayedTeleport {
         }, 20L * DELAY);
     }
 
-    public void cancel(String reason) {
+    public void cancel(Lang reason) {
         teleTask.cancel();
         if (reason != null) {
-            user.sendMessage(reason);
+            reason.send(user);
             //Sets teleport to null so that the user can teleport again
             user.setTeleport(null);
         }

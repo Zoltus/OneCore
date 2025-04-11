@@ -21,10 +21,10 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Speed implements ICommand {
 
-    private final List<String> speedArgs = Arrays.asList(SPEED_MODE_FLY.getString(), SPEED_MODE_WALK.getString());
+    private final List<String> speedArgs = Arrays.asList(SPEED_MODE_FLY.get(), SPEED_MODE_WALK.get());
 
     private Argument<?> speedIntArg() {
-        return new CustomArgument<>(new StringArgument(NODES_SPEED.getString()), info -> {
+        return new CustomArgument<>(new StringArgument(NODES_SPEED.get()), info -> {
             try {
                 float speed = Float.parseFloat(info.input());
                 if (speed > 10.0f) {
@@ -34,7 +34,7 @@ public class Speed implements ICommand {
                 }
                 return speed;
             } catch (Exception ex) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_MODE.getString()));
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_MODE.get()));
             }
         }).replaceSuggestions(ArgumentSuggestions.strings(info ->
                 toSuggestion(info.currentArg(), new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"})));
@@ -42,10 +42,10 @@ public class Speed implements ICommand {
 
     private Argument<?> speedModeArg() {
         return new CustomArgument<>(
-                new StringArgument(SPEED_MODE_FLY.getString() + "/" + SPEED_MODE_WALK.getString()), info -> {
+                new StringArgument(SPEED_MODE_FLY.get() + "/" + SPEED_MODE_WALK.get()), info -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_SPEED.getString()));
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_SPEED.get()));
             } else {
                 return input;
             }
@@ -87,20 +87,20 @@ public class Speed implements ICommand {
         }
 
         if (sender == offTarget.getPlayer()) {
-            SPEED_YOUR_SPEED_SET.send(sender, AMOUNT_PH, speed, MODE_PH, mode);
+            SPEED_YOUR_SPEED_SET.rb(AMOUNT_PH, speed).rb(MODE_PH, mode).send(sender);
         } else {
-            SPEED_YOU_SET_SPEED.send(sender, AMOUNT_PH, speed, MODE_PH, mode, PLAYER_PH, offTarget.getName());
+            SPEED_YOU_SET_SPEED.rb(AMOUNT_PH, speed).rb(MODE_PH, mode).rb(PLAYER_PH, offTarget.getName()).send(sender);
             if (target != null) {
-                SPEED_YOUR_SPEED_SET.send(target, AMOUNT_PH, speed, MODE_PH, mode);
+                SPEED_YOUR_SPEED_SET.rb(AMOUNT_PH, speed).rb(MODE_PH, mode).send(target);
             }
         }
     }
 
     private String setOnlineSpeed(Player onTarget, float speed, String mode) {
         if (mode == null) {
-            mode = onTarget.isFlying() ? SPEED_MODE_FLY.getString() : SPEED_MODE_WALK.getString();
+            mode = onTarget.isFlying() ? SPEED_MODE_FLY.get() : SPEED_MODE_WALK.get();
         }
-        if (mode.equalsIgnoreCase(SPEED_MODE_FLY.getString())) {
+        if (mode.equalsIgnoreCase(SPEED_MODE_FLY.get())) {
             onTarget.setFlySpeed(speedToSmallNumbers(speed, true));
         } else {
             onTarget.setWalkSpeed(speedToSmallNumbers(speed, false));
@@ -111,10 +111,10 @@ public class Speed implements ICommand {
     private String setOfflineSpeed(OfflinePlayer offP, float speed, String mode) {
         NBTPlayer nbtPlayer = new NBTPlayer(offP);
         if (mode == null) {
-            mode = nbtPlayer.getFlying() ? SPEED_MODE_FLY.getString() : SPEED_MODE_WALK.getString();
+            mode = nbtPlayer.getFlying() ? SPEED_MODE_FLY.get() : SPEED_MODE_WALK.get();
         }
 
-        if (mode.equalsIgnoreCase(SPEED_MODE_FLY.getString())) {
+        if (mode.equalsIgnoreCase(SPEED_MODE_FLY.get())) {
             nbtPlayer.setFlySpeed(speedToSmallNumbers(speed, true));
         } else {
             nbtPlayer.setWalkSpeed(speedToSmallNumbers(speed, false));

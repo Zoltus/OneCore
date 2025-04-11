@@ -15,10 +15,10 @@ import java.util.function.Predicate;
 public class GamemodeArgument extends CustomArgument<GameMode, String> implements IArgument {
 
     public GamemodeArgument() {
-        super(new StringArgument(Lang.NODES_GAMEMODE.getString()), info -> {
+        super(new StringArgument(Lang.NODES_GAMEMODE.get()), info -> {
             GameMode gm = getGamemode(info.input());
             if (gm == null) {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.GAMEMODE_INVALID_GAMEMODE.getString()));
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.GAMEMODE_INVALID_GAMEMODE.get()));
             } else {
                 return gm;
             }

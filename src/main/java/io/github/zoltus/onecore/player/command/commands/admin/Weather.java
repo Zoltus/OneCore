@@ -48,6 +48,8 @@ public class Weather implements ICommand {
                 w.setThundering(false);
             }
         }
-        Lang.WEATHER_CHANGED.send(sender, IConfig.WEATHER_PH, weatherType.input(), IConfig.WORLD_PH, w.getName());
+        Lang.WEATHER_CHANGED.rb(IConfig.WEATHER_PH, weatherType.input())
+                .rb(IConfig.WORLD_PH, w.getName())
+                .send(sender);
     }
 }

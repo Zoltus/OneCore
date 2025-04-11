@@ -20,7 +20,7 @@ public class DelWarp implements ICommand {
         Argument<?> arg0 = new WarpArgument()
                 .executes((sender, args) -> {
                     Warp.WarpObj warp = (Warp.WarpObj) args.get(0);
-                    Lang.DELWARP_DELETED.send(sender, Lang.WARP_PH, warp.name());
+                    Lang.DELWARP_DELETED.rb(Lang.WARP_PH, warp.name()).send(sender);
                     warps.set(warp.name(), null);
                     warps.save();
                     warps.reload();

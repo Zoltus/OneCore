@@ -64,7 +64,7 @@ public class PapiExpansion extends PlaceholderExpansion {
         } else if (type.equals("timeleft")) {
             long time = NumberUtils.toInt(split[1]);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.getString());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(SEEN_DATE_FORMAT.get());
             String dateString = dateFormat.format(new Date(time));
            // SEEN_LAST_SEEN.send(sender, PLAYER_PH, oTarget.getName(), TIME_PH, dateString);
 

@@ -16,6 +16,6 @@ public class QuitListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        e.setQuitMessage(QUIT.replaceColored(PLAYER_PH, p.getName()));
+        e.setQuitMessage(QUIT.rb(PLAYER_PH, p.getName()).buildString());
     }
 }

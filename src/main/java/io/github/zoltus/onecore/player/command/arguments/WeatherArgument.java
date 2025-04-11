@@ -26,7 +26,7 @@ public class WeatherArgument extends CustomArgument<WeatherInput, String> implem
     }
 
     public WeatherArgument(boolean isPlayerWeather, String add) {
-        super(new StringArgument(Lang.NODES_WEATHER.getString() + add), info -> {
+        super(new StringArgument(Lang.NODES_WEATHER.get() + add), info -> {
             String input = info.input();
             WeatherMode weatherMode;
             if (isPlayerWeather && containsIgnoreCase(reset_aliases, input.toLowerCase())) {
@@ -38,7 +38,7 @@ public class WeatherArgument extends CustomArgument<WeatherInput, String> implem
             } else if (!isPlayerWeather && containsIgnoreCase(storm_aliases, input.toLowerCase())) {
                 weatherMode = WeatherMode.STORM;
             } else {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.WEATHER_INVALID_WEATHER.getString()));
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.WEATHER_INVALID_WEATHER.get()));
             }
             return new WeatherInput(input, weatherMode);
         });

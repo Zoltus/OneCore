@@ -35,8 +35,8 @@ public class Vanish implements ICommand {
 
         //Refresh vanished players action bar every 2.5s same for godmode?
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
-                () -> Bukkit.getOnlinePlayers().forEach(this::sendActionBar),0,50);
-}
+                () -> Bukkit.getOnlinePlayers().forEach(this::sendActionBar), 0, 50);
+    }
 
     private void executes(CommandSender sender, Player target) {
         User user = User.of(target);
@@ -53,13 +53,13 @@ public class Vanish implements ICommand {
                 }
             }
         });
-        String vanishedString = vanished ? VANISH_INVISIBLE.getString() : VANISH_VISIBLE.getString();
+        String vanishedString = vanished ? VANISH_INVISIBLE.get() : VANISH_VISIBLE.get();
 
         if (target == sender) {
-            VANISH_SELF.send(sender, MODE_PH, vanishedString);
+            VANISH_SELF.rb(MODE_PH, vanishedString).send(sender);
         } else {
-            VANISH_SELF.send(target, MODE_PH, vanishedString);
-            VANISH_OTHER.send(sender, PLAYER_PH, target.getName(), MODE_PH, vanishedString);
+            VANISH_SELF.rb(MODE_PH, vanishedString).send(target);
+            VANISH_OTHER.rb(PLAYER_PH, target.getName()).rb(MODE_PH, vanishedString).send(sender);
         }
         sendActionBar(target);
     }
@@ -72,7 +72,7 @@ public class Vanish implements ICommand {
     private void sendActionBar(Player player) {
         User user = User.of(player);
         if (user.isOnline() && user.isVanished()) {
-            String actionbar = VANISH_INVISIBLE_ACTION_BAR.getString();
+            String actionbar = VANISH_INVISIBLE_ACTION_BAR.get();
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionbar));
         }
     }

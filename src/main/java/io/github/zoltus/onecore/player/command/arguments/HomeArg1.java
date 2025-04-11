@@ -18,7 +18,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
     //Delhome <player> <home> <--
     //Returns String
     public HomeArg1() {
-        super(new StringArgument(NODES_HOME_NAME.getString()), info -> {
+        super(new StringArgument(NODES_HOME_NAME.get()), info -> {
             String input = info.input();
             String prevArg = (String) info.previousArgs().get(0);
             //Player, autocompletes search.
@@ -27,7 +27,7 @@ public class HomeArg1 extends CustomArgument<String, String> implements IArgumen
             if (p != null) {
                 return input;
             } else if (!offP.hasPlayedBefore() || User.of(offP) == null) {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.getString()));
+                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
             } else {
                 return input;
             }

@@ -25,17 +25,17 @@ public class Repair implements ICommand {
 
     //todo cleanup, to enum
     private final List<String> slots = Arrays.asList(
-            REPAIR_SLOT_HAND.getString().toLowerCase(),
-            REPAIR_SLOT_ALL.getString().toLowerCase(),
-            REPAIR_SLOT_OFFHAND.getString().toLowerCase(),
-            REPAIR_SLOT_ARMOR.getString().toLowerCase(),
-            REPAIR_SLOT_INVENTORY.getString().toLowerCase());
+            REPAIR_SLOT_HAND.asLegacyString().toLowerCase(),
+            REPAIR_SLOT_ALL.asLegacyString().toLowerCase(),
+            REPAIR_SLOT_OFFHAND.asLegacyString().toLowerCase(),
+            REPAIR_SLOT_ARMOR.asLegacyString().toLowerCase(),
+            REPAIR_SLOT_INVENTORY.asLegacyString().toLowerCase());
 
     private Argument<?> slotArg() {
-        return new CustomArgument<>(new StringArgument(NODES_SLOT.getString()), (info) -> {
+        return new CustomArgument<>(new StringArgument(NODES_SLOT.get()), (info) -> {
             String input = info.input();
             if (!slots.contains(input.toLowerCase())) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(REPAIR_SLOT_INVALID_SLOT.getString()));
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(REPAIR_SLOT_INVALID_SLOT.get()));
             } else {
                 return input;
             }
@@ -81,12 +81,14 @@ public class Repair implements ICommand {
         }
 
         if (!fixedAny) {
-            REPAIR_NOTHING_TO_FIX.send(sender, SLOT_PH, slot);
+            REPAIR_NOTHING_TO_FIX.rb(SLOT_PH, slot).send(sender);
         } else if (sender == target.getPlayer()) {
-            REPAIR_SELF_REPAIRED.send(target, SLOT_PH, slot);
+            REPAIR_SELF_REPAIRED.rb(SLOT_PH, slot).send(target);
         } else {
-            REPAIR_YOU_REPAIRED_TARGET.send(sender, SLOT_PH, slot, PLAYER_PH, target.getName());
-            REPAIR_YOUR_ITEMS_GOT_REPAIRED.send(target, SLOT_PH, slot);
+            REPAIR_YOU_REPAIRED_TARGET.rb(SLOT_PH, slot)
+                    .rb(PLAYER_PH, target.getName())
+                    .send(sender);
+            REPAIR_YOUR_ITEMS_GOT_REPAIRED.rb(SLOT_PH, slot).send(target);
         }
     }
 

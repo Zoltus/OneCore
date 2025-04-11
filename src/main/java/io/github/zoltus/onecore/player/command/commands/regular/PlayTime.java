@@ -25,7 +25,10 @@ public class PlayTime implements ICommand {
                     OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                     int playtime = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
                     String timeMessage = secondsToTime(playtime);
-                    PLAYTIME_TARGETS_PLAYTIME.send(sender, TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());
+                    PLAYTIME_TARGETS_PLAYTIME
+                            .rb(TIME_PH, timeMessage)
+                            .rb(PLAYER_PH, offTarget.getName())
+                            .send(sender);
                 });
         //playtime
         new Command(PLAYTIME_LABEL)
@@ -33,7 +36,9 @@ public class PlayTime implements ICommand {
                 .withAliases(PLAYTIME_ALIASES)
                 .executesPlayer((player, args) -> {
                     String timeMessage = secondsToTime(player.getStatistic(Statistic.PLAY_ONE_MINUTE));
-                    PLAYTIME_YOUR_PLAYTIME.send(player, TIME_PH, timeMessage);
+                    PLAYTIME_YOUR_PLAYTIME
+                            .rb(TIME_PH, timeMessage)
+                            .send(player);
                 }).then(arg0)
                 .override();
 

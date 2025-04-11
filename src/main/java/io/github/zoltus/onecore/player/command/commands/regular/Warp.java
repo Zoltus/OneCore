@@ -52,7 +52,9 @@ public class Warp implements ICommand {
                         nbtPlayer.save();
                     }
                     if (offTarget.getPlayer() != sender) {
-                        WARP_TARGET_SENT.send(sender, WARP_PH, warpName, PLAYER_PH, offTarget.getName());
+                        WARP_TARGET_SENT.rb(WARP_PH, warpName)
+                                .rb(PLAYER_PH, offTarget.getName())
+                                .send(sender);
                     }
                 });
         //warp, warps
@@ -60,7 +62,7 @@ public class Warp implements ICommand {
                 .withPermission(WARP_PERMISSION)
                 .withAliases(WARP_ALIASES)
                 .executesPlayer((p, args) -> {
-                    WARP_LIST.send(p, LIST_PH, getWarps().toString());
+                    WARP_LIST.rb(LIST_PH, getWarps().toString()).send(p);
                 }).then(arg0.then(arg1))
                 .override();
     }

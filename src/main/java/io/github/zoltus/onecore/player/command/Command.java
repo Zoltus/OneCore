@@ -15,7 +15,7 @@ public class Command extends CommandTree
     }
 
     public Command(IConfig enumz) {
-        super(enumz.getString());
+        super(enumz.get());
     }
 
     public Command withAliases(IConfig enumz) {

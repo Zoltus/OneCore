@@ -14,7 +14,7 @@ public class SetMaxPlayers implements ICommand {
         new Command(Commands.SETMAXPLAYERS_LABEL)
                 .withPermission(Commands.SETMAXPLAYERS_PERMISSION)
                 .withAliases(Commands.SETMAXPLAYERS_ALIASES)
-                .then(new IntegerArgument(Lang.NODES_AMOUNT.getString())
+                .then(new IntegerArgument(Lang.NODES_AMOUNT.get())
                         .executesPlayer((p, args) -> {
                             /*
                             try {

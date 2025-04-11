@@ -17,9 +17,9 @@ public class Broadcast implements ICommand {
         new Command(Commands.BROADCAST_LABEL)
                 .withPermission(Commands.BROADCAST_PERMISSION)
                 .withAliases(Commands.BROADCAST_ALIASES)
-                .then(new ChatArgument(Lang.NODES_MESSAGE.getString())
+                .then(new ChatArgument(Lang.NODES_MESSAGE.get())
                         .executes((sender, args) -> {
-                            BaseComponent[] prefix = TextComponent.fromLegacyText(Lang.BROADCAST_PREFIX.getString());
+                            BaseComponent[] prefix = TextComponent.fromLegacyText(Lang.BROADCAST_PREFIX.get());
                             BaseComponent[] message = (BaseComponent[]) args.get(0);
                             ComponentBuilder builder = new ComponentBuilder();
                             builder.append(prefix).append(message);

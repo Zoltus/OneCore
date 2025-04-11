@@ -35,14 +35,16 @@ public class God implements ICommand, Listener {
                     User target = User.of(offP);
                     if (target != null) {
                         target.setGod(result = !target.isGod());
-                        GOD_SELF.send(target, MODE_PH, result);
+                        GOD_SELF.rb(MODE_PH, result).send(target);
                     } else {
                         NBTPlayer nbtPlayer = new NBTPlayer(offP);
                         nbtPlayer.setInvulnerable(result = !nbtPlayer.getInvulnerable());
                         nbtPlayer.save();
                     }
                     if (sender != offP) {
-                        GOD_OTHER.send(sender, PLAYER_PH, sender.getName(), MODE_PH, result);
+                        GOD_OTHER.rb(PLAYER_PH, sender.getName())
+                                .rb(MODE_PH, result)
+                                .send(sender);
                     }
                 });
         //god
@@ -51,7 +53,8 @@ public class God implements ICommand, Listener {
                 .withAliases(Commands.GOD_ALIASES)
                 .executesPlayer((p, args) -> {
                     p.setInvulnerable(!p.isInvulnerable());
-                    GOD_SELF.send(p, MODE_PH, p.isInvulnerable());
+                    GOD_SELF.rb(MODE_PH, p.isInvulnerable())
+                            .send(p);
                 }).then(arg0).override();
 
 
@@ -61,7 +64,7 @@ public class God implements ICommand, Listener {
                 () -> Bukkit.getOnlinePlayers().forEach(player -> {
                     User target = User.of(player);
                     if (target.isGod()) {
-                        String actionbar = GOD_ACTION_BAR.getString();
+                        String actionbar = GOD_ACTION_BAR.get();
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionbar));
                     }
                 }), 0, 50);

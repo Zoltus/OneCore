@@ -23,7 +23,7 @@ public class Feed implements ICommand {
                     OfflinePlayer target = (OfflinePlayer) args.get(0);
                     feed(target);
                     if (target.getPlayer() != sender) {
-                        FEED_YOU_FED_TARGET.send(sender, PLAYER_PH, target.getName());
+                        FEED_YOU_FED_TARGET.rb(PLAYER_PH, target.getName()).send(sender);
                     }
                 });
         //feed

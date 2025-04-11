@@ -61,9 +61,9 @@ public class Back implements ICommand, Listener {
         User targetUser = User.of(target);
         Location loc = targetUser.getLastLocation();
         if (loc == null) {
-            BACK_NO_HISTORY.send(sender, PLAYER_PH, target.getName());
+            BACK_NO_HISTORY.rb(PLAYER_PH, target.getName()).send(sender);
         } else if (sender != target) {
-            BACK_TARGET_SENT.send(sender, PLAYER_PH, target.getName());
+            BACK_TARGET_SENT.rb(PLAYER_PH, target.getName()).send(sender);
             target.teleport(targetUser.getLastLocation());
         } else {
             targetUser.teleport(targetUser.getLastLocation());

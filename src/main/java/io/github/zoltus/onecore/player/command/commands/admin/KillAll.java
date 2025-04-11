@@ -40,15 +40,15 @@ public class KillAll implements ICommand {
     }
 
     private EntityTypeArgument entityArg() {
-        return new EntityTypeArgument(NODES_ENTITY_TYPE.getString());
+        return new EntityTypeArgument(NODES_ENTITY_TYPE.get());
     }
 
     private Argument<?> rangeArgument() {
-        return new CustomArgument<>(new StringArgument(NODES_RANGE.getString()), info -> {
+        return new CustomArgument<>(new StringArgument(NODES_RANGE.get()), info -> {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(INVALID_RANGE.getString()));
+                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(INVALID_RANGE.get()));
             }
         });
     }
@@ -57,6 +57,9 @@ public class KillAll implements ICommand {
         List<Entity> list = entities.stream()
                 .filter(entity -> entity.getType() == type && entity.getType() != EntityType.PLAYER).toList();
         list.forEach(Entity::remove);
-        KILLALL_REMOVED_ENTITYS.send(p, AMOUNT_PH, list.size(), TYPE_PH, type.name(), RADIUS_PH, range);
+        KILLALL_REMOVED_ENTITYS.rb(AMOUNT_PH, list.size())
+                .rb(TYPE_PH, type.name())
+                .rb(RADIUS_PH, range)
+                .send(p);
     }
 }

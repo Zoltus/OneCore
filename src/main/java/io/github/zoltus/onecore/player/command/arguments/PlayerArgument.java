@@ -13,7 +13,7 @@ public class PlayerArgument extends dev.jorel.commandapi.arguments.PlayerArgumen
     }
 
     public PlayerArgument(String add) {
-        super(NODES_PLAYER.getString() + add);
+        super(NODES_PLAYER.get() + add);
         replaceSuggestions(ArgumentSuggestions
                 .strings(info -> playerSuggestions(info.currentArg())));
     }

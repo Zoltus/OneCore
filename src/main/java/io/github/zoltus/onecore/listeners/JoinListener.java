@@ -49,12 +49,12 @@ public record JoinListener(OneCore plugin) implements Listener {
     @EventHandler
     public void handleSpawnOnJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        e.setJoinMessage(Lang.JOINED.replaceColored(IConfig.PLAYER_PH, p.getName()));
+        e.setJoinMessage(Lang.JOINED.rb(IConfig.PLAYER_PH, p.getName()).buildLegacyString());
         //ForceSpawns
         if (Config.TELEPORT_SPAWN_ON_JOIN.getBoolean()) {
             Location spawn = Spawn.getSpawn();
             if (spawn == null) {
-                p.sendMessage(Lang.SPAWN_IS_NOT_SET.getString());
+                Lang.SPAWN_IS_NOT_SET.send(p);
             } else {
                 p.teleport(spawn);
             }

@@ -37,7 +37,7 @@ public class CommandHandler {
                 Repair.class, Seen.class,
                 SetHome.class, SetMaxPlayers.class, SetSpawn.class, SetFirstJoinSpawn.class,
                 SetWarp.class, SignEdit.class, Spawn.class, Speed.class,
-                SystemInfo.class, Tp.class, Tpa.class,
+                Tp.class, Tpa.class,
                 Tpaccept.class, TpaHere.class, TpDeny.class,
                 TpToggle.class, Time.class, PTime.class, Top.class,
                 Vanish.class,

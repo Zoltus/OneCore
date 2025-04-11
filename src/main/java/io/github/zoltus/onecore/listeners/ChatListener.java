@@ -1,6 +1,7 @@
 package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.utils.ChatUtils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -26,7 +27,7 @@ public class ChatListener implements Listener {
     private static final MiniMessage mm = MiniMessage.miniMessage();
     private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
 
-    //Chat listening event
+   /* //Chat listening event
     @EventHandler
     public void asyncChatEvent(AsyncPlayerChatEvent e) {
         handleChatFormat(e);
@@ -50,21 +51,21 @@ public class ChatListener implements Listener {
             if (matcher.group().equals("@everyone")) {
                 if (p.hasPermission(Config.MENTION_EVERYONE_PERMISSION.asPermission())) {
                     for (Player target : Bukkit.getOnlinePlayers()) {
-                        message = message.replace(matcher.group(), Config.MENTION_COLOR.getString()
+                        message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
                                 + "@Everyone" + continueColor);
                         target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
                     }
                 }
             } else {
                 Player target = Bukkit.getPlayer(matcher.group(1));
-                if (target != null /*&& !player.equals(sender)*/) {
-                    message = message.replace(matcher.group(), Config.MENTION_COLOR.getString()
+                if (target != null *//*&& !player.equals(sender)*//*) {
+                    message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
                             + target.getDisplayName() + continueColor);
                     target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
                 }
             }
         }
-        String colorFormatted = translateColors(message);
+        String colorFormatted = ChatUtils.asLegacy(message);
         e.setMessage(colorFormatted);
     }
 
@@ -75,11 +76,12 @@ public class ChatListener implements Listener {
         //Enables chat colors if player has permission
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-            e.setMessage(translateColors(e.getMessage()));
+            String legacy = ChatUtils.asLegacy(e.getMessage());
+            e.setMessage(legacy);
         }
         //Formats chat
         if (Config.CHAT_FORMATTER_ENABLED.getBoolean()) {
-            String format = Config.CHAT_FORMAT.getString();
+            String format = Config.CHAT_FORMAT.get();
             format = format.replace("{0}", "%s");
             format = format.replace("{1}", "%s");
             if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -95,22 +97,14 @@ public class ChatListener implements Listener {
                 format = format.trim();
             }
             //Translates colors for chat format
-            format = translateColors(format);
+            format = ChatUtils.asLegacy(format);
             try {
                 e.setFormat(format);
             } catch (Exception ex) {
                 System.out.println("Error while formatting chat message! " + ex.getMessage());
             }
         }
-    }
-
-    //todo to chatutils
-
-    public static String translateColors(String str) {
-        str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
-        str = ChatColor.translateAlternateColorCodes('&', str);
-        return str;
-    }
+    }*/
 }
 
 

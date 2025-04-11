@@ -20,7 +20,7 @@ public class SetHome implements ICommand {
     @Override
     public void init() {
         //sethome <home>
-        Argument<?> arg1 = new StringArgument(Lang.NODES_HOME_NAME.getString())
+        Argument<?> arg1 = new StringArgument(Lang.NODES_HOME_NAME.get())
                 .executesPlayer((p, args) -> {
                     //This arg can be in arg 0 or 1 position
                     Object arg = args.args().length == 1 ? args.get(0) : args.get(1);
@@ -48,31 +48,25 @@ public class SetHome implements ICommand {
     private void setHome(CommandSender sender, OfflinePlayer offP, String home) {
         User target = User.of(offP);
         if (target == null) {
-            sender.sendMessage(Lang.PLAYER_NEVER_VISITED_SERVER.getString());
+            Lang.PLAYER_NEVER_VISITED_SERVER.send(sender);
         } else {
             //Async because sethome scans permissions and if user has lot it could slow down the server.
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                 boolean isSelf = sender.getName().equals(offP.getName());
                 boolean canHaveMoreHomes = target.hasFreeHomeSlot();
-                String finalHome = home == null ? Commands.HOME_DEFAULT_NAME.getString() : home;
+                String finalHome = home == null ? Commands.HOME_DEFAULT_NAME.get() : home;
 
                 if ((target.hasHome(finalHome) || canHaveMoreHomes) || !isSelf) {
                     target.setHome(finalHome, target.getPlayer().getLocation());
-                    Lang.SETHOME_SET.send(target, IConfig.HOME_PH, finalHome);
+                    Lang.SETHOME_SET.rb(IConfig.HOME_PH, finalHome).send(target);
                 } else {
                     Lang.SETHOME_FULL_HOMES.send(target);
                     return;
                 }
                 if (!isSelf) {
-                    Lang.SETHOME_OTHER.send(sender, IConfig.PLAYER_PH, offP.getName(), IConfig.HOME_PH, finalHome);
+                    Lang.SETHOME_OTHER.rb(IConfig.PLAYER_PH, offP.getName()).rb(IConfig.HOME_PH, finalHome).send(sender);
                 }
             });
         }
     }
 }
-
-
-/*
-
-
- */

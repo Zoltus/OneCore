@@ -38,9 +38,13 @@ public class PTime implements ICommand {
             target.resetPlayerTime();
         } else {
             target.setPlayerTime(time, false);
-            PTIME_CHANGED.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
+            PTIME_CHANGED.rb(TIME_PH, target.getPlayerTime())
+                    .rb(PLAYER_PH, target.getName())
+                    .send(sender);
             if (sender != target) {
-                PTIME_CHANGED_OTHER.send(sender, TIME_PH, target.getPlayerTime(), PLAYER_PH, target.getName());
+                PTIME_CHANGED_OTHER.rb(TIME_PH, target.getPlayerTime())
+                        .rb(PLAYER_PH, target.getName())
+                        .send(sender);
             }
         }
     }

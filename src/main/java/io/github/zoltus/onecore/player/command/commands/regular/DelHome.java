@@ -3,16 +3,18 @@ package io.github.zoltus.onecore.player.command.commands.regular;
 import dev.jorel.commandapi.arguments.Argument;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
+import io.github.zoltus.onecore.player.User;
+import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg0;
 import io.github.zoltus.onecore.player.command.arguments.HomeArg1;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import io.github.zoltus.onecore.player.User;
-import io.github.zoltus.onecore.player.command.Command;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class DelHome implements ICommand {
@@ -39,17 +41,17 @@ public class DelHome implements ICommand {
     private void deleteHome(CommandSender sender, OfflinePlayer offP, String home) {
         User target = User.of(offP);
         if (target == null) {
-            sender.sendMessage(PLAYER_NEVER_VISITED_SERVER.getString());
+            PLAYER_NEVER_VISITED_SERVER.send(sender);
         } else {
             boolean isSelf = sender.getName().equals(offP.getName());
             if (target.hasHome(home)) {
                 target.delHome(home);
-                DELHOME_DELETED.send(target, HOME_PH, home);
+                DELHOME_DELETED.rb(HOME_PH, home).send(target);
                 if (!isSelf) {
-                    DELHOME_OTHER.send(sender, PLAYER_PH, target.getName(), HOME_PH, home);
+                    DELHOME_OTHER.rb(PLAYER_PH, target.getName()).rb(HOME_PH, home).send(sender);
                 }
             } else {
-                Lang.HOME_LIST.send(sender, IConfig.LIST_PH, target.getHomes().keySet());
+                Lang.HOME_LIST.rb(IConfig.LIST_PH, target.getHomes().keySet()).send(sender);
             }
         }
     }

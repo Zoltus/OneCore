@@ -34,6 +34,6 @@ public class Time implements ICommand {
 
     private void changeTime(CommandSender sender, long time, World w) {
         w.setTime(time);
-        TIME_CHANGED.send(sender, TIME_PH, w.getTime(), WORLD_PH, w.getName());
+        TIME_CHANGED.rb(TIME_PH, w.getTime()).rb(WORLD_PH, w.getName()).send(sender);
     }
 }

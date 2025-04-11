@@ -20,7 +20,7 @@ public class OfflinePlayerArgument extends CustomArgument<OfflinePlayer, String>
     }
 
     public OfflinePlayerArgument(String add) {
-        super(new StringArgument(NODES_PLAYER.getString() + add), info -> {
+        super(new StringArgument(NODES_PLAYER.get() + add), info -> {
             String input = info.input();
             Player p = Bukkit.getPlayer(input);
             //priority to online players, this adds support for auto finding player
@@ -32,7 +32,7 @@ public class OfflinePlayerArgument extends CustomArgument<OfflinePlayer, String>
                 //Bukkit.getOfflinePlayers()
                 if (!offP.hasPlayedBefore() || User.of(offP) == null) {
                     throw CustomArgumentException
-                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.getString()));
+                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
                 } else {
                     return offP;
                 }

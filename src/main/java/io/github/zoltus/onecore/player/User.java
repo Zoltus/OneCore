@@ -84,11 +84,6 @@ public class User {
         return users.get(uuid);
     }
 
-    public void sendMessage(String message) {
-        if (isOnline() && !message.isEmpty()) {
-            this.getPlayer().sendMessage(message);
-        }
-    }
 
     public boolean isOnline() {
         return offP.isOnline();
@@ -108,7 +103,7 @@ public class User {
         }
         Player p = getPlayer();
         if (teleport != null) {
-            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE.getString());
+            teleport.cancel(Lang.TP_CANCELLED_BY_NEW_TELE);
         }
         if (p.hasPermission(Config.TELEPORT_CD_BYPASS.asPermission())
                 || p.getGameMode() == GameMode.CREATIVE
@@ -144,7 +139,7 @@ public class User {
      * @return location of the home
      */
     public PreLocation getorDefaultHOme(String home) {
-        return homes.get(home.toLowerCase()) != null ? homes.get(home.toLowerCase()) : homes.get(HOME_DEFAULT_NAME.getString());
+        return homes.get(home.toLowerCase()) != null ? homes.get(home.toLowerCase()) : homes.get(HOME_DEFAULT_NAME.get());
     }
 
     /**

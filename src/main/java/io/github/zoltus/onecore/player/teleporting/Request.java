@@ -18,7 +18,7 @@ public class Request {
 
     public static Request getLatest(User accepter) {
         List<Request> requests = accepter.getRequests();
-        return requests.isEmpty() ? null : requests.get(requests.size() - 1);
+        return requests.isEmpty() ? null : requests.getLast();
     }
 
     public static Request get(User sender, User accepter) {
@@ -55,7 +55,7 @@ public class Request {
     private BukkitTask expireTimer() {
         return Bukkit.getScheduler().runTaskLater(plugin, () -> {
             requests.remove(this);
-            sender.sendMessage(TP_EXPIRED.getString());
+            TP_EXPIRED.send(sender);
         }, 20L * Config.TELEPORT_EXPIRE.getInt());
     }
 
@@ -68,9 +68,9 @@ public class Request {
         if (sender == accepter) { //Cant self teleport
             TP_CANT_SELF_TELEPORT.send(sender);
         } else if (!accepter.isHasTpEnabled()) { //Cant teleport if tp toggled
-            TP_TOGGLE_IS_OFF.send(sender, PLAYER_PH, accepter.getName());
+            TP_TOGGLE_IS_OFF.rb(PLAYER_PH, accepter.getName()).send(sender);
         } else if (hasRequest(sender, accepter)) {
-            TP_YOU_ALREADY_SENT_REQUEST.send(sender, PLAYER_PH, accepter.getName());
+            TP_YOU_ALREADY_SENT_REQUEST.rb(PLAYER_PH, accepter.getName()).send(sender);
         } else {
             new Request(sender, accepter, type);
         }
@@ -79,16 +79,16 @@ public class Request {
     public void accept() {
         User teleporter = type == TeleportType.TPA ? sender : accepter;
         User target = type == TeleportType.TPA ? accepter : sender;
-        TP_ACCEPTED.send(sender, PLAYER_PH, accepter.getName());
-        TP_YOU_ACCEPTED.send(accepter, PLAYER_PH, sender.getName());
+        TP_ACCEPTED.rb(PLAYER_PH, accepter.getName()).send(sender);
+        TP_YOU_ACCEPTED.rb(PLAYER_PH, sender.getName()).send(accepter);
         removeRequest();
         teleporter.teleport(target);
     }
 
     public void deny() {
         removeRequest();
-        TP_DENIED.send(sender, PLAYER_PH, accepter.getName());
-        TP_YOU_DENIED.send(accepter, PLAYER_PH, sender.getName());
+        TP_DENIED.rb(PLAYER_PH, accepter.getName()).send(sender);
+        TP_YOU_DENIED.rb(PLAYER_PH, sender.getName()).send(accepter);
     }
 
     private void removeRequest() {
@@ -97,7 +97,7 @@ public class Request {
     }
 
     private void sendChat() {
-        TP_SENT.send(sender, PLAYER_PH, accepter.getName()); // todo test
-        TP_RECEIVED.send(accepter, PLAYER_PH, sender.getName(), TYPE_PH, type.name());
+        TP_SENT.rb(PLAYER_PH, accepter.getName()).send(sender); // todo test
+        TP_RECEIVED.rb(PLAYER_PH, sender.getName()).rb(TYPE_PH, type.name()).send(accepter);
     }
 }

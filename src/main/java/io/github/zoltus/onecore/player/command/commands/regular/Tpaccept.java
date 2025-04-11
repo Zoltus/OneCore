@@ -37,7 +37,7 @@ public class Tpaccept implements ICommand {
         }
 
         if (request == null) {
-            accepter.sendMessage(Lang.TP_NO_REQUESTS.getString());
+            Lang.TP_NO_REQUESTS.send(accepter);
         } else {
             request.accept();
         }

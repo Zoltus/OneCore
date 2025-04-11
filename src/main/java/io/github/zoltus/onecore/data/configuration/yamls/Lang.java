@@ -3,12 +3,16 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.data.configuration.OneYml;
 import io.github.zoltus.onecore.data.configuration.Yamls;
-import io.github.zoltus.onecore.listeners.ChatListener;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.utils.ChatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 public enum Lang implements IConfig {
@@ -176,51 +180,24 @@ public enum Lang implements IConfig {
         return Yamls.LANG.getYml();
     }
 
-    public void send(CommandSender sender, Object... replaces) {
-        String replaced = replace(replaces);
-        ChatUtils.mmSend(sender, replaced);
-    }
-
-    public void send(User user, Object... replaces) {
+    public void send(@NotNull User user) {
         if (user.isOnline()) {
-            send(user.getPlayer(), replaces);
+            send(user.getPlayer());
         }
     }
 
-    public String replaceColored(Object... replaces) {
-        return ChatListener.translateColors(replace(replaces));
+    public void send(CommandSender sender) {
+        LangBuilder builder = new LangBuilder(this);
+        builder.send(sender);
     }
 
-    public String replace(Object... replaces) {
-        String ph = null;
-        StringBuilder sb = new StringBuilder(getString());
-        for (Object objRp : replaces) {
-            String value = objRp instanceof IConfig config ? config.getString() : String.valueOf(objRp);
-            //color
-            if (ph == null) {
-                ph = value;
-            } else {
-                //  ph              = <balance>
-                //  value           = 100
-                //  variable-color  =
-                // <color:#ff6666><variable></color>
-                String variableColors = VARIABLE_COLOR.get();
-                //<color:#ff6666><balance></color>
-                String coloredVar = variableColors.replace("<variable>", ph);
-                // '{p} Rahasi: <balance>.'
-                int index = sb.indexOf(ph);
-                if (index != -1) {
-                    sb.replace(index, index + ph.length(), coloredVar);
-                }
-                // '{p} Rahasi: <color:#ff6666><balance></color>.'
-                index = sb.indexOf(coloredVar);
-                if (index != -1) {
-                    sb.replace(index, index + coloredVar.length(), value);
-                }
-                // '{p} Rahasi: <color:#ff6666>value</color>.'
-                ph = null;
-            }
-        }
-        return sb.toString();
+    public LangBuilder rb(IConfig placeholderKey, Object value) {
+        LangBuilder builder = new LangBuilder(this);
+        return builder.rb(placeholderKey, value);
+    }
+
+    public LangBuilder rb(String placeholder, Object value) {
+        LangBuilder builder = new LangBuilder(this);
+        return builder.rb(placeholder, value);
     }
 }

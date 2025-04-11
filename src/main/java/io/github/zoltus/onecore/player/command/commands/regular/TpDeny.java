@@ -37,7 +37,7 @@ public class TpDeny implements ICommand {
 
     private void handle(Request request, User sender) {
         if (request == null) {
-            sender.sendMessage(Lang.TP_NO_REQUESTS.getString());
+            Lang.TP_NO_REQUESTS.send(sender);
         } else {
             request.deny();
         }

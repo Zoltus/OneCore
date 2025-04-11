@@ -33,6 +33,6 @@ public interface ICommand extends IArgument {
     }
 
     default Argument<String> multiLiteralArgument(IConfig label, IConfig aliases) {
-        return new MultiLiteralArgument(ArrayUtils.add(aliases.getAsArray(), label.getString()));
+        return new MultiLiteralArgument("todo", ArrayUtils.add(aliases.getAsArray(), label.get())); // todo
     }
 }

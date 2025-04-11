@@ -27,9 +27,9 @@ public class Gamemode implements ICommand {
                     String perm = GAMEMODE_LABEL.asPermission() + "." + gm.toString().toLowerCase();
                     if (player.hasPermission(perm)) {
                         player.setGameMode(gm);
-                        GAMEMODE_CHANGED.send(player, MODE_PH, gmName);
+                        GAMEMODE_CHANGED.rb(MODE_PH, gmName).send(player);
                     } else {
-                        NO_PERMISSION.send(player, IConfig.PERM_PH, perm);
+                        NO_PERMISSION.rb(IConfig.PERM_PH, perm).send(player);
                     }
                 });
         //gamemode creative <player>
@@ -58,7 +58,7 @@ public class Gamemode implements ICommand {
         String gmName = getGmName(gm);
         if (target != null && target == sender) {
             target.setGameMode(gm);
-            GAMEMODE_CHANGED.send(sender, MODE_PH, gmName);
+            GAMEMODE_CHANGED.rb(MODE_PH, gmName).send(sender);
         } else {
             boolean gmChanged;
             //Change gamemodes
@@ -75,9 +75,15 @@ public class Gamemode implements ICommand {
                 nbtPlayer.save();
             }
             if (gmChanged) {
-                GAMEMODE_TARGETS_GAMEMODE_CHANGED.send(sender, MODE_PH, gmName, PLAYER_PH, offTarget.getName());
+                GAMEMODE_TARGETS_GAMEMODE_CHANGED
+                        .rb(gmName, PLAYER_PH)
+                        .rb(MODE_PH, offTarget.getName())
+                        .send(sender);
             } else {
-                GAMEMODE_TARGET_ALREADY_IN_GAMEMODE.send(sender, MODE_PH, gmName, PLAYER_PH, offTarget.getName());
+                GAMEMODE_TARGET_ALREADY_IN_GAMEMODE
+                        .rb(MODE_PH, gmName)
+                        .rb(PLAYER_PH, offTarget.getName())
+                        .send(sender);
             }
         }
     }
@@ -88,10 +94,10 @@ public class Gamemode implements ICommand {
      */
     private String getGmName(GameMode gm) {
         return switch (gm) {
-            case SURVIVAL -> GAMEMODE_SURVIVAL.getString();
-            case CREATIVE -> GAMEMODE_CREATIVE.getString();
-            case ADVENTURE -> GAMEMODE_ADVENTURE.getString();
-            case SPECTATOR -> GAMEMODE_SPECTATOR.getString();
+            case SURVIVAL -> GAMEMODE_SURVIVAL.get();
+            case CREATIVE -> GAMEMODE_CREATIVE.get();
+            case ADVENTURE -> GAMEMODE_ADVENTURE.get();
+            case SPECTATOR -> GAMEMODE_SPECTATOR.get();
         };
     }
 }
