@@ -205,23 +205,6 @@ Data:
     you-set-speed: '{p} Pelaajan <player> nopeus asetettu <amount> tilaan <mode>.'
     # <mode>, <amount>
     your-speed-set: '{p} Nopeus asetettu <amount> tilaan <mode>.'
-  system:
-    # <used>, <total>
-    disk-usage: 'System Disk usage: <used>GB/<total>GB'
-    # <version>
-    java-version: 'System Java Versio: <version>'
-    # <system-os>
-    os: 'System OS: <system-os>'
-    # <processors>
-    processors: 'System Processors Available: <processors>'
-    # <used>, <total>
-    ram-usage: 'System Ram: <used>MB/<total>MB'
-    # <version>
-    server-version: 'System Server Version: <version>'
-    # <username>
-    username: 'System Username: <username>'
-    # <version>
-    version: 'System Version: <version>'
   ptime:
     # <time>
     changed: '{p} Aika vaihdettu <time>!'

@@ -301,12 +301,6 @@ Data:
     walk-aliases: kävely
     aliases: []
   #  - examplealias1
-  systeminfo:
-    enabled: true
-    label: system
-    permission: system
-    aliases: []
-  #  - examplealias1
   time:
     enabled: true
     label: time
