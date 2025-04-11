@@ -155,7 +155,7 @@ Data:
     # <player>, <time>
     your-playtime: '{p} Sinun peliaikasi on <time>.'
   reload:
-    reloaded: §aFiles reloaded!
+    reloaded: '{p} Files reloaded!'
   repair:
     # <slot>
     nothing-to-fix: '{p} Mitään korjattavaa ei löytynyt sijainnissa <slot>.'

@@ -2,7 +2,7 @@
 
 Data:
   spawn: []
-  prefix: '<blue><bold>One</bold><#559fff><bold>Core </bold><dark_gray><bold>»</bold><#e6e6e6>'
+  prefix: '<bold><gradient:blue:#559fff>OneCore</gradient><dark_gray><bold>»</bold><#e6e6e6>'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
   # How often player & server data is saved.
@@ -30,7 +30,7 @@ Data:
     # {0} = player
     # {1} = message
     # {vault_prefix} = Example papi placeholder for vault prefix. (/papi ecloud download vault)
-    format: '{vault_prefix}{0}<white>: {1}'
+    format: '{vault_prefix}<gray>{0}: <white>{1}'
     # If placeholder is empty it causes double spacing. This fixes it.
     remove-doublespaces: true
     # Removes whitespaces from start & end of message
