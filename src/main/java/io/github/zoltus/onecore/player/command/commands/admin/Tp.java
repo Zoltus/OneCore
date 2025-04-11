@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER2_PH;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.TP_PERMISSION_OTHER;
 
 public class Tp implements ICommand {
     @Override
@@ -33,6 +34,7 @@ public class Tp implements ICommand {
                 });
         //tp <player> <player>
         Argument<?> arg1 = new OfflinePlayerArgument("2")
+                .withPermission(TP_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer fromOff = (OfflinePlayer) args.get(0);
                     OfflinePlayer target = (OfflinePlayer) args.get(1);
@@ -50,6 +52,7 @@ public class Tp implements ICommand {
                 });
         //tp <coord> <player>
         Argument<?> locArg2 = new OfflinePlayerArgument("2")
+                .withPermission(TP_PERMISSION_OTHER.asPermission())
                 .withPermission("")
                 .executes((sender, args) -> {
                     Location destination = (Location) args.get(0);

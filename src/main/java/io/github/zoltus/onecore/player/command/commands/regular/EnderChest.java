@@ -14,13 +14,14 @@ public class EnderChest implements ICommand {
     public void init() {
         //enderchest <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
+                .withPermission(ENDER_CHEST_OTHER_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                     InvSeeHandler.handle(sender, offTarget, true);
                 });
         //enderchest
         new Command(ENDER_CHEST_LABEL)
-                .withPermission(ENDER_CHEST_OTHER_PERMISSION)
+                .withPermission(ENDER_CHEST_PERMISSION)
                 .withAliases(ENDERCHEST_ALIASES)
                 .executesPlayer((sender, args) -> {
                     sender.openInventory(sender.getEnderChest());

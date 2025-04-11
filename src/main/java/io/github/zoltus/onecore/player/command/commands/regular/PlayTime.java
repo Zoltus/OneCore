@@ -13,8 +13,7 @@ import java.time.Duration;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.TIME_PH;
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.*;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_TARGETS_PLAYTIME;
-import static io.github.zoltus.onecore.data.configuration.yamls.Lang.PLAYTIME_YOUR_PLAYTIME;
+import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class PlayTime implements ICommand {
 
@@ -70,6 +69,7 @@ public class PlayTime implements ICommand {
         long minutes = duration.toMinutesPart();
         long seconds = duration.toSecondsPart();
         // Format DD:HH:MM:SS todo to config
+        //PLAYTIME_TIME_FORMAT.get()
         return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
     }
 }

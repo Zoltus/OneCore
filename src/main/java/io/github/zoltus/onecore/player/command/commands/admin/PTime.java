@@ -23,6 +23,7 @@ public class PTime implements ICommand {
                 });
         //TIME <time> <player>
         Argument<?> arg1 = new PlayerArgument()
+                .withPermission(Commands.PTIME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     changeTime(sender, (long) args.get(0), (Player) args.get(1));
                 });

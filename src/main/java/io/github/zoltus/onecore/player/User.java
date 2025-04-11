@@ -139,7 +139,8 @@ public class User {
      * @return location of the home
      */
     public PreLocation getorDefaultHOme(String home) {
-        return homes.get(home.toLowerCase()) != null ? homes.get(home.toLowerCase()) : homes.get(HOME_DEFAULT_NAME.get());
+        String defaultHome = HOME_DEFAULT_NAME.get();
+        return homes.get(home.toLowerCase()) != null ? homes.get(home.toLowerCase()) : homes.get(defaultHome);
     }
 
     /**

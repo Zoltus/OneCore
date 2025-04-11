@@ -61,7 +61,7 @@ public class Repair implements ICommand {
                 .withPermission(Commands.REPAIR_PERMISSION)
                 .withAliases(Commands.REPAIR_ALIASES)
                 .executesPlayer((p, args) -> {
-                    handleRepair(p, p, slots.get(0));
+                    handleRepair(p, p, slots.getFirst());
                 }).then(args1.then(args2))
                 .override();
     }

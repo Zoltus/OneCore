@@ -131,7 +131,7 @@ public final class OneCore extends JavaPlugin {
                 §9   ___  §x§5§5§9§f§f§f  ___      §f░§8  ____
                 §9  / _ \\§x§5§5§9§f§f§f  / __|    §8][__|[]| §7All in one train!
                 §9 | (_) |§x§5§5§9§f§f§f| (__    §8{=======|_|‾‾‾‾‾|_|‾‾‾‾‾|
-                §9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-' 
+                §9  \\___/§x§5§5§9§f§f§f  \\___|  §8.\\/o--000'‾'-0-0-'‾'-0-0-'
                 """);
         Bukkit.getConsoleSender().sendMessage(" ");
     }

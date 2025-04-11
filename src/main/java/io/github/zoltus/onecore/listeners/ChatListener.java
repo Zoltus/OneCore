@@ -18,15 +18,16 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_REMOVE_DUPLICATE_SPACES;
-import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_TRIM;
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.*;
 
 public class ChatListener implements Listener {
     //Chat listening event
     @EventHandler
     public void asyncChatEvent(AsyncPlayerChatEvent e) {
         handleChatFormat(e);
-        handleMentions(e);
+        if (MENTIONS_ENABLED.getBoolean()) {
+            handleMentions(e);
+        }
     }
 
     //todo @everyone bugs a bit with normal mentions if combines "hi@everyone a dd@Zoltus abb"

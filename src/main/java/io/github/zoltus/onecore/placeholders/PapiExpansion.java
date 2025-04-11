@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +38,7 @@ public class PapiExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        ConcurrentHashMap<UUID, Double> balances = OneEconomy.getBalances();
+        Map<UUID, Double> balances = OneEconomy.getBalances();
         String[] split = params.split("_");
         String baltopName = "baltopname";
         String baltopBalance = "baltopbalance";

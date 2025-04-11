@@ -52,7 +52,7 @@ public class WGTabComplete implements Listener {
             } else if (args.length == 3 && StringUtils.startsWithAny(args[1], wgRegionCommands)) {
                 Set<String> regions = rgManager.getRegions().keySet();
                 //Convert allRegions to arraylist:
-                ArrayList<String> allRegions = new ArrayList<>(regions);
+                List<String> allRegions = new ArrayList<>(regions);
                 allRegions.add("__global__");
                 completions = List.copyOf(allRegions);
                 //Rg flag <region> <complete>

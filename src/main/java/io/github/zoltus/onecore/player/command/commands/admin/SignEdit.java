@@ -21,6 +21,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.stream.Stream;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.LINE_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.SIGNEDIT_SET_PERMISSION;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class SignEdit implements ICommand {
@@ -31,6 +32,7 @@ public class SignEdit implements ICommand {
     public void init() {
         //signedit set <line> <text>
         Argument<?> set = multiLiteralArgument(Commands.SIGNEDIT_SET_LABEL, Commands.SIGNEDIT_SET_ALIASES) //SIGNEDIT_SET_LABEL
+                .withPermission(SIGNEDIT_SET_PERMISSION.asPermission())
                 .then(new IntegerArgument("0-3", 0, 3)
                         .then(signTextArg));
         //signedit clear
