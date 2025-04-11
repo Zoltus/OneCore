@@ -153,7 +153,6 @@ public final class OneCore extends JavaPlugin {
                 new KickedForSpamming(),
                 new QuitListener(),
                 new TeleportHandler(),
-                new TestListener(),
                 new WGTabComplete()));
         list.forEach(listener -> Bukkit.getServer().getPluginManager().registerEvents(listener, plugin));
     }
