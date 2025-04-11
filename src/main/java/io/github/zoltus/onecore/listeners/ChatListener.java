@@ -1,13 +1,11 @@
 package io.github.zoltus.onecore.listeners;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.utils.ChatUtils;
+import io.github.zoltus.onecore.data.configuration.yamls.LangBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,10 +22,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_REMO
 import static io.github.zoltus.onecore.data.configuration.yamls.Config.CHAT_TRIM;
 
 public class ChatListener implements Listener {
-    private static final MiniMessage mm = MiniMessage.miniMessage();
-    private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
-
-   /* //Chat listening event
+    //Chat listening event
     @EventHandler
     public void asyncChatEvent(AsyncPlayerChatEvent e) {
         handleChatFormat(e);
@@ -58,14 +53,15 @@ public class ChatListener implements Listener {
                 }
             } else {
                 Player target = Bukkit.getPlayer(matcher.group(1));
-                if (target != null *//*&& !player.equals(sender)*//*) {
+                if (target != null /*&& !player.equals(sender)*/) {
                     message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
                             + target.getDisplayName() + continueColor);
                     target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
                 }
             }
         }
-        String colorFormatted = ChatUtils.asLegacy(message);
+        LangBuilder builder = new LangBuilder(message);
+        String colorFormatted = builder.buildLegacyString();
         e.setMessage(colorFormatted);
     }
 
@@ -76,7 +72,8 @@ public class ChatListener implements Listener {
         //Enables chat colors if player has permission
         if (Config.CHAT_COLORS_ENABLED.getBoolean()
                 && player.hasPermission(Config.CHAT_COLOR_PERMISSION.asPermission())) {
-            String legacy = ChatUtils.asLegacy(e.getMessage());
+            LangBuilder builder = new LangBuilder(e.getMessage());
+            String legacy = builder.buildLegacyString();
             e.setMessage(legacy);
         }
         //Formats chat
@@ -96,15 +93,16 @@ public class ChatListener implements Listener {
             if (CHAT_TRIM.getBoolean()) {
                 format = format.trim();
             }
+            LangBuilder builder = new LangBuilder(e.getMessage());
             //Translates colors for chat format
-            format = ChatUtils.asLegacy(format);
+            format = builder.buildLegacyString();
             try {
                 e.setFormat(format);
             } catch (Exception ex) {
                 System.out.println("Error while formatting chat message! " + ex.getMessage());
             }
         }
-    }*/
+    }
 }
 
 

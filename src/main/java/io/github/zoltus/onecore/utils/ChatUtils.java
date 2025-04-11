@@ -49,26 +49,4 @@ public class ChatUtils {
         }
         return ChatColor.translateAlternateColorCodes('&', sb.toString());
     }
-
-    // For Join and quit
-/*    public static String asLegacy(String str) {
-        Component deserialized = toMiniMessage(str);
-        return mm.serialize(deserialized);
-    }*/
-/*
-    public static Component translateColors(String str) {
-        //Converts &6test &1message to <green>test <blue>message
-        TextComponent deserialize = lcs.deserialize(str);
-        String format = mm.serialize(deserialize);
-        //Removes escapes \
-        String replace = format.replace("\\<", "<");
-        //<hover:show_text:<red>Paina hylkääksesi!><click:run_command:/tpdeny>Hylkää!</click></hover>
-        return mm.deserialize(replace);
-    }*/
-
-/*    public static void mmSend(CommandSender sender, String str) {
-        BukkitAudiences adventure = plugin.adventure();
-        Audience audience = adventure.sender(sender);
-        audience.sendMessage(translateColors(str));
-    }*/
 }

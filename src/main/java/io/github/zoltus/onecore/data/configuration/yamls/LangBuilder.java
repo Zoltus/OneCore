@@ -3,12 +3,12 @@ package io.github.zoltus.onecore.data.configuration.yamls;
 import io.github.zoltus.onecore.OneCore;
 import io.github.zoltus.onecore.data.configuration.IConfig;
 import io.github.zoltus.onecore.player.User;
-import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,15 +17,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@RequiredArgsConstructor
 public class LangBuilder {
 
-    private final IConfig baseLangEntry;
+    private final String baseLangEntry;
     private final Map<String, Object> replacements = new HashMap<>();
 
     private static final OneCore plugin = OneCore.getPlugin();
     private static final MiniMessage mm = MiniMessage.miniMessage();
     private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+
+    public LangBuilder(IConfig baseLangEntry) {
+        this.baseLangEntry = baseLangEntry.get();
+    }
+
+    public LangBuilder(String baseLangEntry) {
+        this.baseLangEntry = baseLangEntry;
+    }
 
     public LangBuilder rb(@NotNull IConfig placeholderKey, @Nullable Object value) {
         String placeholder = placeholderKey.get();
@@ -42,9 +49,8 @@ public class LangBuilder {
 
     @NotNull
     public String buildString() {
-        String template = baseLangEntry.get();
         String colorTemplate = Lang.VARIABLE_COLOR.get();
-        StringBuilder sb = new StringBuilder(template);
+        StringBuilder sb = new StringBuilder(baseLangEntry);
         // Always replace {p} with the prefix
         replacements.put("{p}", Config.PREFIX.get());
 
@@ -54,7 +60,7 @@ public class LangBuilder {
             String valueStr = (value instanceof IConfig config) ? config.get() : Objects.toString(value, "");
             // Create the final colored replacement value string
             String coloredValue = colorTemplate.replace("<variable>", valueStr);
-            // Replace ALL occurrences of the placeholder
+            // Replace placeholders
             int index = sb.indexOf(placeholder);
             while (index != -1) {
                 sb.replace(index, index + placeholder.length(), coloredValue);
@@ -78,7 +84,19 @@ public class LangBuilder {
     }
 
     public String buildLegacyString() {
-        Component deserialized = mm.deserialize(buildString());
-        return lcs.serialize(deserialized);
+        String str = buildString();
+        str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
+        str = ChatColor.translateAlternateColorCodes('&', str);
+        return str;
     }
+
+/*    public Component buildLegacyString2() {
+        //Converts &6test &1message to <green>test <blue>message
+        TextComponent deserialize = lcs.deserialize(buildString());
+        String format = mm.serialize(deserialize);
+        //Removes escapes \
+        String replace = format.replace("\\<", "<");
+        //<hover:show_text:<red>Paina hylkääksesi!><click:run_command:/tpdeny>Hylkää!</click></hover>
+        return mm.deserialize(replace);
+    }*/
 }
