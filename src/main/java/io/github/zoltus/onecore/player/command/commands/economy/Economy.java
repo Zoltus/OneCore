@@ -194,7 +194,7 @@ public class Economy implements ICommand {
     }
 
     public void printBalances(CommandSender sender, int page) {
-        LinkedHashMap<UUID, Double> balances = OneEconomy.getBalanceTop();
+        Map<UUID, Double> balances = OneEconomy.getBalanceTop();
         if (balances.isEmpty()) {
             ECONOMY_BALTOP_EMPTY.send(sender);
         } else {

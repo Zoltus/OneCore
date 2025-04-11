@@ -204,7 +204,7 @@ public class SQLiteImpl implements Database {
         try (Connection con = connection()
              ; PreparedStatement playerStm = con.prepareStatement(sql)
              ; ResultSet rsPlayer = playerStm.executeQuery()) {
-            LinkedHashMap<UUID, Double> balanceTop = OneEconomy.getBalanceTop();
+            Map<UUID, Double> balanceTop = OneEconomy.getBalanceTop();
             //Clear baltop
             balanceTop.clear();
             while (rsPlayer.next()) {

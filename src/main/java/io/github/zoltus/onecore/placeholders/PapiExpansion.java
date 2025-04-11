@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.SEEN_DATE_FORMAT;
 
@@ -38,7 +39,7 @@ public class PapiExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        LinkedHashMap<UUID, Double> balances = OneEconomy.getBalances();
+        ConcurrentHashMap<UUID, Double> balances = OneEconomy.getBalances();
         String[] split = params.split("_");
         String baltopName = "baltopname";
         String baltopBalance = "baltopbalance";

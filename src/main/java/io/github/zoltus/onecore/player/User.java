@@ -32,7 +32,7 @@ import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DE
 public class User {
 
     @Getter
-    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>(); // todo concurrent access?
+    private static final ConcurrentHashMap<UUID, User> users = new ConcurrentHashMap<>();
     private static OneCore plugin = OneCore.getPlugin();
     private static Economy economy = plugin.getVault();
     private final OfflinePlayer offP;

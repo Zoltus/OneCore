@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -25,11 +26,11 @@ public final class OneEconomy extends AbstractEconomy {
 
     @Getter
     @Setter
-    private static LinkedHashMap<UUID, Double> balances = new LinkedHashMap<>();
+    private static ConcurrentHashMap<UUID, Double> balances = new ConcurrentHashMap<>();
     //load baltop from db
 
     @Getter
-    private static final LinkedHashMap<UUID, Double> balanceTop = new LinkedHashMap<>();
+    private static final Map<UUID, Double> balanceTop = Collections.synchronizedMap(new LinkedHashMap<>());
 
     private final Logger logger;
     private final OneCore plugin;
@@ -145,9 +146,7 @@ public final class OneEconomy extends AbstractEconomy {
 
     @Override
     public double getBalance(OfflinePlayer offP) {
-        //todo xxx
-        return balances.get(offP.getUniqueId());
-        //  return balances.compute(offP.getUniqueId(), (k, v) -> v == null ? 0 : v);
+        return balances.getOrDefault(offP.getUniqueId(), 0.0);
     }
 
     @Override

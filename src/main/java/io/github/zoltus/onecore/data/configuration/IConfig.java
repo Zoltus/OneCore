@@ -29,6 +29,7 @@ public interface IConfig {
     String PERM_PH = "<perm>";
 
     OneYml yml();
+
     String getPath();
 
     default String asPermission() {
@@ -45,7 +46,7 @@ public interface IConfig {
     }
 
     default String asLegacyString() {
-         LangBuilder builder = new LangBuilder(this);
+        LangBuilder builder = new LangBuilder(this);
         return builder.buildLegacyString();
     }
 
