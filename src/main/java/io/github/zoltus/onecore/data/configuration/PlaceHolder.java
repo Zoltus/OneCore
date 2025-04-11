@@ -4,7 +4,7 @@ import lombok.Getter;
 
 //Placeholders
 public enum PlaceHolder {
-    PREFIX_PH("<prefix>"),
+    PREFIX_PH("{p}"),
     PLAYER_PH("<player>"),
     PLAYER2_PH("<player2>"),
     AMOUNT_PH("<amount>"),

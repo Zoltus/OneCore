@@ -1,9 +1,6 @@
 package io.github.zoltus.onecore.data.configuration.yamls;
 
-import io.github.zoltus.onecore.data.configuration.IConfig;
-import io.github.zoltus.onecore.data.configuration.OneYml;
-import io.github.zoltus.onecore.data.configuration.PlaceHolder;
-import io.github.zoltus.onecore.data.configuration.Yamls;
+import io.github.zoltus.onecore.data.configuration.*;
 import io.github.zoltus.onecore.player.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -186,11 +183,6 @@ public enum Lang implements IConfig {
         LangBuilder builder = new LangBuilder(this);
         builder.send(sender);
     }
-/*
-    public LangBuilder rb(IConfig placeholderKey, Object value) {
-        LangBuilder builder = new LangBuilder(this);
-        return builder.rb(placeholderKey, value);
-    }*/
 
     public LangBuilder rb(PlaceHolder placeholder, Object value) {
         LangBuilder builder = new LangBuilder(this);

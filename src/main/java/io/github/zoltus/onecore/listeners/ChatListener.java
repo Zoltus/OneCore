@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.listeners;
 
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.configuration.yamls.LangBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -93,7 +93,7 @@ public class ChatListener implements Listener {
             if (CHAT_TRIM.getBoolean()) {
                 format = format.trim();
             }
-            LangBuilder builder = new LangBuilder(e.getMessage());
+            LangBuilder builder = new LangBuilder(format);
             //Translates colors for chat format
             format = builder.buildLegacyString();
             try {

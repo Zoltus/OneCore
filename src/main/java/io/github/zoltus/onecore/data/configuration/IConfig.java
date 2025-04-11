@@ -1,7 +1,6 @@
 package io.github.zoltus.onecore.data.configuration;
 
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
-import io.github.zoltus.onecore.data.configuration.yamls.LangBuilder;
 
 import java.util.List;
 

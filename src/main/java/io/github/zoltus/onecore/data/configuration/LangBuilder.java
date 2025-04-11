@@ -1,15 +1,16 @@
-package io.github.zoltus.onecore.data.configuration.yamls;
+package io.github.zoltus.onecore.data.configuration;
 
 import io.github.zoltus.onecore.OneCore;
-import io.github.zoltus.onecore.data.configuration.IConfig;
-import io.github.zoltus.onecore.data.configuration.PlaceHolder;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
+import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.User;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,26 +21,28 @@ import java.util.Objects;
 
 public class LangBuilder {
 
-    private final String baseLangEntry;
+    private String baseLangEntry;
     private final Map<PlaceHolder, Object> replacements = new HashMap<>();
 
     private static final OneCore plugin = OneCore.getPlugin();
     private static final MiniMessage mm = MiniMessage.miniMessage();
-    private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.legacySection();
+    private static final LegacyComponentSerializer lcs = LegacyComponentSerializer.builder()
+            .character('&') // Use the section symbol (§)
+            // .formats(LEGACY_COLOR) //todo ?
+            .useUnusualXRepeatedCharacterHexFormat()  // Enable BungeeCord's §x§R§R§G§G§B§B format //todo test
+            .hexColors()    // Enable serialization of hex colors in the #RRGGBB format // todo test
+            .build();
 
+    //todo combine a bit
     public LangBuilder(IConfig baseLangEntry) {
         this.baseLangEntry = baseLangEntry.get();
+        replacements.put(PlaceHolder.PREFIX_PH, Config.PREFIX.get());
     }
 
     public LangBuilder(String baseLangEntry) {
         this.baseLangEntry = baseLangEntry;
+        replacements.put(PlaceHolder.PREFIX_PH, Config.PREFIX.get());
     }
-
-/*    public LangBuilder rb(@NotNull IConfig placeholderKey, @Nullable Object value) {
-        String placeholder = placeholderKey.get();
-        replacements.put(placeholder, value);
-        return this;
-    }*/
 
     public LangBuilder rb(@NotNull PlaceHolder placeholder, @Nullable Object value) {
         replacements.put(placeholder, value);
@@ -51,7 +54,6 @@ public class LangBuilder {
         String colorTemplate = Lang.VARIABLE_COLOR.get();
         StringBuilder sb = new StringBuilder(baseLangEntry);
         // Always replace {p} with the prefix
-        replacements.put(PlaceHolder.PREFIX_PH, Config.PREFIX.get());
 
         for (Map.Entry<PlaceHolder, Object> entry : replacements.entrySet()) {
             String placeholder = entry.getKey().getPlaceholder();
@@ -69,33 +71,34 @@ public class LangBuilder {
         return sb.toString();
     }
 
+    public void send(CommandSender... receivers) {
+        Component builtComponent = buildComponent();
+        BukkitAudiences adventure = plugin.adventure();
+
+        for (CommandSender receiver : receivers) {
+            Audience audience = adventure.sender(receiver);
+            audience.sendMessage(builtComponent);
+        }
+    }
+
     public void send(@NotNull User user) {
         if (user.isOnline()) {
             send(user.getPlayer());
         }
     }
 
-    public void send(CommandSender sender) {
-        Component deserialized = mm.deserialize(buildString());
-        BukkitAudiences adventure = plugin.adventure();
-        Audience audience = adventure.sender(sender);
-        audience.sendMessage(deserialized);
-    }
-
     public String buildLegacyString() {
-        String str = buildString();
-        str = lcs.serialize(mm.deserialize(str.replace("§", "&")));
-        str = ChatColor.translateAlternateColorCodes('&', str);
-        return str;
+        baseLangEntry = baseLangEntry.replaceAll("§", "&");
+        Component component = buildComponent();
+        String serialize = lcs.serialize(component);
+        return ChatColor.translateAlternateColorCodes('&', serialize);
     }
 
-/*    public Component buildLegacyString2() {
-        //Converts &6test &1message to <green>test <blue>message
+    public Component buildComponent() {
         TextComponent deserialize = lcs.deserialize(buildString());
         String format = mm.serialize(deserialize);
-        //Removes escapes \
-        String replace = format.replace("\\<", "<");
-        //<hover:show_text:<red>Paina hylkääksesi!><click:run_command:/tpdeny>Hylkää!</click></hover>
+        String replace = format.replace("\\<", "<"); //Removes escapes \
+        replace = replace.replace("§f", ""); // replace random &f which minimessage adds for no reason
         return mm.deserialize(replace);
-    }*/
+    }
 }
