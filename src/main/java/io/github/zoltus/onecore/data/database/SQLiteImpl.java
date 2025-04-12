@@ -8,7 +8,6 @@ import io.github.zoltus.onecore.utils.PreLocation;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
@@ -20,7 +19,7 @@ public class SQLiteImpl implements Database {
     @Getter
     private Connection connection;
     private final OneCore plugin;
-    private final int saveInterval = Config.DATA_SAVE_INTERVAL.getInt(); //todo reload cmd dont change this?
+    private final int saveInterval = Config.DB_SAVE_INTERVAL.getInt(); //todo reload cmd dont change this?
     private final SQLiteConfig config = new SQLiteConfig();
 
     private SQLiteImpl(OneCore plugin) {

@@ -48,7 +48,7 @@ public final class OneEconomy extends AbstractEconomy {
 
     private void sortScheduler() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
-                () -> plugin.getDatabase().updateBalTop(), 0, 20L * 60 * Config.DATA_SAVE_INTERVAL.getInt());
+                () -> plugin.getDatabase().updateBalTop(), 0, 20L * 60 * Config.DB_SAVE_INTERVAL.getInt());
     }
 
     //Economy

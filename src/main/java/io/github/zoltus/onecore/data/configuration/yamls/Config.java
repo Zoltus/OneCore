@@ -19,7 +19,7 @@ public enum Config implements IConfig {
     CHAT_TRIM("chat.trim"),
     CURRENCY_PLURAL("economy.currency-plural"),
     CURRENCY_SINGULAR("economy.currency-singular"),
-    DATA_SAVE_INTERVAL("data-save-interval-minutes"),
+    DB_SAVE_INTERVAL("database.save-interval-minutes"),
     ECONOMY_HOOK("economy.enabled-hook"),
     ECONOMY_USE_ONEECONOMY("economy.use-oneeconomy"),
     KICKED_FOR_SPAMMING_BYPASS("kicked-for-spamming-bypass-permission"),

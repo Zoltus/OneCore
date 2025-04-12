@@ -7,7 +7,8 @@ Data:
   permission-prefix: onecore.
   # How often player & server data is saved.
   # Baltop also updates after database is updated.
-  data-save-interval-minutes: 5
+  database:
+    save-interval-minutes: 5
   kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
   mentions:
