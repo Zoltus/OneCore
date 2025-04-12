@@ -20,7 +20,6 @@ public class SQLiteImpl implements Database {
     @Getter
     private Connection connection;
     private final OneCore plugin;
-    private final BukkitScheduler scheduler = Bukkit.getScheduler();
     private final int saveInterval = Config.DATA_SAVE_INTERVAL.getInt(); //todo reload cmd dont change this?
     private final SQLiteConfig config = new SQLiteConfig();
 
@@ -116,14 +115,14 @@ public class SQLiteImpl implements Database {
 
     @Override
     public void initAutoSave() {
-        scheduler.runTaskTimerAsynchronously(plugin,
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
                 () -> saveData(true), (saveInterval * 20L) * 60, (saveInterval * 20L) * 60);
     }
 
     @Override
     public void saveData(boolean async) {
         if (async) {
-            scheduler.runTaskAsynchronously(plugin, () -> saveData());
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> saveData());
         } else {
             saveData();
         }
