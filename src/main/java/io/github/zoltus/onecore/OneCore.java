@@ -141,7 +141,7 @@ public final class OneCore extends JavaPlugin {
         //Adds listeners to list if enabled and then registers them.
         List<Listener> list = new ArrayList<>();
         if (Commands.INVSEE_ENABLED.getBoolean() || Commands.ENDER_CHEST_ENABLED.getBoolean())
-            list.add(new InvSeeListener());
+            list.add(new InvseeHandler());
         if (Config.TELEPORT_VELOCITY_RESET.getBoolean())
             list.add(new TeleportVelocity());
         if (worldGuardFlags != null)

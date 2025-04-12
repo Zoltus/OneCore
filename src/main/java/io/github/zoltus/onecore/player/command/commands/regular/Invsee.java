@@ -1,6 +1,6 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
-import io.github.zoltus.onecore.listeners.InvSeeListener;
+import io.github.zoltus.onecore.listeners.InvseeHandler;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
@@ -19,7 +19,7 @@ public class Invsee implements ICommand {
                 .then(new OfflinePlayerArgument()
                         .executesPlayer((sender, args) -> {
                             OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
-                            InvSeeListener.openInventory(sender, offTarget, false);
+                            InvseeHandler.openInventory(sender, offTarget, false);
                         })).override();
     }
 }

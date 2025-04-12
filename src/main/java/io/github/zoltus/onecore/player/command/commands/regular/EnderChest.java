@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.player.command.commands.regular;
 
 import dev.jorel.commandapi.arguments.Argument;
-import io.github.zoltus.onecore.listeners.InvSeeListener;
+import io.github.zoltus.onecore.listeners.InvseeHandler;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
@@ -17,7 +17,7 @@ public class EnderChest implements ICommand {
                 .withPermission(ENDER_CHEST_OTHER_PERMISSION.asPermission())
                 .executesPlayer((sender, args) -> {
                     OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
-                    InvSeeListener.openInventory(sender, offTarget, true);
+                    InvseeHandler.openInventory(sender, offTarget, true);
                 });
         //enderchest
         new Command(ENDER_CHEST_LABEL)
