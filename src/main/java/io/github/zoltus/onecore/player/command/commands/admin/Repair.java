@@ -21,7 +21,7 @@ import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.SLOT_PH;
-import static io.github.zoltus.onecore.data.configuration.yamls.Commands.REPAIR_OTHER_PERMISSION;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.REPAIR_PERMISSION_OTHER;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Repair implements ICommand {
@@ -54,7 +54,7 @@ public class Repair implements ICommand {
                 });
         //repair <hand/all> <player>
         Argument<?> args2 = new PlayerArgument()
-                .withPermission(REPAIR_OTHER_PERMISSION.asPermission())
+                .withPermission(REPAIR_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     handleRepair(sender, (Player) args.get(1), (String) args.get(0));
                 });

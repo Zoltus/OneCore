@@ -72,7 +72,7 @@ Data:
     edit-permission: enderchest.edit
     label: enderchest
     permission: enderchest
-    other-permission: enderchest.other
+    permission-other: enderchest.other
     aliases:
       - ec
       - echest
@@ -93,7 +93,7 @@ Data:
   gamemode:
     enabled: true
     label: gamemode
-    other-permission: gamemode-other
+    permission-other: gamemode-other
     # permprefix.gamemode unlocks /gamemode
     # permprefix.gamemode.survival unlocks /gamemode survival and its aliases
     permission: gamemode
@@ -178,7 +178,7 @@ Data:
     permission: sethome
     #Usage example onecore.sethome.3
     permission-amount: home.amount
-    other-permission: sethome.other
+    permission-other: sethome.other
     aliases: []
   #  - examplealias1
   invsee:
@@ -203,14 +203,14 @@ Data:
   ping:
     enabled: true
     label: ping
-    other-permission: ping.other
+    permission-other: ping.other
     permission: ping
     aliases: []
   #  - examplealias1
   playtime:
     enabled: true
     label: playtime
-    other-permission: playtime.other
+    permission-other: playtime.other
     permission: playtime
     aliases: []
   #  - examplealias1
@@ -224,7 +224,7 @@ Data:
     enabled: true
     label: repair
     permission: repair
-    other-permission: repair.other
+    permission-other: repair.other
     aliases: []
   #  - examplealias1
   seen:
@@ -329,7 +329,7 @@ Data:
   top:
     enabled: true
     label: top
-    other-permission: top.other
+    permission-other: top.other
     permission: top
     aliases: []
   #  - examplealias1

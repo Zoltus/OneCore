@@ -19,7 +19,7 @@ public class Ping implements ICommand {
     public void init() {
         //Ping <player>
         Argument<?> arg0 = new PlayerArgument()
-                .withPermission(Commands.PING_OTHER_PERMISSION.asPermission())
+                .withPermission(Commands.PING_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     Player target = (Player) args.get(0);
                     PING_TARGETS_PING.rb(PING_PH, target.getPing())

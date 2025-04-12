@@ -14,7 +14,7 @@ public class EnderChest implements ICommand {
     public void init() {
         //enderchest <player>
         Argument<?> arg0 = new OfflinePlayerArgument()
-                .withPermission(ENDER_CHEST_OTHER_PERMISSION.asPermission())
+                .withPermission(ENDER_CHEST_PERMISSION_OTHER.asPermission())
                 .executesPlayer((sender, args) -> {
                     OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
                     InvseeHandler.openInventory(sender, offTarget, true);

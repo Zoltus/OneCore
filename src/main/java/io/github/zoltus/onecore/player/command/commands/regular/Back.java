@@ -43,7 +43,7 @@ public class Back implements ICommand, Listener {
     public void init() {
         // back <player>
         Argument<Player> other = new PlayerArgument()
-                .withPermission(BACK_OTHER_PERMISSION.asPermission())
+                .withPermission(BACK_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     executes(sender, (Player) args.get(0));
                 });
