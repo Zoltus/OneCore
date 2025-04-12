@@ -5,10 +5,11 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.TIME_PH;
@@ -24,8 +25,9 @@ public class PlayTime implements ICommand {
                 .withPermission(Commands.PLAYTIME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer offTarget = (OfflinePlayer) args.get(0);
-                    int playtime = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
-                    String timeMessage = secondsToTime(playtime);
+                    String format = PLAYTIME_TIME_FORMAT.get();
+                    int playTimeTicks = offTarget.getStatistic(Statistic.PLAY_ONE_MINUTE);
+                    String timeMessage = secondsToTime(playTimeTicks, format);
                     PLAYTIME_TARGETS_PLAYTIME
                             .rb(TIME_PH, timeMessage)
                             .rb(PLAYER_PH, offTarget.getName())
@@ -36,12 +38,35 @@ public class PlayTime implements ICommand {
                 .withPermission(PLAYTIME_PERMISSION)
                 .withAliases(PLAYTIME_ALIASES)
                 .executesPlayer((player, args) -> {
-                    String timeMessage = secondsToTime(player.getStatistic(Statistic.PLAY_ONE_MINUTE));
+                    String format = PLAYTIME_TIME_FORMAT.get();
+                    int playTimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
+                    String timeMessage = secondsToTime(playTimeTicks, format);
                     PLAYTIME_YOUR_PLAYTIME
                             .rb(TIME_PH, timeMessage)
                             .send(player);
                 }).then(arg0)
                 .override();
+    }
+    public static String secondsToTime(int ticks, String format) {
+        long totalSeconds = (long) ticks / 20;
+        long totalMillis = totalSeconds * 1000;
+        if (format == null || format.isEmpty()) {
+            format = "dd:HH:mm:ss"; // Default format
+        }
+
+        try {
+            return DurationFormatUtils.formatDuration(totalMillis, format, true);
+        } catch (Exception e) {
+            System.err.println("Error formatting duration with format '" + format + "': " + e.getMessage());
+            long days = TimeUnit.MILLISECONDS.toDays(totalMillis);
+            long hours = TimeUnit.MILLISECONDS.toHours(totalMillis) % 24;
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(totalMillis) % 60;
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(totalMillis) % 60;
+            return String.format("%02d:%02d:%02d:%02d (fallback)", days, hours, minutes, seconds);
+        }
+    }
+}
+
 
         /* todo? Optional
         new CommandAPICommand("asd")
@@ -59,17 +84,3 @@ public class PlayTime implements ICommand {
                         PLAYTIME_TARGETS_PLAYTIME.send(sender, TIME_PH, timeMessage, PLAYER_PH, offTarget.getName());
                     }
                 }).override();*/
-    }
-
-    private String secondsToTime(int ticks) {
-        int totalSeconds = ticks / 20;
-        Duration duration = Duration.ofSeconds(totalSeconds);
-        long days = duration.toDays();
-        long hours = duration.toHours();
-        long minutes = duration.toMinutesPart();
-        long seconds = duration.toSecondsPart();
-        // Format DD:HH:MM:SS todo to config
-        //PLAYTIME_TIME_FORMAT.get()
-        return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
-    }
-}

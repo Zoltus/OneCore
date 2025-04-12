@@ -151,8 +151,18 @@ Data:
   playtime:
     # <time>
     targets-playtime: '{p} Pelaajan <player> peliaika on <time>.'
-    time-format: HH:mm:ss
+    # Duration Patterns:
+    # y - years
+    # M - months
+    # d - days
+    # H - hours
+    # m - minutes
+    # s - seconds
+    # S - milliseconds
+    # Repetition controls padding (e.g., HH pads hours to 2 digits).
+    # Use single quotes for literal text (e.g., "d 'days', H 'hours'").
     # <player>, <time>
+    time-format: HH:mm:ss
     your-playtime: '{p} Sinun peliaikasi on <time>.'
   reload:
     reloaded: '{p} Files reloaded!'

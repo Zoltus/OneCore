@@ -82,7 +82,7 @@ public enum Lang implements IConfig {
     PWEATHER_CHANGED("pweather.changed"),
     PWEATHER_OTHER_CHANGED("pweather.changed-other"),
     PLAYTIME_TARGETS_PLAYTIME("playtime.targets-playtime"),
-    //PLAYTIME_TIME_FORMAT("playtime.time-format"),
+    PLAYTIME_TIME_FORMAT("playtime.time-format"),
     PLAYTIME_YOUR_PLAYTIME("playtime.your-playtime"),
     QUIT("other.quit"),
     RELOAD_RELOADED("reload.reloaded"),
