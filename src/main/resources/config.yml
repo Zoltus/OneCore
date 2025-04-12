@@ -2,7 +2,7 @@
 
 Data:
   spawn: []
-  prefix: '<bold><gradient:blue:#559fff>OneCore</gradient><dark_gray><bold>»</bold><#e6e6e6>'
+  prefix: '<bold><gradient:blue:#559fff>OneCore</gradient><dark_gray><bold> »</bold><#e6e6e6>'
   # This prefix will be infront of all onecore permissions.
   permission-prefix: onecore.
   # How often player & server data is saved.
