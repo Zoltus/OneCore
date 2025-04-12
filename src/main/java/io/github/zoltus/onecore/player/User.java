@@ -26,6 +26,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.zoltus.onecore.data.configuration.yamls.Commands.HOME_DEFAULT_NAME;
+import static io.github.zoltus.onecore.data.configuration.yamls.Config.DEFAULT_HOME_AMOUNT;
 
 
 @Data
@@ -202,7 +203,7 @@ public class User {
                 .filter(permission -> permission.getPermission().startsWith(perm))
                 .map(permission -> Integer.parseInt(permission.getPermission().replace(perm, "")))
                 .max(Integer::compareTo)
-                .orElse(0) > homes.size();
+                .orElse(DEFAULT_HOME_AMOUNT.getInt()) > homes.size();
     }
 
     /*

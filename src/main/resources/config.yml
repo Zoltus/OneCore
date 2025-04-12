@@ -11,6 +11,7 @@ Data:
     save-interval-minutes: 5
   kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
+  default-home-amount: 3
   mentions:
     enabled: true
     # Color of the mention

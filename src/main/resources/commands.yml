@@ -176,9 +176,9 @@ Data:
     enabled: true
     label: sethome
     permission: sethome
-    #Usage example onecore.sethome.3
-    permission-amount: home.amount
     permission-other: sethome.other
+    # Usage example give user perm onecore.sethome.amount.5, Config.yml also has default home amount if this is not set.
+    permission-amount: sethome.amount
     aliases: []
   #  - examplealias1
   invsee:
