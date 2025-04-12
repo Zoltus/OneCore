@@ -21,11 +21,12 @@ import java.util.List;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.PLAYER_PH;
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.SLOT_PH;
+import static io.github.zoltus.onecore.data.configuration.yamls.Commands.REPAIR_OTHER_PERMISSION;
 import static io.github.zoltus.onecore.data.configuration.yamls.Lang.*;
 
 public class Repair implements ICommand {
 
-    //todo cleanup, to enum
+    //todo cleanup, to enum?
     private final List<String> slots = Arrays.asList(
             REPAIR_SLOT_HAND.asLegacyString().toLowerCase(),
             REPAIR_SLOT_ALL.asLegacyString().toLowerCase(),
@@ -53,6 +54,7 @@ public class Repair implements ICommand {
                 });
         //repair <hand/all> <player>
         Argument<?> args2 = new PlayerArgument()
+                .withPermission(REPAIR_OTHER_PERMISSION.asPermission())
                 .executes((sender, args) -> {
                     handleRepair(sender, (Player) args.get(1), (String) args.get(0));
                 });
@@ -96,21 +98,11 @@ public class Repair implements ICommand {
 
     private boolean repair(ItemStack... stacks) {
         boolean fixedAny = false;
-      /*  Stream.of(stacks)
-                .filter(stack -> stack != null && stack.hasItemMeta())
-                .filter(stack -> stack.getItemMeta() instanceof Damageable damageMeta && damageMeta.hasDamage())
-                .forEach(stack -> {
-                    Damageable damageMeta = (Damageable) stack.getItemMeta();
-                    damageMeta.setDamage(-stack.getType().getMaxDurability());
-                    stack.setItemMeta(damageMeta);
-                    //fixedAny = true;
-                });*/ //todo
-
         for (ItemStack stack : stacks) {
             if (stack != null && stack.hasItemMeta()) {
                 ItemMeta meta = stack.getItemMeta();
                 if (meta instanceof Damageable damageMeta && damageMeta.hasDamage()) {
-                    damageMeta.setDamage(-stack.getType().getMaxDurability());
+                    damageMeta.setDamage(0);
                     stack.setItemMeta(meta);
                     fixedAny = true;
                 }

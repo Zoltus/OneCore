@@ -203,7 +203,7 @@ Data:
   ping:
     enabled: true
     label: ping
-    other-permission: Ping.other
+    other-permission: ping.other
     permission: ping
     aliases: []
   #  - examplealias1
@@ -224,6 +224,7 @@ Data:
     enabled: true
     label: repair
     permission: repair
+    other-permission: repair.other
     aliases: []
   #  - examplealias1
   seen:

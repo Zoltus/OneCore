@@ -127,6 +127,7 @@ public enum Commands implements IConfig {
     REPAIR_ENABLED("repair.enabled"),
     REPAIR_LABEL("repair.label"),
     REPAIR_PERMISSION("repair.permission"),
+    REPAIR_OTHER_PERMISSION("repair.other-permission"),
     SEEN_ALIASES("seen.aliases"),
     SEEN_ENABLED("seen.enabled"),
     SEEN_LABEL("seen.label"),
