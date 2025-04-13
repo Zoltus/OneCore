@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 
@@ -28,6 +29,7 @@ public class InvseeHandler implements Listener {
     private static final BiMap<UUID, Inventory> regInv = HashBiMap.create();
     private static final BiMap<UUID, Inventory> enderInv = HashBiMap.create();
 
+    // Todo armor slots & offhand & mouse
     public static void openInventory(Player sender, OfflinePlayer target, boolean isEnderChest) {
         Inventory inv;
         UUID targetUUID = target.getUniqueId();
@@ -41,7 +43,8 @@ public class InvseeHandler implements Listener {
         } else { // read offlineInv
             NBTPlayer nbtPlayer = new NBTPlayer(target);
             InventoryType type = isEnderChest ? InventoryType.ENDER_CHEST : InventoryType.PLAYER;
-            inv = Bukkit.createInventory(null, type);
+            int size = isEnderChest ? type.getDefaultSize() : 36;
+            inv = Bukkit.createInventory(null, size);
             //Chooses if it uses enderchesitems or normal inv items
             Map<Integer, ItemStack> items = isEnderChest ? nbtPlayer.getEnderItems() : nbtPlayer.getInventory();
             items.forEach((key, item) -> {
