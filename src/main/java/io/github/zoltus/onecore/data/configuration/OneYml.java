@@ -2,6 +2,7 @@ package io.github.zoltus.onecore.data.configuration;
 
 import com.google.common.io.Files;
 import io.github.zoltus.onecore.OneCore;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -58,6 +59,18 @@ public class OneYml extends YamlConfiguration {
     public <T> T getOrDefault(String path, T def) {
         T value = (T) get(path);
         return value == null ? def : value;
+    }
+
+    public float getFloat(String path) {
+        Object rawValue = getOrDefault(path);
+        return switch (rawValue) {
+            case Float f -> f;
+            case Double d -> d.floatValue();
+            case Integer i -> i.floatValue();
+            case Long l -> l.floatValue();
+            case String s -> NumberUtils.toFloat(s);
+            default -> throw new IllegalArgumentException("Cannot convert " + rawValue.getClass() + " to float");
+        };
     }
 
     //* Reloads config from file
