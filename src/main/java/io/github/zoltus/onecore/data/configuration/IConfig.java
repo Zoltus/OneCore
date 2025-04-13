@@ -31,6 +31,10 @@ public interface IConfig {
         return yml().getInt("Data." + getPath());
     }
 
+    default float getFloat() {
+        return yml().getFloat("Data." + getPath());
+    }
+
     default long getLong() {
         return yml().getLong("Data." + getPath());
     }

@@ -18,10 +18,11 @@ Data:
     color: '<#00ff00><bold>'
     # Permission to mention players
     permission: mention
-    # Permission to mention everyone
-    mention-everyone-permission: mention-everyone
-    # Sound to play when mentioned
+    sound-enabled: true
     sound: BLOCK_NOTE_BLOCK_BANJO
+    # Float, has to contain . Example: 0.5
+    sound-volume: 1.0
+    sound-pitch: 1.0
   chat:
     colors-enabled: true
     color-permission: chat.colors

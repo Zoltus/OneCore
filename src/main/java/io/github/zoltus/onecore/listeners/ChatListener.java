@@ -38,26 +38,21 @@ public class ChatListener implements Listener {
         }
         String message = e.getMessage();
         //Handle @<player>
-        Matcher matcher = Pattern.compile("@(\\w+)|@everyone").matcher(message);
+        Matcher matcher = Pattern.compile("(\\w+)").matcher(message);
         while (matcher.find()) {
             int start = matcher.start();
             String beforeColor = ChatColor.getLastColors(message.substring(0, start));
-            String continueColor = StringUtils.defaultIfEmpty(beforeColor, "§f");
-            //Handle @everyone
-            if (matcher.group().equals("@everyone")) {
-                if (p.hasPermission(Config.MENTION_EVERYONE_PERMISSION.asPermission())) {
-                    for (Player target : Bukkit.getOnlinePlayers()) {
-                        message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
-                                + "@Everyone" + continueColor);
-                        target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
-                    }
-                }
-            } else {
-                Player target = Bukkit.getPlayer(matcher.group(1));
-                if (target != null /*&& !player.equals(sender)*/) {
-                    message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
-                            + target.getDisplayName() + continueColor);
-                    target.playSound(target, Sound.valueOf(Config.MENTION_SOUND.get()), 1, 1);
+            String continueColor = StringUtils.defaultIfEmpty(beforeColor, "<reset>"); // todo <reset>?
+            Player target = Bukkit.getPlayer(matcher.group(1));
+            if (target != null /*&& !player.equals(sender)*/) {
+                message = message.replace(matcher.group(), Config.MENTION_COLOR.get()
+                        + target.getDisplayName() + continueColor);
+
+                if (Config.MENTION_SOUND_ENABLED.getBoolean()) {
+                    Sound sound = Sound.valueOf(Config.MENTION_SOUND.get());
+                    float volume = Config.MENTION_SOUND_VOLUME.getFloat();
+                    float pitch = Config.MENTION_SOUND_PITCH.getFloat();
+                    target.playSound(target, sound, volume, pitch);
                 }
             }
         }
