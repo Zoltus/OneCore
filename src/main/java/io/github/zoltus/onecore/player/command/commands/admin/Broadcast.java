@@ -3,11 +3,13 @@ package io.github.zoltus.onecore.player.command.commands.admin;
 import dev.jorel.commandapi.arguments.ChatArgument;
 import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
+import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class Broadcast implements ICommand {
@@ -22,7 +24,17 @@ public class Broadcast implements ICommand {
                             BaseComponent[] components = (BaseComponent[]) args.get(0);
                             String message = Lang.BROADCAST_PREFIX.get() + BaseComponent.toLegacyText(components);
                             LangBuilder langBuilder = new LangBuilder(message);
-                            langBuilder.send(Bukkit.getOnlinePlayers().toArray(Player[]::new));
+                            Player[] players = Bukkit.getOnlinePlayers().toArray(Player[]::new);
+                            langBuilder.send(players);
+
+                            if (Config.BROADCAST_SOUND_ENABLED.getBoolean()) {
+                                for (Player player : players) {
+                                    Sound sound = Sound.valueOf(Config.BROADCAST_SOUND.get());
+                                    float volume = Config.BROADCAST_SOUND_VOLUME.getFloat();
+                                    float pitch = Config.BROADCAST_SOUND_PITCH.getFloat();
+                                    player.playSound(player, sound, volume, pitch);
+                                }
+                            }
                         })
                 ).override();
     }

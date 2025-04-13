@@ -12,6 +12,12 @@ Data:
   kicked-for-spamming-bypass-permission: kick.bypass
   user-console-filter: true
   default-home-amount: 3
+  broadcast:
+    sound-enabled: true
+    sound: BLOCK_NOTE_BLOCK_BANJO
+    # Float, has to contain . Example: 0.5
+    sound-volume: 1.0
+    sound-pitch: 1.0
   mentions:
     enabled: true
     # Color of the mention
