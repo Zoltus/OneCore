@@ -17,4 +17,3 @@ softdepend:
   - WorldGuard
 commands: {}
 permissions: {}
-api-version: '1.21.4'

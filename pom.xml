@@ -10,27 +10,27 @@
         <!-- Removes warnings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Api's -->
-        <spigotAPI.version>1.21.4-R0.1-SNAPSHOT</spigotAPI.version>
-        <lombok.version>1.18.34</lombok.version>
+        <spigotAPI.version>1.21.5-R0.1-SNAPSHOT</spigotAPI.version>
+        <lombok.version>1.18.38</lombok.version>
         <bstats.version>3.1.0</bstats.version>
         <vault.version>1.7.1</vault.version>
         <!-- TODO Does commandapi ship with this? -->
-        <nbtapi.version>2.14.1</nbtapi.version>
+        <nbtapi.version>2.15.0</nbtapi.version>
         <apache-compress>1.27.1</apache-compress>
         <paperlib.version>1.0.8</paperlib.version>
         <placeholderapi.version>2.11.6</placeholderapi.version>
-        <commandapi.version>10.0.0</commandapi.version>
+        <commandapi.version>10.0.1</commandapi.version>
         <sqlite-jdbc.version>3.45.3.0</sqlite-jdbc.version>
         <!-- Maven -->
         <maven.compiler.release>21</maven.compiler.release>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
-        <adventure-serializer.version>4.20.0</adventure-serializer.version>
-        <adventure-bukkit.version>4.3.4</adventure-bukkit.version>
+        <adventure-serializer.version>4.21.0</adventure-serializer.version>
+        <adventure-bukkit.version>4.4.0</adventure-bukkit.version>
         <worldguard.version>7.0.13</worldguard.version>
         <commons-io.version>2.16.1</commons-io.version>
-        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <commons-lang3.version>3.17.0</commons-lang3.version>
         <brigadier.version>1.0.500</brigadier.version>
         <log4j-core.version>3.0.0-beta2</log4j-core.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
