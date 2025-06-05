@@ -25,7 +25,7 @@ public class Home implements ICommand {
         Argument<?> homeArg0 = new HomeArg0() //String
                 .executesPlayer((p, args) -> {
                     //todo? String home = (String) args.getOptional(0).orElse(Commands.HOME_DEFAULT_NAME.getString());
-                    String home = (String) args.getOrDefault(0, Commands.HOME_DEFAULT_NAME.get());
+                    String home = args.getOrDefault(0, (String) Commands.HOME_DEFAULT_NAME.get()).toString();
                     teleportHome(p, p, home);
                 });
         //home <player> <home>
@@ -33,7 +33,7 @@ public class Home implements ICommand {
                 .withPermission(Commands.HOME_PERMISSION_OTHER.asPermission())
                 .executes((sender, args) -> {
                     OfflinePlayer offP = Bukkit.getOfflinePlayer((String) args.get(0));
-                    String home = (String) args.getOrDefault(1, Commands.HOME_DEFAULT_NAME.get());
+                    String home = (String) args.getOrDefault(1, (String) Commands.HOME_DEFAULT_NAME.get());
                     teleportHome(sender, offP, home);
                 });
         //home
