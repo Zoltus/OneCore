@@ -9,6 +9,8 @@ import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -29,7 +31,8 @@ public class Broadcast implements ICommand {
 
                             if (Config.BROADCAST_SOUND_ENABLED.getBoolean()) {
                                 for (Player player : players) {
-                                    Sound sound = Sound.valueOf(Config.BROADCAST_SOUND.get());
+                                    String soundName = Config.BROADCAST_SOUND.get().toString();
+                                    Sound sound = Registry.SOUNDS.get(NamespacedKey.minecraft(soundName));
                                     float volume = Config.BROADCAST_SOUND_VOLUME.getFloat();
                                     float pitch = Config.BROADCAST_SOUND_PITCH.getFloat();
                                     player.playSound(player, sound, volume, pitch);

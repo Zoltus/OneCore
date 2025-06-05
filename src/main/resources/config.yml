@@ -14,7 +14,7 @@ Data:
   default-home-amount: 3
   broadcast:
     sound-enabled: true
-    sound: BLOCK_NOTE_BLOCK_BANJO
+    sound: block.note_block.banjo
     # Float, has to contain . Example: 0.5
     sound-volume: 1.0
     sound-pitch: 1.0
@@ -25,7 +25,7 @@ Data:
     # Permission to mention players
     permission: mention
     sound-enabled: true
-    sound: BLOCK_NOTE_BLOCK_BANJO
+    sound: block.note_block.banjo
     # Float, has to contain . Example: 0.5
     sound-volume: 1.0
     sound-pitch: 1.0
