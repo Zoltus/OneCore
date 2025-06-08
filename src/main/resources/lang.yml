@@ -41,7 +41,7 @@ Data:
   broadcast:
     prefix: '<dark_gray><bold>[</bold><red><bold>Ilmoitus</bold><dark_gray><bold>] </bold><gray>'
   clear:
-    player-cleared-chat: '{p} Chat <#92ad99><bold>tyhjennetty!'
+    player-cleared-chat: '{p} Chat tyhjennetty!'
   economy:
     balance:
       # <player>, <balance>

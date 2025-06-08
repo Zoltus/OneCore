@@ -60,7 +60,7 @@ public final class OneCore extends JavaPlugin {
 
         Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
         if (worldGuard == null) {
-            plugin.getLogger().log(Level.WARNING, "WorldGuard not found, WorldGuard Extra Flags disabled.");
+            getLogger().log(Level.WARNING, "WorldGuard not found, WorldGuard Extra Flags disabled.");
         } else {
             this.worldGuardFlags = new WGFlags((WorldGuardPlugin) worldGuard);
         }
