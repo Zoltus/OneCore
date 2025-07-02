@@ -83,6 +83,13 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
+        <!-- Test MockBukkit -->
+        <dependency>
+            <groupId>org.mockbukkit.mockbukkit</groupId>
+            <artifactId>mockbukkit-v1.21</artifactId>
+            <version>v4.52.0</version>
+            <scope>test</scope>
+        </dependency>
         <!-- Commands -->
         <dependency>
             <groupId>dev.jorel</groupId>
@@ -199,6 +206,12 @@
             <artifactId>brigadier</artifactId>
             <version>${brigadier.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <profiles>
