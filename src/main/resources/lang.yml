@@ -287,7 +287,7 @@ Data:
     other: '{p} Pelaajan <player> läpinäkyvyys asetettu: <mode>!'
   warp:
     # <list>
-    list: 'Warpit: <list>'
+    list: '{p} Warpit: <list>'
     # <list>
     not-found: '{p} Warppia ei löytynyt. Warpit: <list>'
     # <player>, <warp>
