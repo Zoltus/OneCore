@@ -28,13 +28,18 @@ public class OfflinePlayerArgument extends CustomArgument<OfflinePlayer, String>
             if (p != null) {
                 return p;
             } else {
-                OfflinePlayer offP = Bukkit.getOfflinePlayer(input);
-                //Bukkit.getOfflinePlayers()
-                if (!offP.hasPlayedBefore() || User.of(offP) == null) {
+                try {
+                    OfflinePlayer offP = Bukkit.getOfflinePlayer(input);
+                    //Bukkit.getOfflinePlayers()
+                    if (!offP.hasPlayedBefore() || User.of(offP) == null) {
+                        throw CustomArgumentException
+                                .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
+                    } else {
+                        return offP;
+                    }
+                } catch (Exception e) {
                     throw CustomArgumentException
-                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
-                } else {
-                    return offP;
+                                .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
                 }
             }
         });
