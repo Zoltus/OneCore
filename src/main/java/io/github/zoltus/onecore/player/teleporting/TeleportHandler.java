@@ -25,7 +25,7 @@ public class TeleportHandler implements Listener {
                 && !fromLoc.getBlock().equals(toLoc.getBlock())) {
             DelayedTeleport teleport = user.getTeleport();
             if (teleport != null) {
-                user.getTeleport().cancel(TP_CANCELLED_BY_MOVEMENT.get());
+                user.getTeleport().cancel(TP_CANCELLED_BY_MOVEMENT);
             }
         }
     }
@@ -39,7 +39,7 @@ public class TeleportHandler implements Listener {
             User user = User.of(p);
             DelayedTeleport teleport = user.getTeleport();
             if (teleport != null) {
-                user.getTeleport().cancel(TP_CANCELLED_BY_DAMAGE.get());
+                user.getTeleport().cancel(TP_CANCELLED_BY_DAMAGE);
             }
         }
     }
