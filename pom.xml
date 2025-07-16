@@ -78,11 +78,6 @@
     </repositories>
     <!-- Dependencies -->
     <dependencies>
-        <dependency>
-            <groupId>fi.sulku.mc.onedialog</groupId>
-            <artifactId>OneDialog</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <!-- Commands -->
         <dependency>
             <groupId>dev.jorel</groupId>
