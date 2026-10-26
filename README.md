@@ -3,27 +3,28 @@
 
 ![licence](https://img.shields.io/badge/License-GPL-brightgreen)
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20+-brightgreen.svg)]()
+
 Core plugin for any type of server
 
 A comprehensive essential commands plugin for Minecraft servers, providing core functionality and utilities.
 
-## 🚀 Features
+## Features
 
-- 💬 Advanced chat management with mentions and formatting
-- 💰 Integrated economy system
-- 🏠 Complete teleportation system (homes, warps, tpa)
-- 📝 Sign editing capabilities
-- 🌍 Per Player World management (weather, time
-- ⚙️ Offline support for most commands
+- Advanced chat management with mentions and formatting
+- Integrated economy system
+- Complete teleportation system (homes, warps, tpa)
+- Sign editing capabilities
+- Per Player World management (weather, time
+-  Offline support for most commands
 
-## 📥 Installation
+## Installation
 
 1. Download the latest OneCore.jar
 2. Place it in your server's `plugins` folder
 3. Restart your server
 4. Configure the plugin
 
-## ⚙️ Building
+## Building
 1. git clone https://github.com/Zoltus/OneCore.git
 2. Make sure you have atleast jdk 21
 3. mvn clean package
@@ -41,7 +42,7 @@ A comprehensive essential commands plugin for Minecraft servers, providing core 
 - Console filter
 - Everything customizable including lang, command nodes/permissions/aliases
 
-## ⚙️ Commands
+## Commands
 
 | Command                     | Arguments                               | Permissions                                                           | Offline Support |
 |-----------------------------|-----------------------------------------|-----------------------------------------------------------------------|-----------------|
@@ -97,7 +98,7 @@ A comprehensive essential commands plugin for Minecraft servers, providing core 
 | /tptoggle                   | \<player(todo)>                         | onecore.tptoggle                                                      | -               |
 | /warp                       | \<warp> \<player>                       | onecore.warp<br>onecore.warp.other                                    | true            |
 
-## ⚙️ Adding new Database systems
+## Adding new Database systems
 1. Create class and Implement Database (Look into how SQLiteImpl is done)
 2. OneCore.java change this.database = `SQLiteImpl.init(this);` to `this.database = <yourImpl>.init(this);`
 
