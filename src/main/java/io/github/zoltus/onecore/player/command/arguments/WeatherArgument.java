@@ -7,7 +7,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.IArgument;
 import io.github.zoltus.onecore.player.command.commands.WeatherMode;
-import net.md_5.bungee.api.chat.TextComponent;
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.stream.Stream;
@@ -38,7 +38,7 @@ public class WeatherArgument extends CustomArgument<WeatherInput, String> implem
             } else if (!isPlayerWeather && containsIgnoreCase(storm_aliases, input.toLowerCase())) {
                 weatherMode = WeatherMode.STORM;
             } else {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.WEATHER_INVALID_WEATHER.get()));
+                throw CustomArgumentException.fromAdventureComponent(new LangBuilder(Lang.WEATHER_INVALID_WEATHER).buildComponent());
             }
             return new WeatherInput(input, weatherMode);
         });

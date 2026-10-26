@@ -17,7 +17,4 @@ public interface Database {
 
     void updateBalTop();
 
-    void restartDatabase();
-
-
 }

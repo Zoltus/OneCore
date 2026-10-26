@@ -3,7 +3,7 @@ package io.github.zoltus.onecore;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPIPaperConfig;
 import io.github.zoltus.onecore.data.BackupHandler;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Config;
@@ -42,6 +42,7 @@ public final class OneCore extends JavaPlugin {
     private BukkitAudiences adventure;
     private ConsoleFilter consoleFilter;
     private WGFlags worldGuardFlags;
+    private boolean commandApiLoaded;
 
     @Override
     public void onLoad() {
@@ -50,13 +51,14 @@ public final class OneCore extends JavaPlugin {
         // Load the CommandAPI
         CommandAPI.onLoad(
                 // Configure the CommandAPI
-                new CommandAPIBukkitConfig(this)
+                new CommandAPIPaperConfig(this)
                         // Turn on verbose output for command registration logs
                         .verboseOutput(false)
                         // Give file where Brigadier's command registration tree should be dumped
                         //.dispatcherFile(new File(getDataFolder(), "command_registration.json"))
                         // Point to the NBT API we want to use
                         .initializeNBTAPI(NBTContainer.class, NBTContainer::new));
+        commandApiLoaded = true;
 
         Plugin worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard");
         if (worldGuard == null) {
@@ -68,6 +70,11 @@ public final class OneCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (!commandApiLoaded) {
+            getLogger().severe("CommandAPI initialization failed; disabling OneCore.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         //Enabled adventure support for bukkit
         this.adventure = BukkitAudiences.create(this);
         //Loads CommandAPI
@@ -103,18 +110,25 @@ public final class OneCore extends JavaPlugin {
     @Override
     public void onDisable() {
         // Saves all users & settings on disable
-        database.saveData(false);
-        plugin.getLogger().info("Saved users & settings to database...");
+        if (database != null) {
+            database.saveData(false);
+            getLogger().info("Saved users & settings to database...");
+        }
         //Unregisters all cmds on unload. Trying to support reloading plugin.
-        CommandAPI.getRegisteredCommands().forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
-        //Disables commandapia
-        CommandAPI.onDisable();
+        if (commandApiLoaded) {
+            List.copyOf(CommandAPI.getRegisteredCommands())
+                    .forEach(cmd -> CommandAPI.unregister(cmd.commandName(), true));
+            CommandAPI.onDisable();
+            commandApiLoaded = false;
+        }
         if (this.adventure != null) {
             this.adventure.close();
             this.adventure = null;
         }
         // Closes database connection
-        database.closeConnection();
+        if (database != null) {
+            database.closeConnection();
+        }
     }
 
     public BukkitAudiences adventure() {

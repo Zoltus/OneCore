@@ -9,7 +9,7 @@ import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.utils.ChatUtils;
 import io.github.zoltus.onecore.utils.FakeBreak;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.kyori.adventure.chat.SignedMessage;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -107,7 +107,7 @@ public class SignEdit implements ICommand {
                 .override();
     }
 
-    private final Argument<BaseComponent[]> signTextArg = new ChatArgument(NODES_MESSAGE.get())
+    private final Argument<SignedMessage> signTextArg = new ChatArgument(NODES_MESSAGE.get())
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 Sign sign = canEdit(info.sender());
                 if (sign != null && sign.getLines().length != 0) {
@@ -120,7 +120,7 @@ public class SignEdit implements ICommand {
                 Sign sign = canEdit(player);
                 if (sign != null) {
                     int line = (int) args.get(1);
-                    String text = BaseComponent.toPlainText((BaseComponent[]) args.get(2));
+                    String text = ChatUtils.toPlainText((SignedMessage) args.get(2));
                     setSignText(player, sign, line, text);
                 }
             });

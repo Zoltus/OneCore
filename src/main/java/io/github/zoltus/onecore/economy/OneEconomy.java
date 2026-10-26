@@ -250,7 +250,7 @@ public final class OneEconomy extends AbstractEconomy {
     }
 
     @Override
-    public boolean createPlayerAccount(OfflinePlayer player) {
+    public boolean createPlayerAccount(OfflinePlayer player) { // todo check if already exists
         balances.put(player.getUniqueId(), 0D);
         return true;
     }

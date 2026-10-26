@@ -6,7 +6,6 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.Yamls;
 import io.github.zoltus.onecore.player.command.IArgument;
 import io.github.zoltus.onecore.player.command.commands.regular.Warp;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 
 import static io.github.zoltus.onecore.data.configuration.PlaceHolder.*;
@@ -28,8 +27,7 @@ public class WarpArgument extends CustomArgument<Warp.WarpObj, String> implement
             Location warp =  Yamls.WARPS.getYml().getLocation(input);
             if (warp == null) {
                 throw CustomArgument.CustomArgumentException
-                        .fromBaseComponents(TextComponent
-                                .fromLegacyText(WARP_NOT_FOUND.rb(LIST_PH, Warp.getWarps()).buildString()));
+                        .fromAdventureComponent(WARP_NOT_FOUND.rb(LIST_PH, Warp.getWarps()).buildComponent());
             } else {
                 return new Warp.WarpObj(input, warp);
             }

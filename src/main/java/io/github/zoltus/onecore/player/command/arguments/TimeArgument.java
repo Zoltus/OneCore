@@ -6,7 +6,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.IArgument;
-import net.md_5.bungee.api.chat.TextComponent;
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.stream.Stream;
@@ -31,7 +31,7 @@ public class TimeArgument extends CustomArgument<Long, String> implements IArgum
         super(new StringArgument(NODES_TIME.get()), info -> {
             Long time = toTime(info.input());
             if (time == null) {
-                throw CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(Lang.TIME_INVALID_TIME.get()));
+                throw CustomArgumentException.fromAdventureComponent(new LangBuilder(Lang.TIME_INVALID_TIME).buildComponent());
             } else {
                 return time;
             }

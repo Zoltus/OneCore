@@ -7,7 +7,8 @@ import io.github.zoltus.onecore.data.configuration.yamls.Config;
 import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import net.md_5.bungee.api.chat.BaseComponent;
+import io.github.zoltus.onecore.utils.ChatUtils;
+import net.kyori.adventure.chat.SignedMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -23,8 +24,8 @@ public class Broadcast implements ICommand {
                 .withAliases(Commands.BROADCAST_ALIASES)
                 .then(new ChatArgument(Lang.NODES_MESSAGE.get())
                         .executes((sender, args) -> {
-                            BaseComponent[] components = (BaseComponent[]) args.get(0);
-                            String message = Lang.BROADCAST_PREFIX.get() + BaseComponent.toLegacyText(components);
+                            SignedMessage chat = (SignedMessage) args.get(0);
+                            String message = Lang.BROADCAST_PREFIX.get() + ChatUtils.toLegacyText(chat);
                             LangBuilder langBuilder = new LangBuilder(message);
                             Player[] players = Bukkit.getOnlinePlayers().toArray(Player[]::new);
                             langBuilder.send(players);

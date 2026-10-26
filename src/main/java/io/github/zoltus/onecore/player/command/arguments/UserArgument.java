@@ -5,7 +5,7 @@ import dev.jorel.commandapi.arguments.CustomArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
-import net.md_5.bungee.api.chat.TextComponent;
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class UserArgument extends CustomArgument<User, String> implements IArgum
                 User user = User.of(offP);
                 if (!offP.hasPlayedBefore() || user == null) {
                     throw CustomArgumentException
-                            .fromBaseComponents(TextComponent.fromLegacyText(PLAYER_NEVER_VISITED_SERVER.get()));
+                            .fromAdventureComponent(new LangBuilder(PLAYER_NEVER_VISITED_SERVER).buildComponent());
                 } else {
                     return user;
                 }

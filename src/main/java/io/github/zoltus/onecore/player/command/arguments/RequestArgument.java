@@ -1,7 +1,7 @@
 package io.github.zoltus.onecore.player.command.arguments;
 
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import io.github.zoltus.onecore.player.User;
 import io.github.zoltus.onecore.player.command.IArgument;
 import io.github.zoltus.onecore.player.teleporting.Request;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestArgument extends PlayerArgument implements IArgument {
+public class RequestArgument extends EntitySelectorArgument.OnePlayer implements IArgument {
     public RequestArgument() {
         this("");
     }

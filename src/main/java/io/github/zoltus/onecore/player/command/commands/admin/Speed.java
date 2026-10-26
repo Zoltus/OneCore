@@ -8,7 +8,7 @@ import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.OfflinePlayerArgument;
-import net.md_5.bungee.api.chat.TextComponent;
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public class Speed implements ICommand {
                 }
                 return speed;
             } catch (Exception ex) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_MODE.get()));
+                throw CustomArgument.CustomArgumentException.fromAdventureComponent(new LangBuilder(SPEED_MODE_INVALID_MODE).buildComponent());
             }
         }).replaceSuggestions(ArgumentSuggestions.strings(info ->
                 toSuggestion(info.currentArg(), new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"})));
@@ -46,7 +46,7 @@ public class Speed implements ICommand {
                 new StringArgument(SPEED_MODE_FLY.get() + "/" + SPEED_MODE_WALK.get()), info -> {
             String input = info.input();
             if (!speedArgs.contains(input.toLowerCase())) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(SPEED_MODE_INVALID_SPEED.get()));
+                throw CustomArgument.CustomArgumentException.fromAdventureComponent(new LangBuilder(SPEED_MODE_INVALID_SPEED).buildComponent());
             } else {
                 return input;
             }

@@ -7,7 +7,8 @@ import io.github.zoltus.onecore.data.configuration.yamls.Lang;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
 import io.github.zoltus.onecore.player.command.arguments.PlayerArgument;
-import net.md_5.bungee.api.chat.BaseComponent;
+import io.github.zoltus.onecore.utils.ChatUtils;
+import net.kyori.adventure.chat.SignedMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -24,7 +25,7 @@ public class Msg implements ICommand {
                     Player target = (Player) args.get(0);
                     String senderName = sender.getName();
                     String targetName = target.getName();
-                    String message = BaseComponent.toPlainText((BaseComponent[]) args.get(1));
+                    String message = ChatUtils.toPlainText((SignedMessage) args.get(1));
                     message = ChatColor.translateAlternateColorCodes('&', message);
                     Lang.MSG_SENT_MSG
                             .rb(PLAYER_PH, targetName)

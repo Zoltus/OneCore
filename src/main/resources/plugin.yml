@@ -8,8 +8,8 @@ author: Zoltus
 website: https://www.spigotmc.org/members/zoltus.306747/
 libraries:
   #- dev.jorel:commandapi-bukkit-shade:9.3.0
-  - org.bstats:bstats-bukkit:3.1.0
-  - org.apache.commons:commons-compress:1.27.1
+  - org.bstats:bstats-bukkit:3.2.1
+  - org.apache.commons:commons-compress:1.28.0
   - org.apache.logging.log4j:log4j-core:3.0.0-beta2
 softdepend:
   - Vault
@@ -17,4 +17,4 @@ softdepend:
   - WorldGuard
 commands: {}
 permissions: {}
-api-version: '1.20'
+api-version: '26.3'

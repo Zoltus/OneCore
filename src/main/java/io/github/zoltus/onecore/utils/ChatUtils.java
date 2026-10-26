@@ -1,5 +1,8 @@
 package io.github.zoltus.onecore.utils;
 
+import net.kyori.adventure.chat.SignedMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Matcher;
@@ -7,6 +10,15 @@ import java.util.regex.Pattern;
 
 public class ChatUtils {
 
+    public static String toPlainText(SignedMessage message) {
+        return message.unsignedContent() == null ? message.message()
+                : PlainTextComponentSerializer.plainText().serialize(message.unsignedContent());
+    }
+
+    public static String toLegacyText(SignedMessage message) {
+        return message.unsignedContent() == null ? message.message()
+                : LegacyComponentSerializer.legacyAmpersand().serialize(message.unsignedContent());
+    }
 
     // for detecting #8f8f8f
     private static final Pattern pattern = Pattern.compile("#\\p{XDigit}{6}");

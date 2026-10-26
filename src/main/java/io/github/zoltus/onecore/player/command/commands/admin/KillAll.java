@@ -7,7 +7,7 @@ import dev.jorel.commandapi.arguments.StringArgument;
 import io.github.zoltus.onecore.data.configuration.yamls.Commands;
 import io.github.zoltus.onecore.player.command.Command;
 import io.github.zoltus.onecore.player.command.ICommand;
-import net.md_5.bungee.api.chat.TextComponent;
+import io.github.zoltus.onecore.data.configuration.LangBuilder;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -49,7 +49,7 @@ public class KillAll implements ICommand {
             try {
                 return Double.parseDouble(info.input());
             } catch (Exception e) {
-                throw CustomArgument.CustomArgumentException.fromBaseComponents(TextComponent.fromLegacyText(INVALID_RANGE.get()));
+                throw CustomArgument.CustomArgumentException.fromAdventureComponent(new LangBuilder(INVALID_RANGE).buildComponent());
             }
         });
     }

@@ -214,12 +214,6 @@ public class SQLiteImpl implements Database {
         }
     }
 
-    @Override
-    public void restartDatabase() {
-
-    }
-
-
     private static void handleUserSettings(PreparedStatement playerStmt, String uuid, User user) throws SQLException {
         playerStmt.setString(1, uuid);
         playerStmt.setBoolean(2, user.isHasTpEnabled());
